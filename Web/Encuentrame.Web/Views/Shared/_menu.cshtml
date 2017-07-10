@@ -1,0 +1,44 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Controllers
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+<ul class="nav navbar-nav">
+    <li>@Html.ActionLink(Translations.HomeMenu, "Index", "Home")</li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Translations.SecurityMenu <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            @if (AuthorizationHelper.Validate<ManageUserController>())
+            {
+                <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.User), "Index", "ManageUser")</li>
+            }
+            @if (AuthorizationHelper.Validate<ManageRoleController>())
+            {
+                <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.Role), "Index", "ManageRole")</li>
+            }
+           
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Translations.AccountMenu <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.Profile), "UserProfile", "Account")</li>
+            
+            <li role="separator" class="divider"></li>
+            <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.ChangePassword), "ChangePassword", "Account")</li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Translations.SettingsMenu <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+           
+            @if (AuthorizationHelper.Validate<ConfigureEmailServerController>())
+            {
+                <li>@Html.ActionLink(Translations.ConfigureEmailServerTitle, "Index", "ConfigureEmailServer")</li>
+            }
+          
+            <li role="separator" class="divider"></li>
+            <li>@Html.ActionLink("Crear base de datos", "Index", "Database")</li>
+        </ul>
+    </li>
+</ul>
+

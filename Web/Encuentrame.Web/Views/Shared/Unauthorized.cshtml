@@ -1,0 +1,19 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.HandleUnauthorizedInfo
+
+@{
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+    ViewBag.Title = Translations.UnauthorizedTitle;
+}
+
+
+<h2 class="page-header">@ViewBag.Title</h2>
+<h2>@Translations.UnauthorizedSubTitle</h2>
+<p class="bg-info">
+    <b>@Translations.PassNecessary:</b>
+    @TranslationsHelper.Get(Model.Group)<b>/</b> @TranslationsHelper.Get(Model.Module)<b>/</b> @TranslationsHelper.Get(Model.Action)
+</p>
+
+
+<p>@Html.ActionLink(Translations.HomeMenu, "Index", "Home", new { }, new { @class = "btn btn-danger" })</p>

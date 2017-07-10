@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{83F40316-835A-48AF-830A-F14DDF19601B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encuentrame.Services.InfoUpdater</RootNamespace>
+    <AssemblyName>Encuentrame.InfoUpdaterService</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=2.0.1.45000, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Spring.Aop.2.0.1\lib\net45\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=2.0.1.45000, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Spring.Core.2.0.1\lib\net45\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Topshelf">
+      <HintPath>..\..\packages\Topshelf.3.3.1\lib\net40-full\Topshelf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Jobs\CustomJob.cs" />
+    <Compile Include="SystemAuthenticationProvider.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceCreator.cs" />
+    <Compile Include="TranslationService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NailsSupports\Nails.Log4net\Nails.Log4net.csproj">
+      <Project>{da201baa-db6f-4a23-8d66-8219080e7de6}</Project>
+      <Name>Nails.Log4net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NailsSupports\Nails.NHibernate\Nails.NHibernate.csproj">
+      <Project>{d2821896-303f-4826-8ebe-013ca5defa9a}</Project>
+      <Name>Nails.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NailsSupports\Nails.Spring\Nails.Spring.csproj">
+      <Project>{1f954ed9-0ca5-4375-b9cf-d4e84bd92928}</Project>
+      <Name>Nails.Spring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NailsSupports\Nails\Nails.csproj">
+      <Project>{DC6891D7-D143-454D-8CF1-44CD27766AFE}</Project>
+      <Name>Nails</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Encuentrame.Model.Mappings\Encuentrame.Model.Mappings.csproj">
+      <Project>{f3c5289a-6a51-4f3c-8d03-7538a3899cb5}</Project>
+      <Name>Encuentrame.Model.Mappings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Encuentrame.Model\Encuentrame.Model.csproj">
+      <Project>{49c7f680-c882-4295-8f79-aeac8d267653}</Project>
+      <Name>Encuentrame.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Encuentrame.Security\Encuentrame.Security.csproj">
+      <Project>{5F5167A4-DE4C-4497-826C-1FAA87D51EB4}</Project>
+      <Name>Encuentrame.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Supports\Encuentrame.Support.Email\Encuentrame.Support.Email.csproj">
+      <Project>{28b033c9-da53-41b4-b023-2153c5328d49}</Project>
+      <Name>Encuentrame.Support.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Supports\Encuentrame.Support.Mapping\Encuentrame.Support.Mappings.csproj">
+      <Project>{C9C8434B-256B-4FD3-8BBA-06E5F79288BC}</Project>
+      <Name>Encuentrame.Support.Mappings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Supports\Encuentrame.Support\Encuentrame.Support.csproj">
+      <Project>{04D25BEE-1935-45AB-BDBE-80A831CCEE29}</Project>
+      <Name>Encuentrame.Support</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="nhibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

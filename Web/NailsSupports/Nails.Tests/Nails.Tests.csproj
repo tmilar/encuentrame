@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{78A977F8-FA9A-4040-86C4-7C608DC3B35D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NailsFramework.Tests</RootNamespace>
+    <AssemblyName>Nails.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\Libs\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MemoDb, Version=0.1.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\MemoDb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\Unity2\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\..\Libs\Unity2\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\..\Libs\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop">
+      <HintPath>..\..\..\Libs\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\..\..\Libs\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IoC\Aspects\AspectConditionsTests.cs" />
+    <Compile Include="IoC\Aspects\BehaviorTests.cs" />
+    <Compile Include="IoC\Aspects\VirtualMethodsAspectsTests.cs" />
+    <Compile Include="IoC\Aspects\ExcludedMethodsTests.cs" />
+    <Compile Include="IoC\Aspects\GenericInheritorsTests.cs" />
+    <Compile Include="IoC\Aspects\MethodsWithAttributeTests.cs" />
+    <Compile Include="IoC\Aspects\MethodsMatchingTests.cs" />
+    <Compile Include="IoC\Aspects\NullBehavior.cs" />
+    <Compile Include="IoC\Aspects\TypeTests.cs" />
+    <Compile Include="IoC\Aspects\InheritorsTests.cs" />
+    <Compile Include="IoC\Aspects\TypeWithAttributeTests.cs" />
+    <Compile Include="Config\ConfigurationTests.cs" />
+    <Compile Include="IoC\StaticDependencies\ClassWithStaticIntFromConfiguration.cs" />
+    <Compile Include="IoC\StaticDependencies\ClassWithStaticIntFromConfigurationWithOverridenKey.cs" />
+    <Compile Include="IoC\StaticInjectorTests.cs" />
+    <Compile Include="IoC\IoCIntegrationTests.cs" />
+    <Compile Include="IoC\Lemmings\AbstractLemming.cs" />
+    <Compile Include="IoC\Lemmings\AnotherServiceWithGenericDependency.cs" />
+    <Compile Include="IoC\Lemmings\ClassWithStaticCollectionReference.cs" />
+    <Compile Include="IoC\Lemmings\ConcreteLemming.cs" />
+    <Compile Include="IoC\Lemmings\DependencyCollection.cs" />
+    <Compile Include="IoC\Lemmings\GenericLemmingWithValuesFromConfiguration.cs" />
+    <Compile Include="IoC\Lemmings\GenericServiceWithGenericDependency.cs" />
+    <Compile Include="IoC\Lemmings\GenericServiceWithGenericDependencyOfSameType.cs" />
+    <Compile Include="IoC\Lemmings\LemmingWithValuesFromConfiguration.cs" />
+    <Compile Include="IoC\Lemmings\LemmingWithValuesFromConfigurationWithOverridenKey.cs" />
+    <Compile Include="IoC\Lemmings\LemmingWithStaticInjection.cs" />
+    <Compile Include="IoC\Lemmings\NonLemmingWithInjections.cs" />
+    <Compile Include="IoC\Lemmings\ServiceWithCollectionDependency.cs" />
+    <Compile Include="IoC\Lemmings\ServiceWithCollectionDependencyWithoutInjectAttribute.cs" />
+    <Compile Include="IoC\Lemmings\ServiceWithManagedCollectionDependency.cs" />
+    <Compile Include="IoC\ObjectFactoryTests.cs" />
+    <Compile Include="IoC\Aspects\AspectsTests.cs" />
+    <Compile Include="IoC\StaticDependencies\ClassWithAStaticGenericDependency.cs" />
+    <Compile Include="IoC\StaticDependencies\ClassWithStaticDependencies.cs" />
+    <Compile Include="IoC\StaticInjectionTests.cs" />
+    <Compile Include="IoC\Support\IoCContainers.cs" />
+    <Compile Include="Logging\Log4net\Log4netFileLogHelper.cs" />
+    <Compile Include="Logging\Log4net\Log4netTests.cs" />
+    <Compile Include="Logging\LoggingTests.cs" />
+    <Compile Include="Logging\NullLogTests.cs" />
+    <Compile Include="Logging\TestModel\ClassWithInstanceLogger.cs" />
+    <Compile Include="Logging\TestModel\ClassWithStaticLogger.cs" />
+    <Compile Include="Persistence\BagTests.cs" />
+    <Compile Include="Persistence\ExpectedCascadeBehaviorTests.cs" />
+    <Compile Include="Persistence\Memory\TestHelper.cs" />
+    <Compile Include="Persistence\Memory\TestModel\City.cs" />
+    <Compile Include="Persistence\Memory\TestModel\Country.cs" />
+    <Compile Include="Persistence\LinqToSql\TestHelper.cs" />
+    <Compile Include="Persistence\LinqToSql\TestModel\City.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistence\LinqToSql\TestModel\Country.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistence\ModelQueriesTests.cs" />
+    <Compile Include="Persistence\NHibernate\NHibernateTests.cs" />
+    <Compile Include="Persistence\NHibernate\TestHelper.cs" />
+    <Compile Include="Persistence\NHibernate\TestModel\City.cs" />
+    <Compile Include="Persistence\NHibernate\TestModel\Country.cs" />
+    <Compile Include="Persistence\NullBagTests.cs" />
+    <Compile Include="Persistence\NullPersistenceProviderTests.cs" />
+    <Compile Include="Persistence\PagingTests.cs" />
+    <Compile Include="Plugins\GenericDefinitionInheritsFromTests.cs" />
+    <Compile Include="Support\GenericDefinitionIsAssignablerFromTests.cs" />
+    <Compile Include="Support\GenericDefinitionInheritsFromTests.cs" />
+    <Compile Include="IoC\InjectionsTests.cs" />
+    <Compile Include="IoC\IoCConfigurationTests.cs" />
+    <Compile Include="IoC\LemmingsTests.cs" />
+    <Compile Include="IoC\Lemmings\GenericService.cs" />
+    <Compile Include="IoC\Lemmings\IGenericService.cs" />
+    <Compile Include="IoC\Lemmings\IServiceDependency.cs" />
+    <Compile Include="IoC\Lemmings\INonLemmingService.cs" />
+    <Compile Include="IoC\Lemmings\IService.cs" />
+    <Compile Include="IoC\StaticDependencies\ClassWithStaticValuesFromConfiguration.cs" />
+    <Compile Include="IoC\StaticDependencies\ClassWithStaticValuesFromConfigurationWithOverridenKey.cs" />
+    <Compile Include="IoC\Lemmings\NamedLemming.cs" />
+    <Compile Include="IoC\Lemmings\NonLemmingService.cs" />
+    <Compile Include="IoC\Lemmings\NoSingletonLemming.cs" />
+    <Compile Include="IoC\Lemmings\Service.cs" />
+    <Compile Include="IoC\Lemmings\ServiceDependency.cs" />
+    <Compile Include="IoC\Lemmings\ServiceWithGenericDependency.cs" />
+    <Compile Include="Logging\LogBehaviorTests.cs" />
+    <Compile Include="Logging\MockLog.cs" />
+    <Compile Include="IoC\NullLogTests.cs" />
+    <Compile Include="Persistence\ModelTests.cs" />
+    <Compile Include="Persistence\MockModel.cs" />
+    <Compile Include="Support\NullObjectTester.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\MockingExtensions.cs" />
+    <Compile Include="Support\TypeFullNameTests.cs" />
+    <Compile Include="TestSupport\CompleteTests.cs" />
+    <Compile Include="TestSupport\ConfigurableCompleteTests.cs" />
+    <Compile Include="TestSupport\NailsTestsConfigurableTests.cs" />
+    <Compile Include="UnitOfWork\AsyncUnitOfWorkTests.cs" />
+    <Compile Include="UnitOfWork\RunningUnitOfWorkValidationBehaviorOnGenericTypesTests.cs" />
+    <Compile Include="UnitOfWork\Session\SingletonSessionContextTests.cs" />
+    <Compile Include="UnitOfWork\Session\CallExecutionContextTests.cs" />
+    <Compile Include="UnitOfWork\Session\UnitOfWorkSessionContextTests.cs" />
+    <Compile Include="UnitOfWork\WorkContextTests.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkTests.cs" />
+    <Compile Include="UnitOfWork\CurrentUnitOfWorkTests.cs" />
+    <Compile Include="UnitOfWork\RunningUnitOfWorkValidationBehaviorTests.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkBehaviorTests.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkInfoTests.cs" />
+    <Compile Include="UserInterface\Mvp\ITestPresenter.cs" />
+    <Compile Include="UserInterface\Mvp\ITestSingletonPresenter.cs" />
+    <Compile Include="UserInterface\Mvp\ITestSingletonView.cs" />
+    <Compile Include="UserInterface\Mvp\ITestView.cs" />
+    <Compile Include="UserInterface\Mvp\PresenterProviderTests.cs" />
+    <Compile Include="UserInterface\Mvp\MVPPlatformTests.cs" />
+    <Compile Include="UserInterface\Mvp\PerInstancePresenterTests.cs" />
+    <Compile Include="UserInterface\Mvp\SingletonPresenterTests.cs" />
+    <Compile Include="UserInterface\Mvp\TestPresenter.cs" />
+    <Compile Include="UserInterface\Mvp\TestSingletonPresenter.cs" />
+    <Compile Include="UserInterface\Mvp\TestSingletonView.cs" />
+    <Compile Include="UserInterface\Mvp\TestView.cs" />
+    <Compile Include="UserInterface\Mvp\WebForms\PresenterBindingTest.cs" />
+    <Compile Include="UserInterface\Mvp\WebForms\TestForm.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WebForms\TestUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestFormPresenterProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestFormWithOtherPresenterProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestUserControlProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestUserControlWithOtherPresenterProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestFormPresenterField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestFormWithOtherPresenterField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\PresenterBindingTest.cs" />
+    <Compile Include="UserInterface\Mvp\WinForms\TestUserControlField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\Mvp\WinForms\TestUserControlWithOtherPresenterField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nails.EntityFramework\Nails.EntityFramework4.csproj">
+      <Project>{C56CCD0C-20D3-47FD-BC7C-A3FA572C904D}</Project>
+      <Name>Nails.EntityFramework4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.LinqToSql\Nails.LinqToSql.csproj">
+      <Project>{F5C86BBA-CF92-4A33-9A91-1D4C2D4E51DA}</Project>
+      <Name>Nails.LinqToSql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.Log4net\Nails.Log4net.csproj">
+      <Project>{DA201BAA-DB6F-4A23-8D66-8219080E7DE6}</Project>
+      <Name>Nails.Log4net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.Mvc\Nails.Mvc3.csproj">
+      <Project>{F14321A5-5B2B-495E-A87B-69A5239255E8}</Project>
+      <Name>Nails.Mvc3</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.MVP\Nails.Mvp.csproj">
+      <Project>{94FDC244-57BF-4DC3-A91E-D749CCFF08E6}</Project>
+      <Name>Nails.Mvp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.NHibernate\Nails.NHibernate.csproj">
+      <Project>{D2821896-303F-4826-8EBE-013CA5DEFA9A}</Project>
+      <Name>Nails.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.Spring\Nails.Spring.csproj">
+      <Project>{1F954ED9-0CA5-4375-B9CF-D4E84BD92928}</Project>
+      <Name>Nails.Spring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.Tests.Support\Nails.Tests.Support.csproj">
+      <Project>{4FDD1DEA-3D3C-4EF7-B787-DE3A17374EF9}</Project>
+      <Name>Nails.Tests.Support</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.Unity\Nails.Unity2.csproj">
+      <Project>{04A865E7-7EC7-472F-AB63-E1630B3231AD}</Project>
+      <Name>Nails.Unity2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.WebForms\Nails.WebForms.csproj">
+      <Project>{D6FC93B9-6C46-4483-B91D-6D37E0C5CB7F}</Project>
+      <Name>Nails.WebForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails.WinForms\Nails.WinForms.csproj">
+      <Project>{85C12E3C-F73F-4F0A-BA6E-86BF6E0DA088}</Project>
+      <Name>Nails.WinForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nails\Nails.csproj">
+      <Project>{DC6891D7-D143-454D-8CF1-44CD27766AFE}</Project>
+      <Name>Nails</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="badhibernate_useouterjoin.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="badhibernate_wrongconnection.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Persistence\NHibernate\TestModel\Mappings.hbm.xml" />
+    <EmbeddedResource Include="Persistence\LinqToSql\TestModel\Mappings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

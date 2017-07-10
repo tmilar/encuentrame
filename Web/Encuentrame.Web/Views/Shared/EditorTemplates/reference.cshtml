@@ -1,0 +1,74 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model int?
+@{
+    Type sourceType = null;
+    string sourceName = "";
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.SourceType))
+    {
+        sourceType = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceType] as Type;
+        sourceName = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceName].ToString();
+    }
+
+    List<object> parametersList = new List<object>();
+    parametersList.Add(Model);
+  
+    ICollection<SelectListItem> selectListItems = null;
+    if (sourceType == null)
+    {
+        selectListItems = new List<SelectListItem>();
+    }
+    else
+    {
+        selectListItems = sourceType.GetStaticMethod(sourceName, parametersList.ToArray()) as ICollection<SelectListItem>;
+    }
+
+    string dataRelatedTo = "";
+    string dataSourceUrl = "";
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.RelatedTo))
+    {
+        dataRelatedTo = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.RelatedTo].ToString();
+        var controller= ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceController].ToString();
+        var action= ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceAction].ToString();
+        dataSourceUrl = Url.Action(action, controller);
+    }
+
+    var caption = String.Empty;
+   
+    var isRequired= Html.GetIfRequired(x => x);
+
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>();//validationAttributes;
+    
+    if (dataRelatedTo != "")
+    {
+        htmlAttributes.Add("data-related-to", dataRelatedTo);
+        htmlAttributes.Add("data-source-url", dataSourceUrl);
+        htmlAttributes.Add("data-selected-id", Model.HasValue && Model != default(int) ? Model : -1);
+        htmlAttributes.Add("class", "form-control reference reference-single reference-related");
+    }
+    else
+    {
+        htmlAttributes.Add("class", "form-control reference reference-single");
+    }
+    if (isRequired)
+    {
+        caption = Translations.SelectItemDropDownCaption;
+    }
+    else
+    {
+        caption = Translations.NothingDropDownCaption;
+    }
+
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+
+    @Html.DropDownListFor(model => model, selectListItems, caption, htmlAttributes)
+
+    @Html.ValidationMessageFor(model => model)
+</div>
+
+

@@ -1,0 +1,25 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model string
+@{
+    string image = Url.Content("~/images/no-image.png");
+    if (!Model.IsNullOrEmpty())
+    {
+        image = Model;
+    }
+}
+<div class="form-group image-control" data-image-url="@Url.Action("UploadFile", "Resources")">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model) <a class="btn btn-primary btn-xs btn-upload">@Translations.UploadFile</a>
+    <p class="form-control-static">
+        <img src="@image" alt="@Translations.NoImage" class="img-rounded"/>
+        @Html.HiddenFor(model => model)
+        <div style='height: 0px; width: 0px; overflow: hidden;'>
+            <input type="file" accept=".gif,.jpg,.png" id="@(Html.IdFor(model => model).ToHtmlString() + "image")"/>
+        </div>
+        @Html.ValidationMessageFor(model => model)
+    </p>
+</div>
+
+

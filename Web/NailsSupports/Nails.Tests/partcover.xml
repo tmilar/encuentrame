@@ -1,0 +1,11 @@
+<PartCoverSettings>
+  <Target>C:\Projects\Nails\framework\src\Nails.Tests\nunit-sleep.bat</Target>
+  <TargetWorkDir>C:\Projects\Nails\framework\src\Nails.Tests\bin\Debug</TargetWorkDir>
+  <TargetArgs>Nails.Tests.dll</TargetArgs>
+  <LogLevel>120</LogLevel>
+  <Rule>+[Nails*]*</Rule>
+  <Rule>-[Nails.Test*]*</Rule>
+  <Rule>-[*]*b__*</Rule>
+  <Rule>-[*]*c__*</Rule>
+  <Rule>-[*]*Exception</Rule>
+</PartCoverSettings>

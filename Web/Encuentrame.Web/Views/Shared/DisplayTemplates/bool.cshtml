@@ -1,0 +1,9 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@model bool
+
+<div class="checkbox">
+    <label>
+        @Html.CheckBoxFor(model => model,new{disabled="disabled"})
+        @Html.DisplayNameFor(model => model)
+    </label>
+</div>

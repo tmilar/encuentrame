@@ -1,0 +1,47 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@{
+
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+    ViewBag.Title = "Crear base de datos";
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.ErrorSummary()
+<h3>@Translations.ConnectionString</h3>
+<p class="lead">@ViewBag.CS</p>
+<h3>@Translations.Create</h3>
+<form method="POST" action="@Url.Action("Create")">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>@Translations.Password</label>
+                        <input class="form-control" type="password" id="password" name="password"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">@Translations.Ok</button>
+</form>
+<h3>@Translations.Update</h3>
+<form method="POST" action="@Url.Action("Update")">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>@Translations.Password</label>
+                        <input class="form-control" type="password" id="password" name="password" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">@Translations.Ok</button>
+</form>

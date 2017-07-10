@@ -1,0 +1,47 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Models.Accounts.RoleModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManageRoleDetailsTitle;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/modals")
+@Scripts.Render("~/bundles/treeview")
+}
+
+
+
+
+<h2 class="page-header">@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginDisplaySection())
+        {
+            @Html.DisplayFor(m => m.Name)
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginDisplaySection())
+        {
+            @Html.DisplayFor(x => x.Passes)
+        }
+    </div>
+</div>
+<form method="POST" action="@Url.Action("Delete", new {id = Model.Id})">
+    <button type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+            data-modal-ok="@Translations.Delete" data-modal-title="@Translations.Delete" data-modal-message="@Translations.DeleteMessage.FormatWith(Model.Name)">
+        @Translations.Delete
+    </button>
+    @Html.ActionLink(Translations.Edit, "Edit", new { Id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
+
+    @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })
+</form>
+
+@Html.Partial("_modalMessageBeforeSubmit")

@@ -1,0 +1,46 @@
+2017-01-12 15:40:05,469 [1] DEBUG HibernatingRhinos.Profiler.Client.App [(null)] - Profiler initialized. Build: 3105
+2017-01-12 15:40:09,488 [1] WARN  Rhino.Licensing.AbstractLicenseValidator [(null)] - Could not find license file: C:\Users\javie\AppData\Local\NHibernate Profiler\license.xml
+2017-01-12 15:46:43,957 [3] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails\UnitOfWork\UnitOfWork.cs
+2017-01-12 15:46:44,007 [3] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - File is not opened yet so I'm going to scan solutions
+2017-01-12 15:46:44,272 [3] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - I've found any suitable VS instance so I'm returning first on list
+2017-01-12 15:46:45,144 [18] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails\UnitOfWork\UnitOfWorkExecution.cs
+2017-01-12 15:46:45,255 [18] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - File is not opened yet so I'm going to scan solutions
+2017-01-12 15:46:45,324 [18] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - I've found any suitable VS instance so I'm returning first on list
+2017-01-12 15:46:45,636 [3] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:46:45,759 [3] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:46:46,165 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.Mvc\UnitOfWorkFilterAttribute.cs
+2017-01-12 15:46:46,333 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - File is not opened yet so I'm going to scan solutions
+2017-01-12 15:46:46,492 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - I've found any suitable VS instance so I'm returning first on list
+2017-01-12 15:46:46,788 [18] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:46:46,940 [18] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:46:47,976 [5] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:46:47,996 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:47:58,700 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:47:58,710 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - File is not opened yet so I'm going to scan solutions
+2017-01-12 15:47:58,936 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - I've found any suitable VS instance so I'm returning first on list
+2017-01-12 15:47:59,679 [8] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:47:59,696 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:01,030 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:01,587 [5] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:01,594 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:02,159 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:02,718 [8] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:02,723 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:04,100 [18] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:04,674 [18] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:04,691 [18] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:05,669 [21] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails\UnitOfWork\UnitOfWork.cs
+2017-01-12 15:48:06,388 [21] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:06,400 [21] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:25,508 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:26,248 [8] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:26,255 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:26,536 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:27,082 [5] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:27,102 [5] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:27,481 [3] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:28,035 [3] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:28,047 [3] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False
+2017-01-12 15:48:28,723 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Need to display in VS: c:\Projects\Encuentrame\Encuentrame\NailsSupports\Nails.NHibernate\NHibernateTransactionalContext.cs
+2017-01-12 15:48:29,299 [8] WARN  HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - Trying to ask nicely from VS to activate has failed, trying to use SetForegroundWindow for the task
+2017-01-12 15:48:29,306 [8] DEBUG HibernatingRhinos.Profiler.BackEnd.OpenFileProcessor [(null)] - SetForegroundWindow returned: False

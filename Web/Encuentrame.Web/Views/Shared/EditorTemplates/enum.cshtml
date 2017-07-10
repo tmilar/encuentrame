@@ -1,0 +1,50 @@
+﻿@using Encuentrame.Web.Helpers
+@model Enum
+@{
+    var selectListItems = new List<SelectListItem>();
+    string typeName = Model.GetType().Name;
+    IList<int> excludedValues = null;
+    IList<int> includedValues = null;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.ExcludedEnumValues))
+    {
+        excludedValues = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.ExcludedEnumValues] as int[];            
+    }
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.IncludedEnumValues))
+    {
+        includedValues = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.IncludedEnumValues] as int[];
+    }
+    
+    foreach (var itemValue in Enum.GetValues(Model.GetType()))
+    {
+        var itemName = Enum.GetName(Model.GetType(), itemValue);
+        var intValue = (int) itemValue;
+        if ((excludedValues == null && includedValues==null) || (excludedValues != null && !excludedValues.Contains(intValue))
+           || (includedValues != null && includedValues.Contains(intValue)))
+        {
+            selectListItems.Add(new SelectListItem()
+            {
+                Text = TranslationsHelper.Get(typeName, itemName), //all the enum translate with typeName + itemName in translationsResources
+                Value = itemValue.ToString(),
+                Selected = Model.ToString() == itemValue.ToString(),
+            });
+        }        
+    }
+
+    var enumClasses = string.Format("form-control reference reference-enum ");
+    
+    var additionalClass = ViewBag.AdditionalClass;
+    if (!string.IsNullOrEmpty(additionalClass))
+    {
+        enumClasses = string.Format("{0} {1}", enumClasses, additionalClass);
+    }
+
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    @Html.DropDownListFor(model => model, selectListItems, new { @class = enumClasses })
+    @Html.ValidationMessageFor(model => model)
+</div>
+
+

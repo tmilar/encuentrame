@@ -1,0 +1,39 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Accounts.UserModel
+@Html.ErrorSummary()
+
+<div class="row">
+    <div class="col-md-9">
+        @using (Html.BeginEditSection(Translations.PersonalData))
+        {
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.Username)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.LastName)</div>
+                <div class="col-md-6">@Html.DisplayFor(m => m.FirstName)</div>
+            </div>
+        }
+        @using (Html.BeginEditSection(Translations.ContactData))
+        {
+            <div class="row">
+                <div class="col-md-5">@Html.DisplayFor(m => m.Email)</div>
+                <div class="col-md-5">@Html.EditorFor(m => m.EmailAlternative)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">@Html.EditorFor(m => m.PhoneNumber)</div>
+                <div class="col-md-5">@Html.EditorFor(m => m.MobileNumber)</div>
+                <div class="col-md-2">@Html.DisplayFor(m => m.InternalNumber)</div>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-3">
+        @using (Html.BeginEditSection())
+        {
+            @Html.DisplayFor(m => m.Image)
+        }
+    </div>
+</div>
+
