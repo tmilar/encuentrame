@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "sdkVersion": "18.0.0",
+    "name": "Encuentrame",
+    "icon": "./app/img/eme_icon.png",
+    "version": "1.0.0",
+    "slug": "encuentrame",
+    "ios": {
+      "bundleIdentifier": "com.encuentrame.encuentrame"
+    },
+    "android": {
+      "package": "com.encuentrame.encuentrame"
+    }
+  },
+  "name": "Encuentrame",
+  "displayName": "Encuentrame"
+}
