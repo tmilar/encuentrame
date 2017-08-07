@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import NewsList from "./NewsList";
 
-class Feed extends Component {
+class NewsListContainer extends Component {
   state = {
     news: []
   };
@@ -19,4 +19,4 @@ class Feed extends Component {
 }
 
 
-export default Feed;
+export default NewsListContainer;
