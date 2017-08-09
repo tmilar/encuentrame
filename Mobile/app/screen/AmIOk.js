@@ -64,11 +64,12 @@ export default class AmIok extends Component {
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
                 title="Estoy bien!"
-                color='#ff5c5c'
+                color="#64DD17"
                 onPress={this._handleImOk}
               />
               <Button
                 title="Necesito ayuda"
+                color='#ff5c5c'
                 onPress={this._handleINeedHelp}
               />
 
