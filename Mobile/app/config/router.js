@@ -25,7 +25,7 @@ export const Tabs = TabNavigator({
     }
   },
   Me: {
-    screen: AmIok,
+    screen: Me,
     navigationOptions: {
       tabBarLabel: 'Perfil',
       tabBarIcon: ({tintColor}) => <Icon name="account-circle" size={23} color={tintColor}/>
@@ -43,5 +43,6 @@ export const Tabs = TabNavigator({
 export const Root = StackNavigator({
   Login: {screen: Login, navigationOptions: {header: null}},
   Register: {screen: Register},
-  PostLogin: {screen: Tabs, navigationOptions: {header: null}}
+  PostLogin: {screen: Tabs, navigationOptions: {header: null}},
+  AmIok: {screen: AmIok, navigationOptions: {header: null}}
 });

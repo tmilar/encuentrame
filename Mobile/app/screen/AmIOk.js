@@ -21,6 +21,12 @@ export default class AmIok extends Component {
       'Ok!',
       `Avisando a tus amigos`
     );
+    this._backToHome();
+  }
+  _backToHome() {
+    this.setModalVisible(false);
+    const {navigate} = this.props.navigation;
+    navigate('PostLogin');
   }
 
   _handleINeedHelp(inputValue) {
@@ -28,11 +34,11 @@ export default class AmIok extends Component {
       'No te muevas!',
       `Vamos a buscar ayuda`
     );
+    this._backToHome();
   }
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   }
-
 
 render() {
 
@@ -42,6 +48,7 @@ render() {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
+          onRequestClose={() => {}}
         >
           <View style={styles.message}>
             <View>
@@ -59,7 +66,6 @@ render() {
               />
               <Button
                 title="Necesito ayuda"
-                style={styles.needHelp}
                 onPress={this._handleINeedHelp}
               />
 
