@@ -4,11 +4,7 @@ import {AsyncStorage} from 'react-native'
 class SessionService {
 
   async _onValueChange(item, selectedValue) {
-    try {
-      await AsyncStorage.setItem(item, selectedValue);
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
+    await AsyncStorage.setItem(item, selectedValue);
   }
   constructor() {
 
@@ -18,16 +14,7 @@ class SessionService {
    * Set session token id.
    */
   async setSessionToken(id_token) {
-    try {
-      await this._onValueChange(STORAGE_KEY, id_token);
-    } catch (e) {
-      console.log("Session id set error:", e);
-      Alert.alert(
-        "Error de sesion",
-        `Hubo un problema: ${e}`
-      );
-      return;
-    }
+    await this._onValueChange(STORAGE_KEY, id_token);
   }
 
   async getSessionToken() {
@@ -35,12 +22,9 @@ class SessionService {
       var token = await AsyncStorage.getItem(STORAGE_KEY);
       return token;
     } catch (e) {
-      console.log("Session id set error:", e);
-      Alert.alert(
-        "Error de sesion",
-        `Hubo un problema: ${e}`
-      );
-      return;
+      let errMsg = "Session id set error:";
+      console.log(errMsg, e);
+      throw new Error(errMsg, e);
     }
   }
 }
