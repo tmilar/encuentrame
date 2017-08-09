@@ -161,6 +161,31 @@
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Helpers\DataTable\Filters\IBaseFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IBooleanFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IDateRangeFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IEnumFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IIntFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IMultipleValueFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IPropertyBasedFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IRangeFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IRangeValueFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IReferenceFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\IStringFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
+    <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
+    <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Models\DataTable\BooleanFilterModel.cs" />
+    <Compile Include="Models\DataTable\DataTableModel.cs" />
+    <Compile Include="Models\DataTable\DateRangeFilterModel.cs" />
+    <Compile Include="Models\DataTable\EnumFilterModel.cs" />
+    <Compile Include="Models\DataTable\FilterModel.cs" />
+    <Compile Include="Models\DataTable\InputFilterModel.cs" />
+    <Compile Include="Models\DataTable\IntFilterModel.cs" />
+    <Compile Include="Models\DataTable\ListFilterModel.cs" />
+    <Compile Include="Models\DataTable\RangeFilterModel.cs" />
+    <Compile Include="Models\DataTable\SearchModel.cs" />
+    <Compile Include="Models\DataTable\SelectFilterModel.cs" />
     <Compile Include="Models\Tests\TestEnum.cs" />
     <Compile Include="Models\Tests\TestModel.cs" />
     <Compile Include="Models\Tests\TestModel2.cs" />
@@ -176,7 +201,6 @@
     <Compile Include="Helpers\DataTable\Filters\EnumFilter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\DataTable\Filters\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\MultipleValueFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\PropertyBasedFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\RangeValueFilter.cs" />
@@ -241,10 +265,8 @@
     <Compile Include="Models\HandleUnauthorizedInfo.cs" />
     <Compile Include="Models\Notifications\MyNotificationsModel.cs" />
     <Compile Include="Models\Notifications\NotificationsConfigurationModel.cs" />
-    <Compile Include="Models\DataTableModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\References\Commons\ReferenceAny.cs" />
-    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\AuthenticationDataProvider.cs" />
     <Compile Include="Support\TranslationService.cs" />
@@ -463,6 +485,7 @@
     <Content Include="Content\DataTables-1.10.12\extensions\RowReorder\css\semanticui.scss" />
     <Content Include="Content\DataTables-1.10.12\extensions\Buttons\css\mixins.scss" />
     <Content Include="Content\DataTables-1.10.12\extensions\Buttons\css\common.scss" />
+    <None Include="Properties\PublishProfiles\EncuentrameWeb - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\TestingServer.pubxml" />
     <Content Include="Scripts\DataTables-1.10.12\extensions\AutoFill\js\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables-1.10.12\extensions\AutoFill\js\autoFill.bootstrap.min.js" />
@@ -710,6 +733,15 @@
     <Content Include="Views\TestControls\Index2.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\checkboxList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\enumMultiple.cshtml" />
+    <Content Include="Views\Shared\_DataTableViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IBooleanFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IDateRangeFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IEnumFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IIntFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IPropertyBasedFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IRangeFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IReferenceFilter.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Datatables\IStringFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -717,7 +749,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NailsSupports\Nails.Log4net\Nails.Log4net.csproj">

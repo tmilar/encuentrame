@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Web.Mvc;
 using Encuentrame.Web.Helpers.DataTable.Filters;
+using Encuentrame.Web.Helpers.DataTable.Filters.Interfaces;
+using Encuentrame.Web.Helpers.DataTable.ViewModels;
 using Encuentrame.Web.Models.References.Commons;
 
 namespace Encuentrame.Web.Helpers.DataTable
@@ -12,17 +15,12 @@ namespace Encuentrame.Web.Helpers.DataTable
 
         public void SetTableBuilder(ITableBuilder<T> tableBuilder)
         {
-            this.tableBuilder = tableBuilder;            
+            this.tableBuilder = tableBuilder;
         }
 
-        public void Dispose()
+        public DataTableViewModel BuildViewModel()
         {
-            this.tableBuilder.Dispose();
-        }
-
-        public string Build()
-        {
-            return this.tableBuilder.Build();
+            throw new NotImplementedException();
         }
 
         public ITableBuilder<T> AddColumn <TProperty>(Expression<Func<T, TProperty>> memberExpression,
@@ -68,6 +66,11 @@ namespace Encuentrame.Web.Helpers.DataTable
             return this.tableBuilder.AddFilter(memberExpression);
         }
 
+        public ITableSingleValueFilter<T, int> AddExactMatchFilter(Expression<Func<T, int>> memberExpression)
+        {
+            return this.tableBuilder.AddExactMatchFilter(memberExpression);
+        }
+
         public ITableBuilder<T> AddFilter(Expression<Func<T, ReferenceAny>> memberExpression)
         {
             return this.tableBuilder.AddFilter(memberExpression);
@@ -78,17 +81,17 @@ namespace Encuentrame.Web.Helpers.DataTable
             return this.tableBuilder.AddFilter(memberExpression);
         }
 
-        public ITablRangeValueFilter<T, int> AddFilter(Expression<Func<T, int>> memberExpression)
+        public ITableRangeValueFilter<T, int> AddFilter(Expression<Func<T, int>> memberExpression)
         {
             return this.tableBuilder.AddFilter(memberExpression);
         }
 
-        public ITablRangeValueFilter<T, decimal> AddFilter(Expression<Func<T, decimal>> memberExpression)
+        public ITableRangeValueFilter<T, decimal> AddFilter(Expression<Func<T, decimal>> memberExpression)
         {
             return this.tableBuilder.AddFilter(memberExpression);
         }
 
-        public ITablRangeValueFilter<T, DateTime> AddFilter(Expression<Func<T, DateTime>> memberExpression)
+        public ITableRangeValueFilter<T, DateTime> AddFilter(Expression<Func<T, DateTime>> memberExpression)
         {
             return this.tableBuilder.AddFilter(memberExpression);
         }
@@ -151,6 +154,16 @@ namespace Encuentrame.Web.Helpers.DataTable
         public ITableBuilder<T> SortBy <TProperty>(Expression<Func<T, TProperty>> memberExpression, DefaultOrder defaultOrder = DefaultOrder.Ascending)
         {
             return this.tableBuilder.SortBy(memberExpression);
+        }
+
+        public ITableBuilder<T> AllowSelection()
+        {
+            return this.tableBuilder.AllowSelection();
+        }
+
+        MvcHtmlString ITableBuilder.Build()
+        {
+            return this.tableBuilder.Build();
         }
     }
 }

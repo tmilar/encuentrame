@@ -4,21 +4,21 @@ using System.Web.Mvc;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model;
-using Encuentrame.Web.Models;
+using Encuentrame.Web.Models.DataTable;
 
 namespace Encuentrame.Web.Controllers
 {
     public abstract class MasterDetailBaseController<TModel, TViewModel, TChildModel, TChildViewModel> : ListBaseController<TModel, TViewModel>
-        where TModel : class
-        where TViewModel : class
-        where TChildModel : class
-        where TChildViewModel : class
+      where TModel : class
+      where TViewModel : class
+      where TChildModel : class
+      where TChildViewModel : class
     {
         [Inject]
         public virtual IBag<TChildModel> ChildrenBag { get; set; }
 
         [Inject]
-        public virtual ISeekerFactory<TChildModel> ChildrenSeekerFactory { get; set; }        
+        public virtual ISeekerFactory<TChildModel> ChildrenSeekerFactory { get; set; }
 
         [HttpPost]
         public JsonResult GetChildrenItems(ChildDataTableModel dataTableModel, string _)
@@ -68,6 +68,6 @@ namespace Encuentrame.Web.Controllers
         protected virtual IList<TChildModel> GetChildItemList()
         {
             return null;
-        }       
+        }
     }
 }

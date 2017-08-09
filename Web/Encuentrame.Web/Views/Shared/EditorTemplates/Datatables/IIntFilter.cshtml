@@ -1,0 +1,19 @@
+﻿@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Helpers.DataTable.Filters.Interfaces.IIntFilter
+    
+@{
+    string defaultValue = string.Empty;
+
+    if (Model.CanAddDefaultValue)
+    {
+        defaultValue = string.Format("data-default-value={0}", Model.DefaultValueToString);
+    }
+}
+<div class="col-md-@Model.Width table-filter-container int-filter @Model.CssClass" data-for-child-table="@Model.ForChildTable.ToString().ToLower()">
+  <div class="form-group">
+      <label>@(!string.IsNullOrEmpty(Model.TranslationKey) ? TranslationsHelper.Get(Model.TranslationKey) : TranslationsHelper.Get(Model.Name))</label>
+      <input type="text" data-index="@Model.Index" data-name="@Model.ColumnName" class="form-control" @defaultValue/>              
+  </div>    
+</div>
+
+

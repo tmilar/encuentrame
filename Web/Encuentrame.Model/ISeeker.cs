@@ -8,15 +8,19 @@ using Encuentrame.Support;
 
 namespace Encuentrame.Model
 {
-    public interface IGenericSeeker<TModel> where TModel : class
+    public interface IGenericSeeker
+    {
+        int Count();
+    }
+
+    public interface IGenericSeeker<TModel> : IGenericSeeker where TModel : class
     {
         IList<TModel> ToList();
-        int Count();
         IGenericSeeker<TModel> Skip(int start);
         IGenericSeeker<TModel> Take(int length);
     }
 
     public interface ISeeker<TModel> : IGenericSeeker<TModel> where TModel : class, IIdentifiable
-    {     
+    {
     }
 }

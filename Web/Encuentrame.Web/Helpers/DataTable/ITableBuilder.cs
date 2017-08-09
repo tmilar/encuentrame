@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Web.Mvc;
 using Encuentrame.Web.Helpers.DataTable.Filters;
+using Encuentrame.Web.Helpers.DataTable.Filters.Interfaces;
+using Encuentrame.Web.Helpers.DataTable.ViewModels;
 using Encuentrame.Web.Models.References.Commons;
 
 namespace Encuentrame.Web.Helpers.DataTable
 {
-    public interface ITableBuilder : IDisposable
+    public interface ITableBuilder
     {
-        string Build();
+        MvcHtmlString Build();
+        DataTableViewModel BuildViewModel();
     }
     public interface ITableBuilder<T> : ITableBuilder where T : class
     {
@@ -36,11 +40,12 @@ namespace Encuentrame.Web.Helpers.DataTable
         ITableBuilder<T> AddColumn(string key, bool visible = true, bool sortable = true, string dataTemplate = "", bool totalize = false);
 
         ITableSingleValueFilter<T, string> AddFilter(Expression<Func<T, string>> memberExpression);
+        ITableSingleValueFilter<T, int> AddExactMatchFilter(Expression<Func<T, int>> memberExpression);
         ITableBuilder<T> AddFilter(Expression<Func<T, ReferenceAny>> memberExpression);
         ITableSingleValueFilter<T, bool> AddFilter(Expression<Func<T, bool>> memberExpression);
-        ITablRangeValueFilter<T, int> AddFilter(Expression<Func<T, int>> memberExpression);
-        ITablRangeValueFilter<T, decimal> AddFilter(Expression<Func<T, decimal>> memberExpression);
-        ITablRangeValueFilter<T, DateTime> AddFilter(Expression<Func<T, DateTime>> memberExpression);
+        ITableRangeValueFilter<T, int> AddFilter(Expression<Func<T, int>> memberExpression);
+        ITableRangeValueFilter<T, decimal> AddFilter(Expression<Func<T, decimal>> memberExpression);
+        ITableRangeValueFilter<T, DateTime> AddFilter(Expression<Func<T, DateTime>> memberExpression);
         ITableMulipleValueFilter<T, List<int>, int> AddFilter<TProperty>(Expression<Func<T, TProperty>> memberExpression, Expression<Func<TProperty, int>> idExpression, string filterUrl) where TProperty : class;
         ITableMulipleValueFilter<T, List<string>, string> AddFilter<TProperty>(Expression<Func<T, TProperty>> memberExpression, Expression<Func<TProperty, string>> idExpression, string filterUrl) where TProperty : class;
         ITableMulipleValueFilter<T, List<int>, int> AddFilter<TReference>(Expression<Func<T, IList<TReference>>> memberExpression, Expression<Func<TReference, int>> idExpression, string filterUrl) where TReference : class;
@@ -53,6 +58,7 @@ namespace Encuentrame.Web.Helpers.DataTable
         ITableBuilder<TChild> ChildTable<TChild>(Expression<Func<T, IEnumerable<TChild>>> memberExpression) where TChild: class;
         ITableBuilder<TChild> ChildTable<TChild>(Expression<Func<T, int>> parentPropertyExpression, string url) where TChild : class;
         ITableBuilder<T> SortBy<TProperty>(Expression<Func<T, TProperty>> memberExpression, DefaultOrder defaultOrder = DefaultOrder.Ascending);
+        ITableBuilder<T> AllowSelection();
     }
 
     public interface ITableFilterBuilder <T, TProperty> : ITableBuilder<T> where T : class

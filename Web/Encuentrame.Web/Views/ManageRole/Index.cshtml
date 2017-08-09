@@ -18,13 +18,13 @@
 @Html.ActionLink(Translations.Create, "Create", new { }, new { @class = "btn btn-primary" })
 
 <div class="table-container">
-    @{ Html.BuildTable<RoleListModel>(Url.Action("GetItems", "ManageRole"))
+    @( Html.BuildTable<RoleListModel>(Url.Action("GetItems", "ManageRole"))
            .AddColumn(x => x.Id)
            .AddColumn(x => x.Name)           
            .AddColumn("Actions", dataTemplate: "actionsTemplate")
            .AddFilter(x => x.Name)           
-           .Build();
-    }
+           .Build()
+    )
 </div>
 
 <script id="actionsTemplate" type="text/template">

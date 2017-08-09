@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Text;
 using System.Web.Mvc;
@@ -7,6 +8,9 @@ using Encuentrame.Web.Helpers.DataTable.Filters;
 using Encuentrame.Web.Models.References.Commons;
 using Encuentrame.Support;
 using System.Linq;
+using System.Web.Mvc.Html;
+using Encuentrame.Web.Helpers.DataTable.Filters.Interfaces;
+using Encuentrame.Web.Helpers.DataTable.ViewModels;
 
 namespace Encuentrame.Web.Helpers.DataTable
 {
@@ -53,41 +57,58 @@ namespace Encuentrame.Web.Helpers.DataTable
             private int[] lengths;
             private int? defaultLength;
             private bool showAllOption = true;
+            private bool allowSelection;
+            private DataTableViewModel tableViewModel;
 
+            public DataTableViewModel TableViewModel
+            {
+                get
+                {
+                    if (this.tableViewModel == null)
+                        this.tableViewModel = new DataTableViewModel();
+                    return this.tableViewModel;
+                }
+            }
             public HtmlDataTable(HtmlHelper helper, string url, string tableId)
             {
                 this.tableId = tableId;
                 this.url = url;
                 this._helper = helper;
-                this.searchEnabled = true;                
+                this.searchEnabled = true;
             }
 
-            protected HtmlDataTable(HtmlHelper helper, string tableId, ITableBuilder parent, string url=null)
+            protected HtmlDataTable(HtmlHelper helper, string tableId, ITableBuilder parent, string url = null)
             {
-                this.tableId = tableId;                
+                this.tableId = tableId;
                 this._helper = helper;
-                this.searchEnabled = true;                
+                this.searchEnabled = true;
                 this.parent = parent;
                 this.url = url;
             }
 
-            public void Dispose()
+            public DataTableViewModel BuildViewModel()
             {
-                this.Build();
+                DataTableViewModel parentViewModel = null;
+                if (this.parent != null)
+                    parentViewModel = parent.BuildViewModel();
+                else
+                    BuildFilters();
+
+                var className = this.parent == null ? "data-table-editor" : string.Empty;
+                this.BuildTable(className);
+                if (parentViewModel != null)
+                {
+                    parentViewModel.ChildTable = this.tableViewModel;
+                }
+
+                return parentViewModel ?? this.TableViewModel;
             }
 
-            public string Build()
+            public MvcHtmlString Build()
             {
-                if (parent != null)
-                    parent.Build();
-                else
-                    this.BuildFilters();
-                
-                var className = parent == null ? "data-table-editor" : string.Empty;
-                this.BuildTable(className);
-
-                return string.Empty;
-            }            
+                var currentViewModel = BuildViewModel();
+                return _helper.Partial(@"~/Views/Shared/_DataTableViewModel.cshtml", currentViewModel);
+            }
 
             public ITableBuilder<T> InServer()
             {
@@ -127,161 +148,62 @@ namespace Encuentrame.Web.Helpers.DataTable
             {
                 if (this.Filters.Count == 0 || !this.searchEnabled)
                     return;
+                TableViewModel.Filters = this.Filters;
+                var baseChildTable = this.childTable as BaseHtmlDataTable;
+                if (baseChildTable != null && baseChildTable.Filters != null)
+                    TableViewModel.ChildFilters = baseChildTable.Filters;
 
-                var clearFiltersLink = "<a href=\"#\" class='filter-clear'>{0}</a>".FormatWith(TranslationsHelper.Get("Clear"));
-                var title = TranslationsHelper.Get("Filter") ?? "Filter";
-                using (this._helper.BeginDisplaySection(title, rightSection: clearFiltersLink))
-                {
-                    var filterHeaderDivBuilder = new StringBuilder();
-                    filterHeaderDivBuilder.Append("<div class='data-table-filters' role=\"form\" ");
-                    filterHeaderDivBuilder.Append("data-table-id=\"{0}\"".FormatWith(this.tableId));
-                    if (!string.IsNullOrEmpty(this.childPropertyName))
-                    {
-                        filterHeaderDivBuilder.Append("data-child-property='{0}'".FormatWith(childPropertyName));
-                    }
+                TableViewModel.DeferredSearch = this.deferredSearch;
 
-                    filterHeaderDivBuilder.Append(">");
-
-                    this._helper.ViewContext.Writer.Write(filterHeaderDivBuilder.ToString());
-
-                    this._helper.ViewContext.Writer.Write("<div class='row'>");
-                    int widthSum = 0;
-                    foreach (var filter in this.Filters)
-                    {
-                        if ((widthSum + filter.Width) > 12)
-                        {
-                            this._helper.ViewContext.Writer.Write("</div>");   
-                            this._helper.ViewContext.Writer.Write("<div class='row'>");
-                            widthSum = 0;
-                        }
-                        var columnData = this.Columns[filter.Name];
-                        filter.Build(columnData, this._helper);
-                        widthSum += filter.Width;
-                    }
-
-                    var baseChildTable = childTable as BaseHtmlDataTable;
-                    if (baseChildTable != null && baseChildTable.Filters!=null)
-                    {
-                        foreach (var filter in baseChildTable.Filters)
-                        {
-                            if ((widthSum + filter.Width) > 12)
-                            {
-                                this._helper.ViewContext.Writer.Write("</div>");
-                                this._helper.ViewContext.Writer.Write("<div class='row'>");
-                                widthSum = 0;
-                            }
-                            var columnData = baseChildTable.Columns[filter.Name];
-                            filter.Build(columnData, this._helper);
-                            widthSum += filter.Width;
-                        }
-                    }
-
-                    this._helper.ViewContext.Writer.Write("</div>");
-                    this._helper.ViewContext.Writer.Write("</div>");
-
-                    if (deferredSearch)
-                    {
-                        var filterLnk = "<a href=\"#\" class='filter-table btn btn-primary filter-button-style'>{0}</a>".FormatWith(TranslationsHelper.Get("Filter"));
-                        this._helper.ViewContext.Writer.Write(filterLnk);   
-                    }                    
-                }                
             }
 
             private void BuildTable(string className)
             {
-                var childTableClass = parent != null ? "well" : string.Empty;
-                var tableHeader = new StringBuilder();
-                tableHeader.Append("<table class='table table-striped table-style {0} {1}' id=\"{2}\" data-server-side=\"{3}\" data-allow-search=\"{4}\""
-                    .FormatWith(className, childTableClass, this.tableId, this.serverSide.ToString().ToLower(), this.searchEnabled.ToString().ToLower()));
+                var childTableClass = this.parent != null ? "well" : string.Empty;
 
-                if (!string.IsNullOrEmpty(this.url))
+                TableViewModel.ClassName = className;
+                TableViewModel.ChildTableClass = childTableClass;
+                TableViewModel.TableId = this.tableId;
+                TableViewModel.ServerSide = this.serverSide;
+                TableViewModel.SearchEnabled = this.searchEnabled;
+                TableViewModel.Url = this.url;
+                TableViewModel.ChildPropertyName = this.childPropertyName;
+                TableViewModel.Columns = this.Columns;
+                TableViewModel.Lengths = this.lengths;
+                TableViewModel.DefaultLength = this.defaultLength;
+                TableViewModel.ShowAllOption = this.showAllOption;
+
+                if (!string.IsNullOrEmpty(this.sortColumn))
                 {
-                    tableHeader.Append("data-url='{0}'".FormatWith(this.url));                    
+                    var sortOrder = this.Columns[this.sortColumn].Index;
+                    var defaultOrderString = this.defaultOrder == DefaultOrder.Ascending ? "asc" : "desc";
+                    TableViewModel.SortByColumnIndex = sortOrder;
+                    TableViewModel.DefaultSortOrder = defaultOrderString;
                 }
 
-                if (!string.IsNullOrEmpty(sortColumn))
-                {
-                    var sortOrder = this.Columns[sortColumn].Index;
-                    tableHeader.Append("data-sort-column='{0}'".FormatWith(sortOrder));
-                    var defaultOrderString = defaultOrder == DefaultOrder.Ascending ? "asc" : "desc";
-                    tableHeader.Append("data-default-order='{0}'".FormatWith(defaultOrderString));
-                }
+                TableViewModel.ParentPropertyName = this.parentPropertyName;
 
-                if (!this.showAllOption)
-                {
-                    tableHeader.Append(" data-hide-show-all='{0}'".FormatWith(true.ToString().ToLower()));
-                }
-
-                if (lengths != null && lengths.Length > 0)
-                {
-                    var lenghtsToShow = lengths.Join(",");
-                    tableHeader.Append(" data-lengths-to-show='{0}'".FormatWith(lenghtsToShow));
-                    if (defaultLength.HasValue)
-                    {
-                        tableHeader.Append(" data-default-length='{0}'".FormatWith(defaultLength.Value));
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(this.parentPropertyName))
-                {
-                    tableHeader.Append("data-parent-property='{0}'".FormatWith(parentPropertyName));
-                }
-
-                tableHeader.Append(">");
-
-                this._helper.ViewContext.Writer.Write(tableHeader.ToString());
-                this._helper.ViewContext.Writer.Write("<thead>");
-                this._helper.ViewContext.Writer.Write("<tr>");
-
-                if (childTable!=null)
-                {
-                    this._helper.ViewContext.Writer.Write("<th></th>");
-                }
-
-                foreach (var columnData in this.Columns.Values)
-                {
-                    columnData.Build(this._helper);
-                }                
-
-                this._helper.ViewContext.Writer.Write("</tr>");
-                this._helper.ViewContext.Writer.Write("</thead>");
-
-                if (addFooter)
-                    AddFooter();
-
-                this._helper.ViewContext.Writer.Write("</table>");
-            }
-
-            private void AddFooter()
-            {
-                //tfoot
-                this._helper.ViewContext.Writer.Write("<tfoot>");
-                this._helper.ViewContext.Writer.Write("<tr>");
-
-                if (childTable != null)
-                {
-                    this._helper.ViewContext.Writer.Write("<th></th>");
-                }
-
-                foreach (var columnData in this.Columns.Values)
-                {
-                    this._helper.ViewContext.Writer.Write("<th></th>");
-                }
-
-                this._helper.ViewContext.Writer.Write("</tr>");
-                this._helper.ViewContext.Writer.Write("</tfoot>");
+                TableViewModel.HasChildTable = this.childTable != null;
+                TableViewModel.AddFooter = this.addFooter;
+                TableViewModel.AllowSelection = this.allowSelection;
             }
 
             public ITableBuilder<T> AddColumn<TProperty>(Expression<Func<T, TProperty>> memberExpression, bool visible = true, bool sortable = true, string dataTemplate = "", bool totalize = false)
-            {                
+            {
                 this.CreateColumnData(memberExpression, visible, sortable, dataTemplate, totalize);
                 return this;
-            }            
+            }
 
             public ITableBuilder<T> SortBy<TProperty>(Expression<Func<T, TProperty>> memberExpression, DefaultOrder defaultOrder = DefaultOrder.Ascending)
             {
                 this.sortColumn = this.GetPropertyName(memberExpression);
                 this.defaultOrder = defaultOrder;
+                return this;
+            }
+
+            public ITableBuilder<T> AllowSelection()
+            {
+                this.allowSelection = true;
                 return this;
             }
 
@@ -343,12 +265,31 @@ namespace Encuentrame.Web.Helpers.DataTable
                 columnData.Type = type;
                 columnData.Totalize = totalize;
                 this.Columns.Add(columnData.Name, columnData);
+
+                var property = typeof(T).GetProperty(name);
+                if (property != null)
+                {
+                    var displayAttributes = property.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    var displayAttribute = displayAttributes.Length > 0
+                        ? displayAttributes.First() as DisplayAttribute
+                        : null;
+                    if (displayAttribute != null)
+                    {
+                        columnData.TranslationKey = displayAttribute.Name;
+                    }
+
+                }
                 return columnData;
             }
 
             public ITableSingleValueFilter<T, string> AddFilter(Expression<Func<T, string>> memberExpression)
             {
-                return this.CreateFilter<StringValueFilter<T>, string>(memberExpression);                
+                return this.CreateFilter<StringValueFilter<T>, string>(memberExpression);
+            }
+
+            public ITableSingleValueFilter<T, int> AddExactMatchFilter(Expression<Func<T, int>> memberExpression)
+            {
+                return this.CreateFilter<IntValueFilter<T>, int>(memberExpression);
             }
 
             public ITableBuilder<T> AddFilter(Expression<Func<T, ReferenceAny>> memberExpression)
@@ -360,25 +301,38 @@ namespace Encuentrame.Web.Helpers.DataTable
                 this.Filters.Add(filter);
                 filter.SetTableBuilder(this);
 
+                var property = typeof(T).GetProperty(filter.Name);
+                if (property != null)
+                {
+                    var displayAttributes = property.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    var displayAttribute = displayAttributes.Length > 0
+                        ? displayAttributes.First() as DisplayAttribute
+                        : null;
+                    if (displayAttribute != null)
+                    {
+                        filter.TranslationKey = displayAttribute.Name;
+                    }
+                }
+
                 return filter;
             }
 
             public ITableSingleValueFilter<T, bool> AddFilter(Expression<Func<T, bool>> memberExpression)
-            {                
-                return this.CreateFilter<BooleanValueFilter<T>, bool>(memberExpression);                
+            {
+                return this.CreateFilter<BooleanValueFilter<T>, bool>(memberExpression);
             }
 
-            public ITablRangeValueFilter<T, int> AddFilter(Expression<Func<T, int>> memberExpression)
+            public ITableRangeValueFilter<T, int> AddFilter(Expression<Func<T, int>> memberExpression)
             {
                 return this.CreateFilter<RangeFilter<T, int>, int>(memberExpression);
             }
 
-            public ITablRangeValueFilter<T, decimal> AddFilter(Expression<Func<T, decimal>> memberExpression)
-            {                
+            public ITableRangeValueFilter<T, decimal> AddFilter(Expression<Func<T, decimal>> memberExpression)
+            {
                 return this.CreateFilter<RangeFilter<T, decimal>, decimal>(memberExpression);
             }
 
-            public ITablRangeValueFilter<T, DateTime> AddFilter(Expression<Func<T, DateTime>> memberExpression)
+            public ITableRangeValueFilter<T, DateTime> AddFilter(Expression<Func<T, DateTime>> memberExpression)
             {
                 return this.CreateFilter<DateRangeFilter<T>, DateTime>(memberExpression);
             }

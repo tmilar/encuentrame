@@ -19,7 +19,7 @@
 @Html.ActionLink(Translations.Create, "Create", new { }, new { @class = "btn btn-primary" })
 
 <div class="table-container">
-    @{ Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManageUser"))
+    @( Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManageUser"))
            .AddColumn(x => x.Id)
            .AddColumn(x => x.User)
            .AddColumn(x => x.FullName)
@@ -34,8 +34,8 @@
            .AddFilter(x => x.InternalNumber)
            .AddFilter(x => x.PhoneNumber)
            .AddFilter(x => x.Role, x => x.Id, Url.Action("GetRoles", "ReferenceItems"))
-           .Build();
-    }
+           .Build()
+    )
 </div>
 
 <script id="actionsTemplate" type="text/template">
