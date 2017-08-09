@@ -5,7 +5,7 @@ import Login from '../screen/Login';
 import Register from '../screen/Register';
 import {Icon} from 'react-native-elements';
 import Home from "../screen/Home";
-import EstasBien from "../screen/EstasBien";
+import AmIok from "../screen/AmIOk";
 import Find from "../screen/Find";
 import Me from "../screen/Me";
 
@@ -25,7 +25,7 @@ export const Tabs = TabNavigator({
     }
   },
   Me: {
-    screen: EstasBien,
+    screen: AmIok,
     navigationOptions: {
       tabBarLabel: 'Perfil',
       tabBarIcon: ({tintColor}) => <Icon name="account-circle" size={23} color={tintColor}/>

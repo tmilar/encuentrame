@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Alert, Button, Modal, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
 
-export default class EstasBien extends Component {
+export default class AmIok extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +42,6 @@ render() {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/*alert("Modal has been closed.")*/}}
         >
           <View style={styles.message}>
             <View>
@@ -79,12 +78,5 @@ const styles = StyleSheet.create({
     height: 3,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  ImOK: {
-    color: 'red',
-    backgroundColor: 'green'
-  },
-  needHelp: {
-    color: 'red'
   }
 });
