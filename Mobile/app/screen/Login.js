@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import ReactNative, {ScrollView} from 'react-native';
+import SessionService from '../service/SessionService';
 export default class Login extends Component {
 
   constructor(props) {
@@ -47,7 +48,10 @@ export default class Login extends Component {
 
   async _handleLoginButtonPress() {
     try {
-      await this._validateLogin();
+     let loginResult =  await this._validateLogin();
+      if (loginResult){
+        await SessionService.setSessionToken('tokenPrueba');
+      }
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
