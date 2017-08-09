@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
-
+import ReactNative, {ScrollView} from 'react-native';
+import SessionService from '../service/SessionService';
 export default class Login extends Component {
 
   constructor(props) {
@@ -47,7 +48,10 @@ export default class Login extends Component {
 
   async _handleLoginButtonPress() {
     try {
-      await this._validateLogin();
+     let loginResult =  await this._validateLogin();
+      if (loginResult){
+        await SessionService.setSessionToken('tokenPrueba');
+      }
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
@@ -96,42 +100,73 @@ export default class Login extends Component {
     navigate('PostLogin');
   }
 
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        ReactNative.findNodeHandle(this.refs[refName]),
+        110, //additionalOffset
+        true
+      );
+    }, 50);
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.paragraph}>
-          Encuentrame
-        </Text>
 
-        <TextInput
-          value={this.state.userEmail}
-          placeholder="E-mail"
-          style={styles.textInput}
-          keyboardType="email-address"
-          selectTextOnFocus
-          onChangeText={this._handleEmailTextChange}
-        />
+        <ScrollView  ref='scrollView'
+                     style={styles.scroll}>
+          <View style={styles.header}>
+            <Text style={styles.paragraph}>
+              Encuentrame
+            </Text>
+          </View>
 
-        <TextInput
-          value={this.state.password}
-          placeholder="Contraseña"
-          style={styles.textInput}
-          secureTextEntry
-          returnKeyType="done"
-          onChangeText={this._handlePasswordTextChange}
-          onSubmitEditing={this._handleLoginButtonPress}
-        />
+          <View style={styles.content}>
+            <TextInput
+              value={this.state.userEmail}
+              placeholder="E-mail"
+              ref="usuario"
+              style={styles.textInput}
+              onFocus={this.inputFocused.bind(this, 'usuario')}
+              keyboardType="email-address"
+              selectTextOnFocus
+              onChangeText={this._handleEmailTextChange}
+            ></TextInput>
 
-        <Button
-          title="Login"
-          onPress={this._handleLoginButtonPress}
-        />
+            <TextInput
+              value={this.state.password}
+              placeholder="Contraseña"
+              ref="passwordd"
+              style={styles.textInput}
+              secureTextEntry
+              returnKeyType="done"
+              onFocus={this.inputFocused.bind(this, 'passwordd')}
+              onChangeText={this._handlePasswordTextChange}
+              onSubmitEditing={this._handleLoginButtonPress}
+            />
+          </View>
 
-        <Text
-          onPress={this._handleRegisterTextPress}
-          style={{textDecorationLine: "underline"}}>
-          No estoy registrado
-        </Text>
+          <View style={styles.footer}>
+            <Button
+              title="Login"
+              style={styles.Login}
+              onPress={this._handleLoginButtonPress}
+            />
+
+            <Text
+              onPress={this._handleRegisterTextPress}
+              style={styles.notRegistered}>
+              No estoy registrado
+            </Text>
+          </View>
+
+        </ScrollView>
+
+
+
 
       </View>
     )
@@ -144,6 +179,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header:{
+    flex: 1,
+    height: 100,
+  },
+  content:{
+    flex: 4,
+    height: 400,
+  },
+  footer:{
+    flex: 1,
+    height: 100,
+  },
   paragraph: {
     margin: 24,
     fontSize: 18,
@@ -155,5 +202,15 @@ const styles = StyleSheet.create({
     width: 200,
     height: 44,
     padding: 8
+  },
+  Login: {
+    marginTop: 200
+  },
+  scroll: {
+    padding: 30,
+    flexDirection: 'column'
+  },
+  notRegistered: {
+    textAlign:'center'
   }
 });

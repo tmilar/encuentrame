@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native';
+import {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
 import UserService from '../service/UserService';
 
 export default class Register extends Component {
@@ -71,6 +71,16 @@ export default class Register extends Component {
     this.onDone && this.onDone(this.state.userEmail);
     this.props.navigation.goBack();
   }
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        ReactNative.findNodeHandle(this.refs[refName]),
+        110, //additionalOffset
+        true
+      );
+    }, 50);
+  }
 
   static navigationOptions = {
     title: 'Registro'
@@ -80,42 +90,56 @@ export default class Register extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.paragraph}>
-          Encuentrame
-        </Text>
+        <ScrollView  ref='scrollView'
+                     style={styles.scroll}>
+        <View style={styles.header}>
+          <Text style={styles.paragraph}>
+            Encuentrame
+          </Text>
+        </View>
 
-        <TextInput
-          value={this.state.userName}
-          placeholder="Nombre"
-          style={styles.input}
-          selectTextOnFocus
-          onChangeText={this._handleUserNameTextChange}
-        />
+        <View style={styles.content}>
+          <TextInput
+            value={this.state.userName}
+            placeholder="Nombre"
+            onFocus={this.inputFocused.bind(this, 'Name')}
+            ref="Name"
+            style={styles.input}
+            selectTextOnFocus
+            onChangeText={this._handleUserNameTextChange}
+          />
 
-        <TextInput
-          value={this.state.userEmail}
-          placeholder="E-mail"
-          style={styles.input}
-          keyboardType="email-address"
-          selectTextOnFocus
-          onChangeText={this._handleEmailTextChange}
-        />
+          <TextInput
+            value={this.state.userEmail}
+            placeholder="E-mail"
+            onFocus={this.inputFocused.bind(this, 'mail')}
+            ref="mail"
+            style={styles.input}
+            keyboardType="email-address"
+            selectTextOnFocus
+            onChangeText={this._handleEmailTextChange}
+          />
 
-        <TextInput
-          value={this.state.password}
-          placeholder="Contraseña"
-          style={styles.input}
-          secureTextEntry
-          returnKeyType="done"
-          onChangeText={this._handlePasswordTextChange}
-          onSubmitEditing={this._handleLoginButtonPress}
-        />
+          <TextInput
+            value={this.state.password}
+            placeholder="Contraseña"
+            onFocus={this.inputFocused.bind(this, 'passwordd')}
+            ref="passwordd"
+            style={styles.input}
+            secureTextEntry
+            returnKeyType="done"
+            onChangeText={this._handlePasswordTextChange}
+            onSubmitEditing={this._handleLoginButtonPress}
+          />
+        </View>
 
-        <Button
-          title="Registro"
-          onPress={this._handleRegisterButtonPress}
-        />
-
+        <View style={styles.footer}>
+          <Button
+            title="Registro"
+            onPress={this._handleRegisterButtonPress}
+          />
+        </View>
+        </ScrollView>
       </View>
     )
   }
