@@ -12,35 +12,37 @@ export default class AmIok extends Component {
     this._handleImOk = this._handleImOk.bind(this);
     this._handleINeedHelp = this._handleINeedHelp.bind(this);
   }
+
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
 
-  _handleImOk(inputValue) {
+  _handleImOk() {
     Alert.alert(
       'Ok!',
       `Avisando a tus amigos`
     );
     this._backToHome();
   }
+
   _backToHome() {
     this.setModalVisible(false);
-    const {navigate} = this.props.navigation;
-    navigate('PostLogin');
+    this.props.navigation.goBack(null);
   }
 
-  _handleINeedHelp(inputValue) {
+  _handleINeedHelp() {
     Alert.alert(
       'No te muevas!',
       `Vamos a buscar ayuda`
     );
     this._backToHome();
   }
+
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   }
 
-render() {
+  render() {
 
     return (
       <View style={{marginTop: 22}}>
@@ -48,7 +50,8 @@ render() {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {}}
+          onRequestClose={() => {/* handle modal 'back' close? */
+          }}
         >
           <View style={styles.message}>
             <View>
@@ -57,7 +60,7 @@ render() {
 
             </View>
           </View>
-          <View style={{flex: 1}} >
+          <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
                 title="Estoy bien!"
