@@ -1,21 +1,10 @@
-import React, {Component} from 'react';
-import {Avatar, Button, Card, Icon, List, ListItem} from 'react-native-elements';
-import {Image, Text, View, StyleSheet} from "react-native";
+import React from 'react';
+import {Card, Icon} from 'react-native-elements';
+import {Text, View} from "react-native";
 
-class Feed extends Component {
-  state = {
-    news: []
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      news: this.props.news
-    }
-  }
-
-  render() {
-    const newsItems = this.state.news.map((n, i) => {
+const NewsList = props =>
+  <View>
+    {props.news.map((n, i) => {
       return (
         <Card key={i} containerStyle={{padding: 5}}>
           <View style={{
@@ -40,17 +29,8 @@ class Feed extends Component {
           </View>
         </Card>
       )
-    });
+    })}
+  </View>
+;
 
-    const newsListView = (
-      <View>
-        {newsItems}
-      </View>
-    );
-
-    return newsListView;
-  }
-}
-
-
-export default Feed;
+export default NewsList;
