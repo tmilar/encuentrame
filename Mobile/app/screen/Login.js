@@ -130,7 +130,6 @@ export default class Login extends Component {
               placeholder="E-mail"
               ref="usuario"
               style={styles.textInput}
-              onFocus={this.inputFocused.bind(this, 'usuario')}
               keyboardType="email-address"
               selectTextOnFocus
               onChangeText={this._handleEmailTextChange}
