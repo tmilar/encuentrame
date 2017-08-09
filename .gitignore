@@ -129,8 +129,7 @@ publish/
 ## passwords
 #*.pubxml
 
-# NuGet Packages Directory
-Web/packages
+
 ## TODO: If the tool you use requires repositories.config
 ## uncomment the next line
 #!packages/repositories.config
@@ -691,18 +690,7 @@ buck-out/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.xhtml
+
 
 ### WebStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
