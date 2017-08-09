@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
+import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
 import UserService from '../service/UserService';
 
 export default class Register extends Component {

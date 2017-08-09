@@ -9,6 +9,12 @@ import ActionButton from "react-native-action-button";
 
 export default class Home extends Component {
 
+
+  constructor(props) {
+    super(props);
+    this.onPressTitle = this.onPressTitle.bind(this);
+  }
+
   async componentWillMount() {
     let sessionId = await SessionService.getSessionToken();
     if (!sessionId) {
@@ -17,12 +23,17 @@ export default class Home extends Component {
     }
   }
 
+  onPressTitle() {
+    const {navigate} = this.props.navigation;
+    navigate('AmIok');
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
           {/* TODO add styles.container for scroll view?*/}
-          <Text style={styles.paragraph}>
+          <Text style={styles.paragraph} onPress={this.onPressTitle}>
             Bienvenido al Home!
           </Text>
           <NewsListContainer news={news}/>
