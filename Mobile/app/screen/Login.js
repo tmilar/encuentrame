@@ -48,8 +48,8 @@ export default class Login extends Component {
 
   async _handleLoginButtonPress() {
     try {
-     let loginResult =  await this._validateLogin();
-      if (loginResult){
+      let loginResult = await this._validateLogin();
+      if (loginResult) {
         await SessionService.setSessionToken('tokenPrueba');
       }
     } catch (e) {
@@ -100,7 +100,7 @@ export default class Login extends Component {
     navigate('PostLogin');
   }
 
-  inputFocused (refName) {
+  inputFocused(refName) {
     setTimeout(() => {
       let scrollResponder = this.refs.scrollView.getScrollResponder();
       scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
@@ -116,8 +116,8 @@ export default class Login extends Component {
     return (
       <View style={styles.container}>
 
-        <ScrollView  ref='scrollView'
-                     style={styles.scroll}>
+        <ScrollView ref='scrollView'
+                    style={styles.scroll}>
           <View style={styles.header}>
             <Text style={styles.paragraph}>
               Encuentrame
@@ -130,10 +130,11 @@ export default class Login extends Component {
               placeholder="E-mail"
               ref="usuario"
               style={styles.textInput}
+              onFocus={this.inputFocused.bind(this, 'usuario')}
               keyboardType="email-address"
               selectTextOnFocus
               onChangeText={this._handleEmailTextChange}
-            ></TextInput>
+            />
 
             <TextInput
               value={this.state.password}
@@ -165,8 +166,6 @@ export default class Login extends Component {
         </ScrollView>
 
 
-
-
       </View>
     )
   }
@@ -178,15 +177,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header:{
+  header: {
     flex: 1,
     height: 100,
   },
-  content:{
+  content: {
     flex: 4,
     height: 400,
   },
-  footer:{
+  footer: {
     flex: 1,
     height: 100,
   },
@@ -210,6 +209,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   notRegistered: {
-    textAlign:'center'
+    textAlign: 'center'
   }
 });
