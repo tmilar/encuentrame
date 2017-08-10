@@ -1,47 +1,36 @@
-var STORAGE_KEY = 'id_token';
 import {AsyncStorage} from 'react-native'
 
 class SessionService {
 
-  async _onValueChange(item, selectedValue) {
-    try {
-      await AsyncStorage.setItem(item, selectedValue);
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
-  constructor() {
-
-  }
+  STORAGE_KEY = 'ENCUENTRAME_SESSION_TOKEN';
+  SESSION_TTL = 2 * 60 * 60 * 1000; //2 hours
 
   /**
    * Set session token id.
    */
   async setSessionToken(id_token) {
-    try {
-      await this._onValueChange(STORAGE_KEY, id_token);
-    } catch (e) {
-      console.log("Session id set error:", e);
-      Alert.alert(
-        "Error de sesion",
-        `Hubo un problema: ${e}`
-      );
-      return;
-    }
+    let timestamp = new Date().getTime();
+    let session = {
+      id: id_token,
+      expires: new Date(timestamp + this.SESSION_TTL).getTime()
+    };
+    return await AsyncStorage.setItem(this.STORAGE_KEY, JSON.stringify(session));
   }
 
-  async getSessionToken() {
-    try {
-      var token = await AsyncStorage.getItem(STORAGE_KEY);
-      return token;
-    } catch (e) {
-      console.log("Session id set error:", e);
-      Alert.alert(
-        "Error de sesion",
-        `Hubo un problema: ${e}`
-      );
-      return;
+  async isSessionAlive() {
+    let sessionJson = await AsyncStorage.getItem(this.STORAGE_KEY);
+    let session = JSON.parse(sessionJson);
+    let isAlive = false;
+
+    if (session && session.expires) {
+      isAlive = new Date() < new Date(session.expires);
     }
+    console.log("Session check: ", session, `alive?: ${isAlive}`);
+    return isAlive;
+  }
+
+  async clearSession() {
+    return await AsyncStorage.removeItem(this.STORAGE_KEY);
   }
 }
 

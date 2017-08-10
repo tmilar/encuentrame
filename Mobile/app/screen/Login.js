@@ -48,10 +48,8 @@ export default class Login extends Component {
 
   async _handleLoginButtonPress() {
     try {
-      let loginResult = await this._validateLogin();
-      if (loginResult) {
-        await SessionService.setSessionToken('tokenPrueba');
-      }
+      await this._validateLogin();
+      await SessionService.setSessionToken(this.state.userEmail);
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
@@ -76,6 +74,13 @@ export default class Login extends Component {
 
   _handlePasswordTextChange(inputValue) {
     this.setState({password: inputValue})
+  }
+
+  async componentWillMount() {
+    let sessionAlive = await SessionService.isSessionAlive();
+    if (sessionAlive) {
+      this._goToHome();
+    }
   }
 
   _handleRegisterTextPress() {

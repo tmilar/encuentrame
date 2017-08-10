@@ -9,15 +9,14 @@ import ActionButton from "react-native-action-button";
 
 export default class Home extends Component {
 
-
   constructor(props) {
     super(props);
     this.onPressTitle = this.onPressTitle.bind(this);
   }
 
   async componentWillMount() {
-    let sessionId = await SessionService.getSessionToken();
-    if (!sessionId) {
+    let sessionAlive = await SessionService.isSessionAlive();
+    if (!sessionAlive) {
       const {navigate} = this.props.navigation;
       navigate('Login');
     }
