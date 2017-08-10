@@ -48,10 +48,8 @@ export default class Login extends Component {
 
   async _handleLoginButtonPress() {
     try {
-     let loginResult =  await this._validateLogin();
-      if (loginResult){
-        await SessionService.setSessionToken(this.state.userEmail);
-      }
+      await this._validateLogin();
+      await SessionService.setSessionToken(this.state.userEmail);
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(

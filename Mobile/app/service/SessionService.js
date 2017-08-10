@@ -1,20 +1,14 @@
-var STORAGE_KEY = 'id_token';
 import {AsyncStorage} from 'react-native'
 
 class SessionService {
 
-  async _onValueChange(item, selectedValue) {
-    await AsyncStorage.setItem(item, selectedValue);
-  }
-  constructor() {
-
-  }
+  STORAGE_KEY = 'ENCUENTRAME_SESSION_TOKEN';
 
   /**
    * Set session token id.
    */
   async setSessionToken(id_token) {
-    await this._onValueChange(STORAGE_KEY, id_token);
+    return await AsyncStorage.setItem(this.STORAGE_KEY, id_token);
   }
 
   async getSessionToken() {
