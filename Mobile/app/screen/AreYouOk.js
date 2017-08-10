@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
 
-export default class AmIok extends Component {
+export default class AreYouOk extends Component {
   constructor(props) {
     super(props);
     this.state = {
