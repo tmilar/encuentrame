@@ -77,8 +77,8 @@ export default class Login extends Component {
   }
 
   async componentWillMount() {
-    let sessionId = await SessionService.getSessionToken();
-    if (sessionId) {
+    let sessionAlive = await SessionService.isSessionAlive();
+    if (sessionAlive) {
       this._goToHome();
     }
   }
