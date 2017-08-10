@@ -25,7 +25,7 @@ export default class Home extends Component {
 
   onPressTitle() {
     const {navigate} = this.props.navigation;
-    navigate('AmIok');
+    navigate('AreYouOk');
   }
 
   render() {

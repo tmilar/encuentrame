@@ -5,7 +5,7 @@ import Login from '../screen/Login';
 import Register from '../screen/Register';
 import {Icon} from 'react-native-elements';
 import Home from "../screen/Home";
-import AmIok from "../screen/AmIOk";
+import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
 import Me from "../screen/Me";
 
@@ -44,5 +44,5 @@ export const Root = StackNavigator({
   Login: {screen: Login, navigationOptions: {header: null}},
   Register: {screen: Register},
   PostLogin: {screen: Tabs, navigationOptions: {header: null}},
-  AmIok: {screen: AmIok, navigationOptions: {header: null}}
+  AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}}
 });
