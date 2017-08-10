@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Alert, Button, Modal, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
 
-export default class EstasBien extends Component {
+export default class AreYouOk extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,29 +12,37 @@ export default class EstasBien extends Component {
     this._handleImOk = this._handleImOk.bind(this);
     this._handleINeedHelp = this._handleINeedHelp.bind(this);
   }
+
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
 
-  _handleImOk(inputValue) {
+  _handleImOk() {
     Alert.alert(
       'Ok!',
       `Avisando a tus amigos`
     );
+    this._backToHome();
   }
 
-  _handleINeedHelp(inputValue) {
+  _backToHome() {
+    this.setModalVisible(false);
+    this.props.navigation.goBack(null);
+  }
+
+  _handleINeedHelp() {
     Alert.alert(
       'No te muevas!',
       `Vamos a buscar ayuda`
     );
+    this._backToHome();
   }
+
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   }
 
-
-render() {
+  render() {
 
     return (
       <View style={{marginTop: 22}}>
@@ -42,7 +50,8 @@ render() {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/*alert("Modal has been closed.")*/}}
+          onRequestClose={() => {/* handle modal 'back' close? */
+          }}
         >
           <View style={styles.message}>
             <View>
@@ -51,16 +60,16 @@ render() {
 
             </View>
           </View>
-          <View style={{flex: 1}} >
+          <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
                 title="Estoy bien!"
-                color='#ff5c5c'
+                color="#64DD17"
                 onPress={this._handleImOk}
               />
               <Button
                 title="Necesito ayuda"
-                style={styles.needHelp}
+                color='#ff5c5c'
                 onPress={this._handleINeedHelp}
               />
 
@@ -79,12 +88,5 @@ const styles = StyleSheet.create({
     height: 3,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  ImOK: {
-    color: 'red',
-    backgroundColor: 'green'
-  },
-  needHelp: {
-    color: 'red'
   }
 });

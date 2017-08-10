@@ -3,7 +3,7 @@ import {AsyncStorage} from 'react-native'
 class SessionService {
 
   STORAGE_KEY = 'ENCUENTRAME_SESSION_TOKEN';
-  SESSION_TTL = 2*60*60*1000; //2 hours
+  SESSION_TTL = 2 * 60 * 60 * 1000; //2 hours
 
   /**
    * Set session token id.
@@ -22,7 +22,7 @@ class SessionService {
     let session = JSON.parse(sessionJson);
     let isAlive = false;
 
-    if(session && session.expires) {
+    if (session && session.expires) {
       isAlive = new Date() < new Date(session.expires);
     }
     console.log("Session check: ", session, `alive?: ${isAlive}`);
