@@ -28,6 +28,10 @@ class SessionService {
     console.log("Session check: ", session, `alive?: ${isAlive}`);
     return isAlive;
   }
+
+  async clearSession() {
+    return await AsyncStorage.removeItem(this.STORAGE_KEY);
+  }
 }
 
 let sessionService = new SessionService();
