@@ -10,7 +10,7 @@ namespace Encuentrame.Model.Supports.Notifications
         public virtual bool AllowEveryone { get; set; }
         public virtual Notification AssociatedNotification { get; set; }
         public virtual IList<BaseUser> Users { get; set; }
-        public virtual IList<Role> Roles { get; set; }
+       
 
         public NotificationAccess()
         {

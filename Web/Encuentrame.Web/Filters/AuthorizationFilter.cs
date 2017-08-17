@@ -30,12 +30,12 @@ namespace Encuentrame.Web.Filters
 
                 if (passController != null)
                 {
-                    passControllerIsValid = AuthorizationHelper.Validate(passController);
+                    passControllerIsValid = AuthorizationHelper.Validate(passController.Roles);
                 }
 
                 if (passAction != null)
                 {
-                    passActionIsValid = AuthorizationHelper.Validate(passAction);
+                    passActionIsValid = AuthorizationHelper.Validate(passAction.Roles);
                 }
 
                 if (!(passActionIsValid && passControllerIsValid))
@@ -43,11 +43,11 @@ namespace Encuentrame.Web.Filters
                     HandleUnauthorizedInfo model = null;
                     if (!passControllerIsValid)
                     {
-                        model = new HandleUnauthorizedInfo(passController);
+                        model = new HandleUnauthorizedInfo();
                     }
                     else
                     {
-                        model = new HandleUnauthorizedInfo(passAction);
+                        model = new HandleUnauthorizedInfo();
                     }
 
                     filterContext.Result = new ViewResult

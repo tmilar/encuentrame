@@ -1,0 +1,77 @@
+﻿
+
+@{
+    ViewBag.Title = "Test Api";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+@section scripts
+{
+    <script src="@Scripts.Url(@"~/scripts/app/controllers/TestApis/testApi.js")" type="text/javascript"></script>
+
+}
+<h2>@ViewBag.Title</h2>
+    <h3>Url base</h3>
+<div class="row">
+    <div class="col-lg-6">
+        <label for="url">URL base</label>
+        @Html.TextArea("url", Url.Action("Index", "Home"))
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <label for="url">Token</label>
+        @Html.TextArea("token", "")
+
+    </div>
+    <div class="col-lg-6">
+        <label for="url">Usuario id</label>
+        @Html.TextBox("user", "")
+
+    </div>
+</div>
+    <h3>Post</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="methosPost">Metodo</label>
+            @Html.TextArea("methodPost", "")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <label for="parametersPost">parametros en JSON</label>
+            @Html.TextArea("parametersPost", "")
+        </div>
+        <div class="col-lg-4">
+            <button name="post" id="post">Post</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="resultPost">Resultado</label>
+            @Html.TextArea("resultPost", "")
+        </div>
+    </div>
+    <h3>Get</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="methosGet">Metodo</label>
+            @Html.TextArea("methodGet", "")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <label for="parametersGet">parametros en JSON</label>
+            @Html.TextArea("parametersGet", "")
+        </div>
+        <div class="col-lg-4">
+            <button name="get" id="get">Get</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="resultGet">Resultado</label>
+            @Html.TextArea("resultGet", "")
+        </div>
+    </div>

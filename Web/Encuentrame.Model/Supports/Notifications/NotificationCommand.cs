@@ -19,8 +19,7 @@ namespace Encuentrame.Model.Supports.Notifications
         [Inject]
         public IBag<NotificationAccessException> NotificationAccessExceptions { get; set; }
 
-        [Inject]
-        public IBag<Role> Roles { get; set; }
+    
 
         [Inject]
         public IBag<BaseUser> Users { get; set; }
@@ -49,12 +48,12 @@ namespace Encuentrame.Model.Supports.Notifications
                 notificationAccess.AllowEveryone = notificationAccessInfo.AllowEveryone;
                 if (notificationAccess.AllowEveryone)
                 {
-                    notificationAccess.Roles.Clear();
+                   
                     notificationAccess.Users.Clear();
                 }
                 else
                 {
-                    EditListFromIds(notificationAccessInfo.Roles, notificationAccess.Roles, i => Roles[i]);
+                   
                     EditListFromIds(notificationAccessInfo.Users, notificationAccess.Users, i => Users[i]);
                 }
             }            
@@ -64,8 +63,8 @@ namespace Encuentrame.Model.Supports.Notifications
         {
             var loggedUser = AuthenticationProvider.GetLoggedUser();
             var loggedUserRole = loggedUser.Role;
-            var userNotificationAccesses = NotificationAccesses.Where(x => x.Roles.Any(y => y == loggedUserRole)
-                                                                        || x.Users.Any(y => y == loggedUser)
+            var userNotificationAccesses = NotificationAccesses.Where(x =>
+                                                                         x.Users.Any(y => y == loggedUser)
                                                                         || x.AllowEveryone).ToList();
             return userNotificationAccesses;
         }

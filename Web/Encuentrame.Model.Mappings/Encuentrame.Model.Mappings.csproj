@@ -50,8 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\PassMap.cs" />
-    <Compile Include="Accounts\RoleMap.cs" />
+    <Compile Include="Accounts\TokenApiSessionMap.cs" />
     <Compile Include="Addresses\AddressMap.cs" />
     <Compile Include="SqlTypeExtensions.cs" />
     <Compile Include="Accounts\UserMap.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Encuentrame.Model.Accounts;
 using Encuentrame.Web.Helpers;
 using Encuentrame.Web.MetadataProviders;
 using Encuentrame.Web.MetadataProviders.CustomValidations;
@@ -59,13 +60,10 @@ namespace Encuentrame.Web.Models.Accounts
         [UIHint("image")]
         public virtual string Image { get; set; }
 
-        [Display(ResourceType = typeof(Translations), Name = "Role")]
-        [RequiredReference2(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
-        [Reference(SourceType = typeof(ListItemsHelper), SourceName = "GetRoles")]
-        public int Role { get; set; }
+        [Display(ResourceType = typeof(Translations), Name = "PhoneNumber")]
+        
+        [UIHint("Enum")]
+        public RoleEnum Role { get; set; }
 
-        [Display(ResourceType = typeof(Translations), Name = "Role")]
-        [Editable(false)]
-        public string RoleDisplay { get; set; }
     }
 }

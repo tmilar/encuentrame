@@ -17,7 +17,7 @@ namespace Encuentrame.Model.Mappings.Accounts
             Map(x => x.PhoneNumber).Nullable().Length(50);
             Map(x => x.MobileNumber).Nullable().Length(50);
             Map(x => x.Image).Nullable().Length(10000).LazyLoad();
-            References(x => x.Role);
+            Map(x => x.Role);
             Map(x => x.DeletedKey).Nullable();
             DiscriminateSubClassesOnColumn("UserType");
             Table("Users");

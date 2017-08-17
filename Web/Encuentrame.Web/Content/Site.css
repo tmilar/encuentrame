@@ -586,13 +586,6 @@ hr {
     color: red;
 }
 
-/*ManageDispatch*/
-.ManageDispatch .dispatch-items-item h4 {
-    margin-top: 3px;
-}
-
-.ManageDispatch .container-comments-popover {
-    max-height: 200px;
-    overflow: scroll;
-    overflow-x: hidden;
+.testapi.Index textarea {
+    width: 100%;
 }

@@ -1941,4 +1941,13 @@
   <data name="OrderDateAndClientUniqueKeyError" xml:space="preserve">
     <value>El pedido ya existe para la fecha: '{0}' y el cliente: '{1}'</value>
   </data>
+  <data name="RoleEnumAdministrator" xml:space="preserve">
+    <value>Administrador</value>
+  </data>
+  <data name="RoleEnumEventAdministrator" xml:space="preserve">
+    <value>Organizador de eventos</value>
+  </data>
+  <data name="RoleEnumUser" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
 </root>

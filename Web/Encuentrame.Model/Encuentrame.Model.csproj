@@ -79,23 +79,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\IRoleCommand.cs" />
     <Compile Include="Accounts\IUserCommand.cs" />
-    <Compile Include="Accounts\Permissions\PassCombinationInvalidException.cs" />
-    <Compile Include="Accounts\Permissions\PassCombinationValidator.cs" />
-    <Compile Include="Accounts\Role.cs" />
-    <Compile Include="Accounts\RoleCommand.cs" />
+    <Compile Include="Accounts\Permissions\ActionsEnum.cs" />
+    <Compile Include="Accounts\RoleEnum.cs" />
+    <Compile Include="Accounts\TokenApiSession.cs" />
     <Compile Include="Accounts\UserCommand.cs" />
     <Compile Include="Addresses\Address.cs" />
     <Compile Include="BaseSeeker.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="ISeeker.cs" />
-    <Compile Include="Accounts\Permissions\ActionsEnum.cs" />
-    <Compile Include="Accounts\Permissions\GroupParentAttribute.cs" />
-    <Compile Include="Accounts\Permissions\GroupsOfModulesEnum.cs" />
-    <Compile Include="Accounts\Permissions\ModuleParentAttribute.cs" />
-    <Compile Include="Accounts\Permissions\ModulesEnum.cs" />
-    <Compile Include="Accounts\Permissions\Pass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Accounts\User.cs" />
     <Compile Include="SeekerFactory.cs" />

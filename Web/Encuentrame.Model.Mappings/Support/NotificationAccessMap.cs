@@ -11,7 +11,7 @@ namespace Encuentrame.Model.Mappings.Support
             Map(x => x.AllowEveryone);
             References(x => x.AssociatedNotification).Unique().Cascade.All();
             HasManyToMany(x => x.Users);
-            HasManyToMany(x => x.Roles);
+            
         }
     }
 }

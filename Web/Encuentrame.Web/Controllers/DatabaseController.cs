@@ -25,11 +25,7 @@ namespace Encuentrame.Web.Controllers
         [Inject]
         public IBag<SystemUser> SystemUsers { get; set; }
 
-        [Inject]
-        public IBag<Role> Roles { get; set; }
-
-        [Inject]
-        public IBag<Pass> Passes { get; set; }
+      
         [Inject]
         public IBag<Configuration> Configurations { get; set; }
 
@@ -62,11 +58,11 @@ namespace Encuentrame.Web.Controllers
 
             DatabaseCreator.Update();
           
-            CreatePermission();
+          
 
             if (SystemUsers.Count() == 0)
             {
-                var adminRole = Roles.SingleOrDefault(x => x.Name == "Administrator");
+                
                 var systemUser = new SystemUser()
                 {
                     Username = "System",
@@ -74,7 +70,7 @@ namespace Encuentrame.Web.Controllers
                     FirstName = "System",
                     LastName = "System",
                     Email = "system@Encuentrame.com",
-                    Role = adminRole,
+                    Role = RoleEnum.Administrator,
                 };
 
                 SystemUsers.Put(systemUser);
@@ -97,28 +93,7 @@ namespace Encuentrame.Web.Controllers
 
             DatabaseCreator.Create();
 
-           
-
-            
-
-            var roleAdmin = new Role()
-            {
-                Name = "Administrator",
-            };
-            Roles.Put(roleAdmin);
-
-            var role2 = new Role()
-            {
-                Name = "Programador",
-            };
-
-            Roles.Put(role2);
-
-            CreatePermission();
-
-            Passes.ForEach(p => roleAdmin.Passes.Add(p));
-
-            //Users
+           //Users
             var user1 = new User()
             {
                 Username = "javier.wamba",
@@ -126,7 +101,7 @@ namespace Encuentrame.Web.Controllers
                 FirstName = "Javier",
                 LastName = "Wamba",
                 Email = "javier.wamba@Encuentrame.com",
-                Role = roleAdmin,
+                Role = RoleEnum.Administrator,
             };
 
             Users.Put(user1);
@@ -138,7 +113,7 @@ namespace Encuentrame.Web.Controllers
                 FirstName = "Emiliano",
                 LastName = "Soto",
                 Email = "emiliano.soto@Encuentrame.com",
-                Role = roleAdmin,
+                Role = RoleEnum.User,
             };
 
             Users.Put(user2);
@@ -150,7 +125,7 @@ namespace Encuentrame.Web.Controllers
                 FirstName = "System",
                 LastName = "System",
                 Email = "system@Encuentrame.com",
-                Role = roleAdmin,
+                Role = RoleEnum.User,
             };
 
             SystemUsers.Put(systemUser);
@@ -203,43 +178,6 @@ namespace Encuentrame.Web.Controllers
             return notificationTypes;
         }
 
-        protected void CreatePermission()
-        {
-            foreach (ActionsEnum action in Enum.GetValues(typeof(ActionsEnum)))
-            {
-                foreach (ModulesEnum module in action.GetAttributeOfEnumValue<ModuleParentAttribute>().FirstOrDefault().Modules)
-                {
-                    foreach (GroupsOfModulesEnum group in module.GetAttributeOfEnumValue<GroupParentAttribute>().FirstOrDefault().Groups)
-                    {
-                        if (!Passes.Any(x => x.Group == group && x.Action == action && x.Module == module))
-                        {
-                            var pass = new Pass(group, module, action);
-                            Passes.Put(pass);    
-                        }
-                        
-                    }
-                }
-            }
-            CurrentUnitOfWork.Checkpoint();
-
-            foreach (var pass in Passes)
-            {
-                if (!Enum.IsDefined(pass.Group.GetType(), pass.Group)
-                    || !Enum.IsDefined(pass.Action.GetType(), pass.Action)
-                    || !Enum.IsDefined(pass.Module.GetType(), pass.Module) 
-                    || !pass.IsValid())
-                {
-                    foreach (var rol in Roles)
-                    {
-                        var rolPass=rol.Passes.Where(x => x.Id == pass.Id).FirstOrDefault();
-                        if (rolPass != null)
-                        {
-                            rol.Passes.Remove(rolPass);
-                        }
-                    }
-                    Passes.Remove(pass);
-                }
-            }
-        }
+       
     }
 }

@@ -4273,6 +4273,33 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administrador.
+        /// </summary>
+        public static string RoleEnumAdministrator {
+            get {
+                return ResourceManager.GetString("RoleEnumAdministrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organizador de eventos.
+        /// </summary>
+        public static string RoleEnumEventAdministrator {
+            get {
+                return ResourceManager.GetString("RoleEnumEventAdministrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario.
+        /// </summary>
+        public static string RoleEnumUser {
+            get {
+                return ResourceManager.GetString("RoleEnumUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
         public static string Roles {

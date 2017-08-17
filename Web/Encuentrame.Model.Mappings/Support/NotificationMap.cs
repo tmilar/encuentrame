@@ -37,9 +37,7 @@ namespace RAEI.ProgramacionDeProduccion.Model.Mappings.Support
 
   
 
-    public class RoleCreatedNotificationMap : NotificationMappingOf<RoleCreatedNotification>
-    {
-    }
+  
 
   
     public class UserUpdatedNotificationMap : NotificationMappingOf<UserUpdatedNotification>
@@ -48,9 +46,7 @@ namespace RAEI.ProgramacionDeProduccion.Model.Mappings.Support
 
    
 
-    public class RoleUpdatedNotificationMap : NotificationMappingOf<RoleUpdatedNotification>
-    {
-    }
+ 
 
   
 
@@ -59,10 +55,6 @@ namespace RAEI.ProgramacionDeProduccion.Model.Mappings.Support
     }
 
    
-
-    public class RoleDeletedNotificationMap : NotificationMappingOf<RoleDeletedNotification>
-    {
-    }
 
  
 }

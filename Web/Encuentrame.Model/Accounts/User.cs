@@ -23,7 +23,7 @@ namespace Encuentrame.Model.Accounts
         public virtual string PhoneNumber { get; set; }
         public virtual string MobileNumber { get; set; }
         public virtual string Image { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual RoleEnum Role { get; set; }
         public virtual DateTime? DeletedKey { get; set; }
         public virtual string ToDisplay()
         {

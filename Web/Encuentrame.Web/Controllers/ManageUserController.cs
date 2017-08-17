@@ -17,13 +17,12 @@ using Encuentrame.Support.Email.Templates.EmailModels;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(GroupsOfModulesEnum.Security, ModulesEnum.ManageUser, ActionsEnum.List)]
+    [AuthorizationPass(new []{ RoleEnum.Administrator})]
     public class ManageUserController : ListBaseController<User, UserListModel>
     {
         [Inject]
         public IBag<User> Users { get; set; }
-        [Inject]
-        public IBag<Role> Roles { get; set; }
+      
 
         [Inject]
         public IUserCommand UserCommand { get; set; }
@@ -52,7 +51,7 @@ namespace Encuentrame.Web.Controllers
                 PhoneNumber = user.PhoneNumber,
                 MobileNumber = user.MobileNumber,
                 Image = user.Image,
-                RoleDisplay = user.Role.ToDisplay(),
+                Role = user.Role
             };
 
             return View(userModel);
@@ -110,7 +109,7 @@ namespace Encuentrame.Web.Controllers
             userParameters.PhoneNumber = userModel.PhoneNumber;
             userParameters.MobileNumber = userModel.MobileNumber;
             userParameters.Image = userModel.Image;
-            userParameters.RoleId = userModel.Role;
+            userParameters.Role = userModel.Role;
             return userParameters;
         }
 
@@ -130,7 +129,7 @@ namespace Encuentrame.Web.Controllers
                 PhoneNumber = user.PhoneNumber,
                 MobileNumber = user.MobileNumber,
                 Image = user.Image,
-                Role = user.Role.Id,
+                Role = user.Role,
             };
 
             return View(userModel);
@@ -169,7 +168,7 @@ namespace Encuentrame.Web.Controllers
             userListModel.Email = user.Email;
             userListModel.InternalNumber = user.InternalNumber;
             userListModel.PhoneNumber = user.PhoneNumber;
-            userListModel.Role = new ItemModel(){Id = user.Role.Id, Name = user.Role.Name};
+            userListModel.Role = user.Role;
             return userListModel;
         }
 

@@ -11,10 +11,7 @@
             {
                 <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.User), "Index", "ManageUser")</li>
             }
-            @if (AuthorizationHelper.Validate<ManageRoleController>())
-            {
-                <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.Role), "Index", "ManageRole")</li>
-            }
+          
            
         </ul>
     </li>

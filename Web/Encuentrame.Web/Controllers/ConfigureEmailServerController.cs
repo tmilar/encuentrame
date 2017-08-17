@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Encuentrame.Model.Accounts;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts.Permissions;
@@ -15,7 +16,7 @@ using Encuentrame.Support;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(GroupsOfModulesEnum.Settings, ModulesEnum.EmailServerConfiguration, ActionsEnum.Edit)]
+    [AuthorizationPass(new []{RoleEnum.Administrator, })]
     public class ConfigureEmailServerController: BaseController
     {
         [Inject]

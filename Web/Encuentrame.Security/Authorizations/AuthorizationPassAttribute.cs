@@ -1,24 +1,19 @@
 using System;
-using System.Linq;
-using Encuentrame.Model.Accounts.Permissions;
-using Encuentrame.Support;
+using System.Collections.Generic;
+using Encuentrame.Model.Accounts;
 
 namespace Encuentrame.Security.Authorizations
 {
     [AttributeUsage(AttributeTargets.Class| AttributeTargets.Method)]
     public class AuthorizationPassAttribute : Attribute
     {
-        public AuthorizationPassAttribute(GroupsOfModulesEnum group, ModulesEnum module, ActionsEnum action)
+        public AuthorizationPassAttribute(RoleEnum[] roles)
         {
-            PassCombinationValidator.Validate(group,module,action);
-            this.Group = group;
-            this.Module = module;
-            this.Action = action;
+            this.Roles = roles;
         }
 
-        public  GroupsOfModulesEnum Group { get; protected set; }
-        public  ModulesEnum Module { get; protected set; }
-        public  ActionsEnum Action { get; protected set; }
+      
+        public RoleEnum[] Roles { get; protected set; }
         
     }
 }

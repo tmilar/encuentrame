@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Encuentrame.Model.Accounts.Permissions;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
-using Encuentrame.Model.Accounts.Permissions;
+
 using Encuentrame.Model.Supports;
 using Encuentrame.Model.Supports.Audits;
 using Encuentrame.Model.Supports.Interfaces;
@@ -15,8 +16,6 @@ namespace Encuentrame.Model.Accounts
         [Inject]
         public IBag<User> Users { get; set; }
 
-        [Inject]
-        public IBag<Role> Roles { get; set; }
 
         [Inject]
         public ITranslationService TranslationService { get; set; }
@@ -39,7 +38,7 @@ namespace Encuentrame.Model.Accounts
             public string PhoneNumber { get; set; }
             public string MobileNumber { get; set; }
             public string Image { get; set; }
-            public int? RoleId { get; set; }
+            public RoleEnum Role { get; set; }
         }
 
         public User Get(int id)
@@ -92,7 +91,7 @@ namespace Encuentrame.Model.Accounts
             user.MobileNumber = userParameters.MobileNumber;
             user.PhoneNumber = userParameters.PhoneNumber;
             user.Image = userParameters.Image;
-            user.Role = Roles[userParameters.RoleId];
+            user.Role = userParameters.Role;
         }        
     }
 }

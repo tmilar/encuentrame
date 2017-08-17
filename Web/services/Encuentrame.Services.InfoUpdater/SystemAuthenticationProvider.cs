@@ -16,6 +16,16 @@ namespace Encuentrame.Services.InfoUpdater
             return true;
         }
 
+        public override TokenApiSession GenerateApiTokenUser(string  username)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void RegenerateApiTokenUser(TokenApiSession token)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override bool ChangePassword(string oldPassword, string newPassword)
         {
             return true;

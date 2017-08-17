@@ -79,12 +79,21 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -153,14 +162,19 @@
       <DependentUpon>MvcErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\NHibernateProfilerBootstrapper.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Apis\BaseController.cs" />
+    <Compile Include="Controllers\Apis\PositionController.cs" />
     <Compile Include="Controllers\ConfigureEmailServerController.cs" />
     <Compile Include="Controllers\ListBaseController.cs" />
-    <Compile Include="Controllers\ManageRoleController.cs" />
+    <Compile Include="Controllers\Apis\AuthenticationController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\TestApiController.cs" />
+    <Compile Include="Filters\AuthorizationApiFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IBaseFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\Interfaces\IBooleanFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\Interfaces\IDateRangeFilter.cs" />
@@ -175,6 +189,10 @@
     <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Models\Apis\Authentications\LoginApiResultModel.cs" />
+    <Compile Include="Models\Apis\Authentications\LoginApiModel.cs" />
+    <Compile Include="Models\Apis\Positions\PositionApiModel.cs" />
+    <Compile Include="Models\Apis\Positions\PositionResultModel.cs" />
     <Compile Include="Models\DataTable\BooleanFilterModel.cs" />
     <Compile Include="Models\DataTable\DataTableModel.cs" />
     <Compile Include="Models\DataTable\DateRangeFilterModel.cs" />
@@ -253,8 +271,6 @@
     <Compile Include="Helpers\TranslationsHelper.cs" />
     <Compile Include="MetadataProviders\ExtendedMetadataProvider.cs" />
     <Compile Include="MetadataProviders\TreeAttribute.cs" />
-    <Compile Include="Models\Accounts\RoleListModel.cs" />
-    <Compile Include="Models\Accounts\RoleModel.cs" />
     <Compile Include="Models\Accounts\LoginChangeModel.cs" />
     <Compile Include="Models\Accounts\ProfileModel.cs" />
     <Compile Include="Models\Accounts\UserListModel.cs" />
@@ -450,6 +466,7 @@
     <Content Include="Scripts\app\arativa-bootstrap-treeview.js" />
     <Content Include="Scripts\app\commons.js" />
     <Content Include="Scripts\app\controllers\notificationsConfiguration.js" />
+    <Content Include="Scripts\app\controllers\TestApis\testApi.js" />
     <Content Include="Scripts\app\less-than-other-property-validation.js" />
     <Content Include="Scripts\app\greater-than-other-property-validation.js" />
     <Content Include="Scripts\app\cuit-validation.js" />
@@ -710,11 +727,6 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\ProfileEdit.cshtml" />
     <Content Include="Views\Account\_profileForm.cshtml" />
-    <Content Include="Views\ManageRole\Index.cshtml" />
-    <Content Include="Views\ManageRole\_form.cshtml" />
-    <Content Include="Views\ManageRole\Create.cshtml" />
-    <Content Include="Views\ManageRole\Details.cshtml" />
-    <Content Include="Views\ManageRole\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tree.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\tree.cshtml" />
     <Content Include="Views\Shared\_menu.cshtml" />
@@ -742,6 +754,7 @@
     <Content Include="Views\Shared\EditorTemplates\Datatables\IRangeFilter.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Datatables\IReferenceFilter.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Datatables\IStringFilter.cshtml" />
+    <Content Include="Views\TestApi\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

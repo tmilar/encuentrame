@@ -17,8 +17,7 @@ namespace Encuentrame.Web.Helpers
         [Inject]
         public static IBag<User> Users { get; set; }
         
-        [Inject]
-        public static IBag<Role> Roles { get; set; }       
+            
 
         #endregion
 
@@ -40,9 +39,9 @@ namespace Encuentrame.Web.Helpers
 
         #region SelectListItems
        
-        public static ICollection<SelectListItem> GetRoles(int selectedId)
+        public static ICollection<SelectListItem> GetUsers(int selectedId)
         {
-            return Roles.Select(x => new SelectListItem
+            return Users.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.ToDisplay(),
@@ -55,19 +54,7 @@ namespace Encuentrame.Web.Helpers
 
         #region ReferenceItems
         public static List<ReferenceItem> Entities { get; set; }
-
-      
-        public static IList<ReferenceItem> GetRolesList()
-        {
-            return DeleteableToReferenceItems(Roles, x => x.Name);
-        }
-
-        public static IList<SelectListItem> GetRolesSelectList()
-        {
-            return DeleteableToSelectListItems(Roles, x => x.Name);
-        }
-
-       
+        
         public static IList<ReferenceItem> GetUsersList()
         {
             return DeleteableToReferenceItems(Users, x => x.ToDisplay());

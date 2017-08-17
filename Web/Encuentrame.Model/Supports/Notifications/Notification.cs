@@ -25,13 +25,7 @@ namespace Encuentrame.Model.Supports.Notifications
 
    
 
-    public class RoleCreatedNotification : TypedNotification<Role>
-    {
-        public override string TemplateName
-        {
-            get { return EmailTemplateManager.ObjectCreatedTemplateName; }
-        }
-    }
+   
     public class UserCreatedNotification : TypedNotification<User>
     {
         public override string TemplateName
@@ -49,13 +43,7 @@ namespace Encuentrame.Model.Supports.Notifications
     }
 
   
-    public class RoleUpdatedNotification : TypedNotification<Role>
-    {
-        public override string TemplateName
-        {
-            get { return EmailTemplateManager.ObjectUpdatedTemplateName; }
-        }
-    }
+   
 
 
     public class UserDeletedNotification : TypedNotification<User>
@@ -67,12 +55,6 @@ namespace Encuentrame.Model.Supports.Notifications
     }
 
 
-    public class RoleDeletedNotification : TypedNotification<Role>
-    {
-        public override string TemplateName
-        {
-            get { return EmailTemplateManager.ObjectDeletedTemplateName; }
-        }
-    }
+   
     
 }

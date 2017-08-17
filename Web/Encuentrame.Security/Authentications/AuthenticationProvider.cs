@@ -7,6 +7,11 @@ namespace Encuentrame.Security.Authentications
     {
 
         public abstract bool ValidateUser(string username, string password);
+
+        public abstract TokenApiSession GenerateApiTokenUser(string  username);
+        public abstract void RegenerateApiTokenUser(TokenApiSession token);
+        
+
         public abstract bool ChangePassword(string oldPassword, string newPassword);
 
         public abstract bool ResetPassword(string username);

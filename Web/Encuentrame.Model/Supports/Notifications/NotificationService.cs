@@ -70,21 +70,11 @@ namespace Encuentrame.Model.Supports.Notifications
             {
                 finalList.AddRange(Users.ToList());
             }
-            else if (notificationAccess.Roles.Count > 0 || notificationAccess.Users.Count > 0)
+            else if ( notificationAccess.Users.Count > 0)
             {
                 var usersToSend = notificationAccess.Users ?? new List<BaseUser>();
 
-                if (notificationAccess.Roles.Count > 0)
-                {
-                    var usersFromRoles = Users.Where(x => notificationAccess.Roles.Contains(x.Role));
-                    foreach (var userFromRole in usersFromRoles)
-                    {
-                        if (!usersToSend.Contains(userFromRole))
-                        {
-                            usersToSend.Add(userFromRole);
-                        }
-                    }
-                }
+                
 
                 finalList = usersToSend.ToList();
                 if (notificationException.Users.Count > 0)
@@ -236,9 +226,7 @@ namespace Encuentrame.Model.Supports.Notifications
             _typeToCreatedNotification.AddOrUpdate(typeof(User), (x) => userCreatedNotification.Id, (x, y) => userCreatedNotification.Id);
 
            
-            var roleCreatedNotification = Notifications.Single(x => x is RoleCreatedNotification);
-            _typeToCreatedNotification.AddOrUpdate(typeof(Role), (x) => roleCreatedNotification.Id, (x, y) => roleCreatedNotification.Id);
-
+           
            }
 
         public void UpdateUpdatedNotifications()
@@ -248,9 +236,7 @@ namespace Encuentrame.Model.Supports.Notifications
             _typeToUpdatedNotification.AddOrUpdate(typeof(User), (x) => userUpdatedNotification.Id, (x, y) => userUpdatedNotification.Id);
 
            
-            var roleUpdatedNotification = Notifications.Single(x => x is RoleUpdatedNotification);
-            _typeToUpdatedNotification.AddOrUpdate(typeof(Role), (x) => roleUpdatedNotification.Id, (x, y) => roleUpdatedNotification.Id);
-
+           
            
         }
 
@@ -261,9 +247,7 @@ namespace Encuentrame.Model.Supports.Notifications
             _typeToDeletedNotification.AddOrUpdate(typeof(User), (x) => userDeletedNotification.Id, (x, y) => userDeletedNotification.Id);
 
            
-            var roleDeletedNotification = Notifications.Single(x => x is RoleDeletedNotification);
-            _typeToDeletedNotification.AddOrUpdate(typeof(Role), (x) => roleDeletedNotification.Id, (x, y) => roleDeletedNotification.Id);
-
+           
           
         }                
     }

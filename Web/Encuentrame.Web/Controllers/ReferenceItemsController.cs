@@ -6,14 +6,7 @@ namespace Encuentrame.Web.Controllers
     public class ReferenceItemsController : BaseController
     {
        
-        [HttpGet]
-        public JsonResult GetRoles()
-        {
-            var result = ListItemsHelper.GetRolesList();
-
-            return Json(JsReturnHelper.Return(result), JsonRequestBehavior.AllowGet);
-        }
-
+       
       
 
         [HttpGet]
