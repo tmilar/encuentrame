@@ -32,9 +32,6 @@ export default class Home extends Component {
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
           {/* TODO add styles.container for scroll view?*/}
-          <Text style={styles.paragraph} onPress={this.onPressTitle}>
-            Bienvenido al Home!
-          </Text>
           <NewsListContainer news={news}/>
         </ScrollView>
         {/*<ActionButton style={{flex: 0.2}}

@@ -7,7 +7,7 @@ import {Icon} from 'react-native-elements';
 import Home from "../screen/Home";
 import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
-import Me from "../screen/Me";
+import FriendsAndFamily from "../screen/FriendsAndFamily";
 
 export const Tabs = TabNavigator({
   Home: {
@@ -24,10 +24,10 @@ export const Tabs = TabNavigator({
       tabBarIcon: ({tintColor}) => <Icon name="search" size={23} color={tintColor}/>
     }
   },
-  Me: {
-    screen: Me,
+  FriendsAndFamily: {
+    screen: FriendsAndFamily,
     navigationOptions: {
-      tabBarLabel: 'Perfil',
+      tabBarLabel: 'Familia/Amigos',
       tabBarIcon: ({tintColor}) => <Icon name="account-circle" size={23} color={tintColor}/>
     },
   },

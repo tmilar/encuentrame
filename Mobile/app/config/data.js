@@ -783,14 +783,6 @@ export const users = [
 export const news = [
   {
     "type": "search", // permanent (until self-resolution?)
-    "icon": "account-circle",
-    "message": {
-      "started_by": "Papa",
-      "action": "quiere encontrarte."
-    }
-  },
-  {
-    "type": "search", // permanent (until self-resolution?)
     "icon": "help",
     "message": {
       "started_by": "",
