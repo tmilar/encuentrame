@@ -40,7 +40,7 @@ namespace Encuentrame.Security.Authorizations
                 return false;
             }
             var now = SystemDateTime.Now;
-             var tokenApiSession= TokenApiSessions.Where(x => x.ExpiredDateTime <= now && x.Token == token && x.UserId == userId)
+             var tokenApiSession= TokenApiSessions.Where(x => x.ExpiredDateTime >= now && x.Token == token && x.UserId == userId)
                 .FirstOrDefault();
             if (tokenApiSession != null)
             {

@@ -22,6 +22,17 @@ namespace Encuentrame.Web.Controllers.Apis
         [HttpPost]
         public IHttpActionResult Login(LoginApiModel loginApiModel)
         {
+
+            if (loginApiModel == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+          
             if (AuthenticationProvider.ValidateUser(loginApiModel.Username, loginApiModel.Password))
             {
                 var token = AuthenticationProvider.GenerateApiTokenUser(loginApiModel.Username);

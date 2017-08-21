@@ -5,12 +5,15 @@ using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using NailsFramework.UnitOfWork;
 using Encuentrame.Model.Supports.Audits;
+using Encuentrame.Model.Supports.Interfaces;
 using Encuentrame.Support;
 
 namespace Encuentrame.Model.Supports
 {
     public abstract class BaseCommand
     {
+        [Inject]
+        public ITranslationService TranslationService { get; set; }
         [Inject]
         public INHibernateContext NHibernateContext { get; set; }
         [Inject]

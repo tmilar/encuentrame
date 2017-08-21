@@ -20,8 +20,7 @@ namespace Encuentrame.Web.Controllers
     [AuthorizationPass(new []{ RoleEnum.Administrator})]
     public class ManageUserController : ListBaseController<User, UserListModel>
     {
-        [Inject]
-        public IBag<User> Users { get; set; }
+       
       
 
         [Inject]

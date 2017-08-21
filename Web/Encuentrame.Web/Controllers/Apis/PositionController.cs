@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Encuentrame.Security.Authentications;
-using Encuentrame.Support;
+﻿using System.Web.Http;
+using Encuentrame.Model.Positions;
 using Encuentrame.Web.Models.Apis.Authentications;
 using Encuentrame.Web.Models.Apis.Positions;
-using NailsFramework.UserInterface;
+using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers.Apis
 {
     public class PositionController : BaseApiController
     {
+        [Inject]
+        public IPositionCommand PositionCommand { get; set; }
+
         [HttpPost]
         public IHttpActionResult Set(PositionApiModel positionApiModel)
         {
@@ -24,6 +22,13 @@ namespace Encuentrame.Web.Controllers.Apis
             {
                 return BadRequest(ModelState);
             }
+
+            PositionCommand.Create(new PositionCommand.CreateOrEditParameters()
+            {
+                Latitude = positionApiModel.Latitude,
+                Longitude = positionApiModel.Longitude,
+                UserId = positionApiModel.UserId
+            });
 
             return Ok(new PositionResultModel()
             {

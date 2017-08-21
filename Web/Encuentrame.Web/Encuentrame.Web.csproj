@@ -171,6 +171,7 @@
     <Compile Include="Controllers\Apis\AuthenticationController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\TestApiController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Models\DataTable\RangeFilterModel.cs" />
     <Compile Include="Models\DataTable\SearchModel.cs" />
     <Compile Include="Models\DataTable\SelectFilterModel.cs" />
+    <Compile Include="Models\Positions\PositionListModel.cs" />
     <Compile Include="Models\Tests\TestEnum.cs" />
     <Compile Include="Models\Tests\TestModel.cs" />
     <Compile Include="Models\Tests\TestModel2.cs" />
@@ -755,6 +757,7 @@
     <Content Include="Views\Shared\EditorTemplates\Datatables\IReferenceFilter.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Datatables\IStringFilter.cshtml" />
     <Content Include="Views\TestApi\Index.cshtml" />
+    <Content Include="Views\Position\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

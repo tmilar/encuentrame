@@ -7,6 +7,7 @@ using Encuentrame.Web.Models.Apis.Authentications;
 
 namespace Encuentrame.Web.Controllers
 {
+    [AllowAnonymous]
     public class TestApiController : BaseController
     {
         // GET: TestApi

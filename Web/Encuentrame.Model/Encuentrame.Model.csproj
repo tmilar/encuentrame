@@ -88,6 +88,9 @@
     <Compile Include="BaseSeeker.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="ISeeker.cs" />
+    <Compile Include="Positions\IPositionCommand.cs" />
+    <Compile Include="Positions\Position.cs" />
+    <Compile Include="Positions\PositionCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Accounts\User.cs" />
     <Compile Include="SeekerFactory.cs" />

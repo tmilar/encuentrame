@@ -183,32 +183,8 @@
   <data name="Length" xml:space="preserve">
     <value>Largo</value>
   </data>
-  <data name="ManageMachineCreateTitle" xml:space="preserve">
-    <value>Crear maquina</value>
-  </data>
-  <data name="ManageMachineDetailsTitle" xml:space="preserve">
-    <value>Detalle de maquina</value>
-  </data>
-  <data name="ManageMachineEditTitle" xml:space="preserve">
-    <value>Editar maquina</value>
-  </data>
-  <data name="ManageMachineListTitle" xml:space="preserve">
-    <value>Listado de maquinas</value>
-  </data>
   <data name="ManageMenu" xml:space="preserve">
     <value>Administrar</value>
-  </data>
-  <data name="ManagePartCreateTitle" xml:space="preserve">
-    <value>Crear parte</value>
-  </data>
-  <data name="ManagePartDetailsTitle" xml:space="preserve">
-    <value>Detalle de parte</value>
-  </data>
-  <data name="ManagePartEditTitle" xml:space="preserve">
-    <value>Editar parte</value>
-  </data>
-  <data name="ManagePartListTitle" xml:space="preserve">
-    <value>Listado de partes</value>
   </data>
   <data name="MaxLengthError" xml:space="preserve">
     <value>El campo {0} no puede ser mayor a {1} caracteres</value>
@@ -273,71 +249,17 @@
   <data name="SetUpTime" xml:space="preserve">
     <value>Set up (m)</value>
   </data>
-  <data name="ManageOperationCreateTitle" xml:space="preserve">
-    <value>Crear operación</value>
-  </data>
-  <data name="ManageOperationDetailsTitle" xml:space="preserve">
-    <value>Detalle de operación</value>
-  </data>
-  <data name="ManageOperationEditTitle" xml:space="preserve">
-    <value>Editar operación</value>
-  </data>
-  <data name="ManageOperationListTitle" xml:space="preserve">
-    <value>Listado de operaciones</value>
-  </data>
-  <data name="MachineCategory" xml:space="preserve">
-    <value>Categoria de maquina</value>
-  </data>
-  <data name="Machine" xml:space="preserve">
-    <value>Máquina</value>
-  </data>
-  <data name="Part" xml:space="preserve">
-    <value>Parte</value>
-  </data>
   <data name="SelectItemDropDownCaption" xml:space="preserve">
     <value>Seleccione...</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Subir Archivo</value>
   </data>
-  <data name="ManageProductionOrderCreateTitle" xml:space="preserve">
-    <value>Crear Orden de fabricación</value>
-  </data>
-  <data name="ManageProductionOrderDetailsTitle" xml:space="preserve">
-    <value>Detalle de Orden de fabricación</value>
-  </data>
-  <data name="ManageProductionOrderEditTitle" xml:space="preserve">
-    <value>Editar Orden de fabricación</value>
-  </data>
-  <data name="ManageProductionOrderListTitle" xml:space="preserve">
-    <value>Orden de fabricación</value>
-  </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>Cantidad planeada</value>
   </data>
-  <data name="Operation" xml:space="preserve">
-    <value>Operación</value>
-  </data>
-  <data name="ProductionStatusEnumCanceled" xml:space="preserve">
-    <value>Cancelado</value>
-  </data>
-  <data name="ProductionStatusEnumCompleted" xml:space="preserve">
-    <value>Completo</value>
-  </data>
-  <data name="ProductionStatusEnumInProgress" xml:space="preserve">
-    <value>En proceso</value>
-  </data>
-  <data name="ProductionStatusEnumPending" xml:space="preserve">
-    <value>Pendiente</value>
-  </data>
   <data name="Status" xml:space="preserve">
     <value>Estado</value>
-  </data>
-  <data name="ManageProductionOrderMenu" xml:space="preserve">
-    <value>Administrar Ordenes de fabricación</value>
-  </data>
-  <data name="RangeErrorGreaterThanZero" xml:space="preserve">
-    <value>El valor debe ser mayor a cero</value>
   </data>
   <data name="BatchSize" xml:space="preserve">
     <value>Tamaño del lote</value>
@@ -405,26 +327,8 @@
   <data name="SettingsWorkingTimesNoWorkingHoursSubtitle" xml:space="preserve">
     <value>Dias no laborales</value>
   </data>
-  <data name="ManageOperationMachinesSubtitle" xml:space="preserve">
-    <value>Maquinas</value>
-  </data>
   <data name="NoDateError" xml:space="preserve">
     <value>El campo {0} no es una fecha valida</value>
-  </data>
-  <data name="MachineStatusEnumAvailable" xml:space="preserve">
-    <value>Disponible</value>
-  </data>
-  <data name="MachineStatusEnumBreakdown" xml:space="preserve">
-    <value>Averiada</value>
-  </data>
-  <data name="MachineStatusEnumRetired" xml:space="preserve">
-    <value>De baja</value>
-  </data>
-  <data name="MachineStatusEnumInRepair" xml:space="preserve">
-    <value>En reparación</value>
-  </data>
-  <data name="MachineStatusEnumNotAvailable" xml:space="preserve">
-    <value>No disponible</value>
   </data>
   <data name="OperationUniqueKeyError" xml:space="preserve">
     <value>El Nombre '{0}' ya existe, debe modificar uno o ambos</value>
@@ -446,9 +350,6 @@
   </data>
   <data name="SectionSecondaryData" xml:space="preserve">
     <value>Datos secundarios</value>
-  </data>
-  <data name="ProductionOrder" xml:space="preserve">
-    <value>Orden de producción</value>
   </data>
   <data name="SectionInterfaceData" xml:space="preserve">
     <value>Datos de interface de red</value>
@@ -474,24 +375,6 @@
   <data name="SelectMachineError" xml:space="preserve">
     <value>Debe completar los valores necesarios y seleccionar una máquina</value>
   </data>
-  <data name="Machines" xml:space="preserve">
-    <value>Máquinas</value>
-  </data>
-  <data name="PartStatusEnumAvailable" xml:space="preserve">
-    <value>Disponible</value>
-  </data>
-  <data name="PartStatusEnumNotAvailable" xml:space="preserve">
-    <value>No disponible</value>
-  </data>
-  <data name="PartStatusEnumObsolete" xml:space="preserve">
-    <value>Obsoleto</value>
-  </data>
-  <data name="PartStatusEnumRetired" xml:space="preserve">
-    <value>Retirado</value>
-  </data>
-  <data name="ManagePartCreateSectionBasicData" xml:space="preserve">
-    <value>Información basica</value>
-  </data>
   <data name="Reference" xml:space="preserve">
     <value>Referencia</value>
   </data>
@@ -501,23 +384,11 @@
   <data name="DeleteMessage" xml:space="preserve">
     <value>¿Esta seguro que desea eliminar {0}?</value>
   </data>
-  <data name="ManagePartCreateSectionPhysicalSttributesData" xml:space="preserve">
-    <value>Atributos fisicos</value>
-  </data>
-  <data name="ManagePartCreateSectionSecondaryData" xml:space="preserve">
-    <value>Informacion secundaria</value>
-  </data>
-  <data name="ProductionStatusEnumPaused" xml:space="preserve">
-    <value>Pausado</value>
-  </data>
   <data name="ProgramGridMenu" xml:space="preserve">
     <value>Grilla</value>
   </data>
   <data name="HomeTitle" xml:space="preserve">
     <value>Inicio</value>
-  </data>
-  <data name="ProductionStatusEnumOther" xml:space="preserve">
-    <value>Otro</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
@@ -771,21 +642,6 @@
   <data name="ModulesEnumWorkingTime" xml:space="preserve">
     <value>Horario laboral</value>
   </data>
-  <data name="ManageClientCreateTitle" xml:space="preserve">
-    <value>Crear cliente</value>
-  </data>
-  <data name="ManageClientDetailsTitle" xml:space="preserve">
-    <value>Detalle de cliente</value>
-  </data>
-  <data name="ManageClientEditTitle" xml:space="preserve">
-    <value>Editar cliente</value>
-  </data>
-  <data name="ManageClientListTitle" xml:space="preserve">
-    <value>Listado de clientes</value>
-  </data>
-  <data name="Client" xml:space="preserve">
-    <value>Cliente</value>
-  </data>
   <data name="AddClientRow" xml:space="preserve">
     <value>Agregar cliente</value>
   </data>
@@ -810,35 +666,17 @@
   <data name="ManageMenuOption" xml:space="preserve">
     <value>Administrar {0}</value>
   </data>
-  <data name="RawMaterial" xml:space="preserve">
-    <value>Materia Prima</value>
-  </data>
-  <data name="RawMaterials" xml:space="preserve">
-    <value>Materias primas</value>
-  </data>
   <data name="ManageDetailsTitle" xml:space="preserve">
     <value>Detalle de {0}</value>
   </data>
   <data name="Symbol" xml:space="preserve">
     <value>Símbolo</value>
   </data>
-  <data name="MachineCategories" xml:space="preserve">
-    <value>Categorias de maquina</value>
-  </data>
   <data name="MeasurementUnit" xml:space="preserve">
     <value>Unidad de medida</value>
   </data>
   <data name="MeasurementUnits" xml:space="preserve">
     <value>Unidades de medida</value>
-  </data>
-  <data name="Qualities" xml:space="preserve">
-    <value>Calidades</value>
-  </data>
-  <data name="Quality" xml:space="preserve">
-    <value>Calidad</value>
-  </data>
-  <data name="QualityFinish" xml:space="preserve">
-    <value>Acabado</value>
   </data>
   <data name="StandardSuperficial" xml:space="preserve">
     <value>Estándar superficial</value>
@@ -885,12 +723,6 @@
   <data name="DepartmentOfOrganization" xml:space="preserve">
     <value>Sector</value>
   </data>
-  <data name="RawMaterialType" xml:space="preserve">
-    <value>Tipo de materia prima</value>
-  </data>
-  <data name="RawMaterialTypes" xml:space="preserve">
-    <value>Tipos de materia prima</value>
-  </data>
   <data name="ModulesEnumManageRawMaterialType" xml:space="preserve">
     <value>Tipos de materia prima</value>
   </data>
@@ -909,32 +741,11 @@
   <data name="PositionInFactory" xml:space="preserve">
     <value>Posición en la planta</value>
   </data>
-  <data name="RawMaterialInFactories" xml:space="preserve">
-    <value>Materias primas en planta</value>
-  </data>
-  <data name="RawMaterialInFactory" xml:space="preserve">
-    <value>Materia prima en planta</value>
-  </data>
   <data name="SuppliersCoilCode" xml:space="preserve">
     <value>Codigo del proveedor</value>
   </data>
   <data name="UseDateTime" xml:space="preserve">
     <value>Fecha y hora de uso</value>
-  </data>
-  <data name="RawMaterialInFactoryEnumAccepted" xml:space="preserve">
-    <value>Aceptado</value>
-  </data>
-  <data name="RawMaterialInFactoryEnumDetained" xml:space="preserve">
-    <value>Retenido</value>
-  </data>
-  <data name="RawMaterialInFactoryEnumInUse" xml:space="preserve">
-    <value>En uso</value>
-  </data>
-  <data name="RawMaterialInFactoryEnumRejected" xml:space="preserve">
-    <value>Rechazado</value>
-  </data>
-  <data name="RawMaterialInFactoryEnumUsed" xml:space="preserve">
-    <value>Usado</value>
   </data>
   <data name="DeleteRawMaterialInFactoryMessage" xml:space="preserve">
     <value>¿Está seguro que desea eliminar la materia prima {0} ingresada {1}?</value>
@@ -944,12 +755,6 @@
   </data>
   <data name="Origin" xml:space="preserve">
     <value>Origen</value>
-  </data>
-  <data name="RawMaterialOriginEnumBought" xml:space="preserve">
-    <value>Comprado</value>
-  </data>
-  <data name="RawMaterialOriginEnumConsigned" xml:space="preserve">
-    <value>Consignado</value>
   </data>
   <data name="Component" xml:space="preserve">
     <value>Componente</value>
@@ -980,9 +785,6 @@
   </data>
   <data name="SettingsConfigurationMenu" xml:space="preserve">
     <value>Configuración general</value>
-  </data>
-  <data name="RawMaterialInFactoryEnumAssigned" xml:space="preserve">
-    <value>Asignada</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Fitrar</value>
@@ -1020,12 +822,6 @@
   <data name="Use" xml:space="preserve">
     <value>Uso</value>
   </data>
-  <data name="ClientDailyVolume" xml:space="preserve">
-    <value>Volumen diario por cliente</value>
-  </data>
-  <data name="ClientDailyVolumes" xml:space="preserve">
-    <value>Volúmenes diarios por cliente</value>
-  </data>
   <data name="SectionPartPerUnitsData" xml:space="preserve">
     <value>Partes por unidades</value>
   </data>
@@ -1037,9 +833,6 @@
   </data>
   <data name="CheckStock" xml:space="preserve">
     <value>Revisar Stock</value>
-  </data>
-  <data name="StockException" xml:space="preserve">
-    <value>No hay stock suficiente, ¿desea continuar?</value>
   </data>
   <data name="PassNecessary" xml:space="preserve">
     <value>Pase necesario</value>
@@ -1071,9 +864,6 @@
   <data name="CreatedDate" xml:space="preserve">
     <value>Fecha de creación</value>
   </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>Cantidad</value>
-  </data>
   <data name="Clear" xml:space="preserve">
     <value>Limpiar filtros</value>
   </data>
@@ -1095,17 +885,8 @@
   <data name="HasDetained" xml:space="preserve">
     <value>Tiene retenidos</value>
   </data>
-  <data name="Parts" xml:space="preserve">
-    <value>Partes</value>
-  </data>
-  <data name="StocksMenu" xml:space="preserve">
-    <value>Stocks</value>
-  </data>
   <data name="GroupsOfModulesEnumStocks" xml:space="preserve">
     <value>Stocks</value>
-  </data>
-  <data name="StocksMenuOption" xml:space="preserve">
-    <value>{0}</value>
   </data>
   <data name="SectionPartProcessData" xml:space="preserve">
     <value>Proceso</value>
@@ -1122,9 +903,6 @@
   <data name="WorkHeight" xml:space="preserve">
     <value>Altura del trabajo</value>
   </data>
-  <data name="PartTreeTitle" xml:space="preserve">
-    <value>Vista completa de la parte</value>
-  </data>
   <data name="DetailPartTree" xml:space="preserve">
     <value>Vista de árbol</value>
   </data>
@@ -1140,47 +918,11 @@
   <data name="TreeRefresh" xml:space="preserve">
     <value>Recargar</value>
   </data>
-  <data name="Operations" xml:space="preserve">
-    <value>Operaciones</value>
-  </data>
   <data name="Units" xml:space="preserve">
     <value>Unidades</value>
   </data>
   <data name="UnitsSymbol" xml:space="preserve">
     <value>Un.</value>
-  </data>
-  <data name="StockTypeEnumPartProducedAudit" xml:space="preserve">
-    <value>Arqueo de partes</value>
-  </data>
-  <data name="StockTypeEnumPartPartiallyProduced" xml:space="preserve">
-    <value>Parte por operación</value>
-  </data>
-  <data name="StockTypeEnumPartPartiallyProducedUsed" xml:space="preserve">
-    <value>Parte por operación usado</value>
-  </data>
-  <data name="StockTypeEnumPartProduced" xml:space="preserve">
-    <value>Parte final producido</value>
-  </data>
-  <data name="StockTypeEnumRawMaterialAudit" xml:space="preserve">
-    <value>Arqueo de materia prima</value>
-  </data>
-  <data name="StockTypeEnumRawMaterialEntered" xml:space="preserve">
-    <value>Materia prima ingresada</value>
-  </data>
-  <data name="StockTypeEnumRawMaterialUsed" xml:space="preserve">
-    <value>Materia prima usada</value>
-  </data>
-  <data name="StockType" xml:space="preserve">
-    <value>Tipo</value>
-  </data>
-  <data name="StockCreateTitle" xml:space="preserve">
-    <value>Crear asiento de stock</value>
-  </data>
-  <data name="StockListTitle" xml:space="preserve">
-    <value>Stocks</value>
-  </data>
-  <data name="Stock" xml:space="preserve">
-    <value>Stock detallado</value>
   </data>
   <data name="ModulesEnumStock" xml:space="preserve">
     <value>Stocks</value>
@@ -1190,15 +932,6 @@
   </data>
   <data name="Details" xml:space="preserve">
     <value>Detalles</value>
-  </data>
-  <data name="StockPartSummaryListTitle" xml:space="preserve">
-    <value>Stocks de parte resumidos</value>
-  </data>
-  <data name="StockPartSummary" xml:space="preserve">
-    <value>Stocks de parte resumidos</value>
-  </data>
-  <data name="StockTypeEnumPartProducedDispatched" xml:space="preserve">
-    <value>Parte despachada</value>
   </data>
   <data name="CuitValidationError" xml:space="preserve">
     <value>El campo {0} no es un CUIT válido</value>
@@ -1217,15 +950,6 @@
   </data>
   <data name="Sectors" xml:space="preserve">
     <value>Sectores</value>
-  </data>
-  <data name="StockTypeEnumPartPartiallyProducedAudit" xml:space="preserve">
-    <value>Arqueo de partes por operación</value>
-  </data>
-  <data name="StockErrorInComponent" xml:space="preserve">
-    <value>No hay suficientes {0}</value>
-  </data>
-  <data name="StockErrorInOperation" xml:space="preserve">
-    <value>No hay suficientes partes en la operación {0}</value>
   </data>
   <data name="Dispatch" xml:space="preserve">
     <value>Despacho</value>
@@ -1248,21 +972,6 @@
   <data name="Print" xml:space="preserve">
     <value>Imprimir</value>
   </data>
-  <data name="StockTypeEnumPartProducedUsed" xml:space="preserve">
-    <value>Parte usada</value>
-  </data>
-  <data name="StockRawMaterialSummary" xml:space="preserve">
-    <value>Stocks de materia prima resumidos</value>
-  </data>
-  <data name="StockRawMaterialSummaryListTitle" xml:space="preserve">
-    <value>Stocks de materia prima resumidos</value>
-  </data>
-  <data name="StorageType" xml:space="preserve">
-    <value>Medio de almacenaje</value>
-  </data>
-  <data name="StorageTypes" xml:space="preserve">
-    <value>Medios de almacenaje</value>
-  </data>
   <data name="ModulesEnumManageSector" xml:space="preserve">
     <value>Sectores</value>
   </data>
@@ -1281,23 +990,8 @@
   <data name="CompletedDateTime" xml:space="preserve">
     <value>Finalizado</value>
   </data>
-  <data name="ProductionOrderStatusHistory" xml:space="preserve">
-    <value>Historia</value>
-  </data>
-  <data name="PartCodeUniqueKeyError" xml:space="preserve">
-    <value>El Código '{0}' ya existe</value>
-  </data>
-  <data name="PartNameUniqueKeyError" xml:space="preserve">
-    <value>El Nombre '{0}'  ya existe</value>
-  </data>
-  <data name="OperationMachineDeleteUsedException" xml:space="preserve">
-    <value>La maquina "{0}" esta en uso en una orden de producción, no puede ser eliminada</value>
-  </data>
   <data name="SectionWorkDoneStock" xml:space="preserve">
     <value>Stock consumido</value>
-  </data>
-  <data name="Clients" xml:space="preserve">
-    <value>Clientes</value>
   </data>
   <data name="MinutesOfWork" xml:space="preserve">
     <value>Minutos trabajados</value>
@@ -1320,21 +1014,6 @@
   <data name="CreateRawMaterialAudit" xml:space="preserve">
     <value>Arqueo de materia prima</value>
   </data>
-  <data name="StockCreatePartAuditTitle" xml:space="preserve">
-    <value>Crear arqueo de parte</value>
-  </data>
-  <data name="StockCreatePartPartiallyAuditTitle" xml:space="preserve">
-    <value>Crear arqueo de parte en fabricación</value>
-  </data>
-  <data name="StockCreateRawMaterialAuditTitle" xml:space="preserve">
-    <value>Crear arqueo de materia prima</value>
-  </data>
-  <data name="StockDateRangeSummary" xml:space="preserve">
-    <value>Stocks por fecha resumidos</value>
-  </data>
-  <data name="StockDateRangeSummaryListTitle" xml:space="preserve">
-    <value>Stocks por fecha resumidos</value>
-  </data>
   <data name="SecondsByHit" xml:space="preserve">
     <value>Segundos por golpe</value>
   </data>
@@ -1352,9 +1031,6 @@
   </data>
   <data name="FileToBigErrorMessageResourceName" xml:space="preserve">
     <value>El archivo {0} es muy grande. No puede cargar archivos con más de {1} bytes.</value>
-  </data>
-  <data name="OrderStatusSettings" xml:space="preserve">
-    <value>Configuración de estado de pedido</value>
   </data>
   <data name="ExtensionNotAllowedErrorMessageResourceName" xml:space="preserve">
     <value>La extension {0} no esta permitida. No puede cargar archivos con una extension que no este en esta lista: {1}.</value>
@@ -1382,15 +1058,6 @@
   </data>
   <data name="StepUnitEnumYear" xml:space="preserve">
     <value>Años</value>
-  </data>
-  <data name="ManageOrderListTitle" xml:space="preserve">
-    <value>Listado de pedidos</value>
-  </data>
-  <data name="Order" xml:space="preserve">
-    <value>Pedido</value>
-  </data>
-  <data name="Orders" xml:space="preserve">
-    <value>Pedidos diarios</value>
   </data>
   <data name="ModulesEnumManageOrder" xml:space="preserve">
     <value>Pedidos</value>
@@ -1458,15 +1125,6 @@
   <data name="Users" xml:space="preserve">
     <value>Usuarios</value>
   </data>
-  <data name="PartCreatedNotification" xml:space="preserve">
-    <value>Parte Creada</value>
-  </data>
-  <data name="OperationCreatedNotification" xml:space="preserve">
-    <value>Operación Creada</value>
-  </data>
-  <data name="RawMaterialCreatedNotification" xml:space="preserve">
-    <value>Materia Prima Creada</value>
-  </data>
   <data name="MyNotifications" xml:space="preserve">
     <value>Mis Notificaciones</value>
   </data>
@@ -1479,20 +1137,8 @@
   <data name="AllowSending" xml:space="preserve">
     <value>Enviar</value>
   </data>
-  <data name="OrderDate" xml:space="preserve">
-    <value>Fecha</value>
-  </data>
   <data name="SectionOrderItemData" xml:space="preserve">
     <value>Detalle del pedido</value>
-  </data>
-  <data name="OrderStatusEnumFirm" xml:space="preserve">
-    <value>Firme</value>
-  </data>
-  <data name="OrderStatusEnumInformative" xml:space="preserve">
-    <value>Informativo</value>
-  </data>
-  <data name="OrderStatusEnumTentative" xml:space="preserve">
-    <value>Tentativo</value>
   </data>
   <data name="IsRework" xml:space="preserve">
     <value>Es re-trabajo</value>
@@ -1506,83 +1152,23 @@
   <data name="NotificationAccessException" xml:space="preserve">
     <value>Configuracion de Mis notificaciones</value>
   </data>
-  <data name="MachineCreatedNotification" xml:space="preserve">
-    <value>Máquina Creada</value>
-  </data>
   <data name="UserCreatedNotification" xml:space="preserve">
     <value>Usuario Creado</value>
-  </data>
-  <data name="PartUpdatedNotification" xml:space="preserve">
-    <value>Parte Actualizada</value>
   </data>
   <data name="OperationUpdatedNotification" xml:space="preserve">
     <value>Operación Actualizada</value>
   </data>
-  <data name="RawMaterialUpdatedNotification" xml:space="preserve">
-    <value>Materia Prima Actualizada</value>
-  </data>
-  <data name="MachineUpdatedNotification" xml:space="preserve">
-    <value>Máquina Actualizada</value>
-  </data>
   <data name="UserUpdatedNotification" xml:space="preserve">
     <value>Usuario Actualizado</value>
-  </data>
-  <data name="PartDeletedNotification" xml:space="preserve">
-    <value>Parte borrada</value>
-  </data>
-  <data name="OperationDeletedNotification" xml:space="preserve">
-    <value>Operación borrada</value>
-  </data>
-  <data name="RawMaterialDeletedNotification" xml:space="preserve">
-    <value>Materia Prima borrada</value>
-  </data>
-  <data name="MachineDeletedNotification" xml:space="preserve">
-    <value>Máquina borrada</value>
   </data>
   <data name="UserDeletedNotification" xml:space="preserve">
     <value>Usuario borrado</value>
   </data>
-  <data name="Part:Subject:Create" xml:space="preserve">
-    <value>Parte fue creada</value>
-  </data>
-  <data name="Operation:Subject:Create" xml:space="preserve">
-    <value>Operación fue creada</value>
-  </data>
-  <data name="Machine:Subject:Create" xml:space="preserve">
-    <value>Maquina fue creada</value>
-  </data>
-  <data name="RawMaterial:Subject:Create" xml:space="preserve">
-    <value>Materia Prima fue creada</value>
-  </data>
   <data name="User:Subject:Create" xml:space="preserve">
     <value>Usuario fue creado</value>
   </data>
-  <data name="Part:Subject:Update" xml:space="preserve">
-    <value>Parte fue actualizada</value>
-  </data>
-  <data name="Operation:Subject:Update" xml:space="preserve">
-    <value>Operación fue actualizada</value>
-  </data>
-  <data name="Machine:Subject:Update" xml:space="preserve">
-    <value>Máquina fue actualizada</value>
-  </data>
-  <data name="RawMaterial:Subject:Update" xml:space="preserve">
-    <value>Material Prima fue actualizada</value>
-  </data>
   <data name="User:Subject:Update" xml:space="preserve">
     <value>Usuario fue actualizado</value>
-  </data>
-  <data name="Part:Subject:Delete" xml:space="preserve">
-    <value>Parte fue borrado</value>
-  </data>
-  <data name="Operation:Subject:Delete" xml:space="preserve">
-    <value>Operación fue borrada</value>
-  </data>
-  <data name="Machine:Subject:Delete" xml:space="preserve">
-    <value>Máquina fue borrada</value>
-  </data>
-  <data name="RawMaterial:Subject:Delete" xml:space="preserve">
-    <value>Materia Prima fue borrada</value>
   </data>
   <data name="User:Subject:Delete" xml:space="preserve">
     <value>Usuario fue borrado</value>
@@ -1604,78 +1190,6 @@
   </data>
   <data name="SupplierDeletedNotification" xml:space="preserve">
     <value>Proveedor borrado</value>
-  </data>
-  <data name="ClientCreatedNotification" xml:space="preserve">
-    <value>Cliente Creado</value>
-  </data>
-  <data name="ClientUpdatedNotification" xml:space="preserve">
-    <value>Cliente Actualizado</value>
-  </data>
-  <data name="ClientDeletedNotification" xml:space="preserve">
-    <value>Cliente borrado</value>
-  </data>
-  <data name="Client:Subject:Delete" xml:space="preserve">
-    <value>Cliente fue borrado</value>
-  </data>
-  <data name="Client:Subject:Update" xml:space="preserve">
-    <value>Cliente fue actualizado</value>
-  </data>
-  <data name="Client:Subject:Create" xml:space="preserve">
-    <value>Cliente fue creado</value>
-  </data>
-  <data name="ClientDailyVolume:Subject:Delete" xml:space="preserve">
-    <value>Volumen diario por Cliente fue borrado</value>
-  </data>
-  <data name="ClientDailyVolume:Subject:Update" xml:space="preserve">
-    <value>Volumen diario por Cliente fue actualizado</value>
-  </data>
-  <data name="ClientDailyVolume:Subject:Create" xml:space="preserve">
-    <value>Volumen diario por Cliente fue creado</value>
-  </data>
-  <data name="ClientDailyVolumeCreatedNotification" xml:space="preserve">
-    <value>Volumen diario por Cliente Creado</value>
-  </data>
-  <data name="ClientDailyVolumeUpdatedNotification" xml:space="preserve">
-    <value>Volumen diario por Cliente Actualizado</value>
-  </data>
-  <data name="ClientDailyVolumeDeletedNotification" xml:space="preserve">
-    <value>Volumen diario por Cliente borrado</value>
-  </data>
-  <data name="RawMaterialType:Subject:Delete" xml:space="preserve">
-    <value>Tipo de Materia Prima fue borrado</value>
-  </data>
-  <data name="RawMaterialType:Subject:Update" xml:space="preserve">
-    <value>Tipo de Materia Prima fue actualizado</value>
-  </data>
-  <data name="RawMaterialType:Subject:Create" xml:space="preserve">
-    <value>Tipo de Materia Prima fue creado</value>
-  </data>
-  <data name="RawMaterialTypeCreatedNotification" xml:space="preserve">
-    <value>Tipo de Materia Prima Creado</value>
-  </data>
-  <data name="RawMaterialTypeUpdatedNotification" xml:space="preserve">
-    <value>Tipo de Materia Prima Actualizado</value>
-  </data>
-  <data name="RawMaterialTypeDeletedNotification" xml:space="preserve">
-    <value>Tipo de Materia Prima borrado</value>
-  </data>
-  <data name="RawMaterialInFactory:Subject:Delete" xml:space="preserve">
-    <value>Materia Prima en fábrica fue borrada</value>
-  </data>
-  <data name="RawMaterialInFactory:Subject:Update" xml:space="preserve">
-    <value>Materia Prima en fábrica fue actualizada</value>
-  </data>
-  <data name="RawMaterialInFactory:Subject:Create" xml:space="preserve">
-    <value>Materia Prima en fábrica fue creada</value>
-  </data>
-  <data name="RawMaterialInFactoryCreatedNotification" xml:space="preserve">
-    <value>Materia Prima en fábrica Creada</value>
-  </data>
-  <data name="RawMaterialInFactoryUpdatedNotification" xml:space="preserve">
-    <value>Materia Prima en fábrica Actualizada</value>
-  </data>
-  <data name="RawMaterialInFactoryDeletedNotification" xml:space="preserve">
-    <value>Materia Prima en fábrica borrada</value>
   </data>
   <data name="Role:Subject:Delete" xml:space="preserve">
     <value>Rol fue borrado</value>
@@ -1725,24 +1239,6 @@
   <data name="CreateMany" xml:space="preserve">
     <value>Crear Múltiples</value>
   </data>
-  <data name="MachineCategory:Subject:Delete" xml:space="preserve">
-    <value>Categoría de Máquina fue borrada</value>
-  </data>
-  <data name="MachineCategory:Subject:Update" xml:space="preserve">
-    <value>Categoría de Máquina fue actualizada</value>
-  </data>
-  <data name="MachineCategory:Subject:Create" xml:space="preserve">
-    <value>Categoría de Máquina fue creada</value>
-  </data>
-  <data name="MachineCategoryCreatedNotification" xml:space="preserve">
-    <value>Categoría de Máquina Creada</value>
-  </data>
-  <data name="MachineCategoryUpdatedNotification" xml:space="preserve">
-    <value>Categoría de Máquina Actualizada</value>
-  </data>
-  <data name="MachineCategoryDeletedNotification" xml:space="preserve">
-    <value>Categoría de Máquina borrada</value>
-  </data>
   <data name="Key" xml:space="preserve">
     <value>Clave</value>
   </data>
@@ -1764,59 +1260,17 @@
   <data name="Delivered" xml:space="preserve">
     <value>Entregado</value>
   </data>
-  <data name="ManageMatrixListTitle" xml:space="preserve">
-    <value>Listado de matrices</value>
-  </data>
   <data name="DeliveredText" xml:space="preserve">
     <value>Entregado</value>
-  </data>
-  <data name="ManageMatrixEditTitle" xml:space="preserve">
-    <value>Editar Matriz</value>
   </data>
   <data name="False" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="MatrixData" xml:space="preserve">
-    <value>Información de la Matriz</value>
-  </data>
   <data name="PendingToDeliver" xml:space="preserve">
     <value>Pendiente de Entrega</value>
   </data>
-  <data name="ManageMatrixDetailsTitle" xml:space="preserve">
-    <value>Detalle de la Matriz</value>
-  </data>
   <data name="CanNotDeliverMoreThanOrdered" xml:space="preserve">
     <value>No se puede despachar mas de lo pedido. Pedido: {0} - Parte: {1}. Intentando entregar: {2} - Cantidad pendiente de Entregar: {3}</value>
-  </data>
-  <data name="Matrix" xml:space="preserve">
-    <value>Matriz</value>
-  </data>
-  <data name="MatrixStateEnumInMaintenance" xml:space="preserve">
-    <value>En mantenimiento</value>
-  </data>
-  <data name="MatrixStateEnumReady" xml:space="preserve">
-    <value>Lista</value>
-  </data>
-  <data name="MatrixStateEnumObsolete" xml:space="preserve">
-    <value>Obsoleta</value>
-  </data>
-  <data name="Matrix:Subject:Delete" xml:space="preserve">
-    <value>Matriz fue borrada</value>
-  </data>
-  <data name="Matrix:Subject:Update" xml:space="preserve">
-    <value>Matriz fue actualizada</value>
-  </data>
-  <data name="Matrix:Subject:Create" xml:space="preserve">
-    <value>Matriz fue creada</value>
-  </data>
-  <data name="MatrixCreatedNotification" xml:space="preserve">
-    <value>Matriz Creada</value>
-  </data>
-  <data name="MatrixUpdatedNotification" xml:space="preserve">
-    <value>Matriz Actualizada</value>
-  </data>
-  <data name="MatrixDeletedNotification" xml:space="preserve">
-    <value>Matriz borrada</value>
   </data>
   <data name="Matrices" xml:space="preserve">
     <value>Matrices</value>
@@ -1829,9 +1283,6 @@
   </data>
   <data name="Transportation" xml:space="preserve">
     <value>Transporte</value>
-  </data>
-  <data name="OrdersMonthDaily" xml:space="preserve">
-    <value>Pedido Mensual Diario</value>
   </data>
   <data name="CreateMonthDaily" xml:space="preserve">
     <value>Crear</value>
@@ -1850,9 +1301,6 @@
   </data>
   <data name="ApportionMessage" xml:space="preserve">
     <value>¿Esta seguro que desea prorratear {0}?</value>
-  </data>
-  <data name="OrderDispatchSummaryTitle" xml:space="preserve">
-    <value>Resumen de Pedidos y Despachos</value>
   </data>
   <data name="ModulesEnumOrderDispatchSummary" xml:space="preserve">
     <value>Resumen de Pedidos y Despachos</value>
@@ -1887,38 +1335,17 @@
   <data name="DeliveredStatus" xml:space="preserve">
     <value>Entregado</value>
   </data>
-  <data name="OrderDeliveredStatusEnumDelivered" xml:space="preserve">
-    <value>Entregado</value>
-  </data>
-  <data name="OrderDeliveredStatusEnumPartiallyDelivered" xml:space="preserve">
-    <value>Entregado parcial</value>
-  </data>
-  <data name="OrderDeliveredStatusEnumPending" xml:space="preserve">
-    <value>Pendiente</value>
-  </data>
   <data name="LessThanOtherPropertyValidationError" xml:space="preserve">
     <value>{0} debe ser menor que {1}</value>
   </data>
   <data name="DispachedAmount" xml:space="preserve">
     <value>Despachado</value>
   </data>
-  <data name="OrderedAmount" xml:space="preserve">
-    <value>Pedido</value>
-  </data>
   <data name="PendingOrderedAmount" xml:space="preserve">
     <value>Pendiente</value>
   </data>
-  <data name="OrderCantDeleteError" xml:space="preserve">
-    <value>La orden tiene despachos asociados, no se puede borrar</value>
-  </data>
-  <data name="OrderStatusEnumDelivered" xml:space="preserve">
-    <value>Entregado</value>
-  </data>
   <data name="BarCode" xml:space="preserve">
     <value>Código de barras</value>
-  </data>
-  <data name="ClientCode" xml:space="preserve">
-    <value>Código externo</value>
   </data>
   <data name="Long" xml:space="preserve">
     <value>Largo</value>
@@ -1938,9 +1365,6 @@
   <data name="TestEnums" xml:space="preserve">
     <value>TestEnums</value>
   </data>
-  <data name="OrderDateAndClientUniqueKeyError" xml:space="preserve">
-    <value>El pedido ya existe para la fecha: '{0}' y el cliente: '{1}'</value>
-  </data>
   <data name="RoleEnumAdministrator" xml:space="preserve">
     <value>Administrador</value>
   </data>
@@ -1948,6 +1372,24 @@
     <value>Organizador de eventos</value>
   </data>
   <data name="RoleEnumUser" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="ManagePositionListTitle" xml:space="preserve">
+    <value>Posiciones</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Posición</value>
+  </data>
+  <data name="Positions" xml:space="preserve">
+    <value>Posiciones</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitud</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitud</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
     <value>Usuario</value>
   </data>
 </root>
