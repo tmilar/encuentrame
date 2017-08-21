@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native'
 import SessionService from '../service/SessionService';
-import NewsListContainer from "../component/NewsListContainer";
-import {news} from "../config/data";
+import FamilyListContainer from "../component/FamilyListContainer";
+import {familyMembers} from "../config/familyFixture";
 
 import {Icon} from 'react-native-elements';
 import ActionButton from "react-native-action-button";
@@ -32,7 +32,7 @@ export default class Home extends Component {
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
           {/* TODO add styles.container for scroll view?*/}
-          <NewsListContainer news={news}/>
+          <FamilyListContainer familyMembers={familyMembers}/>
         </ScrollView>
         {/*<ActionButton style={{flex: 0.2}}
                       buttonColor="rgba(231,76,60,1)"
