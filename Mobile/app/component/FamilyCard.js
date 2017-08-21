@@ -22,21 +22,18 @@ export default class FamilyCard extends Component {
     this.getStateColor = this.getStateColor.bind(this);
   }
   analyzeState(person) {
-    if (!person.estado.estaBien.consultado){
+    if (person.estado.greenFlag.state){
       return "ok";
     }
+    if (!person.estado.estaBien.consultado){
+      return "initial";
+    }
     if (person.estado.estaBien.respuesta === false){
-      return "no"
+      return "critical"
     }
     if (person.estado.estaBien.respuesta === null){
-      if (person.estado.busquedaColaborativa.activa === false){
-        //si la busqueda colaborativa esta en false, significara que ya fue cancelanda/cerrada, la persona esta Ok?
-        //TODO: cuando se cancela la busqueda colaborativa, deberia indicarse que la persona esta bien a la app central?
-        return "ok";
-      } else {
-        //si la busqueda colaborativa esta en null es que no se ha iniciado, y en true significaria que si. En ambos casos es estado unknown
-        return "unknown";
-      }
+      //TODO: De acuerdo al tiempo que paso desde que se disparo la pregunta, sera pending/amarillo o alert/naranja
+      return "alert";
     }
   }
   getStateColor(person) {
@@ -45,8 +42,17 @@ export default class FamilyCard extends Component {
       case "ok":
         return "green";
         break;
-      case "no":
+      case "critical":
         return "red";
+        break;
+      case "initial":
+        return "white";
+        break;
+      case "pending":
+        return "yellow";
+        break;
+      case "alert":
+        return "orange";
         break;
       default:
         return "white";
@@ -55,7 +61,7 @@ export default class FamilyCard extends Component {
 
   render () {
     return (
-      <Card containerStyle={{flex: 1, padding: 5, backgroundColor: this.getStateColor(this.state.personProps)}}>
+      <Card styles={{ card: { backgroundColor: this.getStateColor(this.state.personProps) }}}>
         <View style={{
           flexDirection: 'row',
           height: 60,

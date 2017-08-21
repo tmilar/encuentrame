@@ -4,6 +4,10 @@ export const familyMembers = [
     "username": "juanita123",
     "name": "mama",
     "estado": {
+      "greenFlag": {
+        "state": true,
+        "end": null
+      },
       "estaBien": {
         "consultado": false
       },
@@ -17,6 +21,10 @@ export const familyMembers = [
     "username": "arturo-aaa",
     "name": "papa",
     "estado": {
+      "greenFlag": {
+        "state": false,
+        "end": null
+      },
       "estaBien": {
         "consultado": false
       },
@@ -30,6 +38,10 @@ export const familyMembers = [
     "username": "flor1234",
     "name": "hermanita",
     "estado": {
+      "greenFlag": {
+        "state": false,
+        "end": null
+      },
       "estaBien": {
         "consultado": true,
         "respuesta": null
