@@ -22,11 +22,7 @@ namespace Encuentrame.Model.Accounts
 
         public class CreateOrEditParameters
         {
-            protected CreateOrEditParameters() { }
-            public static CreateOrEditParameters Instance()
-            {
-                return new CreateOrEditParameters();
-            }
+          
          
             public virtual string Name { get; set; }
             public string Username { get; set; }

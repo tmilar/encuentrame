@@ -20,8 +20,6 @@ namespace Encuentrame.Web.Controllers
     [AuthorizationPass(new []{ RoleEnum.Administrator})]
     public class ManageUserController : ListBaseController<User, UserListModel>
     {
-       
-      
 
         [Inject]
         public IUserCommand UserCommand { get; set; }
@@ -97,18 +95,20 @@ namespace Encuentrame.Web.Controllers
 
         private UserCommand.CreateOrEditParameters GetCreateOrEditParameters(UserModel userModel)
         {
-            var userParameters = Model.Accounts.UserCommand.CreateOrEditParameters.Instance();
+            var userParameters = new UserCommand.CreateOrEditParameters
+            {
+                Username = userModel.Username,
+                LastName = userModel.LastName,
+                FirstName = userModel.FirstName,
+                Email = userModel.Email,
+                EmailAlternative = userModel.EmailAlternative,
+                InternalNumber = userModel.InternalNumber,
+                PhoneNumber = userModel.PhoneNumber,
+                MobileNumber = userModel.MobileNumber,
+                Image = userModel.Image,
+                Role = userModel.Role
+            };
 
-            userParameters.Username = userModel.Username;
-            userParameters.LastName = userModel.LastName;
-            userParameters.FirstName = userModel.FirstName;
-            userParameters.Email = userModel.Email;
-            userParameters.EmailAlternative = userModel.EmailAlternative;
-            userParameters.InternalNumber = userModel.InternalNumber;
-            userParameters.PhoneNumber = userModel.PhoneNumber;
-            userParameters.MobileNumber = userModel.MobileNumber;
-            userParameters.Image = userModel.Image;
-            userParameters.Role = userModel.Role;
             return userParameters;
         }
 

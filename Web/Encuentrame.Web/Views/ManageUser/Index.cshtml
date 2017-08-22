@@ -1,4 +1,6 @@
-﻿@using Encuentrame.Web
+﻿@using Encuentrame.Model.Accounts
+@using Encuentrame.Support
+@using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @using Encuentrame.Web.Helpers.DataTable
 @using Encuentrame.Web.Models.Accounts
@@ -26,7 +28,7 @@
            .AddColumn(x => x.Email)
            .AddColumn(x => x.InternalNumber)
            .AddColumn(x => x.PhoneNumber)
-           .AddColumn(x => x.Role)           
+           .AddColumn(x => x.Role, dataTemplate: "roleTemplate")          
            .AddColumn("Actions", dataTemplate: "actionsTemplate")
            .AddFilter(x => x.User)
            .AddFilter(x => x.FullName)
@@ -38,6 +40,23 @@
     )
 </div>
 
+<script id="roleTemplate" type="text/template">
+    <%
+    if(row.Role === @(RoleEnum.Administrator.ToInt())) { %>
+    <span class="label label-success">
+        @TranslationsHelper.Get(RoleEnum.Administrator)
+    </span>
+    <% } else if(row.Role === @RoleEnum.User.ToInt()){ %>
+    <span class="label label-info">
+        @TranslationsHelper.Get(RoleEnum.User)
+    </span>
+    <% } else if(row.Role === @RoleEnum.EventAdministrator.ToInt()){%>
+    <span class="label label-warning">
+        @TranslationsHelper.Get(RoleEnum.EventAdministrator)
+    </span>
+   
+    <% } %>
+</script>
 <script id="actionsTemplate" type="text/template">
     <a class="btn btn-info btn-xs" href="@Url.Action("Details")/<%=row.Id%>">Detalle</a>
     <a class="btn btn-primary btn-xs" href="@Url.Action("Edit")/<%=row.Id%>">Editar</a>

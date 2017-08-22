@@ -164,6 +164,7 @@
     <Compile Include="App_Start\NHibernateProfilerBootstrapper.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Apis\AccountController.cs" />
     <Compile Include="Controllers\Apis\BaseController.cs" />
     <Compile Include="Controllers\Apis\PositionController.cs" />
     <Compile Include="Controllers\ConfigureEmailServerController.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Models\Apis\Accounts\UserApiModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiResultModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiModel.cs" />
