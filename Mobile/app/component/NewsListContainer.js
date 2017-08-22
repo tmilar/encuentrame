@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import NewsList from "./NewsList";
+import {news} from "../config/newsFixture";
 
-class NewsListContainer extends Component {
-  state = {
-    news: []
-  };
+export default class NewsListContainer extends Component {
+
 
   constructor(props) {
     super(props);
     this.state = {
-      news: this.props.news
+      news: news
     }
   }
 
@@ -17,6 +16,3 @@ class NewsListContainer extends Component {
     return <NewsList news={this.state.news}/>;
   }
 }
-
-
-export default NewsListContainer;
