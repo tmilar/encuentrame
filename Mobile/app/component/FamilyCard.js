@@ -62,8 +62,9 @@ export default class FamilyCard extends Component {
   }
 
   render() {
+    let bgColor = this.getStateColor(this.state.personProps);
     return (
-      <Card styles={{ card: { backgroundColor: this.getStateColor(this.state.personProps) }}}>
+      <Card styles={{card: {backgroundColor: bgColor}}}>
         <View style={{
           flexDirection: 'row',
           height: 60,
