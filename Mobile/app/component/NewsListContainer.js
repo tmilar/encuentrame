@@ -3,13 +3,18 @@ import NewsList from "./NewsList";
 import {news} from "../config/newsFixture";
 
 export default class NewsListContainer extends Component {
+  state = {
+    news: []
+  };
 
+  async componentDidMount() {
+    let news = await this.fetchNews();
+    this.setState({news});
+  }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      news: news
-    }
+  fetchNews() {
+    // TODO fetch news from actual remote API
+    return news;
   }
 
   render() {
