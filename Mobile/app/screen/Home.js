@@ -35,7 +35,7 @@ export default class Home extends Component {
           <Text style={styles.paragraph} onPress={this.onPressTitle}>
             Bienvenido al Home!
           </Text>
-          <NewsListContainer news={news}/>
+          <NewsListContainer/>
         </ScrollView>
         {/*<ActionButton style={{flex: 0.2}}
                       buttonColor="rgba(231,76,60,1)"
