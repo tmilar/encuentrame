@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import {Text, Button, View, Image} from 'react-native'
-import {
-  StyleSheet
-} from 'react-native';
 
 import {
   Card,
@@ -17,28 +14,30 @@ export default class FamilyCard extends Component {
     super(props);
     this.state = {
       personProps: this.props.personProps
-    }
+    };
     this.analyzeState = this.analyzeState.bind(this);
     this.getStateColor = this.getStateColor.bind(this);
   }
+
   analyzeState(person) {
-    if (person.estado.greenFlag.state){
+    if (person.estado.greenFlag.state) {
       return "ok";
     }
-    if (!person.estado.estaBien.consultado){
+    if (!person.estado.estaBien.consultado) {
       return "initial";
     }
-    if (person.estado.estaBien.respuesta === false){
+    if (person.estado.estaBien.respuesta === false) {
       return "critical"
     }
-    if (person.estado.estaBien.respuesta === null){
+    if (person.estado.estaBien.respuesta === null) {
       //TODO: De acuerdo al tiempo que paso desde que se disparo la pregunta, sera pending/amarillo o alert/naranja
       return "alert";
     }
   }
+
   getStateColor(person) {
     let state = this.analyzeState(person);
-    switch(state) {
+    switch (state) {
       case "ok":
         return "green";
         break;
@@ -59,21 +58,22 @@ export default class FamilyCard extends Component {
     }
   }
 
-  render () {
+  render() {
+    let bgColor = this.getStateColor(this.state.personProps);
     return (
-      <Card styles={{ card: { backgroundColor: this.getStateColor(this.state.personProps) }}}>
+      <Card styles={{card: {backgroundColor: bgColor}}}>
         <View style={{
           flexDirection: 'row',
           height: 60,
         }}>
-          <Text style={{flex: 1,fontWeight: 'bold'}}>{this.state.personProps.name}</Text>
+          <Text style={{flex: 1, fontWeight: 'bold'}}>{this.state.personProps.name}</Text>
           <View
             style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Image source={require('../img/personImgExample.jpg')} size={50} />
+            <Image source={require('../img/personImgExample.jpg')} size={50}/>
           </View>
 
         </View>
