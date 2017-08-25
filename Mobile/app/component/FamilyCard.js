@@ -81,7 +81,3 @@ export default class FamilyCard extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-});
