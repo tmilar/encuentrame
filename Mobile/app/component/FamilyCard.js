@@ -12,9 +12,7 @@ import {
 export default class FamilyCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      personProps: this.props.personProps
-    };
+
     this.analyzeState = this.analyzeState.bind(this);
     this.getStateColor = this.getStateColor.bind(this);
   }
@@ -59,14 +57,16 @@ export default class FamilyCard extends Component {
   }
 
   render() {
-    let bgColor = this.getStateColor(this.state.personProps);
+    let personProps = this.props.personProps;
+    let bgColor = this.getStateColor(personProps);
+
     return (
       <Card styles={{card: {backgroundColor: bgColor}}}>
         <View style={{
           flexDirection: 'row',
           height: 60,
         }}>
-          <Text style={{flex: 1, fontWeight: 'bold'}}>{this.state.personProps.name}</Text>
+          <Text style={{flex: 1, fontWeight: 'bold'}}>{personProps.name}</Text>
           <View
             style={{
               flex: 1,
