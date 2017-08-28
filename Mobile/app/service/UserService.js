@@ -1,4 +1,5 @@
 import {AsyncStorage} from 'react-native'
+import {apiUrl } from '../config/apiProperties'
 
 class UserService {
 
@@ -13,18 +14,28 @@ class UserService {
    * Fetch registered users. Using local storage for now.
    */
   async checkCredentials(user) {
-    let found = await this.findByEmail(user.email);
+    fetch('http://encuentrameweb.azurewebsites.net/api/authentication/login/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "Username": 'javier.wamba',
+        "Password": '123'
+      })
+    }).then((response) => {
+      console.log('response', response);
+      return response.json();
+    })
+      .then((responseJson) => {
+        console.log('responseJson', responseJson);
+        return true;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
-    if (!found) {
-      throw `El usuario '${user.email}' no esta registrado.`;
-    }
-
-    // Check password
-    if (this.checkUserPassword(found, user.password)) {
-      throw `La contraseña ingresada para '${user.email}' es incorrecta.`;
-    }
-
-    return found;
   }
 
   /**
@@ -76,18 +87,34 @@ class UserService {
       throw `Por favor, ingrese un email y contraseñas válidos.`;
     }
 
-    let existingUser = await this.findByEmail(userData.email);
+    fetch(apiUrl + 'account/create', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "Username": userData.userName,
+        "Password": userData.password,
+        "FirstName":"Pepe",
+        "LastName":"Grillo",
+        "BirthDay":"1981-03-03",
+        "Email": userData.email
+      })
+    }).then((response) => {
+      console.log('response', response);
+      return response.json();
+    })
+      .then((responseJson) => {
+        console.log('responseJson', responseJson);
+        return responseJson;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
-    if(existingUser) {
-      throw `El usuario '${userData.email}' ya existe.!`;
-    }
-
-    let storedUsers = await this.findAll();
-
-    storedUsers = [...storedUsers, userData];
-
-    console.log(`Registrado '${userData.email}' exitosamente! Users total: ${storedUsers.length}`);
-    return await AsyncStorage.setItem("users", JSON.stringify(storedUsers));
+    console.log(`Registrado '${userData.email}' exitosamente!'`);
+    return await AsyncStorage.setItem("user", JSON.stringify(userJson));
   }
 }
 

@@ -48,6 +48,7 @@ export default class Register extends Component {
 
   async _handleRegisterButtonPress() {
     const registerData = {
+      userName: this.state.userName,
       email: this.state.userEmail,
       password: this.state.password
     };
