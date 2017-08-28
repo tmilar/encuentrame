@@ -41,15 +41,18 @@ export default class Login extends Component {
 
     let result = await UserService.checkCredentials(credentials);
 
-    console.log(`Logged! ->`, result);
+    console.log(`Logged! ->`, result.ok);
 
     return result;
   }
 
   async _handleLoginButtonPress() {
+    let loginResult;
     try {
-      await this._validateLogin();
-      await SessionService.setSessionToken(this.state.userEmail);
+      loginResult = await this._validateLogin();
+      if (loginResult.ok){
+        await SessionService.setSessionToken(this.state.userEmail);
+      }
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
@@ -58,14 +61,22 @@ export default class Login extends Component {
       );
       return;
     }
+    if (loginResult.ok){
+      Alert.alert(
+        'Login!',
+        `Bienvenido, ${this.state.userEmail}!`
+      );
+      this._clearForm();
+      this._goToHome();
+    } else {
+      Alert.alert(
+        'Error',
+        `Error en las credenciales!`
+      );
+    }
 
-    Alert.alert(
-      'Login!',
-      `Bienvenido, ${this.state.userEmail}!`
-    );
 
-    this._clearForm();
-    this._goToHome();
+
   }
 
   _handleEmailTextChange(inputValue) {

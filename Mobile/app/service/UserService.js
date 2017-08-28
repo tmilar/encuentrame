@@ -14,7 +14,8 @@ class UserService {
    * Fetch registered users. Using local storage for now.
    */
   async checkCredentials(user) {
-    fetch('http://encuentrameweb.azurewebsites.net/api/authentication/login/', {
+
+    let resultado = await fetch(apiUrl + 'authentication/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -24,18 +25,21 @@ class UserService {
         "Username": 'javier.wamba',
         "Password": '123'
       })
-    }).then((response) => {
-      console.log('response', response);
-      return response.json();
-    })
-      .then((responseJson) => {
-        console.log('responseJson', responseJson);
-        return true;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
+    }).catch((error) => {
+      console.error(error);
+      console.log(error.json(), responseJson);
+      return false;
+    });
+    if (resultado.status === 200){
+      return {
+        ok: true
+      };
+    } else {
+      return {
+        ok: false,
+        resultado: 'Credenciales incorrectas!'
+      };
+    }
   }
 
   /**
@@ -87,7 +91,7 @@ class UserService {
       throw `Por favor, ingrese un email y contraseñas válidos.`;
     }
 
-    fetch(apiUrl + 'account/create', {
+    let userRegistrationResult = await fetch(apiUrl + 'account/create', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -96,22 +100,23 @@ class UserService {
       body: JSON.stringify({
         "Username": userData.userName,
         "Password": userData.password,
-        "FirstName":"Pepe",
-        "LastName":"Grillo",
-        "BirthDay":"1981-03-03",
         "Email": userData.email
       })
-    }).then((response) => {
-      console.log('response', response);
-      return response.json();
-    })
-      .then((responseJson) => {
-        console.log('responseJson', responseJson);
-        return responseJson;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    }).catch((error) => {
+      console.error(error);
+      console.log(error.json(), responseJson);
+      return false;
+    });
+    if (userRegistrationResult.status === 200){
+      return {
+        ok: true
+      };
+    } else {
+      return {
+        ok: false,
+        resultado: userRegistrationResult
+      };
+    }
 
     console.log(`Registrado '${userData.email}' exitosamente!'`);
     return await AsyncStorage.setItem("user", JSON.stringify(userJson));
