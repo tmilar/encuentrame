@@ -3,7 +3,12 @@ import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import ReactNative, {ScrollView} from 'react-native';
 import SessionService from '../service/SessionService';
+
 export default class Login extends Component {
+  static navigationOptions = {
+    title: 'Login',
+    // header: null
+  };
 
   constructor(props) {
     super(props);
@@ -14,7 +19,7 @@ export default class Login extends Component {
     };
 
     this._clearForm = this._clearForm.bind(this);
-    this._validateLogin = this._validateLogin.bind(this);
+    this._doLogin = this._doLogin.bind(this);
     this._handleUsernameTextChange = this._handleUsernameTextChange.bind(this);
     this._handlePasswordTextChange = this._handlePasswordTextChange.bind(this);
     this._handleLoginButtonPress = this._handleLoginButtonPress.bind(this);
@@ -28,7 +33,7 @@ export default class Login extends Component {
     });
   }
 
-  async _validateLogin() {
+  async _doLogin() {
 
     if (this.state.username === '' || this.state.password === '') {
       throw "Username or password can't empty!";
@@ -39,20 +44,13 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    let result = await UserService.checkCredentials(credentials);
-
-    console.log(`Logged! ->`, result.ok);
-
-    return result;
+    await UserService.checkCredentials(credentials);
   }
 
   async _handleLoginButtonPress() {
-    let loginResult;
+
     try {
-      loginResult = await this._validateLogin();
-      if (loginResult.ok){
-        await SessionService.setSessionToken(this.state.username);
-      }
+      await this._doLogin();
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
@@ -61,22 +59,23 @@ export default class Login extends Component {
       );
       return;
     }
-    if (loginResult.ok){
+
+    try {
+      await SessionService.setSessionToken(this.state.username);
+    } catch (e) {
       Alert.alert(
-        'Login!',
-        `Bienvenido, ${this.state.username}!`
-      );
-      this._clearForm();
-      this._goToHome();
-    } else {
-      Alert.alert(
-        'Error',
-        `Error en las credenciales!`
+        "Error",
+        "Hubo un problema al guardar la sesión. Por favor contacte a soporte."
       );
     }
 
+    Alert.alert(
+      'Login!',
+      `Bienvenido, ${this.state.username}!`
+    );
 
-
+    this._clearForm();
+    this._goToHome();
   }
 
   _handleUsernameTextChange(inputValue) {
@@ -105,11 +104,6 @@ export default class Login extends Component {
       }
     })
   }
-
-  static navigationOptions = {
-    title: 'Login',
-    // header: null
-  };
 
   _goToHome() {
     const {navigate} = this.props.navigation;
@@ -147,7 +141,6 @@ export default class Login extends Component {
               ref="usuario"
               style={styles.textInput}
               onFocus={this.inputFocused.bind(this, 'usuario')}
-              keyboardType="text"
               selectTextOnFocus
               onChangeText={this._handleUsernameTextChange}
             />

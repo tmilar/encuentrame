@@ -17,21 +17,15 @@ class UserService {
         "Username": user.username,
         "Password": user.password
       })
-    }).catch((error) => {
-      console.error(error);
-      console.log(error.json(), responseJson);
-      return false;
     });
-    if (resultado.status === 200) {
-      return {
-        ok: true
-      };
-    } else {
-      return {
-        ok: false,
-        resultado: 'Credenciales incorrectas!'
-      };
+
+    if (resultado.status !== 200) {
+      // TODO refinar control/pase de errores
+      throw 'Credenciales invalidas';
     }
+
+    // Login OK. TODO leer 'resultado' y devolver token respuesta para la sesion
+
   }
 
   async registerUser(userData) {
