@@ -1,4 +1,5 @@
 import {apiUrl} from '../config/apiProperties'
+import SessionService from './SessionService';
 
 class UserService {
 
@@ -7,7 +8,7 @@ class UserService {
    */
   async checkCredentials(user) {
 
-    let resultado = await fetch(apiUrl + 'authentication/login/', {
+    let loginResponse = await fetch(apiUrl + 'authentication/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -19,12 +20,17 @@ class UserService {
       })
     });
 
-    if (resultado.status !== 200) {
+    if (loginResponse.status !== 200) {
       // TODO refinar control/pase de errores
       throw 'Credenciales invalidas';
     }
 
-    // Login OK. TODO leer 'resultado' y devolver token respuesta para la sesion
+    // Login OK. TODO leer 'resultado' y guardar bien el token de la respuesta para la sesion.
+    try {
+      await SessionService.setSessionToken("DUMMY_TOKEN");
+    } catch (e) {
+      throw 'Problema al guardar la sesion';
+    }
 
   }
 

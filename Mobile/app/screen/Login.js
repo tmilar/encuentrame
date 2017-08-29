@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import ReactNative, {ScrollView} from 'react-native';
-import SessionService from '../service/SessionService';
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -58,15 +57,6 @@ export default class Login extends Component {
         `Nombre de usuario o password incorrecto?`
       );
       return;
-    }
-
-    try {
-      await SessionService.setSessionToken(this.state.username);
-    } catch (e) {
-      Alert.alert(
-        "Error",
-        "Hubo un problema al guardar la sesión. Por favor contacte a soporte."
-      );
     }
 
     Alert.alert(
