@@ -1,14 +1,6 @@
-import {AsyncStorage} from 'react-native'
 import {apiUrl} from '../config/apiProperties'
 
 class UserService {
-
-  constructor() {
-    this.initialUsers = [{
-      email: 'admin',
-      password: 'admin'
-    }];
-  }
 
   /**
    * Fetch registered users. Using local storage for now.
@@ -40,48 +32,6 @@ class UserService {
         resultado: 'Credenciales incorrectas!'
       };
     }
-  }
-
-  /**
-   * Naive implementation to Vslidate user credentials against input password.
-   *
-   * @param user
-   * @param password
-   * @returns {boolean}
-   */
-  checkUserPassword(user, password) {
-    return user.password !== password;
-  }
-
-  async findByEmail(userEmail) {
-    let allUsers = await this.findAll();
-
-    return allUsers.find(u => {
-      return u.email === userEmail;
-    });
-  }
-
-  async findAll() {
-
-    let users;
-    let storedUsersJson = await AsyncStorage.getItem("users");
-
-    try {
-      users = JSON.parse(storedUsersJson) || [];
-    } catch (e) {
-      throw new Error("Problem parsing users!", e);
-    }
-
-    let allUsers = users;
-
-    if (this.initialUsers && this.initialUsers.length) {
-      // synchronize (first time only)
-      allUsers = [...this.initialUsers, ...users];
-      delete this.initialUsers;
-      await AsyncStorage.setItem("users", JSON.stringify(allUsers));
-    }
-
-    return allUsers;
   }
 
   async registerUser(userData) {
