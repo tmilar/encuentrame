@@ -54,7 +54,7 @@ export default class Register extends Component {
     };
 
     try {
-      UserService.registerUser(registerData);
+      await UserService.registerUser(registerData);
     } catch (e) {
       console.log("Register error:", e);
       Alert.alert(
