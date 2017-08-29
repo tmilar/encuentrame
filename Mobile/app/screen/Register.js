@@ -3,13 +3,14 @@ import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollVie
 import UserService from '../service/UserService';
 
 export default class Register extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       email: (props.navigation.state.params &&
-        props.navigation.state.params.form &&
-        props.navigation.state.params.form.email) ?
+      props.navigation.state.params.form &&
+      props.navigation.state.params.form.email) ?
         props.navigation.state.params.form.email : '',
       password: props.navigation.state.params.form ?
         props.navigation.state.params.form.password : ''
@@ -70,9 +71,9 @@ export default class Register extends Component {
     );
     this.onDone && this.onDone(this.state.username);
     this.props.navigation.goBack();
-
   }
-  inputFocused (refName) {
+
+  inputFocused(refName) {
     setTimeout(() => {
       let scrollResponder = this.refs.scrollView.getScrollResponder();
       scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
@@ -91,55 +92,55 @@ export default class Register extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView  ref='scrollView'
-                     style={styles.scroll}>
-        <View style={styles.header}>
-          <Text style={styles.paragraph}>
-            Encuentrame
-          </Text>
-        </View>
+        <ScrollView ref='scrollView'
+                    style={styles.scroll}>
+          <View style={styles.header}>
+            <Text style={styles.paragraph}>
+              Encuentrame
+            </Text>
+          </View>
 
-        <View style={styles.content}>
-          <TextInput
-            value={this.state.username}
-            placeholder="Nombre"
-            onFocus={this.inputFocused.bind(this, 'Name')}
-            ref="Name"
-            style={styles.input}
-            selectTextOnFocus
-            onChangeText={this._handleUsernameTextChange}
-          />
+          <View style={styles.content}>
+            <TextInput
+              value={this.state.username}
+              placeholder="Usuario"
+              onFocus={this.inputFocused.bind(this, 'Name')}
+              ref="Name"
+              style={styles.input}
+              selectTextOnFocus
+              onChangeText={this._handleUsernameTextChange}
+            />
 
-          <TextInput
-            value={this.state.email}
-            placeholder="E-mail"
-            onFocus={this.inputFocused.bind(this, 'mail')}
-            ref="mail"
-            style={styles.input}
-            keyboardType="email-address"
-            selectTextOnFocus
-            onChangeText={this._handleEmailTextChange}
-          />
+            <TextInput
+              value={this.state.email}
+              placeholder="E-mail"
+              onFocus={this.inputFocused.bind(this, 'mail')}
+              ref="mail"
+              style={styles.input}
+              keyboardType="email-address"
+              selectTextOnFocus
+              onChangeText={this._handleEmailTextChange}
+            />
 
-          <TextInput
-            value={this.state.password}
-            placeholder="Contraseña"
-            onFocus={this.inputFocused.bind(this, 'password')}
-            ref="password"
-            style={styles.input}
-            secureTextEntry
-            returnKeyType="done"
-            onChangeText={this._handlePasswordTextChange}
-            onSubmitEditing={this._handleLoginButtonPress}
-          />
-        </View>
+            <TextInput
+              value={this.state.password}
+              placeholder="Contraseña"
+              onFocus={this.inputFocused.bind(this, 'password')}
+              ref="password"
+              style={styles.input}
+              secureTextEntry
+              returnKeyType="done"
+              onChangeText={this._handlePasswordTextChange}
+              onSubmitEditing={this._handleLoginButtonPress}
+            />
+          </View>
 
-        <View style={styles.footer}>
-          <Button
-            title="Registro"
-            onPress={this._handleRegisterButtonPress}
-          />
-        </View>
+          <View style={styles.footer}>
+            <Button
+              title="Registro"
+              onPress={this._handleRegisterButtonPress}
+            />
+          </View>
         </ScrollView>
       </View>
     )
