@@ -9,13 +9,13 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      userEmail: '',
+      username: '',
       password: ''
     };
 
     this._clearForm = this._clearForm.bind(this);
     this._validateLogin = this._validateLogin.bind(this);
-    this._handleEmailTextChange = this._handleEmailTextChange.bind(this);
+    this._handleUsernameTextChange = this._handleUsernameTextChange.bind(this);
     this._handlePasswordTextChange = this._handlePasswordTextChange.bind(this);
     this._handleLoginButtonPress = this._handleLoginButtonPress.bind(this);
     this._handleRegisterTextPress = this._handleRegisterTextPress.bind(this);
@@ -23,19 +23,19 @@ export default class Login extends Component {
 
   _clearForm() {
     this.setState({
-      userEmail: '',
+      username: '',
       password: ''
     });
   }
 
   async _validateLogin() {
 
-    if (this.state.userEmail === '' || this.state.password === '') {
-      throw "User email or password can't empty!";
+    if (this.state.username === '' || this.state.password === '') {
+      throw "Username or password can't empty!";
     }
 
     const credentials = {
-      email: this.state.userEmail,
+      username: this.state.username,
       password: this.state.password
     };
 
@@ -51,20 +51,20 @@ export default class Login extends Component {
     try {
       loginResult = await this._validateLogin();
       if (loginResult.ok){
-        await SessionService.setSessionToken(this.state.userEmail);
+        await SessionService.setSessionToken(this.state.username);
       }
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
         'Error',
-        `Email o password incorrecto?`
+        `Nombre de usuario o password incorrecto?`
       );
       return;
     }
     if (loginResult.ok){
       Alert.alert(
         'Login!',
-        `Bienvenido, ${this.state.userEmail}!`
+        `Bienvenido, ${this.state.username}!`
       );
       this._clearForm();
       this._goToHome();
@@ -79,8 +79,8 @@ export default class Login extends Component {
 
   }
 
-  _handleEmailTextChange(inputValue) {
-    this.setState({userEmail: inputValue})
+  _handleUsernameTextChange(inputValue) {
+    this.setState({username: inputValue})
   }
 
   _handlePasswordTextChange(inputValue) {
@@ -100,8 +100,8 @@ export default class Login extends Component {
 
     navigate('Register', {
       form: this.state,
-      onDone: (userEmail) => {
-        self.setState({userEmail});
+      onDone: (username) => {
+        self.setState({username});
       }
     })
   }
@@ -142,24 +142,24 @@ export default class Login extends Component {
 
           <View style={styles.content}>
             <TextInput
-              value={this.state.userEmail}
-              placeholder="E-mail"
+              value={this.state.username}
+              placeholder="Usuario"
               ref="usuario"
               style={styles.textInput}
               onFocus={this.inputFocused.bind(this, 'usuario')}
-              keyboardType="email-address"
+              keyboardType="text"
               selectTextOnFocus
-              onChangeText={this._handleEmailTextChange}
+              onChangeText={this._handleUsernameTextChange}
             />
 
             <TextInput
               value={this.state.password}
               placeholder="Contraseña"
-              ref="passwordd"
+              ref="password"
               style={styles.textInput}
               secureTextEntry
               returnKeyType="done"
-              onFocus={this.inputFocused.bind(this, 'passwordd')}
+              onFocus={this.inputFocused.bind(this, 'password')}
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />

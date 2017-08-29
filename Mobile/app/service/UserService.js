@@ -22,8 +22,8 @@ class UserService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "Username": 'javier.wamba',
-        "Password": '123'
+        "Username": user.username,
+        "Password": user.password
       })
     }).catch((error) => {
       console.error(error);
@@ -86,9 +86,9 @@ class UserService {
 
   async registerUser(userData) {
 
-    if (!userData.email || userData.email === ''
+    if (!userData.username || userData.username === ''
       || !userData.password || userData.password === '') {
-      throw `Por favor, ingrese un email y contraseñas válidos.`;
+      throw `Por favor, ingrese un username y contraseñas válidos.`;
     }
 
     let userRegistrationResult = await fetch(apiUrl + 'account/create', {
@@ -98,7 +98,7 @@ class UserService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "Username": userData.userName,
+        "Username": userData.username,
         "Password": userData.password,
         "Email": userData.email
       })
@@ -118,7 +118,7 @@ class UserService {
       };
     }
 
-    console.log(`Registrado '${userData.email}' exitosamente!'`);
+    console.log(`Registrado '${userData.username}' exitosamente!'`);
     return await AsyncStorage.setItem("user", JSON.stringify(userJson));
   }
 }

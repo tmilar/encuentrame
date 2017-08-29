@@ -6,11 +6,11 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      userEmail: (props.navigation.state.params &&
+      username: '',
+      email: (props.navigation.state.params &&
         props.navigation.state.params.form &&
-        props.navigation.state.params.form.userEmail) ?
-        props.navigation.state.params.form.userEmail : '',
+        props.navigation.state.params.form.email) ?
+        props.navigation.state.params.form.email : '',
       password: props.navigation.state.params.form ?
         props.navigation.state.params.form.password : ''
     };
@@ -19,7 +19,7 @@ export default class Register extends Component {
 
     this._clearForm = this._clearForm.bind(this);
 
-    this._handleUserNameTextChange = this._handleUserNameTextChange.bind(this);
+    this._handleUsernameTextChange = this._handleUsernameTextChange.bind(this);
     this._handleEmailTextChange = this._handleEmailTextChange.bind(this);
     this._handlePasswordTextChange = this._handlePasswordTextChange.bind(this);
 
@@ -28,18 +28,18 @@ export default class Register extends Component {
 
   _clearForm() {
     this.setState({
-      userName: '',
-      userEmail: '',
+      username: '',
+      email: '',
       password: ''
     });
   }
 
-  _handleUserNameTextChange(inputValue) {
-    this.setState({userName: inputValue})
+  _handleUsernameTextChange(inputValue) {
+    this.setState({username: inputValue})
   }
 
   _handleEmailTextChange(inputValue) {
-    this.setState({userEmail: inputValue})
+    this.setState({email: inputValue})
   }
 
   _handlePasswordTextChange(inputValue) {
@@ -48,8 +48,8 @@ export default class Register extends Component {
 
   async _handleRegisterButtonPress() {
     const registerData = {
-      userName: this.state.userName,
-      email: this.state.userEmail,
+      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
     };
 
@@ -68,9 +68,9 @@ export default class Register extends Component {
     if (registrationResult.ok){
       Alert.alert(
         "Registro OK!",
-        `Bienvenido, ${registerData.email}`
+        `Bienvenido, ${registerData.username}`
       );
-      this.onDone && this.onDone(this.state.userEmail);
+      this.onDone && this.onDone(this.state.username);
       this.props.navigation.goBack();
     } else {
       Alert.alert(
@@ -109,17 +109,17 @@ export default class Register extends Component {
 
         <View style={styles.content}>
           <TextInput
-            value={this.state.userName}
+            value={this.state.username}
             placeholder="Nombre"
             onFocus={this.inputFocused.bind(this, 'Name')}
             ref="Name"
             style={styles.input}
             selectTextOnFocus
-            onChangeText={this._handleUserNameTextChange}
+            onChangeText={this._handleUsernameTextChange}
           />
 
           <TextInput
-            value={this.state.userEmail}
+            value={this.state.email}
             placeholder="E-mail"
             onFocus={this.inputFocused.bind(this, 'mail')}
             ref="mail"
@@ -132,8 +132,8 @@ export default class Register extends Component {
           <TextInput
             value={this.state.password}
             placeholder="Contraseña"
-            onFocus={this.inputFocused.bind(this, 'passwordd')}
-            ref="passwordd"
+            onFocus={this.inputFocused.bind(this, 'password')}
+            ref="password"
             style={styles.input}
             secureTextEntry
             returnKeyType="done"
