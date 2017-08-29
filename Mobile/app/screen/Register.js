@@ -66,9 +66,9 @@ export default class Register extends Component {
 
     Alert.alert(
       "Registro OK!",
-      `Bienvenido, ${registerData.email}`
+      `Bienvenido, ${registerData.username}`
     );
-    this.onDone && this.onDone(this.state.email);
+    this.onDone && this.onDone(this.state.username);
     this.props.navigation.goBack();
 
   }
