@@ -53,10 +53,8 @@ export default class Register extends Component {
       password: this.state.password
     };
 
-    let registrationResult;
-
     try {
-      registrationResult = await UserService.registerUser(registerData);
+      UserService.registerUser(registerData);
     } catch (e) {
       console.log("Register error:", e);
       Alert.alert(
@@ -65,19 +63,13 @@ export default class Register extends Component {
       );
       return;
     }
-    if (registrationResult.ok){
-      Alert.alert(
-        "Registro OK!",
-        `Bienvenido, ${registerData.username}`
-      );
-      this.onDone && this.onDone(this.state.username);
-      this.props.navigation.goBack();
-    } else {
-      Alert.alert(
-        "Registro incorrecto",
-        `Error al registrarse!`
-      );
-    }
+
+    Alert.alert(
+      "Registro OK!",
+      `Bienvenido, ${registerData.email}`
+    );
+    this.onDone && this.onDone(this.state.email);
+    this.props.navigation.goBack();
 
   }
   inputFocused (refName) {

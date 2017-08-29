@@ -1,5 +1,5 @@
 import {AsyncStorage} from 'react-native'
-import {apiUrl } from '../config/apiProperties'
+import {apiUrl} from '../config/apiProperties'
 
 class UserService {
 
@@ -30,7 +30,7 @@ class UserService {
       console.log(error.json(), responseJson);
       return false;
     });
-    if (resultado.status === 200){
+    if (resultado.status === 200) {
       return {
         ok: true
       };
@@ -74,7 +74,7 @@ class UserService {
 
     let allUsers = users;
 
-    if(this.initialUsers && this.initialUsers.length) {
+    if (this.initialUsers && this.initialUsers.length) {
       // synchronize (first time only)
       allUsers = [...this.initialUsers, ...users];
       delete this.initialUsers;
@@ -102,24 +102,13 @@ class UserService {
         "Password": userData.password,
         "Email": userData.email
       })
-    }).catch((error) => {
-      console.error(error);
-      console.log(error.json(), responseJson);
-      return false;
     });
-    if (userRegistrationResult.status === 200){
-      return {
-        ok: true
-      };
-    } else {
-      return {
-        ok: false,
-        resultado: userRegistrationResult
-      };
+
+    if (userRegistrationResult.status !== 200) {
+      throw 'Error en el registro...';
     }
 
     console.log(`Registrado '${userData.username}' exitosamente!'`);
-    return await AsyncStorage.setItem("user", JSON.stringify(userJson));
   }
 }
 
