@@ -1,32 +1,34 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import Swiper from "react-native-deck-swiper/Swiper";
 import EncuentraCard from "../component/EncuentraCard";
+import containers from '../style/containers';
 
 
-export default class Me extends Component {
+export default class Find extends Component {
+  renderCard(card) {
+    return <EncuentraCard style={styles.encuentraCard}/>
+  }
+
+  onSwipedHandler(cardIndex) {
+    console.log(cardIndex)
+  }
+
+  onSwipedAllHandler() {
+    console.log('onSwipedAll')
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Swiper style={styles.swiper}
-          cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
-          renderCard={(card) => {
-            return (
-              <EncuentraCard style={styles.encuentraCard}>
-              </EncuentraCard>
-            )
-          }}
-          onSwiped={(cardIndex) => {console.log(cardIndex)}}
-          onSwipedAll={() => {console.log('onSwipedAll')}}
-          cardIndex={0}
-          backgroundColor={'#4FD0E9'}>
-          <Button
-            onPress={() => {console.log('oulala')}}
-            title="Press me">
-            You can press me
-          </Button>
+        <Swiper cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
+                renderCard={this.renderCard}
+                onSwiped={this.onSwipedHandler}
+                onSwipedAll={this.onSwipedAllHandler}
+                cardIndex={0}
+                backgroundColor={'#4F10E9'}
+                style={styles.swiper}>
         </Swiper>
-        <View style={{flex:0.2}}></View>
       </View>
     )
   }
@@ -37,18 +39,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  swiper: {
-    flex: 0.8
-  },
+  swiper: {},
   paragraph: {
     margin: 24,
     fontSize: 18,
     textAlign: 'center',
     color: '#34495e'
   },
-  encuentraCard: {
-    flex: 0.8
-  },
+  encuentraCard: {},
   card: {
     flex: 1,
     borderRadius: 4,
