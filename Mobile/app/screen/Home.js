@@ -31,7 +31,6 @@ export default class Home extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
-          {/* TODO add styles.container for scroll view?*/}
           <Text style={styles.paragraph} onPress={this.onPressTitle}>
             Home
           </Text>
@@ -47,11 +46,6 @@ export default class Home extends Component {
   }
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   paragraph: {
     margin: 24,
     fontSize: 18,

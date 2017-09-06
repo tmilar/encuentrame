@@ -3,6 +3,8 @@ import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import ReactNative, {ScrollView} from 'react-native';
 import SessionService from '../service/SessionService';
+import containers from '../style/containers';
+
 export default class Login extends Component {
 
   constructor(props) {
@@ -119,7 +121,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={containers.container}>
 
         <ScrollView ref='scrollView'
                     style={styles.scroll}>
@@ -177,11 +179,6 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   header: {
     flex: 1,
     height: 100,

@@ -20,7 +20,7 @@ export default class Find extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={containers.container}>
         <Swiper cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
                 renderCard={this.renderCard}
                 onSwiped={this.onSwipedHandler}
@@ -34,11 +34,6 @@ export default class Find extends Component {
   }
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   swiper: {},
   paragraph: {
     margin: 24,
