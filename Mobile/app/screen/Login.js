@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import ReactNative, {ScrollView} from 'react-native';
 import SessionService from '../service/SessionService';
-import containers from '../style/containers';
+import {containers} from '../style';
 
 export default class Login extends Component {
 

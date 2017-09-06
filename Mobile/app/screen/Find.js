@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
 import Swiper from "react-native-deck-swiper/Swiper";
 import EncuentraCard from "../component/EncuentraCard";
-import containers from '../style/containers';
+import {containers} from '../style';
 
 
 export default class Find extends Component {

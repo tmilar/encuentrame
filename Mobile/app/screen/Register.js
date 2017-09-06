@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
 import UserService from '../service/UserService';
-import containers from '../style/containers';
+import {containers} from '../style';
 
 export default class Register extends Component {
   constructor(props) {
