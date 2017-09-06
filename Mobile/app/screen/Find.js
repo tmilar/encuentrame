@@ -26,7 +26,7 @@ export default class Find extends Component {
                 onSwiped={this.onSwipedHandler}
                 onSwipedAll={this.onSwipedAllHandler}
                 cardIndex={0}
-                backgroundColor={'#4F10E9'}
+                backgroundColor={'#E9E9EF'}
                 style={styles.swiper}>
         </Swiper>
       </View>
