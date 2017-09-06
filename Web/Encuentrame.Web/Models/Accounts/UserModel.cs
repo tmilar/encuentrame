@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using Encuentrame.Model.Accounts;
-using Encuentrame.Web.Helpers;
-using Encuentrame.Web.MetadataProviders;
-using Encuentrame.Web.MetadataProviders.CustomValidations;
-using Encuentrame.Web.Models.References;
 
 namespace Encuentrame.Web.Models.Accounts
 {

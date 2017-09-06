@@ -21,6 +21,7 @@ namespace Encuentrame.Model.Supports
         [Inject]
         public IAuditContextManager AuditContextManager { get; set; }
 
+
         protected void RefreshObject(object obj)
         {
             NHibernateContext.CurrentSession.Refresh(obj);

@@ -6,6 +6,8 @@ namespace Encuentrame.Model.Accounts
     {
         User Get(int id);
         void Create(UserCommand.CreateOrEditParameters userParameters);
+        void NewRegister(UserCommand.CreateOrEditParameters userParameters);
+        void EditRegister( UserCommand.CreateOrEditParameters userParameters);
         IList<User> List();
         void Edit(int id, UserCommand.CreateOrEditParameters userParameters);
         void Delete(int id);

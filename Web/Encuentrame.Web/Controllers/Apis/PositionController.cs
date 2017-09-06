@@ -27,7 +27,7 @@ namespace Encuentrame.Web.Controllers.Apis
             {
                 Latitude = positionApiModel.Latitude,
                 Longitude = positionApiModel.Longitude,
-                UserId = positionApiModel.UserId
+                UserId = this.GetIdUserLogged(),
             });
 
             return Ok(new PositionResultModel()

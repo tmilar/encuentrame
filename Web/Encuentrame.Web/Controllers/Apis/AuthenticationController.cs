@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
-using Encuentrame.Model.Accounts;
+using System.Web.Http.Results;
 using Encuentrame.Model.Supports.Interfaces;
-using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Authentications;
 using NailsFramework.IoC;
-using NailsFramework.Persistence;
-using NailsFramework.UserInterface;
 
 namespace Encuentrame.Web.Controllers.Apis
 {
@@ -17,6 +15,7 @@ namespace Encuentrame.Web.Controllers.Apis
         [Inject]
         public IAuthenticationProvider AuthenticationProvider { get; set; }
 
+        
       
         [AllowAnonymous]
         [HttpPost]
@@ -43,7 +42,8 @@ namespace Encuentrame.Web.Controllers.Apis
                 };
                 return Ok(result);
             }
-            return Unauthorized();
+         
+            return Content(HttpStatusCode.Unauthorized, new {Message= "Invalid user name or password" }); ;
 
         }
 

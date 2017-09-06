@@ -86,6 +86,9 @@
     <Compile Include="Accounts\UserCommand.cs" />
     <Compile Include="Addresses\Address.cs" />
     <Compile Include="BaseSeeker.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\EventCommand.cs" />
+    <Compile Include="Events\IEventCommand.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="ISeeker.cs" />
     <Compile Include="Positions\IPositionCommand.cs" />

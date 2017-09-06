@@ -15,28 +15,7 @@ namespace Encuentrame.Model.Accounts
     {
         [Inject]
         public IBag<User> Users { get; set; }
-
-
-        [Inject]
-        public ITranslationService TranslationService { get; set; }
-
-        public class CreateOrEditParameters
-        {
-          
-         
-            public virtual string Name { get; set; }
-            public string Username { get; set; }
-            public string LastName { get; set; }
-            public string FirstName { get; set; }
-            public string Email { get; set; }
-            public string EmailAlternative { get; set; }
-            public string InternalNumber { get; set; }
-            public string PhoneNumber { get; set; }
-            public string MobileNumber { get; set; }
-            public string Image { get; set; }
-            public RoleEnum Role { get; set; }
-        }
-
+        
         public User Get(int id)
         {
             return Users[id];
@@ -52,6 +31,28 @@ namespace Encuentrame.Model.Accounts
 
             AuditContextManager.SetObject(user);
             AuditContextManager.Add(TranslationService.Translate("UserName"), user.Username);
+        }
+        
+        public void NewRegister(CreateOrEditParameters userParameters)
+        {
+            var user = new User();
+            UpdateUserWith(user, userParameters);
+
+            Users.Put(user);
+        }
+
+        public void EditRegister( CreateOrEditParameters userParameters)
+        {
+            var user = Users.Where(x=>x.Username==userParameters.Username).First();
+            user.LastName = userParameters.LastName;
+            user.FirstName = userParameters.FirstName;
+            user.Email = userParameters.Email;
+            user.EmailAlternative = userParameters.EmailAlternative;
+            user.InternalNumber = userParameters.InternalNumber;
+            user.MobileNumber = userParameters.MobileNumber;
+            user.PhoneNumber = userParameters.PhoneNumber;
+            user.Image = userParameters.Image;
+            
         }
 
         [Audit(BehaviorType = ActionsEnum.Edit, EntityType = typeof(User), IdField = "id")]
@@ -88,6 +89,21 @@ namespace Encuentrame.Model.Accounts
             user.PhoneNumber = userParameters.PhoneNumber;
             user.Image = userParameters.Image;
             user.Role = userParameters.Role;
-        }        
+        }
+
+        public class CreateOrEditParameters
+        {
+            public virtual string Name { get; set; }
+            public string Username { get; set; }
+            public string LastName { get; set; }
+            public string FirstName { get; set; }
+            public string Email { get; set; }
+            public string EmailAlternative { get; set; }
+            public string InternalNumber { get; set; }
+            public string PhoneNumber { get; set; }
+            public string MobileNumber { get; set; }
+            public string Image { get; set; }
+            public RoleEnum Role { get; set; }
+        }
     }
 }

@@ -13,7 +13,9 @@ namespace Encuentrame.Web.Controllers.Apis
     {
         [Inject]
         public ISessionContext SessionContext { get; set; }
-
+        
+            [Inject]
+        public IExecutionContext ExecutionContext { get; set; }
         [Inject]
         public ICurrentUnitOfWork CurrentUnitOfWork { get; set; }
 
@@ -21,7 +23,14 @@ namespace Encuentrame.Web.Controllers.Apis
         public ILog Log { get; set; }
 
 
+        protected bool IsLogged()
+        {
+            return ExecutionContext.GetObject<int>("isLogged")>0;
+        }
+        protected int GetIdUserLogged()
+        {
+            return ExecutionContext.GetObject<int>("isLogged");
+        }
 
-     
     }
 }

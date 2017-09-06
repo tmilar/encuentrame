@@ -25,7 +25,8 @@
                             'user': $user.val()
                         },
                         type: 'POST',
-                        data: jQuery.parseJSON($textPost.val())
+                        data: jQuery.parseJSON($textPost.val()),
+                        dataType:'json'
 
                     }).done(function (data) {
                         
