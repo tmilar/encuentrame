@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
 import UserService from '../service/UserService';
-import {containers} from '../style';
+import {containers, text} from '../style';
 
 export default class Register extends Component {
   constructor(props) {
@@ -94,7 +94,7 @@ export default class Register extends Component {
         <ScrollView  ref='scrollView'
                      style={styles.scroll}>
         <View style={styles.header}>
-          <Text style={styles.paragraph}>
+          <Text style={text.title}>
             Encuentrame
           </Text>
         </View>
@@ -147,13 +147,6 @@ export default class Register extends Component {
 }
 
 const styles = StyleSheet.create({
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#34495e'
-  },
   input: {
     width: 200,
     height: 44,
