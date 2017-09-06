@@ -6,6 +6,10 @@ const containers = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  statusBar: {
+    backgroundColor: "#3DB097",
+    paddingTop: Constants.statusBarHeight,
   }
 });
 

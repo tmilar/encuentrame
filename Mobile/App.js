@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Root} from './app/config/router';
 import {View} from "react-native";
-import {Constants} from 'expo';
+import {containers} from './app/style';
 
 class App extends Component {
   render() {
     return (
-      <View style={{flex: 1, marginTop: Constants.statusBarHeight}}>
+      <View style={[{flex: 1}, containers.statusBar]}>
         <Root />
       </View>
     )
