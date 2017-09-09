@@ -8,10 +8,13 @@ class SessionService {
   /**
    * Set session token id.
    */
-  async setSessionToken(id_token) {
+  async setSession(sessionData) {
+    this._validateSessionData();
+
     let timestamp = new Date().getTime();
     let session = {
-      id: id_token,
+      id: sessionData.token,
+      userId: sessionData.userId,
       expires: new Date(timestamp + this.SESSION_TTL).getTime()
     };
     return await AsyncStorage.setItem(this.STORAGE_KEY, JSON.stringify(session));
@@ -31,6 +34,18 @@ class SessionService {
 
   async clearSession() {
     return await AsyncStorage.removeItem(this.STORAGE_KEY);
+  }
+
+  _validateSessionData(data) {
+    if (!data) {
+      throw 'Session data is empty!';
+    }
+    if(!data.tokenId) {
+      throw 'Session tokenId is missing!';
+    }
+    if(!data.userId) {
+      throw 'User Id is missing!';
+    }
   }
 }
 
