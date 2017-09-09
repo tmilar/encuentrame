@@ -22,13 +22,19 @@ class SessionService {
 
   async isSessionAlive() {
     let sessionJson = await AsyncStorage.getItem(this.STORAGE_KEY);
-    let session = JSON.parse(sessionJson);
     let isAlive = false;
+
+    if(!sessionJson) {
+      console.log("Session check: [No session found]", `alive?: ${isAlive}`);
+      return isAlive;
+    }
+
+    let session = JSON.parse(sessionJson);
 
     if (session && session.expires) {
       isAlive = new Date() < new Date(session.expires);
     }
-    console.log("Session check: ", session, `alive?: ${isAlive}`);
+    console.log("Session check: ", session, `alive?: ${isAlive} (expires: ${session.expires}`);
     return isAlive;
   }
 
