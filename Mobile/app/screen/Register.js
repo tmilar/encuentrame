@@ -60,14 +60,14 @@ export default class Register extends Component {
       console.log("Register error:", e);
       Alert.alert(
         "Error de registro",
-        `Hubo un problema: ${e}`
+        `Hubo un problema: ${e}.`
       );
       return;
     }
 
     Alert.alert(
-      "Registro OK!",
-      `Bienvenido, ${registerData.username}`
+      "Registro exitoso",
+      `Bienvenido, ${registerData.username}!`
     );
     this.onDone && this.onDone(this.state.username);
     this.props.navigation.goBack();

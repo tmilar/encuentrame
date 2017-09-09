@@ -34,7 +34,7 @@ class SessionService {
     if (session && session.expires) {
       isAlive = new Date() < new Date(session.expires);
     }
-    console.log("Session check: ", session, `alive?: ${isAlive} (expires: ${session.expires}`);
+    console.log("Session check: ", session, `alive?: ${isAlive} (expires: ${new Date(session.expires)}`);
     return isAlive;
   }
 

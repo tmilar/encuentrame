@@ -36,7 +36,7 @@ export default class Login extends Component {
   async _doLogin() {
 
     if (this.state.username === '' || this.state.password === '') {
-      throw "Username or password can't empty!";
+      throw "El usuario o la contraseña no pueden estar vacíos!";
     }
 
     const credentials = {
@@ -54,8 +54,8 @@ export default class Login extends Component {
     } catch (e) {
       console.log("Login error: ", e);
       Alert.alert(
-        'Error',
-        e.message
+        'Login Error',
+        e.message || e
       );
       return;
     }
