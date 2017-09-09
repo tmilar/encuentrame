@@ -4,11 +4,11 @@ import SessionService from './SessionService';
 class UserService {
 
   /**
-   * Fetch registered users. Using local storage for now.
+   * Check registered user credentials against api
    */
   async checkCredentials(user) {
 
-    let loginResponse = await fetch(apiUrl + 'authentication/login/', {
+    let rawResponse = await fetch(apiUrl + 'authentication/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -20,16 +20,26 @@ class UserService {
       })
     });
 
-    if (loginResponse.status !== 200) {
-      // TODO refinar control/pase de errores
-      throw 'Credenciales invalidas';
-    }
 
-    // Login OK. TODO leer 'resultado' y guardar bien el token de la respuesta para la sesion.
+    if (rawResponse.status !== 200) {
+      this._manageLoginErrors(rawResponse);
+    }
+    let loginResponse = await rawResponse.json();
+
+    // Login OK. TODO loginResponde tiene userId y Token. Ver si conviene guardar el user id en algun lado
     try {
-      await SessionService.setSessionToken("DUMMY_TOKEN");
+      await SessionService.setSessionToken(loginResponse.Token);
     } catch (e) {
       throw 'Problema al guardar la sesion';
+    }
+
+  }
+  _manageLoginErrors(loginResponse){
+    if (loginResponse.status === 401) {
+      throw 'Credenciales inválidas';
+    }
+    if (loginResponse.status === 400) {
+      throw 'Error en el formato de las credenciales';
     }
 
   }

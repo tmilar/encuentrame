@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
+import SessionService from '../service/SessionService';
 import ReactNative, {ScrollView} from 'react-native';
 
 export default class Login extends Component {
@@ -54,7 +55,7 @@ export default class Login extends Component {
       console.log("Login error: ", e);
       Alert.alert(
         'Error',
-        `Nombre de usuario o password incorrecto?`
+        e.message
       );
       return;
     }
