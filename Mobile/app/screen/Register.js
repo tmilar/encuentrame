@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
 import UserService from '../service/UserService';
+import {showLoading, hideLoading} from 'react-native-notifyer';
 
 export default class Register extends Component {
 
@@ -54,20 +55,25 @@ export default class Register extends Component {
       password: this.state.password
     };
 
+    showLoading("Registro en progreso...");
+
     try {
       await UserService.registerUser(registerData);
     } catch (e) {
+      hideLoading();
       console.log("Register error:", e);
       Alert.alert(
         "Error de registro",
-        `Hubo un problema: ${e}`
+        `Hubo un problema: ${e}.`
       );
       return;
     }
 
+    hideLoading();
+
     Alert.alert(
-      "Registro OK!",
-      `Bienvenido, ${registerData.username}`
+      "Registro exitoso",
+      `Bienvenido, ${registerData.username}!`
     );
     this.onDone && this.onDone(this.state.username);
     this.props.navigation.goBack();

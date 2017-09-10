@@ -26,10 +26,11 @@ class UserService {
     }
 
 
-    // Login OK. TODO loginResponde tiene userId y Token. Ver si conviene guardar el user id en algun lado
+    // Login OK. Guardamos el token y el userId en la sesion.
     try {
-      await SessionService.setSessionToken(loginResponse.Token);
+      await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId});
     } catch (e) {
+      console.error(e);
       throw 'Problema al guardar la sesion';
     }
 

@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
 import ReactNative, {ScrollView} from 'react-native';
+import {showLoading, hideLoading} from 'react-native-notifyer';
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -36,7 +37,7 @@ export default class Login extends Component {
   async _doLogin() {
 
     if (this.state.username === '' || this.state.password === '') {
-      throw "Username or password can't empty!";
+      throw "El usuario o la contraseña no pueden estar vacíos!";
     }
 
     const credentials = {
@@ -49,17 +50,19 @@ export default class Login extends Component {
 
   async _handleLoginButtonPress() {
 
+    showLoading("Cargando...");
     try {
       await this._doLogin();
     } catch (e) {
+      hideLoading();
       console.log("Login error: ", e);
       Alert.alert(
-        'Error',
-        e
+        'Login Error',
+        e.message || e
       );
       return;
     }
-
+    hideLoading();
     Alert.alert(
       'Login!',
       `Bienvenido, ${this.state.username}!`
