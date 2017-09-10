@@ -6,7 +6,6 @@ using NailsFramework.Persistence;
 
 using Encuentrame.Model.Supports;
 using Encuentrame.Model.Supports.Audits;
-using Encuentrame.Model.Supports.Interfaces;
 
 namespace Encuentrame.Model.Accounts
 {
@@ -25,7 +24,17 @@ namespace Encuentrame.Model.Accounts
         public void Create(CreateOrEditParameters userParameters)
         {
             var user = new User();
-            UpdateUserWith(user, userParameters);
+            user.Username = userParameters.Username;
+            user.LastName = userParameters.LastName;
+            
+            user.FirstName = userParameters.FirstName;
+            user.Email = userParameters.Email;
+            user.EmailAlternative = userParameters.EmailAlternative;
+            user.InternalNumber = userParameters.InternalNumber;
+            user.MobileNumber = userParameters.MobileNumber;
+            user.PhoneNumber = userParameters.PhoneNumber;
+            user.Image = userParameters.Image;
+            user.Role = userParameters.Role;
 
             Users.Put(user);
 
@@ -35,8 +44,25 @@ namespace Encuentrame.Model.Accounts
         
         public void NewRegister(CreateOrEditParameters userParameters)
         {
-            var user = new User();
-            UpdateUserWith(user, userParameters);
+            if (Users.Where(x => x.Username == userParameters.Username).Any())
+            {
+                throw new UserUsernameUniqueException();
+            }
+
+            var user = new User
+            {
+                Username = userParameters.Username,
+                LastName = userParameters.LastName,
+                Password = userParameters.Password,
+                FirstName = userParameters.FirstName,
+                Email = userParameters.Email,
+                EmailAlternative = userParameters.EmailAlternative,
+                InternalNumber = userParameters.InternalNumber,
+                MobileNumber = userParameters.MobileNumber,
+                PhoneNumber = userParameters.PhoneNumber,
+                Image = userParameters.Image,
+                Role = userParameters.Role
+            };
 
             Users.Put(user);
         }
@@ -59,7 +85,15 @@ namespace Encuentrame.Model.Accounts
         public void Edit(int id, CreateOrEditParameters userParameters)
         {
             var user = Users[id];
-            UpdateUserWith(user, userParameters);
+            user.LastName = userParameters.LastName;
+            user.FirstName = userParameters.FirstName;
+            user.Email = userParameters.Email;
+            user.EmailAlternative = userParameters.EmailAlternative;
+            user.InternalNumber = userParameters.InternalNumber;
+            user.MobileNumber = userParameters.MobileNumber;
+            user.PhoneNumber = userParameters.PhoneNumber;
+            user.Image = userParameters.Image;
+            user.Role = userParameters.Role;
             AuditContextManager.SetObject(user);
         }
 
@@ -77,24 +111,13 @@ namespace Encuentrame.Model.Accounts
             return Users.Where(x => x.DeletedKey == null).ToList();
         }
 
-        private void UpdateUserWith(User user, CreateOrEditParameters userParameters)
-        {
-            user.Username = userParameters.Username;
-            user.LastName = userParameters.LastName;
-            user.FirstName = userParameters.FirstName;
-            user.Email = userParameters.Email;
-            user.EmailAlternative = userParameters.EmailAlternative;
-            user.InternalNumber = userParameters.InternalNumber;
-            user.MobileNumber = userParameters.MobileNumber;
-            user.PhoneNumber = userParameters.PhoneNumber;
-            user.Image = userParameters.Image;
-            user.Role = userParameters.Role;
-        }
+       
 
         public class CreateOrEditParameters
         {
             public virtual string Name { get; set; }
             public string Username { get; set; }
+            public string Password { get; set; }
             public string LastName { get; set; }
             public string FirstName { get; set; }
             public string Email { get; set; }

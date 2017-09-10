@@ -28,6 +28,7 @@ namespace Encuentrame.Web.Controllers.Apis
             var userParameters = new UserCommand.CreateOrEditParameters
             {
                 Username = userApiModel.Username,
+                Password = userApiModel.Password,
                 LastName = userApiModel.LastName,
                 FirstName = userApiModel.FirstName,
                 Email = userApiModel.Email,
@@ -39,9 +40,19 @@ namespace Encuentrame.Web.Controllers.Apis
                 Role = RoleEnum.User
             };
 
-            UserCommand.NewRegister(userParameters);
+            try
+            {
+                UserCommand.NewRegister(userParameters);
 
-            return Ok();
+                return Ok();
+            }
+            catch (UserUsernameUniqueException e)
+            {
+                ModelState.AddModelError("UserApiModel.Username", Translations.UserUsernameUniqueException);
+                return BadRequest(ModelState);
+            }
+
+           
 
         }
 

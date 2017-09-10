@@ -1392,4 +1392,7 @@
   <data name="UserId" xml:space="preserve">
     <value>Usuario</value>
   </data>
+  <data name="UserUsernameUniqueException" xml:space="preserve">
+    <value>El nombre de usuario ya existe.</value>
+  </data>
 </root>

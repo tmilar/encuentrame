@@ -84,6 +84,7 @@
     <Compile Include="Accounts\RoleEnum.cs" />
     <Compile Include="Accounts\TokenApiSession.cs" />
     <Compile Include="Accounts\UserCommand.cs" />
+    <Compile Include="Accounts\UserUsernameUniqueException.cs" />
     <Compile Include="Addresses\Address.cs" />
     <Compile Include="BaseSeeker.cs" />
     <Compile Include="Events\Event.cs" />

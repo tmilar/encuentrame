@@ -3814,6 +3814,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El nombre de usuario ya existe..
+        /// </summary>
+        public static string UserUsernameUniqueException {
+            get {
+                return ResourceManager.GetString("UserUsernameUniqueException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visualizar.
         /// </summary>
         public static string ViewMonthDaily {
