@@ -19,12 +19,12 @@ class UserService {
         "Password": user.password
       })
     });
-
-
-    if (rawResponse.status !== 200) {
-      this._manageLoginErrors(rawResponse);
-    }
     let loginResponse = await rawResponse.json();
+    if (rawResponse.status !== 200) {
+      loginResponse.status = rawResponse.status;
+      this._manageLoginErrors(loginResponse);
+    }
+
 
     // Login OK. TODO loginResponde tiene userId y Token. Ver si conviene guardar el user id en algun lado
     try {

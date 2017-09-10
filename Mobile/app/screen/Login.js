@@ -55,7 +55,7 @@ export default class Login extends Component {
       console.log("Login error: ", e);
       Alert.alert(
         'Error',
-        e.message
+        e
       );
       return;
     }
