@@ -1,93 +1,75 @@
-import {AsyncStorage} from 'react-native'
+import {apiUrl} from '../config/apiProperties'
+import SessionService from './SessionService';
 
 class UserService {
 
-  constructor() {
-    this.initialUsers = [{
-      email: 'admin',
-      password: 'admin'
-    }];
-  }
-
   /**
-   * Fetch registered users. Using local storage for now.
+   * Check registered user credentials against api
    */
   async checkCredentials(user) {
-    let found = await this.findByEmail(user.email);
 
-    if (!found) {
-      throw `El usuario '${user.email}' no esta registrado.`;
-    }
-
-    // Check password
-    if (this.checkUserPassword(found, user.password)) {
-      throw `La contraseña ingresada para '${user.email}' es incorrecta.`;
-    }
-
-    return found;
-  }
-
-  /**
-   * Naive implementation to Vslidate user credentials against input password.
-   *
-   * @param user
-   * @param password
-   * @returns {boolean}
-   */
-  checkUserPassword(user, password) {
-    return user.password !== password;
-  }
-
-  async findByEmail(userEmail) {
-    let allUsers = await this.findAll();
-
-    return allUsers.find(u => {
-      return u.email === userEmail;
+    let rawResponse = await fetch(apiUrl + 'authentication/login/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "Username": user.username,
+        "Password": user.password
+      })
     });
-  }
+    let loginResponse = await rawResponse.json();
+    if (rawResponse.status !== 200) {
+      loginResponse.status = rawResponse.status;
+      this._manageLoginErrors(loginResponse);
+    }
 
-  async findAll() {
 
-    let users;
-    let storedUsersJson = await AsyncStorage.getItem("users");
-
+    // Login OK. Guardamos el token y el userId en la sesion.
     try {
-      users = JSON.parse(storedUsersJson) || [];
+      await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId});
     } catch (e) {
-      throw new Error("Problem parsing users!", e);
+      console.error(e);
+      throw 'Problema al guardar la sesion';
     }
 
-    let allUsers = users;
-
-    if(this.initialUsers && this.initialUsers.length) {
-      // synchronize (first time only)
-      allUsers = [...this.initialUsers, ...users];
-      delete this.initialUsers;
-      await AsyncStorage.setItem("users", JSON.stringify(allUsers));
+  }
+  _manageLoginErrors(loginResponse){
+    if (loginResponse.status === 401) {
+      throw 'Credenciales inválidas';
+    }
+    if (loginResponse.status === 400) {
+      throw 'Error en el formato de las credenciales';
     }
 
-    return allUsers;
   }
 
   async registerUser(userData) {
 
-    if (!userData.email || userData.email === ''
+    if (!userData.username || userData.username === ''
       || !userData.password || userData.password === '') {
-      throw `Por favor, ingrese un email y contraseñas válidos.`;
+      throw `Por favor, ingrese un username y contraseñas válidos.`;
     }
 
-    let existingUser = await this.findByEmail(userData.email);
+    let userRegistrationResult = await fetch(apiUrl + 'account/create', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "Username": userData.username,
+        "Password": userData.password,
+        "Email": userData.email
+      })
+    });
 
-    if(existingUser) {
-      throw `El usuario '${userData.email}' ya existe.!`;
+    if (userRegistrationResult.status !== 200) {
+      throw 'Error en el registro...';
     }
 
-    let storedUsers = await this.findAll();
-
-    storedUsers = [...storedUsers, userData];
-
-    console.log(`Registrado '${userData.email}' exitosamente! Users total: ${storedUsers.length}`);
-    return await AsyncStorage.setItem("users", JSON.stringify(storedUsers));
+    console.log(`Registrado '${userData.username}' exitosamente!'`);
   }
 }
 

@@ -1,23 +1,28 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
-import ReactNative, {ScrollView} from 'react-native';
 import SessionService from '../service/SessionService';
+import ReactNative, {ScrollView} from 'react-native';
+import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
 
 export default class Login extends Component {
+  static navigationOptions = {
+    title: 'Login',
+    // header: null
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      userEmail: '',
+      username: '',
       password: ''
     };
 
     this._clearForm = this._clearForm.bind(this);
-    this._validateLogin = this._validateLogin.bind(this);
-    this._handleEmailTextChange = this._handleEmailTextChange.bind(this);
+    this._doLogin = this._doLogin.bind(this);
+    this._handleUsernameTextChange = this._handleUsernameTextChange.bind(this);
     this._handlePasswordTextChange = this._handlePasswordTextChange.bind(this);
     this._handleLoginButtonPress = this._handleLoginButtonPress.bind(this);
     this._handleRegisterTextPress = this._handleRegisterTextPress.bind(this);
@@ -25,53 +30,51 @@ export default class Login extends Component {
 
   _clearForm() {
     this.setState({
-      userEmail: '',
+      username: '',
       password: ''
     });
   }
 
-  async _validateLogin() {
+  async _doLogin() {
 
-    if (this.state.userEmail === '' || this.state.password === '') {
-      throw "User email or password can't empty!";
+    if (this.state.username === '' || this.state.password === '') {
+      throw "El usuario o la contraseña no pueden estar vacíos!";
     }
 
     const credentials = {
-      email: this.state.userEmail,
+      username: this.state.username,
       password: this.state.password
     };
 
-    let result = await UserService.checkCredentials(credentials);
-
-    console.log(`Logged! ->`, result);
-
-    return result;
+    await UserService.checkCredentials(credentials);
   }
 
   async _handleLoginButtonPress() {
+
+    showLoading("Cargando...");
     try {
-      await this._validateLogin();
-      await SessionService.setSessionToken(this.state.userEmail);
+      await this._doLogin();
     } catch (e) {
+      hideLoading();
       console.log("Login error: ", e);
       Alert.alert(
-        'Error',
-        `Email o password incorrecto?`
+        'Login Error',
+        e.message || e
       );
       return;
     }
-
+    hideLoading();
     Alert.alert(
       'Login!',
-      `Bienvenido, ${this.state.userEmail}!`
+      `Bienvenido, ${this.state.username}!`
     );
 
     this._clearForm();
     this._goToHome();
   }
 
-  _handleEmailTextChange(inputValue) {
-    this.setState({userEmail: inputValue})
+  _handleUsernameTextChange(inputValue) {
+    this.setState({username: inputValue})
   }
 
   _handlePasswordTextChange(inputValue) {
@@ -91,16 +94,11 @@ export default class Login extends Component {
 
     navigate('Register', {
       form: this.state,
-      onDone: (userEmail) => {
-        self.setState({userEmail});
+      onDone: (username) => {
+        self.setState({username});
       }
     })
   }
-
-  static navigationOptions = {
-    title: 'Login',
-    // header: null
-  };
 
   _goToHome() {
     const {navigate} = this.props.navigation;
@@ -133,24 +131,23 @@ export default class Login extends Component {
 
           <View style={styles.content}>
             <TextInput
-              value={this.state.userEmail}
-              placeholder="E-mail"
+              value={this.state.username}
+              placeholder="Usuario"
               ref="usuario"
               style={styles.textInput}
               onFocus={this.inputFocused.bind(this, 'usuario')}
-              keyboardType="email-address"
               selectTextOnFocus
-              onChangeText={this._handleEmailTextChange}
+              onChangeText={this._handleUsernameTextChange}
             />
 
             <TextInput
               value={this.state.password}
               placeholder="Contraseña"
-              ref="passwordd"
+              ref="password"
               style={styles.textInput}
               secureTextEntry
               returnKeyType="done"
-              onFocus={this.inputFocused.bind(this, 'passwordd')}
+              onFocus={this.inputFocused.bind(this, 'password')}
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />
