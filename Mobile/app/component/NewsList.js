@@ -31,6 +31,5 @@ const NewsList = props =>
       )
     })}
   </View>
-;
 
 export default NewsList;

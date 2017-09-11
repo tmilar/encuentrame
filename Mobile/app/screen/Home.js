@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native'
+import {Text, View, Alert, ScrollView} from 'react-native'
 import SessionService from '../service/SessionService';
 import NewsListContainer from "../component/NewsListContainer";
-import {news} from "../config/data";
+import {text} from '../style';
 
 import {Icon} from 'react-native-elements';
 import ActionButton from "react-native-action-button";
@@ -31,11 +31,10 @@ export default class Home extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
-          {/* TODO add styles.container for scroll view?*/}
-          <Text style={styles.paragraph} onPress={this.onPressTitle}>
-            Bienvenido al Home!
+          <Text style={text.p} onPress={this.onPressTitle}>
+            Home
           </Text>
-          <NewsListContainer news={news}/>
+          <NewsListContainer/>
         </ScrollView>
         {/*<ActionButton style={{flex: 0.2}}
                       buttonColor="rgba(231,76,60,1)"
@@ -46,16 +45,3 @@ export default class Home extends Component {
     )
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#34495e'
-  }
-});

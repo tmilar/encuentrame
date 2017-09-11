@@ -4,6 +4,7 @@ import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
 import ReactNative, {ScrollView} from 'react-native';
 import {showLoading, hideLoading} from 'react-native-notifyer';
+import {containers, text} from '../style';
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -118,12 +119,12 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={containers.container}>
 
         <ScrollView ref='scrollView'
                     style={styles.scroll}>
           <View style={styles.header}>
-            <Text style={styles.paragraph}>
+            <Text style={text.title}>
               Encuentrame
             </Text>
           </View>
@@ -175,11 +176,6 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   header: {
     flex: 1,
     height: 100,
@@ -191,13 +187,6 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     height: 100,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#34495e'
   },
   textInput: {
     width: 200,
