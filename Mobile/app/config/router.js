@@ -8,6 +8,7 @@ import Home from "../screen/Home";
 import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
+import EncuentrameHeader from "../component/EncuentrameHeader";
 
 export const Tabs = TabNavigator({
   Home: {
@@ -43,6 +44,6 @@ export const Tabs = TabNavigator({
 export const Root = StackNavigator({
   Login: {screen: Login, navigationOptions: {header: null}},
   Register: {screen: Register},
-  PostLogin: {screen: Tabs, navigationOptions: {header: null}},
+  PostLogin: {screen: Tabs, navigationOptions: {header:  <EncuentrameHeader />}},
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}}
 });
