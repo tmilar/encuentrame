@@ -9,7 +9,7 @@ class SessionService {
    * Set session token id.
    */
   async setSession(sessionData) {
-    this._validateSessionData();
+    this._validateSessionData(sessionData);
 
     let timestamp = new Date().getTime();
     let session = {
@@ -46,7 +46,7 @@ class SessionService {
     if (!data) {
       throw 'Session data is empty!';
     }
-    if(!data.tokenId) {
+    if(!data.token) {
       throw 'Session tokenId is missing!';
     }
     if(!data.userId) {
