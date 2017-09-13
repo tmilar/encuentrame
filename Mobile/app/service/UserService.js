@@ -1,5 +1,6 @@
 import {apiUrl} from '../config/apiProperties'
 import SessionService from './SessionService';
+import fetchMock from 'fetch-mock';
 
 class UserService {
 
@@ -23,7 +24,11 @@ class UserService {
   }
 
   async postLoginRequest(userData) {
-    return await fetch(apiUrl + 'authentication/login/', {
+    let loginUrl = apiUrl + 'authentication/login/';
+
+    this.checkTestUser(userData, loginUrl);
+
+    return await fetch(loginUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -34,6 +39,26 @@ class UserService {
         "Password": userData.password
       })
     });
+  }
+
+  /**
+   * Only DEV env: if credentials belong to 'test' user,
+   * mock server login response to allow
+   * easy access to the app.
+   *
+   * @param userData
+   * @param loginUrl
+   */
+  checkTestUser(userData, loginUrl) {
+    if (!(__DEV__ && this.isTestUser(userData))) {
+      return;
+    }
+    let mockLoginResponse = {
+      Token: "1",
+      UserId: "1"
+    };
+
+    fetchMock.once(loginUrl, mockLoginResponse);
   }
 
   checkResponseStatus(rawResponse) {
@@ -101,6 +126,17 @@ class UserService {
     }
 
     console.log(`Registrado '${userData.username}' exitosamente!'`);
+  }
+
+  isTestUser(userData) {
+    const testUser = {
+      username: "test",
+      password: "test"
+    };
+
+    return userData &&
+      userData.username === testUser.username &&
+      userData.password === testUser.password
   }
 }
 

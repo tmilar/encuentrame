@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "expo": "^18.0.3",
+    "fetch-mock": "^5.12.2",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.45.1",
     "react-native-action-button": "^2.7.2",
