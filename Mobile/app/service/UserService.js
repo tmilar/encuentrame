@@ -8,44 +8,60 @@ class UserService {
    */
   async checkCredentials(user) {
 
-    let rawResponse = await fetch(apiUrl + 'authentication/login/', {
+    // request server login
+    let rawResponse = await this.postLoginRequest(user);
+
+    // Check response status for errors
+    this.checkResponseStatus(rawResponse);
+
+    // Parse response data
+    let loginData = await this.parseLoginResponse(rawResponse);
+
+    // Login OK! Guardamos el token y el userId en la sesion.
+    await this.storeLoginSession(loginData);
+
+  }
+
+  async postLoginRequest(userData) {
+    return await fetch(apiUrl + 'authentication/login/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "Username": user.username,
-        "Password": user.password
+        "Username": userData.username,
+        "Password": userData.password
       })
     });
+  }
 
-    // Check response status
+  checkResponseStatus(rawResponse) {
     let status = rawResponse.status;
     if (status < 200 || status > 300) {
       console.debug(rawResponse);
       this._manageLoginErrors(status);
     }
+  }
 
-    // Parse response data
-    let loginResponse;
-
+  async parseLoginResponse(rawResponse) {
     try {
-      loginResponse = await rawResponse.json();
+      return await rawResponse.json();
     } catch (e) {
       console.error("Invalid server login raw response", e);
       throw 'Ocurrió un problema en la comunicación con el servidor.'
     }
+  }
 
-    // Login OK. Guardamos el token y el userId en la sesion.
+  async storeLoginSession(loginResponse) {
     try {
       await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId});
     } catch (e) {
       console.error(e);
       throw 'Problema al guardar la sesion.';
     }
-
   }
+
   _manageLoginErrors(loginResponseStatus){
     if (loginResponseStatus === 403) {
       throw 'El servidor no está disponible. Por favor vuelva a intentar más tarde :(';
