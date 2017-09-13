@@ -19,37 +19,50 @@ class UserService {
         "Password": user.password
       })
     });
-    let loginResponse = await rawResponse.json();
-    if (rawResponse.status !== 200) {
-      loginResponse.status = rawResponse.status;
-      this._manageLoginErrors(loginResponse);
+
+    // Check response status
+    let status = rawResponse.status;
+    if (status < 200 || status > 300) {
+      console.debug(rawResponse);
+      this._manageLoginErrors(status);
     }
 
+    // Parse response data
+    let loginResponse;
+
+    try {
+      loginResponse = await rawResponse.json();
+    } catch (e) {
+      console.error("Invalid server login raw response", e);
+      throw 'Ocurrió un problema en la comunicación con el servidor.'
+    }
 
     // Login OK. Guardamos el token y el userId en la sesion.
     try {
       await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId});
     } catch (e) {
       console.error(e);
-      throw 'Problema al guardar la sesion';
+      throw 'Problema al guardar la sesion.';
     }
 
   }
-  _manageLoginErrors(loginResponse){
-    if (loginResponse.status === 401) {
-      throw 'Credenciales inválidas';
-    }
-    if (loginResponse.status === 400) {
-      throw 'Error en el formato de las credenciales';
+  _manageLoginErrors(loginResponseStatus){
+    if (loginResponseStatus === 403) {
+      throw 'El servidor no está disponible. Por favor vuelva a intentar más tarde :(';
     }
 
+    if (loginResponseStatus === 401 || loginResponseStatus === 400) {
+      throw 'El usuario o la contraseña son inválidas (' + loginResponseStatus + ').';
+    }
+
+    throw 'Ha ocurrido un error. (status: ' + loginResponseStatus + ').';
   }
 
   async registerUser(userData) {
 
     if (!userData.username || userData.username === ''
       || !userData.password || userData.password === '') {
-      throw `Por favor, ingrese un username y contraseñas válidos.`;
+      throw `Por favor, ingrese un Usuario y Contraseña válidos.`;
     }
 
     let userRegistrationResult = await fetch(apiUrl + 'account/create', {
@@ -65,8 +78,10 @@ class UserService {
       })
     });
 
-    if (userRegistrationResult.status !== 200) {
-      throw 'Error en el registro...';
+    let status = userRegistrationResult.status;
+    if (status < 200 || status >= 300) {
+      console.debug(userRegistrationResult);
+      throw 'Error en el registro. (status: ' + status + ').';
     }
 
     console.log(`Registrado '${userData.username}' exitosamente!'`);
