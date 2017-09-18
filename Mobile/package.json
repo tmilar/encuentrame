@@ -1,6 +1,6 @@
 {
   "name": "encuentrame-mobile",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "devDependencies": {
     "react-native-scripts": "0.0.40",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "expo": "^18.0.3",
+    "fetch-mock": "^5.12.2",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.45.1",
     "native-base": "2.2.0",
