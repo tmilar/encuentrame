@@ -9,7 +9,7 @@ import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
-import { Button, Text } from "native-base";
+import {Text, TouchableHighlight, View} from "react-native";
 
 
 export const Tabs = TabNavigator({
@@ -48,17 +48,21 @@ export const Root = StackNavigator({
   Register: {screen: Register},
   PostLogin: {screen: Tabs,
     navigationOptions: ({ navigation }) => ({
-      headerLeft: <Button
-        transparent
-        onPress={() => navigation.navigate('NewActivity')}>
-        <Icon name="people" size={23}  />
-        <Text style={{fontSize: 8}}>Nueva actividad</Text>
-      </Button>,
-      headerRight: <Button
-        transparent
-        onPress={() => navigation.navigate('NewActivity')}>
-        <Icon name="menu" />
-      </Button>
+      headerLeft:
+      <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
+        <View>
+          <Icon name="people" size={23}  />
+          <Text style={{fontSize: 8}}>Nueva actividad</Text>
+        </View>
+      </TouchableHighlight>
+      ,
+      headerRight:
+      <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
+        <View>
+          <Icon name="menu" />
+          <Text style={{fontSize: 8}}>Mi perfil</Text>
+        </View>
+      </TouchableHighlight>
     })
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
