@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Modal, StyleSheet, Text, View, Picker, TextInput} from 'react-native';
 import {text} from '../style';
+import { MapView } from 'expo';
 
 const NewActivity = React.createClass({
 
@@ -64,7 +65,14 @@ const NewActivity = React.createClass({
                 <Picker.Item label="Recital del Indio" value="1"/>
                 <Picker.Item label="Boca-RiBer" value="2"/>
               </Picker>
-
+              <MapView style={styles.map}
+                initialRegion={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+              />
             </View>
           </View>
 
@@ -98,6 +106,13 @@ const styles = StyleSheet.create({
     width: 400,
     alignSelf: "center",
     textAlignVertical: "center"
+  },
+  map: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   }
 });
 
