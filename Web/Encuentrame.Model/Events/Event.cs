@@ -8,10 +8,21 @@ namespace Encuentrame.Model.Events
     {
         public virtual int Id { get; protected set; }
         public virtual string Name { get; set; }
-        public virtual Address Address { get; set; }
+
+        private Address _address;
+
+        public virtual Address Address
+        {
+            get => _address;
+            set => _address = value ?? new Address();
+        }
+
+
         public virtual decimal Latitude { get; set; }
         public virtual decimal Longitude { get; set; }
         public virtual DateTime? DeletedKey { get; set; }
+        public virtual DateTime BeginDateTime { get; set; }
+        public virtual DateTime EndDateTime { get; set; }
     }
 }
 

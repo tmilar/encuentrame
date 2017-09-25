@@ -6,7 +6,7 @@ namespace Encuentrame.Security.Authentications
     public abstract class AuthenticationProvider : IAuthenticationProvider  
     {
 
-        public abstract bool ValidateUser(string username, string password);
+        public abstract bool ValidateUser(string username, string password, params RoleEnum[] validRoles);
 
         public abstract TokenApiSession GenerateApiTokenUser(string  username);
         public abstract void RegenerateApiTokenUser(TokenApiSession token);

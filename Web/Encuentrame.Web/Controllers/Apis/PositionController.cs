@@ -30,7 +30,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 UserId = this.GetIdUserLogged(),
             });
 
-            return Ok(new PositionResultModel()
+            return Ok(new PositionApiResultModel()
             {
                
             });

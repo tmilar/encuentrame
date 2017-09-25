@@ -1,9 +1,8 @@
-﻿@using Encuentrame.Web.Helpers
-@model bool
+﻿@model bool
 
 <div class="checkbox">
+    @Html.CheckBoxFor(model => model)
     <label>
-        @Html.CheckBoxFor(model => model)
         @Html.DisplayNameFor(model => model)
     </label>
 </div>

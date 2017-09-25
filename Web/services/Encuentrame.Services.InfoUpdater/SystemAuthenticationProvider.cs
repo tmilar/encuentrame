@@ -11,7 +11,7 @@ namespace Encuentrame.Services.InfoUpdater
     {
         public IBag<SystemUser> SystemUsers { get; set; }
 
-        public override bool ValidateUser(string username, string password)
+        public override bool ValidateUser(string username, string password, params RoleEnum[] validRoles)
         {
             return true;
         }

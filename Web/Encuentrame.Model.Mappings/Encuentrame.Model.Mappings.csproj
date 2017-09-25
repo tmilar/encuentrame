@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\TokenApiSessionMap.cs" />
+    <Compile Include="Activities\ActivityMap.cs" />
     <Compile Include="Events\EventMap.cs" />
     <Compile Include="Positions\PositionMap.cs" />
     <Compile Include="SqlTypeExtensions.cs" />

@@ -4,9 +4,9 @@ namespace Encuentrame.Web.Models.Apis.Authentications
 {
     public class LoginApiModel
     {
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
         public string Username { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
         public string Password { get; set; }
 
     }

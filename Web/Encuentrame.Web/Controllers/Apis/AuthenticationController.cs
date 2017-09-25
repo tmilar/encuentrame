@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net;
 using System.Web.Http;
-using System.Web.Http.Results;
+using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Supports.Interfaces;
 using Encuentrame.Web.Models.Apis.Authentications;
 using NailsFramework.IoC;
@@ -32,7 +29,7 @@ namespace Encuentrame.Web.Controllers.Apis
             }
 
           
-            if (AuthenticationProvider.ValidateUser(loginApiModel.Username, loginApiModel.Password))
+            if (AuthenticationProvider.ValidateUser(loginApiModel.Username, loginApiModel.Password,RoleEnum.User))
             {
                 var token = AuthenticationProvider.GenerateApiTokenUser(loginApiModel.Username);
                 var result=new LoginApiResultModel()

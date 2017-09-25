@@ -277,6 +277,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usuario administrador.
+        /// </summary>
+        public static string AdministratorUser {
+            get {
+                return ResourceManager.GetString("AdministratorUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enviar a Todos.
         /// </summary>
         public static string AllowEveryone {
@@ -1285,6 +1294,24 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evento.
+        /// </summary>
+        public static string Event {
+            get {
+                return ResourceManager.GetString("Event", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eventos.
+        /// </summary>
+        public static string Events {
+            get {
+                return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La extension {0} no esta permitida. No puede cargar archivos con una extension que no este en esta lista: {1}..
         /// </summary>
         public static string ExtensionNotAllowedErrorMessageResourceName {
@@ -1780,6 +1807,42 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crear usuario administrador.
+        /// </summary>
+        public static string ManageAdministratorUserCreateTitle {
+            get {
+                return ResourceManager.GetString("ManageAdministratorUserCreateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalle de usuario administrador.
+        /// </summary>
+        public static string ManageAdministratorUserDetailsTitle {
+            get {
+                return ResourceManager.GetString("ManageAdministratorUserDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar usuario administrador.
+        /// </summary>
+        public static string ManageAdministratorUserEditTitle {
+            get {
+                return ResourceManager.GetString("ManageAdministratorUserEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listado de usuarios administradores.
+        /// </summary>
+        public static string ManageAdministratorUserListTitle {
+            get {
+                return ResourceManager.GetString("ManageAdministratorUserListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrar Auditorías.
         /// </summary>
         public static string ManageAuditTitle {
@@ -1825,6 +1888,42 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crear evento.
+        /// </summary>
+        public static string ManageEventCreateTitle {
+            get {
+                return ResourceManager.GetString("ManageEventCreateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalle de evento.
+        /// </summary>
+        public static string ManageEventDetailsTitle {
+            get {
+                return ResourceManager.GetString("ManageEventDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar evento.
+        /// </summary>
+        public static string ManageEventEditTitle {
+            get {
+                return ResourceManager.GetString("ManageEventEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lista de eventos.
+        /// </summary>
+        public static string ManageEventListTitle {
+            get {
+                return ResourceManager.GetString("ManageEventListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Listado de {0}.
         /// </summary>
         public static string ManageListTitle {
@@ -1848,6 +1947,24 @@ namespace Encuentrame.Web {
         public static string ManageMenuOption {
             get {
                 return ResourceManager.GetString("ManageMenuOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalle de persona.
+        /// </summary>
+        public static string ManagePersonUserDetailsTitle {
+            get {
+                return ResourceManager.GetString("ManagePersonUserDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listado de personas.
+        /// </summary>
+        public static string ManagePersonUserListTitle {
+            get {
+                return ResourceManager.GetString("ManagePersonUserListTitle", resourceCulture);
             }
         }
         
@@ -2563,6 +2680,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Persona.
+        /// </summary>
+        public static string PersonUser {
+            get {
+                return ResourceManager.GetString("PersonUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teléfono.
         /// </summary>
         public static string PhoneNumber {
@@ -2725,6 +2851,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El campo {0} debe estar entre {1} y {2}.
+        /// </summary>
+        public static string RangeError {
+            get {
+                return ResourceManager.GetString("RangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Referencia.
         /// </summary>
         public static string Reference {
@@ -2811,51 +2946,6 @@ namespace Encuentrame.Web {
         public static string Role {
             get {
                 return ResourceManager.GetString("Role", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rol fue creado.
-        /// </summary>
-        public static string Role_Subject_Create {
-            get {
-                return ResourceManager.GetString("Role:Subject:Create", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rol fue borrado.
-        /// </summary>
-        public static string Role_Subject_Delete {
-            get {
-                return ResourceManager.GetString("Role:Subject:Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rol fue actualizado.
-        /// </summary>
-        public static string Role_Subject_Update {
-            get {
-                return ResourceManager.GetString("Role:Subject:Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rol Creado.
-        /// </summary>
-        public static string RoleCreatedNotification {
-            get {
-                return ResourceManager.GetString("RoleCreatedNotification", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rol borrado.
-        /// </summary>
-        public static string RoleDeletedNotification {
-            get {
-                return ResourceManager.GetString("RoleDeletedNotification", resourceCulture);
             }
         }
         
@@ -3386,7 +3476,7 @@ namespace Encuentrame.Web {
         /// </summary>
         public static string Supplier_Subject_Create {
             get {
-                return ResourceManager.GetString("Supplier:Subject:Create", resourceCulture);
+                return ResourceManager.GetString("Supplier_Subject_Create", resourceCulture);
             }
         }
         
@@ -3395,7 +3485,7 @@ namespace Encuentrame.Web {
         /// </summary>
         public static string Supplier_Subject_Delete {
             get {
-                return ResourceManager.GetString("Supplier:Subject:Delete", resourceCulture);
+                return ResourceManager.GetString("Supplier_Subject_Delete", resourceCulture);
             }
         }
         
@@ -3404,7 +3494,7 @@ namespace Encuentrame.Web {
         /// </summary>
         public static string Supplier_Subject_Update {
             get {
-                return ResourceManager.GetString("Supplier:Subject:Update", resourceCulture);
+                return ResourceManager.GetString("Supplier_Subject_Update", resourceCulture);
             }
         }
         
@@ -3737,7 +3827,7 @@ namespace Encuentrame.Web {
         /// </summary>
         public static string User_Subject_Create {
             get {
-                return ResourceManager.GetString("User:Subject:Create", resourceCulture);
+                return ResourceManager.GetString("User_Subject_Create", resourceCulture);
             }
         }
         
@@ -3746,7 +3836,7 @@ namespace Encuentrame.Web {
         /// </summary>
         public static string User_Subject_Delete {
             get {
-                return ResourceManager.GetString("User:Subject:Delete", resourceCulture);
+                return ResourceManager.GetString("User_Subject_Delete", resourceCulture);
             }
         }
         
@@ -3755,7 +3845,7 @@ namespace Encuentrame.Web {
         /// </summary>
         public static string User_Subject_Update {
             get {
-                return ResourceManager.GetString("User:Subject:Update", resourceCulture);
+                return ResourceManager.GetString("User_Subject_Update", resourceCulture);
             }
         }
         

@@ -15,13 +15,8 @@
                 <div class="col-md-6">@Html.EditorFor(m => m.FirstName)</div>
             </div>
         }
-        @using (Html.BeginEditSection(Translations.SecurityData))
-        {
-            <div class="row">
-                <div class="col-md-5">@Html.EditorFor(m => m.Role)</div>
+        
 
-            </div>
-        }
         @using (Html.BeginEditSection(Translations.ContactData))
         {
             <div class="row">

@@ -12,6 +12,8 @@ namespace Encuentrame.Model.Mappings.Events
             Map(x => x.DeletedKey).UniqueKey("nameUnique");
             Map(x => x.Latitude);
             Map(x => x.Longitude);
+            Map(x => x.BeginDateTime);
+            Map(x => x.EndDateTime);
             Component(x => x.Address, m =>
             {
                 m.Map(x => x.Number);

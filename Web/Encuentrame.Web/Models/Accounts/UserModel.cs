@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Encuentrame.Model.Accounts;
+using Encuentrame.Web.MetadataProviders;
 
 namespace Encuentrame.Web.Models.Accounts
 {
@@ -52,9 +53,8 @@ namespace Encuentrame.Web.Models.Accounts
         [UIHint("image")]
         public virtual string Image { get; set; }
 
-        [Display(ResourceType = typeof(Translations), Name = "PhoneNumber")]
-        
-        [UIHint("Enum")]
+        [Display(ResourceType = typeof(Translations), Name = "Role")]
+        [EnumReference(ExcludeValues = new []{(int)RoleEnum.User})]
         public RoleEnum Role { get; set; }
 
     }

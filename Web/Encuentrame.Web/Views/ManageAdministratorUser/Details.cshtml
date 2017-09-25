@@ -1,0 +1,72 @@
+﻿
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Models.Accounts.UserModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManagePersonUserDetailsTitle;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/modals")
+
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-9">
+        @using (Html.BeginDisplaySection(Translations.PersonalData))
+        {
+
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.Username)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.LastName)</div>
+                <div class="col-md-6">@Html.DisplayFor(m => m.FirstName)</div>
+            </div>
+        }
+        @using (Html.BeginDisplaySection(Translations.SecurityData))
+        {
+            <div class="row">
+                <div class="col-md-5">@Html.DisplayFor(m => m.Role)</div>
+
+            </div>
+        }
+        @using (Html.BeginDisplaySection(Translations.ContactData))
+        {
+            <div class="row">
+                <div class="col-md-5">@Html.DisplayFor(m => m.Email)</div>
+                <div class="col-md-5">@Html.DisplayFor(m => m.EmailAlternative)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">@Html.DisplayFor(m => m.PhoneNumber)</div>
+                <div class="col-md-5">@Html.DisplayFor(m => m.MobileNumber)</div>
+                <div class="col-md-2">@Html.DisplayFor(m => m.InternalNumber)</div>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-3">
+        @using (Html.BeginEditSection())
+        {
+            @Html.DisplayFor(m => m.Image)
+        }
+    </div>
+</div>
+
+   
+<form method="POST" action="@Url.Action("Delete", new {id = Model.Id})">
+    <button type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+            data-modal-ok="@Translations.Delete" data-modal-title="@Translations.Delete" data-modal-message="@Translations.DeleteMessage.FormatWith(Model.Username)">
+        @Translations.Delete
+    </button>
+    @Html.ActionLink(Translations.Edit, "Edit", new { Id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
+
+    @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })
+</form>
+
+@Html.Partial("_modalMessageBeforeSubmit")

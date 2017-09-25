@@ -1164,22 +1164,22 @@
   <data name="UserDeletedNotification" xml:space="preserve">
     <value>Usuario borrado</value>
   </data>
-  <data name="User:Subject:Create" xml:space="preserve">
+  <data name="User_Subject_Create" xml:space="preserve">
     <value>Usuario fue creado</value>
   </data>
-  <data name="User:Subject:Update" xml:space="preserve">
+  <data name="User_Subject_Update" xml:space="preserve">
     <value>Usuario fue actualizado</value>
   </data>
-  <data name="User:Subject:Delete" xml:space="preserve">
+  <data name="User_Subject_Delete" xml:space="preserve">
     <value>Usuario fue borrado</value>
   </data>
-  <data name="Supplier:Subject:Delete" xml:space="preserve">
+  <data name="Supplier_Subject_Delete" xml:space="preserve">
     <value>Proveedor fue borrado</value>
   </data>
-  <data name="Supplier:Subject:Update" xml:space="preserve">
+  <data name="Supplier_Subject_Update" xml:space="preserve">
     <value>Proveedor fue actualizado</value>
   </data>
-  <data name="Supplier:Subject:Create" xml:space="preserve">
+  <data name="Supplier_Subject_Create" xml:space="preserve">
     <value>Proveedor fue creado</value>
   </data>
   <data name="SupplierCreatedNotification" xml:space="preserve">
@@ -1191,23 +1191,8 @@
   <data name="SupplierDeletedNotification" xml:space="preserve">
     <value>Proveedor borrado</value>
   </data>
-  <data name="Role:Subject:Delete" xml:space="preserve">
-    <value>Rol fue borrado</value>
-  </data>
-  <data name="Role:Subject:Update" xml:space="preserve">
-    <value>Rol fue actualizado</value>
-  </data>
-  <data name="Role:Subject:Create" xml:space="preserve">
-    <value>Rol fue creado</value>
-  </data>
-  <data name="RoleCreatedNotification" xml:space="preserve">
-    <value>Rol Creado</value>
-  </data>
   <data name="RoleUpdatedNotification" xml:space="preserve">
     <value>Rol Actualizado</value>
-  </data>
-  <data name="RoleDeletedNotification" xml:space="preserve">
-    <value>Rol borrado</value>
   </data>
   <data name="Province" xml:space="preserve">
     <value>Provincia</value>
@@ -1394,5 +1379,50 @@
   </data>
   <data name="UserUsernameUniqueException" xml:space="preserve">
     <value>El nombre de usuario ya existe.</value>
+  </data>
+  <data name="RangeError" xml:space="preserve">
+    <value>El campo {0} debe estar entre {1} y {2}</value>
+  </data>
+  <data name="ManageAdministratorUserListTitle" xml:space="preserve">
+    <value>Listado de usuarios administradores</value>
+  </data>
+  <data name="AdministratorUser" xml:space="preserve">
+    <value>Usuario administrador</value>
+  </data>
+  <data name="ManageAdministratorUserCreateTitle" xml:space="preserve">
+    <value>Crear usuario administrador</value>
+  </data>
+  <data name="ManageAdministratorUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de usuario administrador</value>
+  </data>
+  <data name="ManageAdministratorUserEditTitle" xml:space="preserve">
+    <value>Editar usuario administrador</value>
+  </data>
+  <data name="ManagePersonUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de persona</value>
+  </data>
+  <data name="ManagePersonUserListTitle" xml:space="preserve">
+    <value>Listado de personas</value>
+  </data>
+  <data name="PersonUser" xml:space="preserve">
+    <value>Persona</value>
+  </data>
+  <data name="ManageEventListTitle" xml:space="preserve">
+    <value>Lista de eventos</value>
+  </data>
+  <data name="ManageEventCreateTitle" xml:space="preserve">
+    <value>Crear evento</value>
+  </data>
+  <data name="ManageEventDetailsTitle" xml:space="preserve">
+    <value>Detalle de evento</value>
+  </data>
+  <data name="ManageEventEditTitle" xml:space="preserve">
+    <value>Editar evento</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Evento</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventos</value>
   </data>
 </root>

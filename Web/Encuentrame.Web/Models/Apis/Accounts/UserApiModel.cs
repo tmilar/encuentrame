@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Encuentrame.Web.Models.Apis.Accounts
 {
@@ -10,15 +7,15 @@ namespace Encuentrame.Web.Models.Apis.Accounts
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
         public string Username { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
         public string Password { get; set; }
         public DateTime BirthDay { get; set; }
-        [Required]
-        [EmailAddress]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
+        [EmailAddress(ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "EmailError")]
         public string Email { get; set; }
-        [EmailAddress]
+        [EmailAddress(ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "EmailError")]
         public  string EmailAlternative { get; set; }
         public  string InternalNumber { get; set; }
         public  string PhoneNumber { get; set; }

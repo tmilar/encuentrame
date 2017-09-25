@@ -171,12 +171,16 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Apis\AccountController.cs" />
+    <Compile Include="Controllers\Apis\ActivityController.cs" />
     <Compile Include="Controllers\Apis\BaseApiController.cs" />
+    <Compile Include="Controllers\Apis\EventController.cs" />
     <Compile Include="Controllers\Apis\PositionController.cs" />
     <Compile Include="Controllers\ConfigureEmailServerController.cs" />
     <Compile Include="Controllers\ListBaseController.cs" />
     <Compile Include="Controllers\Apis\AuthenticationController.cs" />
-    <Compile Include="Controllers\ManageUserController.cs" />
+    <Compile Include="Controllers\ManageAdministratorUserController.cs" />
+    <Compile Include="Controllers\ManageEventController.cs" />
+    <Compile Include="Controllers\ManagePersonUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
@@ -197,11 +201,15 @@
     <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Models\Apis\Activities\ActivityApiModel.cs" />
     <Compile Include="Models\Apis\Accounts\UserApiModel.cs" />
+    <Compile Include="Models\Apis\Activities\ActivityApiResultModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiResultModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiModel.cs" />
+    <Compile Include="Models\Apis\Events\EventApiModel.cs" />
+    <Compile Include="Models\Apis\Events\EventApiResultModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiModel.cs" />
-    <Compile Include="Models\Apis\Positions\PositionResultModel.cs" />
+    <Compile Include="Models\Apis\Positions\PositionApiResultModel.cs" />
     <Compile Include="Models\DataTable\BooleanFilterModel.cs" />
     <Compile Include="Models\DataTable\DataTableModel.cs" />
     <Compile Include="Models\DataTable\DateRangeFilterModel.cs" />
@@ -213,6 +221,8 @@
     <Compile Include="Models\DataTable\RangeFilterModel.cs" />
     <Compile Include="Models\DataTable\SearchModel.cs" />
     <Compile Include="Models\DataTable\SelectFilterModel.cs" />
+    <Compile Include="Models\Events\EventListModel.cs" />
+    <Compile Include="Models\Events\EventModel.cs" />
     <Compile Include="Models\Positions\PositionListModel.cs" />
     <Compile Include="Models\Tests\TestEnum.cs" />
     <Compile Include="Models\Tests\TestModel.cs" />
@@ -304,6 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Start\NHibernateProfilerBootstrapper.vb" />
+    <Content Include="Content\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
@@ -455,12 +466,15 @@
     <Content Include="Content\DataTables-1.10.12\media\images\sort_both.png" />
     <Content Include="Content\DataTables-1.10.12\media\images\sort_desc.png" />
     <Content Include="Content\DataTables-1.10.12\media\images\sort_desc_disabled.png" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\select2-bootstrap.css" />
     <Content Include="Content\Treant-site-custom.css" />
     <Content Include="Content\Treant.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -512,6 +526,13 @@
     <Content Include="Content\DataTables-1.10.12\extensions\RowReorder\css\semanticui.scss" />
     <Content Include="Content\DataTables-1.10.12\extensions\Buttons\css\mixins.scss" />
     <Content Include="Content\DataTables-1.10.12\extensions\Buttons\css\common.scss" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\awesome-bootstrap-checkbox.scss" />
+    <Content Include="Content\awesome-bootstrap-checkbox.less" />
     <None Include="Properties\PublishProfiles\EncuentrameWeb - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\TestingServer.pubxml" />
     <Content Include="Scripts\DataTables-1.10.12\extensions\AutoFill\js\autoFill.bootstrap.js" />
@@ -725,11 +746,11 @@
     <Content Include="Views\Shared\_modalMessageBeforeSubmit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Database\IndexMessage.cshtml" />
-    <Content Include="Views\ManageUser\Index.cshtml" />
-    <Content Include="Views\ManageUser\Details.cshtml" />
-    <Content Include="Views\ManageUser\Create.cshtml" />
-    <Content Include="Views\ManageUser\Edit.cshtml" />
-    <Content Include="Views\ManageUser\_form.cshtml" />
+    <Content Include="Views\ManagePersonUser\Index.cshtml" />
+    <Content Include="Views\ManagePersonUser\Details.cshtml" />
+    <Content Include="Views\ManageAdministratorUser\Create.cshtml" />
+    <Content Include="Views\ManageAdministratorUser\Edit.cshtml" />
+    <Content Include="Views\ManageAdministratorUser\_form.cshtml" />
     <Content Include="Views\Shared\_LayoutPublic.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\password.cshtml" />
@@ -766,6 +787,13 @@
     <Content Include="Views\Shared\EditorTemplates\Datatables\IStringFilter.cshtml" />
     <Content Include="Views\TestApi\Index.cshtml" />
     <Content Include="Views\Position\Index.cshtml" />
+    <Content Include="Views\ManageAdministratorUser\Index.cshtml" />
+    <Content Include="Views\ManageAdministratorUser\Details.cshtml" />
+    <Content Include="Views\ManageEvent\Index.cshtml" />
+    <Content Include="Views\ManageEvent\_form.cshtml" />
+    <Content Include="Views\ManageEvent\Create.cshtml" />
+    <Content Include="Views\ManageEvent\Details.cshtml" />
+    <Content Include="Views\ManageEvent\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

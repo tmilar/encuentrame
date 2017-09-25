@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
+using Encuentrame.Model;
 using NailsFramework.IoC;
-using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
-using Encuentrame.Model.Accounts.Permissions;
+using Encuentrame.Model.Accounts.Seekers;
 using Encuentrame.Security.Authorizations;
 using Encuentrame.Web.Helpers;
-using Encuentrame.Web.Models;
 using Encuentrame.Web.Models.Accounts;
-using Encuentrame.Web.Models.References;
 using Encuentrame.Support;
 using Encuentrame.Support.Email;
 using Encuentrame.Support.Email.Templates;
@@ -18,9 +15,8 @@ using Encuentrame.Support.Email.Templates.EmailModels;
 namespace Encuentrame.Web.Controllers
 {
     [AuthorizationPass(new []{ RoleEnum.Administrator})]
-    public class ManageUserController : ListBaseController<User, UserListModel>
+    public class ManageAdministratorUserController : ListBaseController<User, UserListModel>
     {
-
         [Inject]
         public IUserCommand UserCommand { get; set; }
 
@@ -106,7 +102,7 @@ namespace Encuentrame.Web.Controllers
                 PhoneNumber = userModel.PhoneNumber,
                 MobileNumber = userModel.MobileNumber,
                 Image = userModel.Image,
-                Role = userModel.Role
+                Role = RoleEnum.Administrator
             };
 
             return userParameters;
@@ -160,20 +156,23 @@ namespace Encuentrame.Web.Controllers
 
         protected override UserListModel GetViewModelFrom(User user)
         {
-            var userListModel = new UserListModel();
-            userListModel.Id = user.Id;
-            userListModel.User = user.Username;
-            userListModel.FullName = user.FullName;
-            userListModel.Email = user.Email;
-            userListModel.InternalNumber = user.InternalNumber;
-            userListModel.PhoneNumber = user.PhoneNumber;
-            userListModel.Role = user.Role;
+            var userListModel = new UserListModel
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FullName = user.FullName,
+                Email = user.Email,
+                InternalNumber = user.InternalNumber,
+                PhoneNumber = user.PhoneNumber,
+                Role = user.Role
+            };
             return userListModel;
         }
 
-        protected override IList<User> GetItemList()
+        public override void ApplyDefaultFilters(IGenericSeeker<User> seeker)
         {
-            return UserCommand.List();
-        }        
+            base.ApplyDefaultFilters(seeker);
+            ((IUserSeeker) seeker).ByRole(RoleEnum.Administrator);
+        }
     }
 }

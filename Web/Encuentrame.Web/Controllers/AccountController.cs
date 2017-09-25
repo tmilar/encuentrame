@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Security;
 using NailsFramework.IoC;
-using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
-using Encuentrame.Model.Accounts.Permissions;
 using Encuentrame.Model.Supports.Interfaces;
-using Encuentrame.Security;
-using Encuentrame.Security.Authentications;
-using Encuentrame.Security.Authorizations;
 using Encuentrame.Web.Helpers;
 using Encuentrame.Web.Models.Accounts;
 using Encuentrame.Support;
@@ -22,6 +13,7 @@ namespace Encuentrame.Web.Controllers
     {
         [Inject]
         public IAuthenticationProvider Authentication { get; set; }
+
         // GET: Account
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -38,7 +30,7 @@ namespace Encuentrame.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Authentication.ValidateUser(loginModel.Username, loginModel.Password))
+                if (Authentication.ValidateUser(loginModel.Username, loginModel.Password, RoleEnum.Administrator, RoleEnum.EventAdministrator))
                 {
                     FormsAuthentication.SetAuthCookie(loginModel.Username, true);
                     if (returnUrl.IsNullOrEmpty())

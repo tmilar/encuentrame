@@ -7,6 +7,7 @@ using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Accounts.Permissions;
+using Encuentrame.Model.Events;
 using Encuentrame.Model.Supports.Notifications;
 using Encuentrame.Support;
 using Encuentrame.Support.Mappings;
@@ -21,6 +22,9 @@ namespace Encuentrame.Web.Controllers
 
         [Inject]
         public IBag<User> Users { get; set; }
+
+        [Inject]
+        public IBag<Event> Events { get; set; }
 
         [Inject]
         public IBag<SystemUser> SystemUsers { get; set; }
@@ -131,6 +135,23 @@ namespace Encuentrame.Web.Controllers
             SystemUsers.Put(systemUser);
 
           
+            var eventt1=new Event()
+            {
+                Name="Evento 1",
+                BeginDateTime = SystemDateTime.Now.AddHours(-3),
+                EndDateTime = SystemDateTime.Now.AddHours(3)
+            };
+
+            Events.Put(eventt1);
+
+            var eventt2 = new Event()
+            {
+                Name = "Evento 2",
+                BeginDateTime = SystemDateTime.Now.AddHours(-3),
+                EndDateTime = SystemDateTime.Now.AddHours(3)
+            };
+
+            Events.Put(eventt2);
 
             CreateNotifications();
 

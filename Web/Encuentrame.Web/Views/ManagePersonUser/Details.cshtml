@@ -1,12 +1,11 @@
 ﻿
 @using Encuentrame.Web
 @using Encuentrame.Web.Helpers
-@using Encuentrame.Support
 @model Encuentrame.Web.Models.Accounts.UserModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Translations.ManageUserDetailsTitle;
+    ViewBag.Title = Translations.ManagePersonUserDetailsTitle;
 }
 
 @section scripts
@@ -57,14 +56,6 @@
         }
     </div>
 </div>
-<form method="POST" action="@Url.Action("Delete", new {id = Model.Id})">
-    <button type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-            data-modal-ok="@Translations.Delete" data-modal-title="@Translations.Delete" data-modal-message="@Translations.DeleteMessage.FormatWith(Model.Username)">
-        @Translations.Delete
-    </button>
-    @Html.ActionLink(Translations.Edit, "Edit", new { Id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
 
-    @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })
-</form>
 
-@Html.Partial("_modalMessageBeforeSubmit")
+@Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })

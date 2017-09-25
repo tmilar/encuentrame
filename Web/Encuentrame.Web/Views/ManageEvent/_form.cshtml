@@ -1,0 +1,37 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Events.EventModel
+@Html.ErrorSummary()
+
+
+@using (Html.BeginEditSection(Translations.Data))
+{
+    <div class="row">
+        <div class="col-md-6">@Html.EditorFor(m => m.Name)</div>
+    </div>
+            <div class="row">
+                <div class="col-md-6">@Html.EditorFor(m => m.BeginDateTime)</div>
+                <div class="col-md-6">@Html.EditorFor(m => m.EndDateTime)</div>
+            </div>
+}
+
+
+@using (Html.BeginEditSection(Translations.SectionBasicData))
+{
+    <div class="row">
+        <div class="col-md-5">@Html.EditorFor(m => m.Latitude)</div>
+        <div class="col-md-5">@Html.EditorFor(m => m.Longitude)</div>
+    </div>
+            <div class="row">
+                <div class="col-md-6">@Html.EditorFor(m => m.Street)</div>
+                <div class="col-md-2">@Html.EditorFor(m => m.Number)</div>
+                <div class="col-md-2">@Html.EditorFor(m => m.FloorAndDepartament)</div>
+                <div class="col-md-2">@Html.EditorFor(m => m.Zip)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">@Html.EditorFor(m => m.City)</div>
+                <div class="col-md-6">@Html.EditorFor(m => m.Province)</div>
+            </div>
+}
+
+

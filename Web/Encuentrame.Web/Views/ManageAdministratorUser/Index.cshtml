@@ -7,7 +7,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Translations.ManageUserListTitle;
+    ViewBag.Title = Translations.ManageAdministratorUserListTitle;
 }
 
 @section scripts
@@ -19,25 +19,23 @@
 <h2 class="page-header">@ViewBag.Title</h2>
 @Html.SuccessSummary()
 @Html.ActionLink(Translations.Create, "Create", new { }, new { @class = "btn btn-primary" })
-
 <div class="table-container">
-    @( Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManageUser"))
-           .AddColumn(x => x.Id)
-           .AddColumn(x => x.User)
-           .AddColumn(x => x.FullName)
-           .AddColumn(x => x.Email)
-           .AddColumn(x => x.InternalNumber)
-           .AddColumn(x => x.PhoneNumber)
-           .AddColumn(x => x.Role, dataTemplate: "roleTemplate")          
-           .AddColumn("Actions", dataTemplate: "actionsTemplate")
-           .AddFilter(x => x.User)
-           .AddFilter(x => x.FullName)
-           .AddFilter(x => x.Email)
-           .AddFilter(x => x.InternalNumber)
-           .AddFilter(x => x.PhoneNumber)
-           .AddFilter(x => x.Role)
-           .Build()
-    )
+    @(Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManageAdministratorUser"))
+          .InServer()
+          .AddColumn(x => x.Id)
+          .AddColumn(x => x.Username)
+          .AddColumn(x => x.FullName)
+          .AddColumn(x => x.Email)
+          .AddColumn(x => x.InternalNumber)
+          .AddColumn(x => x.PhoneNumber)
+          .AddColumn(x => x.Role, dataTemplate: "roleTemplate")          
+          .AddColumn("Actions", dataTemplate: "actionsTemplate")
+          .AddFilter(x => x.Username)
+          .AddFilter(x => x.FullName)
+          .AddFilter(x => x.Email)
+           
+           
+          .Build())
 </div>
 
 <script id="roleTemplate" type="text/template">

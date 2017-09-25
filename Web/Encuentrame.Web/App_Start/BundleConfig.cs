@@ -71,6 +71,8 @@ namespace Encuentrame.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.min.css",
+                "~/Content/font-awesome.min.css",
+                "~/Content/awesome-bootstrap-checkbox.css",
                 "~/Content/select2.min.css",
                 "~/Content/select2-bootstrap.css",
                 "~/Content/bootstrap-datepicker3.min.css",

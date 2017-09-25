@@ -21,9 +21,9 @@ namespace Encuentrame.Security.Authentications
         [Inject]
         public IAuthenticationDataProvider AuthenticationDataProvider { get; set; }
 
-        public override bool ValidateUser(string username, string password)
+        public override bool ValidateUser(string username, string password, params RoleEnum[] validRoles)
         {
-            return Users.FirstOrDefault(x => x.Username == username && x.Password == password) != null;
+            return Users.Where(x => x.Username == username && x.Password == password && validRoles.Contains( x.Role)).Any();
         }
 
         public override TokenApiSession GenerateApiTokenUser(string username)
