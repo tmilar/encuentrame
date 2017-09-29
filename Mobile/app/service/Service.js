@@ -20,7 +20,11 @@ class Service {
       'token': token,
       'user': userId
     });
-    return await fetch(url, requestData);
+
+    let rawResponse = await fetch(url, requestData);
+    this.checkResponseStatus(rawResponse);
+    let finalResponse = await this.parseResponse(rawResponse);
+    return finalResponse;
   }
   async parseResponse(rawResponse) {
     try {
@@ -28,6 +32,14 @@ class Service {
     } catch (e) {
       console.error("Invalid server raw response", e);
       throw 'Ocurrió un problema en la comunicación con el servidor.'
+    }
+  }
+
+  checkResponseStatus(rawResponse) {
+    let status = rawResponse.status;
+    if (status < 200 || status > 300) {
+      console.debug(rawResponse);
+      //TODO: add custom callback invokation for different callers
     }
   }
 
