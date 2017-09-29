@@ -1,7 +1,11 @@
-import React, {Component} from 'react';
-import {Alert, Modal, StyleSheet, Text, View, Picker, TextInput, Button} from 'react-native';
+import React from 'react';
+import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'react-native';
 import {text} from '../style';
 import { MapView } from 'expo';
+import EventsService from '../service/EventsService';
+import GeolocationService from '../service/GeolocationService';
+import ActivityService from '../service/ActivityService';
+import {hideLoading, showLoading} from "react-native-notifyer";
 
 const NewActivity = React.createClass({
 
@@ -9,7 +13,7 @@ const NewActivity = React.createClass({
     return {
       activityName: "",
       selectedEventId: 0,
-      selectedEventName: "Selecciona un evento"
+      selectedEventName: "Selecciona un evento",
     };
   },
 
@@ -20,8 +24,37 @@ const NewActivity = React.createClass({
   _handleActivitynameTextChange(inputValue) {
     this.setState({activityName: inputValue})
   },
-  _handleCreateActivityButtonPress() {
-    //TODO retrieve and save activity data
+  async _handleCreateActivityButtonPress() {
+    showLoading("Espera...");
+    //TODO: add real inputs for activity start and end times. or now its mocked
+    let beginDateTime = new Date();
+    let endDateTime = new Date();
+    //dura 5 horas
+    let durationInHours = 5;
+    endDateTime.setTime(endDateTime.getTime() + (durationInHours*60*60*1000));
+    try {
+      let activity = {
+        "Name": this.state.activityName,
+        "Latitude": this.state.bsasCoordinates.latitude,
+        "Longitude": this.state.bsasCoordinates.longitude,
+        "BeginDateTime": beginDateTime,
+        "EndDateTime": endDateTime,
+        "EventId": this.state.selectedEventId
+      };
+      await ActivityService.createActivity(activity);
+    } catch (e) {
+      hideLoading();
+      console.log("Error creating activity in server: ", e);
+      Alert.alert(
+        'Error creating activity in server',
+        e.message || e
+      );
+      return;
+    }
+    hideLoading();
+    Alert.alert(
+      'Actividad creada con exito!'
+    );
     this._goToHome();
   },
   _handleCancelActivityCreation() {
@@ -32,16 +65,33 @@ const NewActivity = React.createClass({
     this.props.navigation.goBack(null);
   },
 
-  /*_backToHome() {
-    this.setModalVisible(false);
-    this.props.navigation.goBack(null);
-  }*/
+  async componentWillMount() {
+    this.setState({loading: true});
+    try {
+      let events = await EventsService.getEvents();
+      this.setState({events});
+      let bsasCoordinates = GeolocationService.getBsAsLocation();
+      this.setState({bsasCoordinates});
+      this.setState({loading: false});
+    } catch (e) {
+      this.setState({loading: false});
+      console.log("Error retrieving events from server: ", e);
+      Alert.alert(
+        'Error retrieving events from server',
+        e.message || e
+      );
+      return;
+    }
+  },
 
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   },
 
   render() {
+    if (this.state.loading){
+      return null;
+    }
     var mapStyles = [
       {
         "featureType": "administrative",
@@ -109,8 +159,11 @@ const NewActivity = React.createClass({
                 onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
                 color= "red"
               >
-                <Picker.Item label="Recital del Indio" value="1"/>
-                <Picker.Item label="Boca-RiBer" value="2"/>
+                {this.state.events.map((event, i) => {
+                  return (
+                    <Picker.Item label={event.Name} value={event.Id}/>
+                  )
+                })}
               </Picker>
 
             </View>
@@ -120,10 +173,10 @@ const NewActivity = React.createClass({
             <MapView style={styles.map}
                      customMapStyle={mapStyles}
                      initialRegion={{
-                       latitude: 37.78825,
-                       longitude: -122.4324,
-                       latitudeDelta: 0.0922,
-                       longitudeDelta: 0.0421,
+                       latitude: this.state.bsasCoordinates.latitude,
+                       longitude: this.state.bsasCoordinates.longitude,
+                       latitudeDelta: this.state.bsasCoordinates.latitudeDelta,
+                       longitudeDelta: this.state.bsasCoordinates.longitudeDelta
                      }}
             />
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center" , flexWrap: "wrap"}]}>
