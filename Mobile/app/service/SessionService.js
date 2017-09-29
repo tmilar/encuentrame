@@ -13,7 +13,7 @@ class SessionService {
 
     let timestamp = new Date().getTime();
     let session = {
-      id: sessionData.token,
+      token: sessionData.token,
       userId: sessionData.userId,
       expires: new Date(timestamp + this.SESSION_TTL).getTime()
     };
@@ -36,6 +36,31 @@ class SessionService {
     }
     console.log("Session check: ", session, `alive?: ${isAlive} (expires: ${new Date(session.expires)}`);
     return isAlive;
+  }
+
+  async getSessionParam(paramName) {
+    let sessionJson = await AsyncStorage.getItem(this.STORAGE_KEY);
+    let param = null;
+    if(!sessionJson) {
+      console.log("No hay sesion guardada!");
+      throw 'Problema al buscar ' + paramName + 'en la sesion.';
+    }
+
+    let session = JSON.parse(sessionJson);
+
+    if (session && session[paramName]) {
+      param = session[paramName];
+    }
+    console.log("Session " + paramName + ": ", param);
+    return param;
+  }
+
+  async getSessionToken() {
+    return this.getSessionParam("token");
+  }
+
+  async getSessionUserId() {
+    return this.getSessionParam("userId");
   }
 
   async clearSession() {
