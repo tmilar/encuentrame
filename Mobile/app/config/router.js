@@ -46,21 +46,18 @@ export const Tabs = TabNavigator({
 export const Root = StackNavigator({
   Login: {screen: Login, navigationOptions: {header: null}},
   Register: {screen: Register},
-  PostLogin: {screen: Tabs,
-    navigationOptions: ({ navigation }) => ({
-      headerLeft:
-      <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
+  PostLogin: {
+    screen: Tabs,
+    navigationOptions: ({navigation}) => ({
+      headerTitle: "Encuentrame",
+      headerLeft: <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
         <View>
-          <Icon name="people" size={23}  />
-          <Text style={{fontSize: 8}}>Nueva actividad</Text>
+          <Icon name="menu" size={25}/>
         </View>
-      </TouchableHighlight>
-      ,
-      headerRight:
-      <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
+      </TouchableHighlight>,
+      headerRight: <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
         <View>
-          <Icon name="menu" />
-          <Text style={{fontSize: 8}}>Mi perfil</Text>
+          <Icon name="people" size={25}/>
         </View>
       </TouchableHighlight>
     })
