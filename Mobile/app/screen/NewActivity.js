@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'react-native';
 import {text} from '../style';
-import { MapView } from 'expo';
+import {MapView} from 'expo';
 import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
@@ -57,9 +57,11 @@ const NewActivity = React.createClass({
     );
     this._goToHome();
   },
+
   _handleCancelActivityCreation() {
     this._goToHome();
   },
+
   _goToHome() {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
@@ -77,7 +79,7 @@ const NewActivity = React.createClass({
       this.setState({loading: false});
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
-        'Error retrieving events from server',
+        'Error al cargar información de Eventos existentes.',
         e.message || e
       );
       return;
@@ -89,7 +91,7 @@ const NewActivity = React.createClass({
   },
 
   render() {
-    if (this.state.loading){
+    if (this.state.loading) {
       return null;
     }
     var mapStyles = [
@@ -141,7 +143,7 @@ const NewActivity = React.createClass({
             <Text style={[text.p, styles.activityTitle]}>
               Nueva Actividad
             </Text>
-            <View style={{flex: 2, flexDirection:'column', justifyContent:'flex-start', alignItems: "center"}}>
+            <View style={{flex: 2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
               <TextInput
                 value={this.state.activityName}
                 placeholder="Nombre de la actividad"
@@ -157,7 +159,7 @@ const NewActivity = React.createClass({
                 selectedValue={this.state.selectedEventId}
                 style={styles.picker}
                 onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
-                color= "red"
+                color="red"
               >
                 {this.state.events.map((event, i) => {
                   return (
@@ -167,7 +169,7 @@ const NewActivity = React.createClass({
               </Picker>
 
             </View>
-            <Text style={text.p}>
+            <Text style={text.title}>
               Ubicacion de la actividad?
             </Text>
             <MapView style={styles.map}
@@ -179,15 +181,15 @@ const NewActivity = React.createClass({
                        longitudeDelta: this.state.bsasCoordinates.longitudeDelta
                      }}
             />
-            <View style={[styles.footer, {flexDirection: "row", justifyContent: "center" , flexWrap: "wrap"}]}>
-              <View style={{width: 300 , flex: 1}}>
+            <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
+              <View style={{flex: 0.5}}>
                 <Button
                   title="Crear Actividad"
                   onPress={this._handleCreateActivityButtonPress}
                 />
               </View>
 
-              <View style={{width: 300 , flex: 1}}>
+              <View style={{flex: 0.5}}>
                 <Button
                   color="grey"
                   title="Cancelar"
