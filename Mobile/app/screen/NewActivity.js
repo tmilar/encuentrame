@@ -161,7 +161,7 @@ const NewActivity = React.createClass({
               >
                 {this.state.events.map((event, i) => {
                   return (
-                    <Picker.Item label={event.Name} value={event.Id}/>
+                    <Picker.Item label={event.Name} key={`event_${i}`} value={event.Id}/>
                   )
                 })}
               </Picker>
