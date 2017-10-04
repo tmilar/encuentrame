@@ -70,7 +70,7 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
-      let bsasCoordinates = GeolocationService.getBsAsLocation();
+      let bsasCoordinates = GeolocationService.getBsAsRegion();
       this.setState({bsasCoordinates});
       this.setState({loading: false});
     } catch (e) {

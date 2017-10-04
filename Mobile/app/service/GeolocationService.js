@@ -1,9 +1,15 @@
-import {bsasBoundariesPoints} from '../config/locationProperties'
+import {bsasBoundaryPoints} from '../config/locationProperties'
 
 class GeolocationService {
 
+  /**
+   * Get region object from an array of points of a square.
+   *
+   * @param points array [minX, maxX, minY, maxY]; each point :: {{latitude:number, longitude: float}}
+   * @returns {{latitude: number, longitude: number, latitudeDelta: number, longitudeDelta: number}}
+   */
   regionContainingPoints(points) {
-    var minX, maxX, minY, maxY;
+    let minX, maxX, minY, maxY;
 
     // init first point
     ((point) => {
@@ -21,20 +27,28 @@ class GeolocationService {
       maxY = Math.max(maxY, point.longitude);
     });
 
-    var midX = (minX + maxX) / 2;
-    var midY = (minY + maxY) / 2;
-    var midPoint = [midX, midY];
+    let midX = (minX + maxX) / 2;
+    let midY = (minY + maxY) / 2;
+    let midPoint = [midX, midY];
 
-    var deltaX = (maxX - minX);
-    var deltaY = (maxY - minY);
+    let deltaX = (maxX - minX);
+    let deltaY = (maxY - minY);
 
     return {
-      latitude: midX, longitude: midY,
-      latitudeDelta: deltaX, longitudeDelta: deltaY,
+      latitude: midX,
+      longitude: midY,
+      latitudeDelta: deltaX,
+      longitudeDelta: deltaY,
     };
   }
-  getBsAsLocation() {
-    return this.regionContainingPoints(bsasBoundariesPoints);
+
+  /**
+   * Get BsAs City region.
+   *
+   * @returns {{latitude, longitude, latitudeDelta, longitudeDelta}|*}
+   */
+  getBsAsRegion() {
+    return this.regionContainingPoints(bsasBoundaryPoints);
   }
 }
 
