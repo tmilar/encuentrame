@@ -46,7 +46,7 @@ const NewActivity = React.createClass({
       hideLoading();
       console.log("Error creating activity in server: ", e);
       Alert.alert(
-        'Error creating activity in server',
+        'Ocurrió un problema al crear la actividad. ',
         e.message || e
       );
       return;
