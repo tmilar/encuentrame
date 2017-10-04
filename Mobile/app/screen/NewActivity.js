@@ -9,11 +9,15 @@ import {hideLoading, showLoading} from "react-native-notifyer";
 
 const NewActivity = React.createClass({
 
-  getInitialState () {
+  getInitialState() {
+    const bsasCoordinates = GeolocationService.getBsAsRegion();
+
     return {
       activityName: "",
       selectedEventId: 0,
       selectedEventName: "Selecciona un evento",
+      events: [],
+      initialMapRegionCoordinates: bsasCoordinates
     };
   },
 
@@ -24,23 +28,27 @@ const NewActivity = React.createClass({
   _handleActivitynameTextChange(inputValue) {
     this.setState({activityName: inputValue})
   },
+
   async _handleCreateActivityButtonPress() {
     showLoading("Espera...");
     //TODO: add real inputs for activity start and end times. or now its mocked
     let beginDateTime = new Date();
     let endDateTime = new Date();
     //dura 5 horas
-    let durationInHours = 5;
-    endDateTime.setTime(endDateTime.getTime() + (durationInHours*60*60*1000));
+    let duration = 5 * 60 * 60 * 1000;
+    endDateTime.setTime(endDateTime.getTime() + duration);
+
+    // TODO add real input for activity latitude/longitude selection point.
+    let activity = {
+      name: this.state.activityName,
+      latitude: this.state.initialMapRegionCoordinates.latitude,
+      longitude: this.state.initialMapRegionCoordinates.longitude,
+      beginDateTime: beginDateTime,
+      endDateTime: endDateTime,
+      eventId: this.state.selectedEventId
+    };
+
     try {
-      let activity = {
-        name: this.state.activityName,
-        latitude: this.state.bsasCoordinates.latitude,
-        longitude: this.state.bsasCoordinates.longitude,
-        beginDateTime: beginDateTime,
-        endDateTime: endDateTime,
-        eventId: this.state.selectedEventId
-      };
       await ActivityService.createActivity(activity);
     } catch (e) {
       hideLoading();
@@ -72,17 +80,14 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
-      let bsasCoordinates = GeolocationService.getBsAsRegion();
-      this.setState({bsasCoordinates});
-      this.setState({loading: false});
     } catch (e) {
-      this.setState({loading: false});
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
         'Error al cargar información de Eventos existentes.',
         e.message || e
       );
-      return;
+    } finally {
+      this.setState({loading: false});
     }
   },
 
@@ -174,12 +179,7 @@ const NewActivity = React.createClass({
             </Text>
             <MapView style={styles.map}
                      customMapStyle={mapStyles}
-                     initialRegion={{
-                       latitude: this.state.bsasCoordinates.latitude,
-                       longitude: this.state.bsasCoordinates.longitude,
-                       latitudeDelta: this.state.bsasCoordinates.latitudeDelta,
-                       longitudeDelta: this.state.bsasCoordinates.longitudeDelta
-                     }}
+                     initialRegion={this.state.initialMapRegionCoordinates}
             />
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
               <View style={{flex: 0.5}}>
