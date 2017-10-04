@@ -7,12 +7,12 @@ class ActivityService {
     let activityCreationResponse =  await Service.sendRequest(createActivityUrl, {
       method: 'POST',
       body: JSON.stringify({
-        "Name": activity.Name,
-        "Latitude": activity.Latitude,
-        "Longitude": activity.Longitude,
-        "BeginDateTime": activity.BeginDateTime,
-        "EndDateTime": activity.EndDateTime,
-        "EventId": activity.EventId
+        "Name": activity.name,
+        "Latitude": activity.latitude,
+        "Longitude": activity.longitude,
+        "BeginDateTime": activity.beginDateTime,
+        "EndDateTime": activity.endDateTime,
+        "EventId": activity.eventId
       })
     });
     return activityCreationResponse;

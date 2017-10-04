@@ -34,12 +34,12 @@ const NewActivity = React.createClass({
     endDateTime.setTime(endDateTime.getTime() + (durationInHours*60*60*1000));
     try {
       let activity = {
-        "Name": this.state.activityName,
-        "Latitude": this.state.bsasCoordinates.latitude,
-        "Longitude": this.state.bsasCoordinates.longitude,
-        "BeginDateTime": beginDateTime,
-        "EndDateTime": endDateTime,
-        "EventId": this.state.selectedEventId
+        name: this.state.activityName,
+        latitude: this.state.bsasCoordinates.latitude,
+        longitude: this.state.bsasCoordinates.longitude,
+        beginDateTime: beginDateTime,
+        endDateTime: endDateTime,
+        eventId: this.state.selectedEventId
       };
       await ActivityService.createActivity(activity);
     } catch (e) {
