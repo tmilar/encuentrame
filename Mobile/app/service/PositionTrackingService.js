@@ -18,7 +18,7 @@ class PositionTrackingService {
    * to publish device GPS position to server.
    *
    */
-  setupPeriodicPositionReport = async () => {
+  setupPositionTracking = async () => {
     this.cleanScheduledBackgroundNotifications();
 
     await GeolocationService.requireLocationPermission();

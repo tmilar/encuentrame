@@ -3,6 +3,7 @@ import {Text, View, Alert, ScrollView} from 'react-native'
 import SessionService from '../service/SessionService';
 import NewsListContainer from "../component/NewsListContainer";
 import {text} from '../style';
+import PositionTrackingService from '../service/PositionTrackingService';
 
 import {Icon} from 'react-native-elements';
 import ActionButton from "react-native-action-button";
@@ -21,6 +22,11 @@ export default class Home extends Component {
       navigate('Login');
     }
   }
+
+  componentDidMount = () => {
+    PositionTrackingService.setupPositionTracking();
+  };
+
 
   onPressTitle() {
     const {navigate} = this.props.navigation;
