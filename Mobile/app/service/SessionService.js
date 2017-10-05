@@ -79,6 +79,11 @@ class SessionService {
       throw 'User Id is missing!';
     }
   }
+
+  isDevSession = async () => {
+    let username = await this.getSessionParam("username");
+    return username.includes("test");
+  }
 }
 
 let sessionService = new SessionService();
