@@ -1,4 +1,6 @@
 import {bsasBoundaryPoints} from '../config/locationProperties'
+import {Permissions} from 'expo';
+import {Alert} from "react-native";
 
 class GeolocationService {
 
@@ -49,6 +51,22 @@ class GeolocationService {
    */
   getBsAsRegion() {
     return this.regionContainingPoints(bsasBoundaryPoints);
+  }
+
+  requireLocationPermission = async () => {
+
+    let response = await Permissions.askAsync(Permissions.LOCATION);
+
+    if (response.status !== 'granted') {
+      Alert.alert(
+        "Ocurrió un problema.",
+        "El permiso de ubicación es necesario para el uso de esta app!"
+      );
+      setTimeout(async () => {
+        await this.requireLocationPermission();
+      }, 3000);
+    }
+
   }
 }
 
