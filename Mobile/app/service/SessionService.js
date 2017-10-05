@@ -15,7 +15,8 @@ class SessionService {
     let session = {
       token: sessionData.token,
       userId: sessionData.userId,
-      expires: new Date(timestamp + this.SESSION_TTL).getTime()
+      expires: new Date(timestamp + this.SESSION_TTL).getTime(),
+      username: sessionData.username
     };
     return await AsyncStorage.setItem(this.STORAGE_KEY, JSON.stringify(session));
   }
@@ -77,6 +78,11 @@ class SessionService {
     if(!data.userId) {
       throw 'User Id is missing!';
     }
+  }
+
+  isDevSession = async () => {
+    let username = await this.getSessionParam("username");
+    return username.includes("test");
   }
 }
 
