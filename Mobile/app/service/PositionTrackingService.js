@@ -109,10 +109,11 @@ class PositionTrackingService {
       "Latitude": "1.0000",
       "Longitude": "1.0000"
     };
+    console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
 
     return Service.sendRequest("/position/set", {
       method: "POST",
-      body: currentPositionBody
+      body: JSON.stringify(currentPositionBody)
     });
   };
 
