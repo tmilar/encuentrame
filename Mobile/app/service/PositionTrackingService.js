@@ -7,6 +7,8 @@ class PositionTrackingService {
    * Setup periodic GPS Position report.
    * This method should be called once at App initialization phase.
    *
+   * [Warning] Will clean ALL scheduled background local notifications.
+   *
    * Will schedule minutely, 'dummy' local notifications,
    * then handle them in background
    * to publish device GPS position to server.
@@ -121,7 +123,10 @@ class PositionTrackingService {
       await this.postCurrentPosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
-      // TODO display a simple Toast with error message
+      // TODO display on screen, a simple Toast error message
     }
   }
 }
+
+const positionTrackingServiceInstance = new PositionTrackingService();
+export default positionTrackingServiceInstance;
