@@ -1,5 +1,6 @@
 import Service from './Service';
 import {Notifications} from 'expo';
+import GeolocationService from "./GeolocationService";
 
 class PositionTrackingService {
 
@@ -17,8 +18,10 @@ class PositionTrackingService {
    * to publish device GPS position to server.
    *
    */
-  setupPeriodicPositionReport = () => {
+  setupPeriodicPositionReport = async () => {
     this.cleanScheduledBackgroundNotifications();
+
+    await GeolocationService.requireLocationPermission();
 
     this.registerPositionNotificationListener();
 
@@ -34,7 +37,7 @@ class PositionTrackingService {
    */
   registerPositionNotificationListener = () => {
 
-    let positionNotificationListener = (notification) => {
+    let positionNotificationListener = async (notification) => {
       // Try to remove annoying popup notification.
       let notificationId = notification.notificationId;
       Notifications.dismissNotificationAsync(notificationId);
@@ -45,7 +48,7 @@ class PositionTrackingService {
       }
 
       try {
-        this.handleLocalPositionNotification(notification);
+        await this.handleLocalPositionNotification(notification);
       } catch (e) {
         console.error("Problem handling local position notification. ", e);
       }
@@ -95,7 +98,7 @@ class PositionTrackingService {
       // intervalMs: 5*60*1000 //TODO requires Expo upgrade v21
     };
 
-    console.log("Scheduling local notification with options: ", schedulingOptions);
+    console.log("[PositionTrackingService] Tracking started via local periodic background notifications. ", beginDate);
     Notifications.scheduleLocalNotificationAsync(localNotificationBody, schedulingOptions);
   };
 
