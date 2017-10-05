@@ -107,10 +107,11 @@ class PositionTrackingService {
   };
 
   postCurrentPosition = () => {
-    // TODO Get actual device position from GPS service.
+    let deviceLocation = GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+
     let currentPositionBody = {
-      "Latitude": "1.0000",
-      "Longitude": "1.0000"
+      "Latitude": deviceLocation.latitude,
+      "Longitude": deviceLocation.longitude
     };
     console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
 
