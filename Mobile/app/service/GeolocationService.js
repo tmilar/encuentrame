@@ -78,11 +78,12 @@ class GeolocationService {
   /**
    * Get current device location.
    *
+   * @param options: enableHighAccuracy
    * @returns {Promise.<{latitude, longitude, accuracy: (*|number|Number), heading, speed, timestamp}>}
    */
-  getDeviceLocation = async () => {
+  getDeviceLocation = async (options) => {
 
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync(options);
     let coords = location.coords;
 
     return {
