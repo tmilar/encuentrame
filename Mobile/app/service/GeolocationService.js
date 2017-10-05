@@ -1,4 +1,6 @@
 import {bsasBoundaryPoints} from '../config/locationProperties'
+import {Permissions, Location} from 'expo';
+import {Alert} from "react-native";
 
 class GeolocationService {
 
@@ -50,6 +52,51 @@ class GeolocationService {
   getBsAsRegion() {
     return this.regionContainingPoints(bsasBoundaryPoints);
   }
+
+  /**
+   * Persistently request Location permission to user.
+   *
+   * If not accepted, will display an Alert (react-native) error message
+   * and try to request again, indefinitely.
+   *
+   * @returns {Promise.<void>}
+   */
+  requireLocationPermission = async () => {
+
+    let response = await Permissions.askAsync(Permissions.LOCATION);
+
+    if (response.status !== 'granted') {
+      Alert.alert(
+        "Ocurrió un problema.",
+        "El permiso de ubicación es necesario para el uso de esta app!"
+      );
+      setTimeout(async () => {
+        await this.requireLocationPermission();
+      }, 3000);
+    }
+  };
+
+  /**
+   * Get current device location.
+   *
+   * @returns {Promise.<{latitude, longitude, accuracy: (*|number|Number), heading, speed, timestamp}>}
+   */
+  getDeviceLocation = async () => {
+
+    let location = await Location.getCurrentPositionAsync({});
+    let coords = location.coords;
+
+    return {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      accuracy: coords.accuracy,
+      heading: coords.heading,
+      speed: coords.speed,
+      timestamp: location.timestamp
+    };
+  };
+
+
 }
 
 let geolocationService = new GeolocationService();
