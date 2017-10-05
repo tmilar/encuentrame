@@ -115,7 +115,7 @@ class PositionTrackingService {
     };
     console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
 
-    return Service.sendRequest("/position/set", {
+    return await Service.sendRequest("Position/set", {
       method: "POST",
       body: JSON.stringify(currentPositionBody)
     });
