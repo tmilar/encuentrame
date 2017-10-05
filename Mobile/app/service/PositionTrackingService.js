@@ -34,12 +34,12 @@ class PositionTrackingService {
   };
 
   _checkLocalNotification = (notification) => {
-    if (!notification.body) {
-      console.debug("Trying to parse notification body which was null. ", notification);
+    if (!notification.data) {
+      console.debug("Trying to parse notification body (data) which was null. ", notification);
       return false;
     }
 
-    let data = JSON.parse(notification.body);
+    let data = notification.data;
 
     if (!data || !data.type || data.type !== "position") {
       console.debug("Notification is not 'position' type. Ignoring.", notification);
@@ -56,25 +56,26 @@ class PositionTrackingService {
    *
    */
   scheduleRecurrentBackgroundNotification = () => {
+
+    let beginDate = new Date();
+    beginDate.setSeconds(beginDate.getSeconds() + 3);
+
     const localNotificationBody = {
       title: 'Encuentrame',
       body: 'Enviando datos...',
-      data: JSON.stringify({created: new Date().getTime(), type: "position"}),
+      data: {created: beginDate, type: "position"},
       ios: {sound: false},
       android: {sound: false, sticky: false, vibrate: false, priority: "min"}
     };
 
-    let t = new Date();
-    t.setSeconds(t.getSeconds() + 3);
-
     const schedulingOptions = {
-      time: t,
+      time: beginDate,
       repeat: 'minute',
       // intervalMs: 5*60*1000 //TODO requires Expo upgrade v21
     };
 
     console.log("Scheduling local notification with options: ", schedulingOptions);
-    Notifications.scheduleLocalNotificationAsync(this.localNotificationBody, schedulingOptions);
+    Notifications.scheduleLocalNotificationAsync(localNotificationBody, schedulingOptions);
   };
 
   cleanScheduledBackgroundNotifications = () => {
