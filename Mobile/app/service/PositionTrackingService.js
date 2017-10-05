@@ -3,6 +3,9 @@ import {Notifications} from 'expo';
 
 class PositionTrackingService {
 
+  static POSITION_SET_INTERVAL = 5 * 60 * 1000; // 5 MINUTES
+  static POSITION_SET_INTERVAL_DELTA = 60 * 1000; // +/- 1 MINUTE (60 seconds)
+
   /**
    * Setup periodic GPS Position report.
    * This method should be called once at App initialization phase.
@@ -116,9 +119,38 @@ class PositionTrackingService {
   handleLocalPositionNotification = async (notification) => {
 
     let now = new Date();
-    console.log(new Date(), 'Notification received... ', notification);
+    let started = new Date(notification.data.created);
 
-    // TODO only post current position once each 5 minutes. Not once per minute.
+    let elapsedTime = now.getTime() - started.getTime();
+
+    let totalIntervalTime = elapsedTime / PositionTrackingService.POSITION_SET_INTERVAL;
+
+    let relativeIntervalTime = totalIntervalTime - Math.floor(totalIntervalTime);
+    let relativeErrorDelta = PositionTrackingService.POSITION_SET_INTERVAL_DELTA / PositionTrackingService.POSITION_SET_INTERVAL;
+
+    let shouldPostPosition = relativeIntervalTime < relativeErrorDelta;
+
+    let remainingPositionTimeMs = Math.round((1 - relativeIntervalTime) * PositionTrackingService.POSITION_SET_INTERVAL);
+
+    let debugData = {
+      cycle: Math.floor(totalIntervalTime),
+      totalIntervalTime: totalIntervalTime,
+      relativeIntervalDelta: relativeIntervalTime,
+      remainingForNextMs: remainingPositionTimeMs
+    };
+
+    console.log(now,
+      'Notification received. ',
+      shouldPostPosition ?
+        `Posting device position to server` :
+        `Not posting position to server yet. (will do in about: ${remainingPositionTimeMs} ms.)`,
+      debugData,
+      notification);
+
+    if (!shouldPostPosition) {
+      return;
+    }
+
     try {
       await this.postCurrentPosition();
     } catch (e) {
