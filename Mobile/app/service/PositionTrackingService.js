@@ -15,22 +15,38 @@ class PositionTrackingService {
   setupPeriodicPositionReport = () => {
     this.cleanScheduledBackgroundNotifications();
 
-    Notifications.addListener(this.positionNotificationListener);
+    this.registerPositionNotificationListener();
 
     this.scheduleRecurrentBackgroundNotification();
   };
 
-  positionNotificationListener = (notification) => {
-    // Try to remove annoying popup notification.
-    let notificationId = notification.notificationId;
-    Notifications.dismissNotificationAsync(notificationId);
+  /**
+   * Register Position Notification Listener.
+   *
+   * This will listen and handle the 'position' local notification,
+   * dismiss it ASAP,
+   * and proceed to process it for position tracking.
+   */
+  registerPositionNotificationListener = () => {
 
-    if (!this._checkLocalNotification(notification)) {
-      return; // ignore invalid notification
-    }
+    let positionNotificationListener = (notification) => {
+      // Try to remove annoying popup notification.
+      let notificationId = notification.notificationId;
+      Notifications.dismissNotificationAsync(notificationId);
 
-    this.handleLocalPositionNotification(notification);
-    // Notifications.dismissAllNotificationsAsync();
+      // ignore invalid notification
+      if (!this._checkLocalNotification(notification)) {
+        return;
+      }
+
+      try {
+        this.handleLocalPositionNotification(notification);
+      } catch (e) {
+        console.error("Problem handling local position notification. ", e);
+      }
+    };
+
+    Notifications.addListener(positionNotificationListener);
   };
 
   _checkLocalNotification = (notification) => {
