@@ -70,9 +70,8 @@ class GeolocationService {
         "Ocurrió un problema.",
         "El permiso de ubicación es necesario para el uso de esta app!"
       );
-      setTimeout(async () => {
-        await this.requireLocationPermission();
-      }, 3000);
+      await this._sleep(3000);
+      await this.requireLocationPermission();
     }
   };
 
@@ -96,6 +95,17 @@ class GeolocationService {
     };
   };
 
+
+  /**
+   * Auxiliar function to have a delay in ms, compatible with async/await.
+   *
+   * @param time
+   * @returns {Promise}
+   * @private
+   */
+  _sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
 
 }
 
