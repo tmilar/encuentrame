@@ -6,10 +6,8 @@ import PositionTrackingService from "./app/service/PositionTrackingService";
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-
-    PositionTrackingService.setupPeriodicPositionReport();
+  componentDidMount = async () => {
+    await PositionTrackingService.setupPeriodicPositionReport();
   };
 
   render() {
