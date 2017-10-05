@@ -1,36 +1,140 @@
-import React, {Component} from 'react';
-import {Alert, Modal, StyleSheet, Text, View, Picker, TextInput} from 'react-native';
+import React from 'react';
+import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'react-native';
+import {text} from '../style';
+import {MapView} from 'expo';
+import EventsService from '../service/EventsService';
+import GeolocationService from '../service/GeolocationService';
+import ActivityService from '../service/ActivityService';
+import {hideLoading, showLoading} from "react-native-notifyer";
 
-export default class NewActivity extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+const NewActivity = React.createClass({
+
+  getInitialState() {
+    const bsasCoordinates = GeolocationService.getBsAsRegion();
+
+    return {
       activityName: "",
-      selectedEventId: -1
+      selectedEventId: 0,
+      selectedEventName: "Selecciona un evento",
+      events: [],
+      initialMapRegionCoordinates: bsasCoordinates
     };
-
-    this._handleActivitynameTextChange = this._handleActivitynameTextChange.bind(this);
-  }
+  },
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
-  }
+  },
 
   _handleActivitynameTextChange(inputValue) {
     this.setState({activityName: inputValue})
-  }
+  },
 
-  /*_backToHome() {
+  async _handleCreateActivityButtonPress() {
+    showLoading("Espera...");
+    //TODO: add real inputs for activity start and end times. or now its mocked
+    let beginDateTime = new Date();
+    let endDateTime = new Date();
+    //dura 5 horas
+    let duration = 5 * 60 * 60 * 1000;
+    endDateTime.setTime(endDateTime.getTime() + duration);
+
+    // TODO add real input for activity latitude/longitude selection point.
+    let activity = {
+      name: this.state.activityName,
+      latitude: this.state.initialMapRegionCoordinates.latitude,
+      longitude: this.state.initialMapRegionCoordinates.longitude,
+      beginDateTime: beginDateTime,
+      endDateTime: endDateTime,
+      eventId: this.state.selectedEventId
+    };
+
+    try {
+      await ActivityService.createActivity(activity);
+    } catch (e) {
+      hideLoading();
+      console.log("Error creating activity in server: ", e);
+      Alert.alert(
+        'Ocurrió un problema al crear la actividad. ',
+        e.message || e
+      );
+      return;
+    }
+    hideLoading();
+    Alert.alert(
+      'Actividad creada con exito!'
+    );
+    this._goToHome();
+  },
+
+  _handleCancelActivityCreation() {
+    this._goToHome();
+  },
+
+  _goToHome() {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
-  }*/
+  },
+
+  async componentWillMount() {
+    this.setState({loading: true});
+    try {
+      let events = await EventsService.getEvents();
+      this.setState({events});
+    } catch (e) {
+      console.log("Error retrieving events from server: ", e);
+      Alert.alert(
+        'Error al cargar información de Eventos existentes.',
+        e.message || e
+      );
+    } finally {
+      this.setState({loading: false});
+    }
+  },
 
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
-  }
+  },
 
   render() {
-
+    if (this.state.loading) {
+      return null;
+    }
+    var mapStyles = [
+      {
+        "featureType": "administrative",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ];
     return (
       <View style={{marginTop: 22}}>
         <Modal
@@ -40,35 +144,68 @@ export default class NewActivity extends Component {
           onRequestClose={() => {/* handle modal 'back' close? */
           }}
         >
-          <View style={styles.message}>
-            <View>
+          <View style={{flex: 1}}>
+            <Text style={[text.p, styles.activityTitle]}>
+              Nueva Actividad
+            </Text>
+            <View style={{flex: 2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+              <TextInput
+                value={this.state.activityName}
+                placeholder="Nombre de la actividad"
+                ref="activityName"
+                style={styles.activityName}
+                selectTextOnFocus
+                onChangeText={this._handleActivitynameTextChange}
+              />
+              <Text style={text.p}>
+                {this.state.selectedEventName || "Si vas a un evento eligelo"}
+              </Text>
+              <Picker
+                selectedValue={this.state.selectedEventId}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
+                color="red"
+              >
+                {this.state.events.map((event, i) => {
+                  return (
+                    <Picker.Item label={event.Name} key={`event_${i}`} value={event.Id}/>
+                  )
+                })}
+              </Picker>
 
-              <Text>Nueva Actividad</Text>
+            </View>
+            <Text style={text.title}>
+              Ubicacion de la actividad?
+            </Text>
+            <MapView style={styles.map}
+                     customMapStyle={mapStyles}
+                     initialRegion={this.state.initialMapRegionCoordinates}
+            />
+            <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
+              <View style={{flex: 0.5}}>
+                <Button
+                  title="Crear Actividad"
+                  onPress={this._handleCreateActivityButtonPress}
+                />
+              </View>
+
+              <View style={{flex: 0.5}}>
+                <Button
+                  color="grey"
+                  title="Cancelar"
+                  onPress={this._handleCancelActivityCreation}
+                />
+              </View>
 
             </View>
           </View>
-          <View style={{flex: 1}}>
-            <TextInput
-              value={this.state.activityName}
-              placeholder="Nombre de la actividad"
-              ref="activityName"
-              style={styles.activityName}
-              selectTextOnFocus
-              onChangeText={this._handleActivitynameTextChange}
-            />
-            <Picker
-              selectedValue={this.state.selectedEventId}
-              onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}>
-              <Picker.Item label="Recital del Indio" value="1" />
-              <Picker.Item label="Boca-RiBer" value="2" />
-            </Picker>
-          </View>
+
         </Modal>
 
       </View>
     )
   }
-}
+});
 
 const styles = StyleSheet.create({
   message: {
@@ -76,5 +213,28 @@ const styles = StyleSheet.create({
     height: 3,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  picker: {
+    width: 200,
+    paddingBottom: 10
+  },
+  activityName: {
+    width: 200,
+    textAlign: 'center',
+    paddingBottom: 10
+  },
+  activityTitle: {
+    backgroundColor: "#2962FF",
+    color: "white",
+    flex: 1,
+    width: 400,
+    alignSelf: "center",
+    textAlignVertical: "center"
+  },
+  map: {
+    flex: 3,
+    margin: 50
   }
 });
+
+export default NewActivity;

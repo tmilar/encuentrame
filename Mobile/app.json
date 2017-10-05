@@ -9,7 +9,12 @@
       "bundleIdentifier": "com.encuentrame.encuentrame"
     },
     "android": {
-      "package": "com.encuentrame.encuentrame"
+      "package": "com.encuentrame.encuentrame",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAPBng6Zq78t9u8NX4ISlbki8ryA-25j3s"
+        }
+      }
     }
   },
   "name": "Encuentrame",
