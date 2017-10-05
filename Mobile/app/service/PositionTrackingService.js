@@ -106,8 +106,8 @@ class PositionTrackingService {
     Notifications.cancelAllScheduledNotificationsAsync();
   };
 
-  postCurrentPosition = () => {
-    let deviceLocation = GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+  postCurrentPosition = async () => {
+    let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
 
     let currentPositionBody = {
       "Latitude": deviceLocation.latitude,
