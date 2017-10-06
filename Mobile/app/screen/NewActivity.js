@@ -41,8 +41,8 @@ const NewActivity = React.createClass({
     // TODO add real input for activity latitude/longitude selection point.
     let activity = {
       name: this.state.activityName,
-      latitude: this.state.initialMapRegionCoordinates.latitude,
-      longitude: this.state.initialMapRegionCoordinates.longitude,
+      latitude: this.state.activityRegion.latitude,
+      longitude: this.state.activityRegion.longitude,
       beginDateTime: beginDateTime,
       endDateTime: endDateTime,
       eventId: this.state.selectedEventId
@@ -80,6 +80,13 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
+      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+      let activityRegion = {
+        "latitude": deviceLocation.latitude,
+        "longitude": deviceLocation.longitude
+      };
+      this.setState({"activityRegion": activityRegion  });
+
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
@@ -180,7 +187,13 @@ const NewActivity = React.createClass({
             <MapView style={styles.map}
                      customMapStyle={mapStyles}
                      initialRegion={this.state.initialMapRegionCoordinates}
-            />
+            >
+              <MapView.Marker draggable
+                              coordinate={this.state.activityRegion}
+                              title={"Actividad"}
+                              onDragEnd={(e) => this.setState({ activityRegion: e.nativeEvent.coordinate })}
+              />
+            </MapView>
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
               <View style={{flex: 0.5}}>
                 <Button
