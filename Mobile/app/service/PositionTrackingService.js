@@ -1,6 +1,8 @@
 import Service from './Service';
 import {Notifications} from 'expo';
 import GeolocationService from "./GeolocationService";
+import SessionService from "./SessionService";
+import {hide, showToast} from 'react-native-notifyer';
 
 class PositionTrackingService {
 
@@ -22,6 +24,9 @@ class PositionTrackingService {
     this.cleanScheduledBackgroundNotifications();
 
     await GeolocationService.requireLocationPermission();
+    if (SessionService.isDevSession()) {
+      showToast("Location Permission is enabled successfully.");
+    }
 
     this.registerPositionNotificationListener();
 
@@ -107,13 +112,21 @@ class PositionTrackingService {
   };
 
   postCurrentPosition = async () => {
+    if(SessionService.isDevSession()) {
+      showToast("Requesting device position...");
+    }
+
     let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
 
     let currentPositionBody = {
       "Latitude": deviceLocation.latitude,
       "Longitude": deviceLocation.longitude
     };
+
     console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
+    if(SessionService.isDevSession()) {
+      showToast("Posting position: "  + JSON.stringify(currentPositionBody));
+    }
 
     return await Service.sendRequest("Position/set", {
       method: "POST",
@@ -147,8 +160,8 @@ class PositionTrackingService {
     console.log(now,
       'Notification received. ',
       shouldPostPosition ?
-        `Posting device position to server` :
-        `Not posting position to server yet. (will do in about: ${remainingPositionTimeMs} ms.)`,
+        `Posting device position to server. ` :
+        `Not posting position to server yet. (will do in about: ${remainingPositionTimeMs} ms.). `,
       debugData,
       notification);
 
@@ -160,7 +173,7 @@ class PositionTrackingService {
       await this.postCurrentPosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
-      // TODO display on screen, a simple Toast error message
+      showToast("Problema en la comunicación con el servidor: " + e.message || e);
     }
   }
 }
