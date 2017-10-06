@@ -18,7 +18,7 @@ const NewActivity = React.createClass({
       selectedEventName: "Selecciona un evento",
       events: [],
       initialMapRegionCoordinates: bsasCoordinates,
-      activityRegion: {
+      activityLocation: {
         latitude: 0,
         longitude: 0
       }
@@ -45,8 +45,8 @@ const NewActivity = React.createClass({
     // TODO add real input for activity latitude/longitude selection point.
     let activity = {
       name: this.state.activityName,
-      latitude: this.state.activityRegion.latitude,
-      longitude: this.state.activityRegion.longitude,
+      latitude: this.state.activityLocation.latitude,
+      longitude: this.state.activityLocation.longitude,
       beginDateTime: beginDateTime,
       endDateTime: endDateTime,
       eventId: this.state.selectedEventId
@@ -94,11 +94,11 @@ const NewActivity = React.createClass({
 
     try {
       let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
-      let activityRegion = {
+      let activityLocation = {
         latitude: deviceLocation.latitude,
         longitude: deviceLocation.longitude
       };
-      this.setState({activityRegion});
+      this.setState({activityLocation});
     } catch (e) {
       console.log("Error getting device location: ", e);
       Alert.alert(
@@ -201,9 +201,9 @@ const NewActivity = React.createClass({
                      initialRegion={this.state.initialMapRegionCoordinates}
             >
               <MapView.Marker draggable
-                              coordinate={this.state.activityRegion}
+                              coordinate={this.state.activityLocation}
                               title={"Actividad"}
-                              onDragEnd={(e) => this.setState({activityRegion: e.nativeEvent.coordinate})}
+                              onDragEnd={(e) => this.setState({activityLocation: e.nativeEvent.coordinate})}
               />
             </MapView>
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
