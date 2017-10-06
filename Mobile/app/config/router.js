@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {StackNavigator, TabNavigator} from 'react-navigation';
+import {DrawerNavigator, StackNavigator, TabNavigator} from 'react-navigation';
 import Login from '../screen/Login';
 import Register from '../screen/Register';
 import {Icon} from 'react-native-elements';
@@ -9,10 +9,10 @@ import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
-import {Text, TouchableHighlight, View} from "react-native";
+import {TouchableHighlight, View} from "react-native";
 
 
-export const Tabs = TabNavigator({
+const Tabs = TabNavigator({
   Home: {
     screen: Home,
     navigationOptions: {
@@ -42,26 +42,69 @@ export const Tabs = TabNavigator({
   },
   tabBarPosition: 'bottom'
 });
+Tabs.navigationOptions = {
+  drawerLabel: 'Encuentrame',
+  drawerIcon: ({tintColor}) => (
+    <Icon name="drafts" size={24} color={tintColor}/>
+  ),
+};
 
-export const Root = StackNavigator({
+const AuthStack = StackNavigator({
   Login: {screen: Login, navigationOptions: {header: null}},
-  Register: {screen: Register},
+  Register: {screen: Register}
+});
+
+
+const EncuentrameHeader = ({navigation}) => ({
+  headerTitle: "Encuentrame",
+  headerLeft: <TouchableHighlight onPress={() => navigation.navigate('DrawerOpen')}>
+    <View>
+      <Icon name="menu" size={25}/>
+    </View>
+  </TouchableHighlight>,
+  headerRight: <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
+    <View>
+      <Icon name="people" size={25}/>
+    </View>
+  </TouchableHighlight>
+});
+
+const AppNavigator = DrawerNavigator({
+    AppTabs: {
+      path: '/home',
+      screen: Tabs,
+      // navigationOptions: EncuentrameHeader
+    },
+    Logout: {
+      path: '/login',
+      screen: AuthStack,
+      navigationOptions: {
+        drawerLabel: "Logout",
+        drawerIcon: ({tintColor}) => (
+          <Icon name="drafts" size={24}/>
+        )
+      }
+    },
+  }, {
+    // initialRouteName: 'AppTabs',
+    contentOptions: {
+      activeTintColor: '#2962FF'
+    },
+  }
+);
+
+const BaseStack = StackNavigator({
+  // TODO when navigating PreLogin - from inside app - delete the session as "Logout".
+  PreLogin: {
+    screen: AuthStack,
+    navigationOptions: {header: null}
+  },
   PostLogin: {
-    screen: Tabs,
-    navigationOptions: ({navigation}) => ({
-      headerTitle: "Encuentrame",
-      headerLeft: <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
-        <View>
-          <Icon name="menu" size={25}/>
-        </View>
-      </TouchableHighlight>,
-      headerRight: <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
-        <View>
-          <Icon name="people" size={25}/>
-        </View>
-      </TouchableHighlight>
-    })
+    screen: AppNavigator,
+    navigationOptions: EncuentrameHeader
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}}
 });
+
+export const Root = BaseStack;

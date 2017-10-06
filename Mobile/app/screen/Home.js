@@ -18,7 +18,7 @@ export default class Home extends Component {
     let sessionAlive = await SessionService.isSessionAlive();
     if (!sessionAlive) {
       const {navigate} = this.props.navigation;
-      navigate('Login');
+      navigate('PreLogin');
     }
   }
 
