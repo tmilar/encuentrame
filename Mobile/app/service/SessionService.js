@@ -82,6 +82,9 @@ class SessionService {
 
   isDevSession = async () => {
     let username = await this.getSessionParam("username");
+    if(!username) {
+      return false;
+    }
     return username.includes("test");
   }
 }
