@@ -17,7 +17,11 @@ const NewActivity = React.createClass({
       selectedEventId: 0,
       selectedEventName: "Selecciona un evento",
       events: [],
-      initialMapRegionCoordinates: bsasCoordinates
+      initialMapRegionCoordinates: bsasCoordinates,
+      activityRegion: {
+        latitude: 0,
+        longitude: 0
+      }
     };
   },
 
@@ -80,17 +84,25 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
-      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
-      let activityRegion = {
-        "latitude": deviceLocation.latitude,
-        "longitude": deviceLocation.longitude
-      };
-      this.setState({"activityRegion": activityRegion  });
-
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
         'Error al cargar información de Eventos existentes.',
+        e.message || e
+      );
+    }
+
+    try {
+      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+      let activityRegion = {
+        latitude: deviceLocation.latitude,
+        longitude: deviceLocation.longitude
+      };
+      this.setState({activityRegion});
+    } catch (e) {
+      console.log("Error getting device location: ", e);
+      Alert.alert(
+        'Error al obtener la ubicación del dispositivo.',
         e.message || e
       );
     } finally {
@@ -191,7 +203,7 @@ const NewActivity = React.createClass({
               <MapView.Marker draggable
                               coordinate={this.state.activityRegion}
                               title={"Actividad"}
-                              onDragEnd={(e) => this.setState({ activityRegion: e.nativeEvent.coordinate })}
+                              onDragEnd={(e) => this.setState({activityRegion: e.nativeEvent.coordinate})}
               />
             </MapView>
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
