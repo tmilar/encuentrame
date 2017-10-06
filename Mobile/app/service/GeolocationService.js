@@ -1,4 +1,6 @@
 import {bsasBoundaryPoints} from '../config/locationProperties'
+import {Permissions, Location} from 'expo';
+import {Alert} from "react-native";
 
 class GeolocationService {
 
@@ -50,6 +52,62 @@ class GeolocationService {
   getBsAsRegion() {
     return this.regionContainingPoints(bsasBoundaryPoints);
   }
+
+  /**
+   * Persistently request Location permission to user.
+   *
+   * If not accepted, will display an Alert (react-native) error message
+   * and try to request again, indefinitely.
+   *
+   * @returns {Promise.<void>}
+   */
+  requireLocationPermission = async () => {
+
+    let response = await Permissions.askAsync(Permissions.LOCATION);
+
+    if (response.status !== 'granted') {
+      Alert.alert(
+        "Ocurrió un problema.",
+        "El permiso de ubicación es necesario para el uso de esta app!"
+      );
+      await this._sleep(3000);
+      await this.requireLocationPermission();
+    }
+  };
+
+  /**
+   * Get current device location.
+   *
+   * @param options: enableHighAccuracy
+   * @returns {Promise.<{latitude, longitude, accuracy: (*|number|Number), heading, speed, timestamp}>}
+   */
+  getDeviceLocation = async (options) => {
+
+    let location = await Location.getCurrentPositionAsync(options);
+    let coords = location.coords;
+
+    return {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      accuracy: coords.accuracy,
+      heading: coords.heading,
+      speed: coords.speed,
+      timestamp: location.timestamp
+    };
+  };
+
+
+  /**
+   * Auxiliar function to have a delay in ms, compatible with async/await.
+   *
+   * @param time
+   * @returns {Promise}
+   * @private
+   */
+  _sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
+
 }
 
 let geolocationService = new GeolocationService();
