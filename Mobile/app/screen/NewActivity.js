@@ -6,6 +6,7 @@ import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
+import mapStyles from '../style/map';
 
 const NewActivity = React.createClass({
 
@@ -99,42 +100,6 @@ const NewActivity = React.createClass({
     if (this.state.loading) {
       return null;
     }
-    var mapStyles = [
-      {
-        "featureType": "administrative",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "transit",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      }
-    ];
     return (
       <View style={{marginTop: 22}}>
         <Modal
