@@ -17,7 +17,11 @@ const NewActivity = React.createClass({
       selectedEventId: 0,
       selectedEventName: "Selecciona un evento",
       events: [],
-      initialMapRegionCoordinates: bsasCoordinates
+      initialMapRegionCoordinates: bsasCoordinates,
+      activityLocation: {
+        latitude: 0,
+        longitude: 0
+      }
     };
   },
 
@@ -41,8 +45,8 @@ const NewActivity = React.createClass({
     // TODO add real input for activity latitude/longitude selection point.
     let activity = {
       name: this.state.activityName,
-      latitude: this.state.initialMapRegionCoordinates.latitude,
-      longitude: this.state.initialMapRegionCoordinates.longitude,
+      latitude: this.state.activityLocation.latitude,
+      longitude: this.state.activityLocation.longitude,
       beginDateTime: beginDateTime,
       endDateTime: endDateTime,
       eventId: this.state.selectedEventId
@@ -84,6 +88,21 @@ const NewActivity = React.createClass({
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
         'Error al cargar información de Eventos existentes.',
+        e.message || e
+      );
+    }
+
+    try {
+      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+      let activityLocation = {
+        latitude: deviceLocation.latitude,
+        longitude: deviceLocation.longitude
+      };
+      this.setState({activityLocation});
+    } catch (e) {
+      console.log("Error getting device location: ", e);
+      Alert.alert(
+        'Error al obtener la ubicación del dispositivo.',
         e.message || e
       );
     } finally {
@@ -180,7 +199,13 @@ const NewActivity = React.createClass({
             <MapView style={styles.map}
                      customMapStyle={mapStyles}
                      initialRegion={this.state.initialMapRegionCoordinates}
-            />
+            >
+              <MapView.Marker draggable
+                              coordinate={this.state.activityLocation}
+                              title={"Actividad"}
+                              onDragEnd={(e) => this.setState({activityLocation: e.nativeEvent.coordinate})}
+              />
+            </MapView>
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
               <View style={{flex: 0.5}}>
                 <Button
