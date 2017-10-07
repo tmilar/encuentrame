@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {DrawerNavigator, StackNavigator, TabNavigator} from 'react-navigation';
+import {StackNavigator, TabNavigator, NavigationActions, DrawerNavigator} from 'react-navigation';
 import Login from '../screen/Login';
 import Register from '../screen/Register';
 import {Icon} from 'react-native-elements';
@@ -55,7 +55,7 @@ const AuthStack = StackNavigator({
 });
 
 
-const EncuentrameHeader = ({navigation}) => ({
+const EncuentrameHeaderOptions = ({navigation}) => ({
   headerTitle: "Encuentrame",
   headerLeft: <TouchableHighlight onPress={() => navigation.navigate('DrawerOpen')}>
     <View>
@@ -69,6 +69,27 @@ const EncuentrameHeader = ({navigation}) => ({
   </TouchableHighlight>
 });
 
+/**
+ * Dummy screen to reset navigator back to Login screen.
+ * Then Login screen will take care of resetting session.
+ */
+class LogoutActionScreen extends React.Component {
+  componentDidMount() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'PreLogin', params: {logout: true}})
+      ]
+    });
+    console.log("Dispatching Reset Action", resetAction);
+    this.props.navigation.dispatch(resetAction);
+  }
+
+  render() {
+    return <View/>
+  }
+}
+
 const AppNavigator = DrawerNavigator({
     AppTabs: {
       path: '/home',
@@ -77,7 +98,7 @@ const AppNavigator = DrawerNavigator({
     },
     Logout: {
       path: '/login',
-      screen: AuthStack,
+      screen: LogoutActionScreen,
       navigationOptions: {
         drawerLabel: "Logout",
         drawerIcon: ({tintColor}) => (
@@ -94,14 +115,13 @@ const AppNavigator = DrawerNavigator({
 );
 
 const BaseStack = StackNavigator({
-  // TODO when navigating PreLogin - from inside app - delete the session as "Logout".
   PreLogin: {
     screen: AuthStack,
     navigationOptions: {header: null}
   },
   PostLogin: {
     screen: AppNavigator,
-    navigationOptions: EncuentrameHeader
+    navigationOptions: EncuentrameHeaderOptions
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}}
