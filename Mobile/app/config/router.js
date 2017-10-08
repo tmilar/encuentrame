@@ -97,7 +97,7 @@ const AppNavigator = DrawerNavigator({
       // navigationOptions: EncuentrameHeader
     },
     Logout: {
-      path: '/login',
+      path: '/logout',
       screen: LogoutActionScreen,
       navigationOptions: {
         drawerLabel: "Logout",

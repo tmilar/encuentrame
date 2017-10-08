@@ -3,7 +3,7 @@ import {Text, View, Alert, ScrollView} from 'react-native'
 import SessionService from '../service/SessionService';
 import NewsListContainer from "../component/NewsListContainer";
 import {text} from '../style';
-
+import {showToast} from 'react-native-notifyer';
 import {Icon} from 'react-native-elements';
 import ActionButton from "react-native-action-button";
 
@@ -17,8 +17,9 @@ export default class Home extends Component {
   async componentWillMount() {
     let sessionAlive = await SessionService.isSessionAlive();
     if (!sessionAlive) {
+      showToast("La sesión ha caducado. Por favor, vuelve a iniciar sesión.");
       const {navigate} = this.props.navigation;
-      navigate('PreLogin');
+      navigate('Logout');
     }
   }
 
