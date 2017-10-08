@@ -11,6 +11,10 @@ import ActionButton from "react-native-action-button";
 
 export default class Home extends Component {
 
+  state = {
+    trackingEnabled: false
+  };
+
   constructor(props) {
     super(props);
     this.onPressTitle = this.onPressTitle.bind(this);
@@ -26,6 +30,8 @@ export default class Home extends Component {
 
   componentDidMount = async () => {
     await PositionTrackingService.startPositionTracking();
+    let trackingEnabled = await PositionTrackingService.checkEnabled();
+    this.setState({trackingEnabled});
   };
 
 
@@ -33,6 +39,21 @@ export default class Home extends Component {
     const {navigate} = this.props.navigation;
     navigate('AreYouOk');
   }
+
+  onPressTrackToggle = async () => {
+    let trackingEnabled = await PositionTrackingService.checkEnabled();
+    this.setState({trackingEnabled});
+    let alertMsg;
+    if(trackingEnabled) {
+      await PositionTrackingService.stopPositionTracking();
+      alertMsg = "Segumiento desactivado. \nRecuerda activarlo cuando quieras que te podamos cuidar!";
+    } else {
+      await PositionTrackingService.startPositionTracking();
+      alertMsg = "Seguimiento activado \uD83D\uDE00";
+    }
+
+    Alert.alert("Seguime", alertMsg);
+  };
 
   render() {
     return (
@@ -43,11 +64,11 @@ export default class Home extends Component {
           </Text>
           <NewsListContainer/>
         </ScrollView>
-        {/*<ActionButton style={{flex: 0.2}}
-                      buttonColor="rgba(231,76,60,1)"
-                      onPress={() => Alert.alert("Seguime", "Seguimiento activado \uD83D\uDE00")}
-                      icon={(<Icon name="person-pin-circle" color="white" size={26}/>)}>
-        </ActionButton>*/}
+        <ActionButton style={{flex: 0.2}}
+                      buttonColor={this.state.trackingEnabled ? 'rgba(231,76,60,1)' : 'rgba(76,231,60,1)'}
+                      onPress={this.onPressTrackToggle}
+                      icon={(<Icon name="person-pin-circle" color="white" size={26}/>)}
+        />
       </View>
     )
   }
