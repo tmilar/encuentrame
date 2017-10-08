@@ -66,24 +66,18 @@ class PushNotificationsService {
   };
 
   _requireNotificationsPermission = async () => {
-    const {status: existingStatus} = await Permissions.getAsync(Permissions.NOTIFICATIONS);
 
-    let finalStatus = existingStatus;
-
-    // only ask if permissions have not already been determined, because
-    // iOS won't necessarily prompt the user a second time.
-    if (existingStatus !== 'granted') {
-      // Android remote notification permissions are granted during the app
-      // install, so this will only ask on iOS
-      const {status} = await PermissionsHelper.askPermission("NOTIFICATIONS", "notificaciones");
-      finalStatus = status;
-    }
+    // Android remote notification permissions are granted during the app
+    // install, so this will only ask on iOS
+    let finalStatus = await PermissionsHelper.askIfNotGranted("NOTIFICATIONS", "notificaciones");
 
     // Stop here if the user did not grant permissions
     if (finalStatus !== 'granted') {
       throw new Error("Error: el permiso de notificaciones no fue concedido.");
     }
-  }
+  };
+
+
 }
 
 const pushNotificationsService = new PushNotificationsService();
