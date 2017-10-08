@@ -3,6 +3,7 @@ import {Text, View, Alert, ScrollView} from 'react-native'
 import SessionService from '../service/SessionService';
 import NewsListContainer from "../component/NewsListContainer";
 import {text} from '../style';
+import {showToast} from 'react-native-notifyer';
 import PositionTrackingService from '../service/PositionTrackingService';
 
 import {Icon} from 'react-native-elements';
@@ -18,13 +19,14 @@ export default class Home extends Component {
   async componentWillMount() {
     let sessionAlive = await SessionService.isSessionAlive();
     if (!sessionAlive) {
+      showToast("La sesión ha caducado. Por favor, vuelve a iniciar sesión.");
       const {navigate} = this.props.navigation;
-      navigate('Login');
+      navigate('Logout');
     }
   }
 
-  componentDidMount = () => {
-    PositionTrackingService.setupPositionTracking();
+  componentDidMount = async () => {
+    await PositionTrackingService.setupPositionTracking();
   };
 
 
