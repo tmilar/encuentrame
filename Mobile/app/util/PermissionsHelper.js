@@ -1,4 +1,5 @@
 import {Permissions} from 'expo';
+import {Alert} from 'react-native';
 
 class PermissionsHelper {
   static askPermission = async (permissionName, permissionI18n, timeInterval = 3000) => {
