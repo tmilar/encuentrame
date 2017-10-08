@@ -19,7 +19,7 @@ class PushNotificationsService {
       return;
     }
 
-    this._requireNotificationsPermission();
+    await this._requireNotificationsPermission();
 
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExponentPushTokenAsync();
