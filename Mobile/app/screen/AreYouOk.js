@@ -1,51 +1,45 @@
 import React, {Component} from 'react';
 import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
+import {text} from '../style';
 
 export default class AreYouOk extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      estoyBien: true,
-      modalVisible: false
-    };
+  state = {
+    modalVisible: false
+  };
 
-    this._handleImOk = this._handleImOk.bind(this);
-    this._handleINeedHelp = this._handleINeedHelp.bind(this);
-  }
-
-  setModalVisible(visible) {
+  setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
-  }
+  };
 
-  _handleImOk() {
+  _handleImOk = () => {
     Alert.alert(
       'Ok!',
       `Avisando a tus amigos`
     );
     this._backToHome();
-  }
+  };
 
-  _backToHome() {
+  _backToHome = () => {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
-  }
+  };
 
-  _handleINeedHelp() {
+  _handleINeedHelp = () => {
     Alert.alert(
       'No te muevas!',
       `Vamos a buscar ayuda`
     );
     this._backToHome();
-  }
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setModalVisible(!this.state.modalVisible)
-  }
+  };
 
   render() {
 
     return (
-      <View style={{marginTop: 22}}>
+      <View>
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -54,11 +48,7 @@ export default class AreYouOk extends Component {
           }}
         >
           <View style={styles.message}>
-            <View>
-
-              <Text>Estas bien?</Text>
-
-            </View>
+            <Text style={text.title}>Estas bien?</Text>
           </View>
           <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
