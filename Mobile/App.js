@@ -3,6 +3,7 @@ import {RootNavigator} from './app/config/router';
 import {View} from "react-native";
 import {containers} from './app/style';
 import SessionService from './app/service/SessionService';
+import PushNotificationsService from './app/service/PushNotificationsService';
 import LoadingIndicator from './app/component/LoadingIndicator';
 
 class App extends Component {
@@ -11,6 +12,10 @@ class App extends Component {
     let sessionAlive = await SessionService.isSessionAlive();
     console.log("[App] session alive?", sessionAlive);
     this.setState({sessionAlive});
+  };
+
+  componentDidMount = async () => {
+    await PushNotificationsService.registerDevice();
   };
 
   render() {
