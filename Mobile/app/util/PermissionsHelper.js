@@ -15,6 +15,22 @@ class PermissionsHelper {
     }
   };
 
+  static askIfNotGranted = async (permission, permissionI18n) => {
+    const {status: existingStatus} = await Permissions.getAsync(Permissions[permission]);
+
+    let finalStatus = existingStatus;
+
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const {status} = await PermissionsHelper.askPermission(permission, permissionI18n);
+      finalStatus = status;
+    }
+    return finalStatus;
+  };
+
   /**
    * Auxiliar function to have a delay in ms, compatible with async/await.
    *
