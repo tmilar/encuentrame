@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, ActivityIndicator} from "react-native";
 import {RootNavigator} from './app/config/router';
+import {View} from "react-native";
 import {containers} from './app/style';
 import SessionService from './app/service/SessionService';
+import LoadingIndicator from './app/component/LoadingIndicator';
 
 class App extends Component {
 
@@ -13,8 +14,8 @@ class App extends Component {
   };
 
   render = () => {
-    if(!this.state || this.state.sessionAlive === undefined) {
-      return (<ActivityIndicator size="small"/>);
+    if (!this.state || this.state.sessionAlive === undefined) {
+      return <LoadingIndicator size="large"/>;
     }
 
     const Navigator = RootNavigator(this.state.sessionAlive);
