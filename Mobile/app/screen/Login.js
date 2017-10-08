@@ -82,11 +82,33 @@ export default class Login extends Component {
   }
 
   async componentWillMount() {
+    await this.checkLogout();
+    await this.checkSessionAlive();
+  }
+
+  checkLogout = async () => {
+    let isLogout =
+      (
+        this.props.screenProps &&
+        this.props.screenProps.logout
+      ) || (
+        this.props.navigation.state &&
+        this.props.navigation.state.params &&
+        this.props.navigation.state.params.logout
+      );
+
+    if (isLogout) {
+      console.log("Logout: destroying session.");
+      await SessionService.clearSession();
+    }
+  };
+
+  checkSessionAlive = async () => {
     let sessionAlive = await SessionService.isSessionAlive();
     if (sessionAlive) {
       this._goToHome();
     }
-  }
+  };
 
   _handleRegisterTextPress() {
     const {navigate} = this.props.navigation;
@@ -105,6 +127,7 @@ export default class Login extends Component {
     navigate('PostLogin');
   }
 
+
   inputFocused(refName) {
     setTimeout(() => {
       let scrollResponder = this.refs.scrollView.getScrollResponder();
@@ -115,7 +138,6 @@ export default class Login extends Component {
       );
     }, 50);
   }
-
 
   render() {
     return (

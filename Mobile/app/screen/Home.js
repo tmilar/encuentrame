@@ -5,6 +5,7 @@ import NewsListContainer from "../component/NewsListContainer";
 import {text} from '../style';
 import PositionTrackingService from '../service/PositionTrackingService';
 
+import {showToast} from 'react-native-notifyer';
 import {Icon} from 'react-native-elements';
 import ActionButton from "react-native-action-button";
 
@@ -18,8 +19,8 @@ export default class Home extends Component {
   async componentWillMount() {
     let sessionAlive = await SessionService.isSessionAlive();
     if (!sessionAlive) {
-      const {navigate} = this.props.navigation;
-      navigate('Login');
+      showToast("La sesión ha caducado. Por favor, vuelva a iniciar sesión.");
+      this.props.navigation.navigate('Logout');
     }
   }
 
