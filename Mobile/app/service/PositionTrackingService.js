@@ -3,11 +3,17 @@ import {Notifications} from 'expo';
 import GeolocationService from "./GeolocationService";
 import SessionService from "./SessionService";
 import {hide, showToast} from 'react-native-notifyer';
+import {AsyncStorage} from 'react-native';
 
 class PositionTrackingService {
 
   static POSITION_SET_INTERVAL = 5 * 60 * 1000; // 5 MINUTES
   static POSITION_SET_INTERVAL_DELTA = 60 * 1000; // +/- 1 MINUTE (60 seconds)
+
+  /**
+   * Reference to local notifications listener. Useful for activation/deactivation.
+   */
+  _localNotificationsListener;
 
   /**
    * Setup periodic GPS Position report.
@@ -20,18 +26,49 @@ class PositionTrackingService {
    * to publish device GPS position to server.
    *
    */
-  setupPositionTracking = async () => {
-    this.cleanScheduledBackgroundNotifications();
+  startPositionTracking = async () => {
+    this._cleanScheduledBackgroundNotifications();
 
     await GeolocationService.requireLocationPermission();
-    if (SessionService.isDevSession()) {
+
+    if (await SessionService.isDevSession()) {
       showToast("Location Permission is enabled successfully.");
     }
 
-    this.registerPositionNotificationListener();
+    this._registerPositionNotificationListener();
 
-    this.scheduleRecurrentBackgroundNotification();
+    this._scheduleRecurrentBackgroundNotification();
+
+    await this._updateEnabled(true);
   };
+
+  /**
+   * Check enabled for user feedback purposes.
+   *
+   * @returns {Promise.<boolean>}
+   */
+  checkEnabled = async () => {
+    let enabledStr = await AsyncStorage.getItem("ENCUENTRAME_TRACKING_ENABLED");
+    return enabledStr === "true";
+  };
+
+  /**
+   * Stop tracking device position.
+   *
+   * @returns {Promise.<void>}
+   */
+  stopPositionTracking = async () => {
+    this._localNotificationsListener.remove();
+    this._localNotificationsListener = null;
+
+    this._cleanScheduledBackgroundNotifications();
+    await this._updateEnabled(false);
+  };
+
+  _updateEnabled = async (enabled) => {
+    await AsyncStorage.setItem("ENCUENTRAME_TRACKING_ENABLED", enabled.toString());
+  };
+
 
   /**
    * Register Position Notification Listener.
@@ -39,8 +76,10 @@ class PositionTrackingService {
    * This will listen and handle the 'position' local notification,
    * dismiss it ASAP,
    * and proceed to process it for position tracking.
+   *
+   * @private
    */
-  registerPositionNotificationListener = () => {
+  _registerPositionNotificationListener = () => {
 
     let positionNotificationListener = async (notification) => {
       // Try to remove annoying popup notification.
@@ -53,13 +92,13 @@ class PositionTrackingService {
       }
 
       try {
-        await this.handleLocalPositionNotification(notification);
+        await this._handleLocalPositionNotification(notification);
       } catch (e) {
         console.error("Problem handling local position notification. ", e);
       }
     };
 
-    Notifications.addListener(positionNotificationListener);
+    this._localNotificationsListener = Notifications.addListener(positionNotificationListener);
   };
 
   _checkLocalNotification = (notification) => {
@@ -83,8 +122,9 @@ class PositionTrackingService {
    *
    * This is a workaround, not a production-ready solution.
    *
+   * @private
    */
-  scheduleRecurrentBackgroundNotification = () => {
+  _scheduleRecurrentBackgroundNotification = () => {
 
     let beginDate = new Date();
     beginDate.setSeconds(beginDate.getSeconds() + 3);
@@ -107,12 +147,12 @@ class PositionTrackingService {
     Notifications.scheduleLocalNotificationAsync(localNotificationBody, schedulingOptions);
   };
 
-  cleanScheduledBackgroundNotifications = () => {
+  _cleanScheduledBackgroundNotifications = () => {
     Notifications.cancelAllScheduledNotificationsAsync();
   };
 
-  postCurrentPosition = async () => {
-    if(SessionService.isDevSession()) {
+  _postCurrentPosition = async () => {
+    if (await SessionService.isDevSession()) {
       showToast("Requesting device position...");
     }
 
@@ -124,8 +164,8 @@ class PositionTrackingService {
     };
 
     console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
-    if(SessionService.isDevSession()) {
-      showToast("Posting position: "  + JSON.stringify(currentPositionBody));
+    if (await SessionService.isDevSession()) {
+      showToast("Posting position: " + JSON.stringify(currentPositionBody));
     }
 
     return await Service.sendRequest("Position/set", {
@@ -134,7 +174,7 @@ class PositionTrackingService {
     });
   };
 
-  handleLocalPositionNotification = async (notification) => {
+  _handleLocalPositionNotification = async (notification) => {
 
     let now = new Date();
     let started = new Date(notification.data.created);
@@ -170,7 +210,7 @@ class PositionTrackingService {
     }
 
     try {
-      await this.postCurrentPosition();
+      await this._postCurrentPosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
       showToast("Problema en la comunicación con el servidor: " + e.message || e);

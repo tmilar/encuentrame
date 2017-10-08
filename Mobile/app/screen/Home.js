@@ -23,8 +23,8 @@ export default class Home extends Component {
     }
   }
 
-  componentDidMount = () => {
-    PositionTrackingService.setupPositionTracking();
+  componentDidMount = async () => {
+    await PositionTrackingService.startPositionTracking();
   };
 
 
