@@ -77,8 +77,14 @@ class PushNotificationsService {
     }
   };
 
-
-  setupDispatcher = async (navigation) => {
+  /**
+   * Register remote notifications listener,
+   * and configure to dispatch based on type to corresponding action/navigation.
+   *
+   * @param navigation
+   * @returns {Promise.<void>}
+   */
+  setupNotificationsDispatcher = async (navigation) => {
     Notifications.addListener((notification) => {
       if(!this._validRemoteNotification(notification)) {
         return;

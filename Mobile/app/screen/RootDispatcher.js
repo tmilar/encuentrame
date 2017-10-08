@@ -22,7 +22,8 @@ export default class RootDispatcher extends Component {
   };
 
   componentDidMount = async () => {
-    await PushNotificationsService.setupDispatcher(this.props.navigation);
+    // setup navigation-aware notifications dispatcher.
+    await PushNotificationsService.setupNotificationsDispatcher(this.props.navigation);
   };
 
   render() {
