@@ -10,6 +10,7 @@ import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
 import {TouchableHighlight, View} from "react-native";
+import RootDispatcher from "../screen/RootDispatcher";
 
 
 const Tabs = TabNavigator({
@@ -114,7 +115,11 @@ const AppNavigator = DrawerNavigator({
   }
 );
 
-const BaseStack = (sessionAlive) => StackNavigator({
+const BaseStack = StackNavigator({
+  Root: {
+    screen: RootDispatcher,
+    navigationOptions: {header: null}
+  },
   PreLogin: {
     screen: AuthStack,
     navigationOptions: {header: null}
@@ -125,8 +130,8 @@ const BaseStack = (sessionAlive) => StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}}
-},{
-  initialRouteName: sessionAlive ? 'PostLogin' : 'PreLogin'
+}, {
+  initialRouteName: 'Root'
 });
 
 export const RootNavigator = BaseStack;

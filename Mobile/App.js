@@ -8,26 +8,15 @@ import LoadingIndicator from './app/component/LoadingIndicator';
 
 class App extends Component {
 
-  async componentWillMount() {
-    let sessionAlive = await SessionService.isSessionAlive();
-    console.log("[App] session alive?", sessionAlive);
-    this.setState({sessionAlive});
-  };
 
   componentDidMount = async () => {
     await PushNotificationsService.registerDevice();
   };
 
   render() {
-    if (!this.state || this.state.sessionAlive === undefined) {
-      return <LoadingIndicator size="large"/>;
-    }
-
-    const Navigator = RootNavigator(this.state.sessionAlive);
-
     return (
       <View style={[{flex: 1}, containers.statusBar]}>
-        <Navigator/>
+        <RootNavigator/>
       </View>
     )
   }
