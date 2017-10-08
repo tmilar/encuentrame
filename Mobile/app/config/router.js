@@ -114,7 +114,7 @@ const AppNavigator = DrawerNavigator({
   }
 );
 
-const BaseStack = StackNavigator({
+const BaseStack = (sessionAlive) => StackNavigator({
   PreLogin: {
     screen: AuthStack,
     navigationOptions: {header: null}
@@ -125,6 +125,8 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}}
+},{
+  initialRouteName: sessionAlive ? 'PostLogin' : 'PreLogin'
 });
 
-export const Root = BaseStack;
+export const RootNavigator = BaseStack;
