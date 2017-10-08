@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SessionService from '../service/SessionService';
 import LoadingIndicator from "../component/LoadingIndicator";
+import PushNotificationsService from '../service/PushNotificationsService';
 
 /**
  * Dummy screen that is aware of navigation.
@@ -18,6 +19,10 @@ export default class RootDispatcher extends Component {
     } else {
       this.props.navigation.navigate("PreLogin");
     }
+  };
+
+  componentDidMount = async () => {
+    await PushNotificationsService.setupDispatcher(this.props.navigation);
   };
 
   render() {

@@ -78,6 +78,40 @@ class PushNotificationsService {
   };
 
 
+  setupDispatcher = async (navigation) => {
+    Notifications.addListener((notification) => {
+      if(!this._validRemoteNotification(notification)) {
+        return;
+      }
+
+      console.debug("[PushNotificationService] Received notification: ", notification);
+      if(notification.data.type === "estasbien") {
+        console.log("[PushNotificationService] Notification 'estasbien'! Navigating to 'AreYouOk' screen.");
+        navigation.navigate("AreYouOk");
+      }
+
+      //TODO handle/switch over other types of notifications. Move this logic to a different service?
+    });
+  };
+
+  _validRemoteNotification = (notification) => {
+    let data = notification.data;
+
+    if (!data) {
+      console.debug("[PushNotificationsService] Trying to parse notification body (data) which was null. ", notification);
+      return false;
+    }
+
+    if (!data.type) {
+      console.debug("[PushNotificationsService] Notification is not 'estasbien' type. Ignoring.", notification);
+      return false;
+    }
+
+    // TODO check remote here?
+
+    return true;
+  };
+
 }
 
 const pushNotificationsService = new PushNotificationsService();
