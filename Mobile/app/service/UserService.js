@@ -19,7 +19,7 @@ class UserService {
     let loginData = await this.parseLoginResponse(rawResponse);
 
     // Login OK! Guardamos el token y el userId en la sesion.
-    await this.storeLoginSession(loginData);
+    await this.storeLoginSession(loginData, user.username);
 
   }
 
@@ -78,9 +78,9 @@ class UserService {
     }
   }
 
-  async storeLoginSession(loginResponse) {
+  async storeLoginSession(loginResponse, username) {
     try {
-      await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId});
+      await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId, username: username});
     } catch (e) {
       console.error(e);
       throw 'Problema al guardar la sesion.';

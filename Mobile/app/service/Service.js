@@ -37,9 +37,18 @@ class Service {
 
   checkResponseStatus(rawResponse) {
     let status = rawResponse.status;
-    if (status < 200 || status > 300) {
+    if (status < 200 || status >= 300) {
       console.debug(rawResponse);
-      //TODO: add custom callback invokation for different callers
+      if (status === 403) {
+        throw 'El servidor no está disponible. Por favor vuelva a intentar más tarde :(';
+      }
+
+      if (status === 401 || status === 400) {
+        throw 'La sesión ha caducado. Por favor, vuelva a iniciar sesión. (' + status + ').';
+      }
+
+      throw 'Ha ocurrido un error. (status: ' + status + ').';
+
     }
   }
 

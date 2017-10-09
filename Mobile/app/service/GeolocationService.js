@@ -1,6 +1,7 @@
 import {bsasBoundaryPoints} from '../config/locationProperties'
-import {Permissions, Location} from 'expo';
+import {Location} from 'expo';
 import {Alert} from "react-native";
+import PermissionsHelper from '../util/PermissionsHelper';
 
 class GeolocationService {
 
@@ -62,18 +63,9 @@ class GeolocationService {
    * @returns {Promise.<void>}
    */
   requireLocationPermission = async () => {
-
-    let response = await Permissions.askAsync(Permissions.LOCATION);
-
-    if (response.status !== 'granted') {
-      Alert.alert(
-        "Ocurrió un problema.",
-        "El permiso de ubicación es necesario para el uso de esta app!"
-      );
-      await this._sleep(3000);
-      await this.requireLocationPermission();
-    }
+    await PermissionsHelper.askPermission("LOCATION", "ubicación", 3000);
   };
+
 
   /**
    * Get current device location.
@@ -96,17 +88,6 @@ class GeolocationService {
     };
   };
 
-
-  /**
-   * Auxiliar function to have a delay in ms, compatible with async/await.
-   *
-   * @param time
-   * @returns {Promise}
-   * @private
-   */
-  _sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  };
 
 }
 
