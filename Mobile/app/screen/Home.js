@@ -29,8 +29,11 @@ export default class Home extends Component {
   }
 
   componentDidMount = async () => {
-    await PositionTrackingService.startPositionTracking();
     let trackingEnabled = await PositionTrackingService.checkEnabled();
+    if (trackingEnabled){
+      PositionTrackingService.startPositionTracking();
+      trackingEnabled = PositionTrackingService.checkEnabled()
+    }
     this.setState({trackingEnabled});
   };
 
@@ -42,7 +45,6 @@ export default class Home extends Component {
 
   onPressTrackToggle = async () => {
     let trackingEnabled = await PositionTrackingService.checkEnabled();
-    this.setState({trackingEnabled});
     let alertMsg;
     if(trackingEnabled) {
       await PositionTrackingService.stopPositionTracking();
@@ -51,7 +53,8 @@ export default class Home extends Component {
       await PositionTrackingService.startPositionTracking();
       alertMsg = "Seguimiento activado \uD83D\uDE00";
     }
-
+    trackingEnabled = await PositionTrackingService.checkEnabled();
+    this.setState({trackingEnabled});
     Alert.alert("Seguime", alertMsg);
   };
 
