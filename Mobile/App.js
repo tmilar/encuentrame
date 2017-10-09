@@ -13,7 +13,7 @@ class App extends Component {
     this.setState({sessionAlive});
   };
 
-  render = () => {
+  render() {
     if (!this.state || this.state.sessionAlive === undefined) {
       return <LoadingIndicator size="large"/>;
     }
