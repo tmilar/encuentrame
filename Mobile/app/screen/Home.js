@@ -61,6 +61,9 @@ export default class Home extends Component {
   };
 
   render() {
+    let enabledGreenColor = "rgba(76,231,60,1)";
+    let disabledRedColor = "rgba(231,76,60,1)";
+
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
@@ -70,7 +73,7 @@ export default class Home extends Component {
           <NewsListContainer/>
         </ScrollView>
         <ActionButton style={{flex: 0.2}}
-                      buttonColor={this.state.trackingEnabled ? 'rgba(231,76,60,1)' : 'rgba(76,231,60,1)'}
+                      buttonColor={this.state.trackingEnabled ? enabledGreenColor : disabledRedColor}
                       onPress={this.onPressTrackToggle}
                       icon={(<Icon name="person-pin-circle" color="white" size={26}/>)}
         />
