@@ -41,17 +41,20 @@ export default class Home extends Component {
   }
 
   onPressTrackToggle = async () => {
-    let trackingEnabled = await PositionTrackingService.checkEnabled();
-    this.setState({trackingEnabled});
+    let prevTrackingEnabled = this.state.trackingEnabled;
     let alertMsg;
-    if(trackingEnabled) {
-      await PositionTrackingService.stopPositionTracking();
+
+    let trackingEnabled = await PositionTrackingService.togglePositionTracking();
+
+    if (prevTrackingEnabled === trackingEnabled) {
+      alertMsg = `Ocurrió un problema, no se pudo ${prevTrackingEnabled ? "desactivar" : "activar"} el Seguimiento.`;
+    } else if (trackingEnabled) {
       alertMsg = "Segumiento desactivado. \nRecuerda activarlo cuando quieras que te podamos cuidar!";
     } else {
-      await PositionTrackingService.startPositionTracking();
       alertMsg = "Seguimiento activado \uD83D\uDE00";
     }
 
+    this.setState({trackingEnabled});
     Alert.alert("Seguime", alertMsg);
   };
 

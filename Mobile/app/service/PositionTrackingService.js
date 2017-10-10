@@ -215,6 +215,22 @@ class PositionTrackingService {
       console.log("Problem when sending position to server. ", e);
       showToast("Problema en la comunicación con el servidor: " + e.message || e);
     }
+  };
+
+  /**
+   * Switch tracking enabled on/off.
+   *
+   * @returns {Promise.<boolean>} enabled?
+   */
+  togglePositionTracking = async () => {
+    let enabled = await this.checkEnabled();
+    if (enabled) {
+      await this.stopPositionTracking();
+    } else {
+      await this.startPositionTracking();
+    }
+    enabled = await this.checkEnabled();
+    return enabled;
   }
 }
 
