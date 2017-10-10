@@ -29,11 +29,13 @@ export default class Home extends Component {
   }
 
   componentDidMount = async () => {
-    await PositionTrackingService.startPositionTracking();
-    let trackingEnabled = await PositionTrackingService.checkEnabled();
-    this.setState({trackingEnabled});
+    await this._refreshPositionTracking();
   };
 
+  _refreshPositionTracking = async () => {
+    let trackingEnabled = await PositionTrackingService.refreshPositionTracking();
+    this.setState({trackingEnabled});
+  };
 
   onPressTitle() {
     const {navigate} = this.props.navigation;
