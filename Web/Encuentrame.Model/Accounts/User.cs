@@ -28,12 +28,7 @@ namespace Encuentrame.Model.Accounts
         public virtual RoleEnum Role { get; set; }
 
       
-        private IList<Device> _devices;
-        public virtual IList<Device> Devices
-        {
-            get { return _devices ?? (_devices = new List<Device>()); }
-            set { _devices = value; }
-        }
+       
         public virtual DateTime? DeletedKey { get; set; }
         public virtual string ToDisplay()
         {
@@ -43,7 +38,12 @@ namespace Encuentrame.Model.Accounts
 
     public class User:BaseUser
     {
-        
+        private IList<Device> _devices;
+        public virtual IList<Device> Devices
+        {
+            get { return _devices ?? (_devices = new List<Device>()); }
+            set { _devices = value; }
+        }
     }
 
     public class SystemUser : BaseUser

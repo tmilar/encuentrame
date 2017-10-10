@@ -110,11 +110,12 @@ namespace Encuentrame.Model.Accounts
 
         public void SetDevice(DeviceParameters deviceParameters)
         {
-            var user = Users[deviceParameters];
+            var user = Users[deviceParameters.UserId];
 
            var device=new Device()
            {
-               Token = deviceParameters.Token
+               Token = deviceParameters.Token,
+               User = user
            };
 
             user.Devices.Add(device);

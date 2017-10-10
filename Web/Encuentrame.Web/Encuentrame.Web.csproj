@@ -60,6 +60,9 @@
       <HintPath>..\Tools\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
@@ -154,11 +157,6 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -848,6 +846,10 @@
     <ProjectReference Include="..\Supports\Encuentrame.Support.Email\Encuentrame.Support.Email.csproj">
       <Project>{28B033C9-DA53-41B4-B023-2153C5328D49}</Project>
       <Name>Encuentrame.Support.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Supports\Encuentrame.Support.ExpoNotification\Encuentrame.Support.ExpoNotification.csproj">
+      <Project>{c61787f5-b17a-4271-b936-8c53eb45d3b8}</Project>
+      <Name>Encuentrame.Support.ExpoNotification</Name>
     </ProjectReference>
     <ProjectReference Include="..\Supports\Encuentrame.Support.Mapping\Encuentrame.Support.Mappings.csproj">
       <Project>{c9c8434b-256b-4fd3-8bba-06e5f79288bc}</Project>
