@@ -121,6 +121,7 @@ namespace Encuentrame.Web
                 .InspectAssembly(@"bin\Encuentrame.Security.dll")
                 .InspectAssembly(@"bin\Encuentrame.Web.dll")
                 .InspectAssembly(@"bin\Encuentrame.Support.Email.dll")
+                .InspectAssembly(@"bin\Encuentrame.Support.ExpoNotification.dll")
                 .Aspects
                 .ApplyBehavior<LogBehavior>().ToInheritorsOf(typeof(ControllerBase))
                 .ApplyBehavior<AuditBehavior>().ToMethodsWithAttribute<AuditAttribute>()

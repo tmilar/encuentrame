@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Encuentrame.Model.Accounts.Permissions;
+using Encuentrame.Model.Devices;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 
 using Encuentrame.Model.Supports;
 using Encuentrame.Model.Supports.Audits;
+using Encuentrame.Support;
 
 namespace Encuentrame.Model.Accounts
 {
@@ -106,6 +108,18 @@ namespace Encuentrame.Model.Accounts
             AuditContextManager.SetObject(user);
         }
 
+        public void SetDevice(DeviceParameters deviceParameters)
+        {
+            var user = Users[deviceParameters];
+
+           var device=new Device()
+           {
+               Token = deviceParameters.Token
+           };
+
+            user.Devices.Add(device);
+        }
+
         public IList<User> List()
         {
             return Users.Where(x => x.DeletedKey == null).ToList();
@@ -115,7 +129,7 @@ namespace Encuentrame.Model.Accounts
 
         public class CreateOrEditParameters
         {
-            public virtual string Name { get; set; }
+            public  string Name { get; set; }
             public string Username { get; set; }
             public string Password { get; set; }
             public string LastName { get; set; }
@@ -127,6 +141,12 @@ namespace Encuentrame.Model.Accounts
             public string MobileNumber { get; set; }
             public string Image { get; set; }
             public RoleEnum Role { get; set; }
+        }
+
+        public class DeviceParameters 
+        {
+            public int UserId { get; set; }
+            public string Token { get; set; }
         }
     }
 }

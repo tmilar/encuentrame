@@ -15,13 +15,7 @@ namespace Encuentrame.Model.Positions
         public IBag<Position> Positions { get; set; }
 
 
-        public class CreateOrEditParameters
-        {
-            public int UserId { get; set; }
-            public decimal Latitude { get; set; }
-            public decimal Longitude { get; set; }
-
-        }
+       
 
         public Position Get(int id)
         {
@@ -35,6 +29,11 @@ namespace Encuentrame.Model.Positions
                 Latitude = positionParameters.Latitude,
                 Longitude = positionParameters.Longitude,
                 UserId = positionParameters.UserId,
+                Accuracy = positionParameters.Accuracy,
+                Heading = positionParameters.Heading,
+                Speed = positionParameters.Speed,
+
+
                 Creation = SystemDateTime.Now,
             };
 
@@ -49,6 +48,9 @@ namespace Encuentrame.Model.Positions
             position.Latitude = positionParameters.Latitude;
             position.Longitude = positionParameters.Longitude;
             position.UserId = positionParameters.UserId;
+            position.Accuracy = positionParameters.Accuracy;
+            position.Heading = positionParameters.Heading;
+            position.Speed = positionParameters.Speed;
         }
 
         public void Delete(int id)
@@ -63,6 +65,18 @@ namespace Encuentrame.Model.Positions
         {
             return Positions.OrderByDescending(x=>x.Id).ToList();
         }
+        public class CreateOrEditParameters
+        {
+            public int UserId { get; set; }
+            public decimal Latitude { get; set; }
+            public decimal Longitude { get; set; }
+            public decimal Accuracy { get; set; }
+            /// <summary>
+            /// rotacion respecto al norte
+            /// </summary>
+            public decimal Heading { get; set; }
+            public decimal Speed { get; set; }
 
+        }
     }
 }

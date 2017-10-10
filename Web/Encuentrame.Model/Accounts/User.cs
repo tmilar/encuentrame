@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Encuentrame.Model.Devices;
 using Encuentrame.Support;
 
 namespace Encuentrame.Model.Accounts
@@ -24,6 +26,14 @@ namespace Encuentrame.Model.Accounts
         public virtual string MobileNumber { get; set; }
         public virtual string Image { get; set; }
         public virtual RoleEnum Role { get; set; }
+
+      
+        private IList<Device> _devices;
+        public virtual IList<Device> Devices
+        {
+            get { return _devices ?? (_devices = new List<Device>()); }
+            set { _devices = value; }
+        }
         public virtual DateTime? DeletedKey { get; set; }
         public virtual string ToDisplay()
         {

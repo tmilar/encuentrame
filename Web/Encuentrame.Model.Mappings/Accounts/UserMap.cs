@@ -19,6 +19,7 @@ namespace Encuentrame.Model.Mappings.Accounts
             Map(x => x.Image).Nullable().Length(10000).LazyLoad();
             Map(x => x.Role);
             Map(x => x.DeletedKey).Nullable();
+            HasMany(x => x.Devices).Cascade.AllDeleteOrphan().AsBag();
             DiscriminateSubClassesOnColumn("UserType");
             Table("Users");
         }

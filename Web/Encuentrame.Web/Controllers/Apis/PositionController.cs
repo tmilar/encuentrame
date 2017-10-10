@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using Encuentrame.Model.Positions;
-using Encuentrame.Web.Models.Apis.Authentications;
 using Encuentrame.Web.Models.Apis.Positions;
 using NailsFramework.IoC;
 
@@ -27,6 +26,9 @@ namespace Encuentrame.Web.Controllers.Apis
             {
                 Latitude = positionApiModel.Latitude,
                 Longitude = positionApiModel.Longitude,
+                Accuracy = positionApiModel.Accuracy,
+                Heading = positionApiModel.Heading,
+                Speed = positionApiModel.Speed,
                 UserId = this.GetIdUserLogged(),
             });
 

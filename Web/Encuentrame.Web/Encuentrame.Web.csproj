@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Apis\AccountController.cs" />
     <Compile Include="Controllers\Apis\ActivityController.cs" />
+    <Compile Include="Controllers\Apis\AreYouOkController.cs" />
     <Compile Include="Controllers\Apis\BaseApiController.cs" />
     <Compile Include="Controllers\Apis\EventController.cs" />
     <Compile Include="Controllers\Apis\PositionController.cs" />
@@ -201,13 +202,19 @@
     <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Models\Apis\Activities\ActivitiesApiResultModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivityApiModel.cs" />
     <Compile Include="Models\Apis\Accounts\UserApiModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivityApiResultModel.cs" />
+    <Compile Include="Models\Apis\AreYouOks\AskApiModel.cs" />
+    <Compile Include="Models\Apis\AreYouOks\AskApiResultModel.cs" />
+    <Compile Include="Models\Apis\AreYouOks\ReplyApiModel.cs" />
+    <Compile Include="Models\Apis\AreYouOks\ReplyApiResultModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiResultModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiModel.cs" />
+    <Compile Include="Models\Apis\Commons\AddressModel.cs" />
     <Compile Include="Models\Apis\Events\EventApiModel.cs" />
-    <Compile Include="Models\Apis\Events\EventApiResultModel.cs" />
+    <Compile Include="Models\Apis\Events\EventsApiResultModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiResultModel.cs" />
     <Compile Include="Models\DataTable\BooleanFilterModel.cs" />
@@ -221,6 +228,7 @@
     <Compile Include="Models\DataTable\RangeFilterModel.cs" />
     <Compile Include="Models\DataTable\SearchModel.cs" />
     <Compile Include="Models\DataTable\SelectFilterModel.cs" />
+    <Compile Include="Models\Devices\DeviceApiModel.cs" />
     <Compile Include="Models\Events\EventListModel.cs" />
     <Compile Include="Models\Events\EventModel.cs" />
     <Compile Include="Models\Positions\PositionListModel.cs" />
@@ -709,6 +717,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -797,6 +806,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AreYouOk\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

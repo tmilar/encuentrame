@@ -93,7 +93,13 @@
     <Compile Include="Activities\Seekers\IActivitySeeker.cs" />
     <Compile Include="Activities\Seekers\ActivitySeeker.cs" />
     <Compile Include="Addresses\Address.cs" />
+    <Compile Include="AreYouOks\AreYouOkCommand.cs" />
+    <Compile Include="AreYouOks\AreYouOk.cs" />
+    <Compile Include="AreYouOks\IAreYouOkCommand.cs" />
+    <Compile Include="AreYouOks\Seekers\AreYouOkSeeker.cs" />
+    <Compile Include="AreYouOks\Seekers\IAreYouOkSeeker.cs" />
     <Compile Include="BaseSeeker.cs" />
+    <Compile Include="Devices\Device.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventCommand.cs" />
     <Compile Include="Events\IEventCommand.cs" />
@@ -146,6 +152,10 @@
     <ProjectReference Include="..\Supports\Encuentrame.Support.Email\Encuentrame.Support.Email.csproj">
       <Project>{28B033C9-DA53-41B4-B023-2153C5328D49}</Project>
       <Name>Encuentrame.Support.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Supports\Encuentrame.Support.ExpoNotification\Encuentrame.Support.ExpoNotification.csproj">
+      <Project>{c61787f5-b17a-4271-b936-8c53eb45d3b8}</Project>
+      <Name>Encuentrame.Support.ExpoNotification</Name>
     </ProjectReference>
     <ProjectReference Include="..\Supports\Encuentrame.Support\Encuentrame.Support.csproj">
       <Project>{04d25bee-1935-45ab-bdbe-80a831ccee29}</Project>

@@ -11,6 +11,9 @@ namespace Encuentrame.Model.Mappings.Positions
             Map(x => x.Longitude).Not.Nullable();
             Map(x => x.UserId).Not.Nullable();
             Map(x => x.Creation).Not.Nullable();
+            Map(x => x.Accuracy).Nullable();
+            Map(x => x.Heading).Nullable();
+            Map(x => x.Speed).Nullable();
 
         }
     }

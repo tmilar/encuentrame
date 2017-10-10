@@ -26,6 +26,13 @@ namespace Encuentrame.Model.Activities
         {
             return Activities[id];
         }
+
+        public IList<Activity> GetActivities(int userId)
+        {
+            var user = Users[userId];
+            return Activities.Where(x=>x.User==user).ToList();
+        }
+
         public IList<Activity> List()
         {
             return Activities.ToList();

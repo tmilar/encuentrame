@@ -2,6 +2,7 @@
 using Encuentrame.Model.Accounts;
 using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Accounts;
+using Encuentrame.Web.Models.Devices;
 using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers.Apis
@@ -52,7 +53,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 return BadRequest(ModelState);
             }
 
-           
+
 
         }
 
@@ -89,6 +90,20 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
+        [HttpPost]
+        public IHttpActionResult Devices(DeviceApiModel deviceApiModel)
+        {
+            var deviceParameters = new UserCommand.DeviceParameters
+            {
+                UserId = this.GetIdUserLogged(),
+                Token = deviceApiModel.Token,
+            };
+
+            UserCommand.SetDevice(deviceParameters);
+
+            return Ok();
+        }
+
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -112,4 +127,6 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
     }
+
+
 }

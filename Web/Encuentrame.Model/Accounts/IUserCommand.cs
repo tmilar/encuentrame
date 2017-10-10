@@ -11,5 +11,6 @@ namespace Encuentrame.Model.Accounts
         IList<User> List();
         void Edit(int id, UserCommand.CreateOrEditParameters userParameters);
         void Delete(int id);
+        void SetDevice(UserCommand.DeviceParameters deviceParameters);
     }
 }
