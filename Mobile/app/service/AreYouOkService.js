@@ -35,5 +35,7 @@ class AreYouOkService {
       })
     });
   }
-
 }
+
+const instance = new AreYouOkService();
+export default instance;
