@@ -1,8 +1,21 @@
 import {apiUrl} from '../config/apiProperties'
 import SessionService from './SessionService';
 import fetchMock from 'fetch-mock';
+import PushNotificationsService from '../service/PushNotificationsService';
 
 class UserService {
+
+  /**
+   * Login {username,password}
+   * Then register device for push notifications.
+   *
+   * @param user
+   * @returns {Promise.<void>}
+   */
+  doLogin = async (user) => {
+    await this.checkCredentials(user);
+    await PushNotificationsService.registerDevice();
+  };
 
   /**
    * Check registered user credentials against api
