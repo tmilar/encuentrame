@@ -7,14 +7,15 @@ import {Alert} from "react-native";
 class PushNotificationsService {
 
   /**
-   * Register Exponent push token to server.
+   * Register Exponent push token to server for user.
    * Store token locally to prevent duplicated requests.
    *
+   * @param user
    * @returns {Promise.<void>}
    */
-  registerDevice = async () => {
+  registerDevice = async (user) => {
 
-    if(await this._checkRegistered()) {
+    if (await this._checkRegistered(user)) {
       console.log("[PushNotificationsService] Device already registered.");
       return;
     }
@@ -28,7 +29,7 @@ class PushNotificationsService {
     this._registerDeviceRequest(token);
 
     // Remember stored token in local storage.
-    await this._saveRegistered(token);
+    await this._saveRegistered(token, user);
   };
 
   _registerDeviceRequest(token) {
@@ -49,9 +50,9 @@ class PushNotificationsService {
     }
   }
 
-  _saveRegistered = async (token) => {
-    await AsyncStorage.setItem("ENCUENTRAME_NOTIFICATIONS_TOKEN", token);
-    console.log("[PushNotificationsService] Device registered for push notifications. Token: ", token);
+  _saveRegistered = async (token, {username}) => {
+    await AsyncStorage.setItem(`ENCUENTRAME_NOTIFICATIONS_TOKEN_${username}`, token);
+    console.log(`[PushNotificationsService] Device registered for push notifications. Token: ${token}`);
   };
 
   /**
@@ -60,8 +61,8 @@ class PushNotificationsService {
    * @returns {Promise.<boolean>}
    * @private
    */
-  _checkRegistered = async () => {
-    let token = await AsyncStorage.getItem("ENCUENTRAME_NOTIFICATIONS_TOKEN");
+  _checkRegistered = async ({username}) => {
+    let token = await AsyncStorage.getItem(`ENCUENTRAME_NOTIFICATIONS_TOKEN_${username}`);
     return !!token;
   };
 
@@ -86,7 +87,7 @@ class PushNotificationsService {
    */
   setupNotificationsDispatcher = async (navigation) => {
     Notifications.addListener((notification) => {
-      if(!this._validRemoteNotification(notification)) {
+      if (!this._validRemoteNotification(notification)) {
         return;
       }
 

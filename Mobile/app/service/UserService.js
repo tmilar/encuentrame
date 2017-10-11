@@ -14,7 +14,7 @@ class UserService {
    */
   doLogin = async (user) => {
     await this.checkCredentials(user);
-    await PushNotificationsService.registerDevice();
+    await PushNotificationsService.registerDevice(user);
   };
 
   /**
