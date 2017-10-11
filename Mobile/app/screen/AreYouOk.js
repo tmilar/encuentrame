@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
 import {text} from '../style';
+import AreYouOkService from '../service/AreYouOkService';
 
 export default class AreYouOk extends Component {
   state = {
@@ -15,19 +16,21 @@ export default class AreYouOk extends Component {
     this.setState({modalVisible: visible});
   };
 
-  _handleImOk = () => {
+  _handleImOk = async () => {
     Alert.alert(
       'Ok!',
       `Avisando a tus amigos`
     );
+    await AreYouOkService.reply(true);
     this._goBack();
   };
 
-  _handleINeedHelp = () => {
+  _handleINeedHelp = async () => {
     Alert.alert(
       'No te muevas!',
       `Vamos a buscar ayuda`
     );
+    await AreYouOkService.reply(false);
     this._goBack();
   };
 
