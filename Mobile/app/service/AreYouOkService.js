@@ -2,12 +2,19 @@ import Service from './Service';
 
 class AreYouOkService {
 
-  replyAreYouOkRequest = async (reply) => {
-    const url = "Estasbien/reply";
+  /**
+   * Send iAmOk reply.
+   * Server will notify asking user with replied answer.
+   *
+   * @param iAmOkReply {boolean}
+   * @returns {Promise.<*>}
+   */
+  reply = async (iAmOkReply) => {
+    const url = "Areyouok/reply";
     return await Service.sendRequest(url, {
       method: "POST",
       data: JSON.stringify({
-        Estasbien: false
+        IAmOk: iAmOkReply
       })
     });
   };
