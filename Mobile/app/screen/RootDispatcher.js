@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SessionService from '../service/SessionService';
 import LoadingIndicator from "../component/LoadingIndicator";
 import PushNotificationsService from '../service/PushNotificationsService';
+import {NavigationActions} from "react-navigation";
 
 /**
  * Dummy screen that is aware of navigation.
@@ -14,11 +15,17 @@ export default class RootDispatcher extends Component {
     let sessionAlive = await SessionService.isSessionAlive();
     console.log("[RootDispatcher] session alive?", sessionAlive);
 
-    if (sessionAlive) {
-      this.props.navigation.navigate("PostLogin");
-    } else {
-      this.props.navigation.navigate("PreLogin");
-    }
+    let nextRouteName = sessionAlive ? "PostLogin" : "PreLogin";
+
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: nextRouteName})
+      ]
+    });
+    console.debug(`[RootDispatcher] Dispatching Reset Action, navigating to '${nextRouteName}'. `);
+
+    this.props.navigation.dispatch(resetAction);
   };
 
   componentDidMount = async () => {

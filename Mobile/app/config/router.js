@@ -82,7 +82,7 @@ class LogoutActionScreen extends React.Component {
         NavigationActions.navigate({routeName: 'PreLogin', params: {logout: true}})
       ]
     });
-    console.log("Dispatching Reset Action", resetAction);
+    console.debug("[LogoutActionScreen] Dispatching Reset Action, navigate to 'PreLogin'. ", resetAction);
     this.props.navigation.dispatch(resetAction);
   }
 
