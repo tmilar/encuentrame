@@ -7,6 +7,10 @@ export default class AreYouOk extends Component {
     modalVisible: false
   };
 
+  componentDidMount = () => {
+    this.setModalVisible(!this.state.modalVisible)
+  };
+
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   };
@@ -16,12 +20,7 @@ export default class AreYouOk extends Component {
       'Ok!',
       `Avisando a tus amigos`
     );
-    this._backToHome();
-  };
-
-  _backToHome = () => {
-    this.setModalVisible(false);
-    this.props.navigation.goBack(null);
+    this._goBack();
   };
 
   _handleINeedHelp = () => {
@@ -29,11 +28,12 @@ export default class AreYouOk extends Component {
       'No te muevas!',
       `Vamos a buscar ayuda`
     );
-    this._backToHome();
+    this._goBack();
   };
 
-  componentDidMount = () => {
-    this.setModalVisible(!this.state.modalVisible)
+  _goBack = () => {
+    this.setModalVisible(false);
+    this.props.navigation.goBack(null);
   };
 
   render() {
