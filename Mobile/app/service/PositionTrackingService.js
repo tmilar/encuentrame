@@ -10,6 +10,8 @@ class PositionTrackingService {
   static POSITION_SET_INTERVAL = 5 * 60 * 1000; // 5 MINUTES
   static POSITION_SET_INTERVAL_DELTA = 60 * 1000; // +/- 1 MINUTE (60 seconds)
 
+  static INITIAL_TRACKING_ENABLED = true;
+
   /**
    * Reference to local notifications listener. Useful for activation/deactivation.
    */
@@ -43,13 +45,39 @@ class PositionTrackingService {
   };
 
   /**
-   * Check enabled for user feedback purposes.
+   * Refresh position tracking.
+   * If first time refresh, will set it to config INITIAL_TRACKING_ENABLED value.
    *
    * @returns {Promise.<boolean>}
+   *    true if was enabled,
+   *    false if was disabled.
+   */
+  refreshPositionTracking = async () => {
+    let enabled = await this.checkEnabled();
+    let firstTimeCheck = enabled === undefined;
+
+    if (firstTimeCheck) {
+      enabled = PositionTrackingService.INITIAL_TRACKING_ENABLED;
+      console.debug("[PositionTrackingService] " +
+        `First time refresh - ${enabled ? "enabling" : "disabling"} tracking (based on INITIAL_TRACKING_ENABLED value)`);
+    }
+
+    if (enabled) {
+      await this.startPositionTracking();
+    }
+
+    return await this.checkEnabled();
+  };
+
+  /**
+   * Check Tracking enabled, for user feedback purposes.
+   * If user has never enabled/disabled, it will return undefined.
+   *
+   * @returns {Promise.<boolean|undefined>}
    */
   checkEnabled = async () => {
     let enabledStr = await AsyncStorage.getItem("ENCUENTRAME_TRACKING_ENABLED");
-    return enabledStr === "true";
+    return enabledStr ? enabledStr === "true" : undefined;
   };
 
   /**
@@ -215,6 +243,22 @@ class PositionTrackingService {
       console.log("Problem when sending position to server. ", e);
       showToast("Problema en la comunicación con el servidor: " + e.message || e);
     }
+  };
+
+  /**
+   * Switch tracking enabled on/off.
+   *
+   * @returns {Promise.<boolean>} enabled?
+   */
+  togglePositionTracking = async () => {
+    let enabled = await this.checkEnabled();
+    if (enabled) {
+      await this.stopPositionTracking();
+    } else {
+      await this.startPositionTracking();
+    }
+    enabled = await this.checkEnabled();
+    return enabled;
   }
 }
 
