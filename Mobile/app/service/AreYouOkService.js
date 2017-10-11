@@ -19,4 +19,21 @@ class AreYouOkService {
     });
   };
 
+  /**
+   * Ask a target user if is OK.
+   * Server will notify target user prompting for an answer.
+   *
+   * @param targetUser <id:<number>>
+   * @returns {Promise.<*>}
+   */
+  ask = async (targetUser) => {
+    const url = "Areyouok/ask";
+    return await Service.sendRequest(url, {
+      method: "POST",
+      data: JSON.stringify({
+        IAmOk: targetUser.id
+      })
+    });
+  }
+
 }
