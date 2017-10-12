@@ -1,5 +1,8 @@
 import React from 'react';
-import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'react-native';
+import {
+  Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button, TouchableOpacity,
+  ScrollView
+} from 'react-native';
 import {text} from '../style';
 import {MapView} from 'expo';
 import EventsService from '../service/EventsService';
@@ -7,6 +10,8 @@ import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
 import mapStyles from '../style/map';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import ModalMap from './ModalMap';
 
 const NewActivity = React.createClass({
 
@@ -18,6 +23,9 @@ const NewActivity = React.createClass({
       selectedEventId: 0,
       selectedEventName: "Selecciona un evento",
       events: [],
+      isStartDateTimePickerVisible: false,
+      isEndDateTimePickerVisible: false,
+      showMapLocation: false,
       initialMapRegionCoordinates: bsasCoordinates,
       activityLocation: {
         latitude: 0,
@@ -25,6 +33,30 @@ const NewActivity = React.createClass({
       }
     };
   },
+  _showStartDateTimePicker(){
+    this.setState({ isStartDateTimePickerVisible: true });
+  },
+  _hideStartDateTimePicker(){
+    this.setState({ isStartDateTimePickerVisible: false });
+  },
+  _showEndDateTimePicker(){
+    this.setState({ isEndDateTimePickerVisible: true });
+  },
+  _hideEndDateTimePicker(){
+    this.setState({ isEndDateTimePickerVisible: false });
+  },
+  _handleActivityLocationButtonpress(){
+    this.setState({ showMapLocation: true });
+  },
+  _handleStartDatePicked(startDate){
+    console.log('A date has been picked: ', startDate);
+    this._hideStartDateTimePicker();
+  },
+  _handleEndDatePicked(startDate){
+    console.log('A date has been picked: ', startDate);
+    this._hideEndDateTimePicker();
+  },
+
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -110,11 +142,16 @@ const NewActivity = React.createClass({
       this.setState({loading: false});
     }
   },
+  saveActivityLocation(location) {
+    this.setState({activityLocation: {
+      latitude: location.latitude,
+      longitude: location.longitude
+    }})
+  },
 
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   },
-
   render() {
     if (this.state.loading) {
       return null;
@@ -132,62 +169,86 @@ const NewActivity = React.createClass({
             <Text style={[text.p, styles.activityTitle]}>
               Nueva Actividad
             </Text>
-            <View style={{flex: 2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
-              <TextInput
-                value={this.state.activityName}
-                placeholder="Nombre de la actividad"
-                ref="activityName"
-                style={styles.activityName}
-                selectTextOnFocus
-                onChangeText={this._handleActivitynameTextChange}
-              />
-              <Text style={text.p}>
-                {this.state.selectedEventName || "Si vas a un evento eligelo"}
-              </Text>
-              <Picker
-                selectedValue={this.state.selectedEventId}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
-                color="red"
-              >
-                {this.state.events.map((event, i) => {
-                  return (
-                    <Picker.Item label={event.Name} key={`event_${i}`} value={event.Id}/>
-                  )
-                })}
-              </Picker>
+            <View style={{flex: 1.8}}>
+              <View style={{flex: 2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+                <TextInput
+                  value={this.state.activityName}
+                  placeholder="Nombre de la actividad"
+                  ref="activityName"
+                  style={styles.activityName}
+                  selectTextOnFocus
+                  onChangeText={this._handleActivitynameTextChange}
+                />
+                <Text style={text.p}>
+                  {this.state.selectedEventName || "Si vas a un evento eligelo"}
+                </Text>
+                <Picker
+                  selectedValue={this.state.selectedEventId}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
+                  color="red"
+                >
+                  {this.state.events.map((event, i) => {
+                    return (
+                      <Picker.Item label={event.Name} key={`event_${i}`} value={event.Id}/>
+                    )
+                  })}
+                </Picker>
 
-            </View>
-            <Text style={text.title}>
-              Ubicacion de la actividad?
-            </Text>
-            <MapView style={styles.map}
-                     customMapStyle={mapStyles}
-                     initialRegion={this.state.initialMapRegionCoordinates}
-            >
-              <MapView.Marker draggable
-                              coordinate={this.state.activityLocation}
-                              title={"Actividad"}
-                              onDragEnd={(e) => this.setState({activityLocation: e.nativeEvent.coordinate})}
-              />
-            </MapView>
-            <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
+              </View>
               <View style={{flex: 0.5}}>
                 <Button
-                  title="Crear Actividad"
-                  onPress={this._handleCreateActivityButtonPress}
+                  title="Click para elegir Ubicacion de la Actividad"
+                  onPress={this._handleActivityLocationButtonpress}
                 />
               </View>
+              {this.state.showMapLocation ? <ModalMap saveActivityLocation={this.saveActivityLocation}/> : null}
 
-              <View style={{flex: 0.5}}>
-                <Button
-                  color="grey"
-                  title="Cancelar"
-                  onPress={this._handleCancelActivityCreation}
-                />
+
+              <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
+                <View style={{ flex: 1 }}>
+                  <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
+                    <Text>Fecha inicio</Text>
+                  </TouchableOpacity>
+                  <DateTimePicker
+                    mode="datetime"
+                    isVisible={this.state.isStartDateTimePickerVisible}
+                    onConfirm={this._handleStartDatePicked}
+                    onCancel={this._hideStartDateTimePicker}
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
+                    <Text>Fecha fin</Text>
+                  </TouchableOpacity>
+                  <DateTimePicker
+                    mode="datetime"
+                    isVisible={this.state.isEndDateTimePickerVisible}
+                    onConfirm={this._handleEndDatePicked}
+                    onCancel={this._hideEndDateTimePicker}
+                  />
+                </View>
               </View>
 
+              <View style={[styles.footer, {flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
+                <View style={{flex: 0.5}}>
+                  <Button
+                    title="Crear Actividad"
+                    onPress={this._handleCreateActivityButtonPress}
+                  />
+                </View>
+
+                <View style={{flex: 0.5}}>
+                  <Button
+                    color="grey"
+                    title="Cancelar"
+                    onPress={this._handleCancelActivityCreation}
+                  />
+                </View>
+
+              </View>
             </View>
+
           </View>
 
         </Modal>
@@ -211,12 +272,13 @@ const styles = StyleSheet.create({
   activityName: {
     width: 200,
     textAlign: 'center',
-    paddingBottom: 10
+    paddingBottom: 10,
+    flex: 1
   },
   activityTitle: {
     backgroundColor: "#2962FF",
     color: "white",
-    flex: 1,
+    flex: 0.15,
     width: 400,
     alignSelf: "center",
     textAlignVertical: "center"
