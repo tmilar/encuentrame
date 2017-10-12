@@ -32,7 +32,7 @@ export default class Find extends Component {
       <View style={containers.container}>
         <Swiper cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
                 renderCard={this.renderCard}
-                onSwiped={this.onSwipedHandler}
+                onSwipedRight={this.onSwipedHandler}
                 onSwipedAll={this.onSwipedAllHandler}
                 cardIndex={0}
                 backgroundColor={'#E9E9EF'}
