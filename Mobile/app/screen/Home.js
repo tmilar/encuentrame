@@ -30,14 +30,13 @@ export default class Home extends Component {
   }
 
   componentDidMount = async () => {
-    let trackingEnabled = await PositionTrackingService.checkEnabled();
-    if (trackingEnabled){
-      PositionTrackingService.startPositionTracking();
-      trackingEnabled = PositionTrackingService.checkEnabled()
-    }
-    this.setState({trackingEnabled});
+    await this._refreshPositionTracking();
   };
 
+  _refreshPositionTracking = async () => {
+    let trackingEnabled = await PositionTrackingService.refreshPositionTracking();
+    this.setState({trackingEnabled});
+  };
 
   onPressTitle() {
     const {navigate} = this.props.navigation;
@@ -45,21 +44,26 @@ export default class Home extends Component {
   }
 
   onPressTrackToggle = async () => {
-    let trackingEnabled = await PositionTrackingService.checkEnabled();
+    let prevTrackingEnabled = this.state.trackingEnabled;
     let alertMsg;
-    if(trackingEnabled) {
-      await PositionTrackingService.stopPositionTracking();
+
+    let trackingEnabled = await PositionTrackingService.togglePositionTracking();
+
+    if (prevTrackingEnabled === trackingEnabled) {
+      alertMsg = `Ocurrió un problema, no se pudo ${prevTrackingEnabled ? "desactivar" : "activar"} el Seguimiento.`;
+    } else if (trackingEnabled) {
       alertMsg = "Segumiento desactivado. \nRecuerda activarlo cuando quieras que te podamos cuidar!";
     } else {
-      await PositionTrackingService.startPositionTracking();
       alertMsg = "Seguimiento activado \uD83D\uDE00";
     }
-    trackingEnabled = await PositionTrackingService.checkEnabled();
     this.setState({trackingEnabled});
     Alert.alert("Seguime", alertMsg);
   };
 
   render() {
+    let enabledGreenColor = "rgba(76,231,60,1)";
+    let disabledRedColor = "rgba(231,76,60,1)";
+
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
@@ -69,7 +73,7 @@ export default class Home extends Component {
           <NewsListContainer/>
         </ScrollView>
         <ActionButton style={{flex: 0.2}}
-                      buttonColor={this.state.trackingEnabled ? 'rgba(231,76,60,1)' : 'rgba(76,231,60,1)'}
+                      buttonColor={this.state.trackingEnabled ? enabledGreenColor : disabledRedColor}
                       onPress={this.onPressTrackToggle}
                       icon={(<Icon name="person-pin-circle" color="white" size={26}/>)}
         />
