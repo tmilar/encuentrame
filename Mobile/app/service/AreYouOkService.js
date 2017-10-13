@@ -13,7 +13,7 @@ class AreYouOkService {
     const url = "Areyouok/reply";
     return await Service.sendRequest(url, {
       method: "POST",
-      data: JSON.stringify({
+      body: JSON.stringify({
         IAmOk: iAmOkReply
       })
     });
@@ -30,8 +30,8 @@ class AreYouOkService {
     const url = "Areyouok/ask";
     return await Service.sendRequest(url, {
       method: "POST",
-      data: JSON.stringify({
-        IAmOk: targetUser.id
+      body: JSON.stringify({
+        TargetUserId: targetUser.id
       })
     });
   }
