@@ -92,12 +92,23 @@ class PushNotificationsService {
       }
 
       console.debug("[PushNotificationService] Received notification: ", notification);
-      if(notification.data.type === "estasbien") {
-        console.log("[PushNotificationService] Notification 'estasbien'! Navigating to 'AreYouOk' screen.");
+
+      if (notification.data.type === "Areyouok.Ask") {
+        console.log(`[PushNotificationService] Notification '${notification.data.type}'! Navigating to 'AreYouOk' screen.`);
         navigation.navigate("AreYouOk");
       }
 
-      //TODO handle/switch over other types of notifications. Move this logic to a different service?
+      if (notification.data.type === "Areyouok.Reply") {
+        let reply = notification.data.ok;
+        let targetUserId = notification.data.targetUserId;
+        console.log(`[PushNotificationService] Notification '${notification.data.type}'! Showing response.`);
+        Alert.alert(
+          "Te respondieron: Estas Bien?",
+          `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
+        );
+      }
+
+      //TODO handle/switch over other types of notifications? Move this logic to a different service?
     });
   };
 
