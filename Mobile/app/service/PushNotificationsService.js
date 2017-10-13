@@ -67,6 +67,7 @@ class PushNotificationsService {
    * @private
    */
   _checkRegistered = async ({username}) => {
+    return false; // TEMPORARILY ignore 'already registered' state. TODO delete this line before merge.
     let token = await AsyncStorage.getItem(`ENCUENTRAME_NOTIFICATIONS_TOKEN_${username}`);
     return !!token;
   };
