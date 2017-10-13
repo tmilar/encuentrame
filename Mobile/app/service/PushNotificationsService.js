@@ -29,32 +29,31 @@ class PushNotificationsService {
     }
 
     // register token to server.
-    this._registerDeviceRequest(token);
+    await this._registerDeviceRequest(token, user);
 
     // Remember stored token in local storage.
     await this._saveRegistered(token, user);
   };
 
-  _registerDeviceRequest(token) {
+  _registerDeviceRequest = async (token, {username}) => {
     const url = 'Account/devices';
+    console.log(`[PushNotificationsService] Registering device... ${JSON.stringify({token, username})}`);
 
-    // POST the token to your backend server from where you can retrieve it to send push notifications.
     try {
-      Alert.alert(`POST ${url}`, `Registro con el servidor OK! \nToken: ${token}`);
-      // TODO hacer la request real al backend..
-      // await Service.sendRequest(url, {
-      //   method: 'POST',
-      //   body: JSON.stringify({
-      //     pushToken: token
-      //   }),
-      // });
+      await Service.sendRequest(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          Token: token
+        })
+      });
+      console.log(`[PushNotificationsService] Register device token for push OK! ${JSON.stringify({token, username})}`);
       if (SessionService.isDevSession()) {
         showToast(`POST ${url}. \nRegistro con el servidor OK! \nToken: ${token}`);
       }
     } catch (e) {
       throw 'Problema al registrar el dispositivo. ' + (e.message || e);
     }
-  }
+  };
 
   _saveRegistered = async (token, {username}) => {
     await AsyncStorage.setItem(`ENCUENTRAME_NOTIFICATIONS_TOKEN_${username}`, token);
