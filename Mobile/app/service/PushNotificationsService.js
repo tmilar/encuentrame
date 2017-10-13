@@ -2,7 +2,10 @@ import {Permissions, Notifications} from 'expo';
 import Service from './Service';
 import {AsyncStorage} from 'react-native';
 import PermissionsHelper from '../util/PermissionsHelper';
+
 import {Alert} from "react-native";
+import {showToast} from 'react-native-notifyer';
+import SessionService from './SessionService';
 
 class PushNotificationsService {
 
@@ -15,15 +18,15 @@ class PushNotificationsService {
    */
   registerDevice = async (user) => {
 
-    if (await this._checkRegistered(user)) {
-      console.log("[PushNotificationsService] Device already registered.");
-      return;
-    }
-
     await this._requireNotificationsPermission();
 
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExponentPushTokenAsync();
+
+    if (await this._checkRegistered(user)) {
+      console.log(`[PushNotificationsService] Device already registered. Token: ${token}`);
+      return;
+    }
 
     // register token to server.
     this._registerDeviceRequest(token);
@@ -45,6 +48,9 @@ class PushNotificationsService {
       //     pushToken: token
       //   }),
       // });
+      if (SessionService.isDevSession()) {
+        showToast(`POST ${url}. \nRegistro con el servidor OK! \nToken: ${token}`);
+      }
     } catch (e) {
       throw 'Problema al registrar el dispositivo. ' + (e.message || e);
     }
