@@ -98,16 +98,17 @@ class PushNotificationsService {
       }
 
       console.debug("[PushNotificationService] Received notification: ", notification);
+      let notificationType = notification.data.type || notification.data.Type;
 
-      if (notification.data.type === "Areyouok.Ask") {
-        console.log(`[PushNotificationService] Notification '${notification.data.type}'! Navigating to 'AreYouOk' screen.`);
+      if (notificationType === "Areyouok.Ask") {
+        console.log(`[PushNotificationService] Notification '${notificationType}'! Navigating to 'AreYouOk' screen.`);
         navigation.navigate("AreYouOk");
       }
 
-      if (notification.data.type === "Areyouok.Reply") {
-        let reply = notification.data.ok;
-        let targetUserId = notification.data.targetUserId;
-        console.log(`[PushNotificationService] Notification '${notification.data.type}'! Showing response.`);
+      if (notificationType === "Areyouok.Reply") {
+        let reply = notification.data.ok || notification.data.Ok;
+        let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
+        console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
         Alert.alert(
           "Te respondieron: Estas Bien?",
           `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
@@ -119,6 +120,12 @@ class PushNotificationsService {
   };
 
   _validRemoteNotification = (notification) => {
+
+    if (!notification.remote) {
+      console.debug("[PushNotificationsService] Received local notification (not remote). Ignoring. ", notification);
+      return;
+    }
+
     let data = notification.data;
 
     if (!data) {
@@ -126,12 +133,10 @@ class PushNotificationsService {
       return false;
     }
 
-    if (!data.type) {
-      console.debug("[PushNotificationsService] Notification is not 'estasbien' type. Ignoring.", notification);
+    if (!data.type && !data.Type) {
+      console.debug("[PushNotificationsService] Notification does not contain 'type' field. Ignoring.", notification);
       return false;
     }
-
-    // TODO check remote here?
 
     return true;
   };
