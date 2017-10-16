@@ -20,10 +20,6 @@ export default class SupplyInfo extends Component {
     this.initialMapRegionCoordinates = GeolocationService.getBsAsRegion();
   }
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  };
-
   _handleTextInfoChange = (inputValue) => {
     this.setState({textInfo: inputValue})
   };
@@ -49,15 +45,14 @@ export default class SupplyInfo extends Component {
     Alert.alert(
       'Gracias por tu ayuda!'
     );
-    this._goToHome();
+    this._goBack();
   };
 
   _handleCancelSupplyInfo = () => {
-    this._goToHome();
+    this._goBack();
   };
 
-  _goToHome = () => {
-    this.setModalVisible(false);
+  _goBack = () => {
     this.props.navigation.goBack(null);
   };
 
@@ -81,10 +76,6 @@ export default class SupplyInfo extends Component {
     }
   };
 
-  componentDidMount = () => {
-    this.setModalVisible(!this.state.modalVisible)
-  };
-
   render() {
     if (this.state.loading) {
       return <LoadingIndicator/>;
@@ -95,9 +86,8 @@ export default class SupplyInfo extends Component {
         <Modal
           animationType={"fade"}
           transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
-          }}
+          visible={true}
+          onRequestClose={() => {/* TODO reportar al Swiper de personas q restablezca la card de éste?*/}}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.supplyInfoTitle]}>
@@ -145,9 +135,7 @@ export default class SupplyInfo extends Component {
 
             </View>
           </View>
-
         </Modal>
-
       </View>
     )
   }
