@@ -11,7 +11,18 @@ import {
   CardAction
 } from 'react-native-card-view';
 
-export default class EnuentraCard extends Component {
+export default class EncuentraCard extends Component {
+
+  constructor(props) {
+    super(props);
+    this._handleIveSeenHim = this._handleIveSeenHim.bind(this);
+  }
+
+  _handleIveSeenHim() {
+    const {navigate} = this.props.navigation;
+    navigate('SupplyInfo');
+  }
+
   render () {
     return (
       <Card style={styles.card}>
@@ -25,7 +36,7 @@ export default class EnuentraCard extends Component {
           <Button color="green"
             title="Lo he visto!"
             style={styles.confirmButton}
-            onPress={() => {}}>
+            onPress={this._handleIveSeenHim}>
             Button 1
           </Button>
           <Button

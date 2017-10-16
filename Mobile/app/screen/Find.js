@@ -6,12 +6,21 @@ import {containers} from '../style';
 
 
 export default class Find extends Component {
+
+  constructor(props) {
+    super(props);
+    this.renderCard = this.renderCard.bind(this);
+    this.onSwipedHandler = this.onSwipedHandler.bind(this);
+  }
+
   renderCard(card) {
-    return <EncuentraCard style={styles.encuentraCard}/>
+    return <EncuentraCard style={styles.encuentraCard} navigation=""/>
   }
 
   onSwipedHandler(cardIndex) {
-    console.log(cardIndex)
+    console.log(cardIndex);
+    const {navigate} = this.props.navigation;
+    navigate('SupplyInfo');
   }
 
   onSwipedAllHandler() {

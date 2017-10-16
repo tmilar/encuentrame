@@ -9,7 +9,8 @@ import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
-import {TouchableHighlight, View} from "react-native";
+import SupplyInfo from "../screen/SupplyInfo";
+import {Text, TouchableHighlight, View} from "react-native";
 import RootDispatcher from "../screen/RootDispatcher";
 
 
@@ -129,8 +130,9 @@ const BaseStack = StackNavigator({
     navigationOptions: EncuentrameHeaderOptions
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
-  NewActivity: {screen: NewActivity, navigationOptions: {header: null}}
-}, {
+  NewActivity: {screen: NewActivity, navigationOptions: {header: null}},
+  SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}}
+},{
   initialRouteName: 'Root'
 });
 
