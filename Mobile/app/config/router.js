@@ -11,6 +11,7 @@ import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
 import SupplyInfo from "../screen/SupplyInfo";
 import {Text, TouchableHighlight, View} from "react-native";
+import RootDispatcher from "../screen/RootDispatcher";
 
 
 const Tabs = TabNavigator({
@@ -82,7 +83,7 @@ class LogoutActionScreen extends React.Component {
         NavigationActions.navigate({routeName: 'PreLogin', params: {logout: true}})
       ]
     });
-    console.log("Dispatching Reset Action", resetAction);
+    console.debug("[LogoutActionScreen] Dispatching Reset Action, navigate to 'PreLogin'. ", resetAction);
     this.props.navigation.dispatch(resetAction);
   }
 
@@ -115,7 +116,11 @@ const AppNavigator = DrawerNavigator({
   }
 );
 
-const BaseStack = (sessionAlive) => StackNavigator({
+const BaseStack = StackNavigator({
+  Root: {
+    screen: RootDispatcher,
+    navigationOptions: {header: null}
+  },
   PreLogin: {
     screen: AuthStack,
     navigationOptions: {header: null}
@@ -128,7 +133,7 @@ const BaseStack = (sessionAlive) => StackNavigator({
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}},
   SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}}
 },{
-  initialRouteName: sessionAlive ? 'PostLogin' : 'PreLogin'
+  initialRouteName: 'Root'
 });
 
 export const RootNavigator = BaseStack;
