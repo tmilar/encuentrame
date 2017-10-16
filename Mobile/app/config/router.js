@@ -12,7 +12,6 @@ import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
 import SupplyInfo from "../screen/SupplyInfo";
-import {Text, TouchableHighlight, View} from "react-native";
 import RootDispatcher from "../screen/RootDispatcher";
 
 

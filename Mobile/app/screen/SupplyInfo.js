@@ -93,7 +93,7 @@ export default class SupplyInfo extends Component {
             <Text style={[text.p, styles.supplyInfoTitle]}>
               Ayuda a encontrar a esta persona!
             </Text>
-            <View style={{flex: 2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+            <View style={{flex: 2.5, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
               <TextInput
                 value={this.state.textInfo}
                 placeholder="Como estaba?"
