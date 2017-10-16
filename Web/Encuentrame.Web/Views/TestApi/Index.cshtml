@@ -19,14 +19,29 @@
 
     </div>
 </div>
+<h3>Login</h3>
 <div class="row">
-    <div class="col-lg-6">
-        <label for="url">Token</label>
-        @Html.TextArea("token", "")
+    <div class="col-lg-3">
+        <label for="username">Username</label>
+        @Html.TextBox("username", "emiliano.soto")
+    </div>
+    <div class="col-lg-3">
+        <label for="password">password</label>
+        @Html.TextBox("password", "123")
+    </div>
+    <div class="col-lg-3">
+        <button name="login" id="login">Login</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <label for="token">Token</label>
+        @Html.TextBox("token", "")
 
     </div>
-    <div class="col-lg-6">
-        <label for="url">Usuario id</label>
+    <div class="col-lg-4">
+        <label for="user">Usuario id</label>
         @Html.TextBox("user", "")
 
     </div>

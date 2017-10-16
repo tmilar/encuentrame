@@ -2,8 +2,12 @@
     $(document).ready(function () {
 
         var $url = $('#url');
+        var $username = $('#username');
+        var $password= $('#password');
         var $token = $('#token');
         var $user = $('#user');
+
+        var $buttonLogin = $('#login');
 
         var $methodPost = $('#methodPost');
         var $textPost = $('#parametersPost');
@@ -14,6 +18,29 @@
         var $textGet = $('#parametersGet');
         var $resultGet = $('#resultGet');
         var $buttonGet = $('#get');
+
+
+        $buttonLogin.on('click',
+            function () {
+
+                $.ajax({
+                        url: $url.val() + '/authentication/login',
+                        type: 'POST',
+                        data: {
+                            "Username": $username.val(),
+                            "Password": $password.val()
+                        },
+                        dataType: 'json'
+
+                    }).done(function (data) {
+                        $token.val(data.Token);
+                        $user.val(data.UserId);
+                    })
+                    .fail(function (x, y, z) {
+
+                        $resultPost.val(x.responseText);
+                    });
+            });
 
         $buttonPost.on('click',
             function () {

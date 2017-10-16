@@ -35,28 +35,33 @@ namespace Encuentrame.Model.AreYouOks
             AreYouOks.Remove(areYouOk);
         }
 
-        public void Reply(int id,ReplyParameters parameters)
+        public void Reply(ReplyParameters parameters)
         {
-            var areYouOk = AreYouOks[id];
-            areYouOk.IAmOk = parameters.IAmOk;
-            areYouOk.ReplyDatetime = SystemDateTime.Now;
-            
-            var list=areYouOk.Sender.Devices.Select(x => new BodySend()
+            var areYouOks = AreYouOks.Where(x=>x.ReplyDatetime==null);
+            foreach (var areYouOk in areYouOks)
             {
-                Token = x.Token,
-                Body = "Reply",
-                Title = parameters.IAmOk? $"{x.User.FullName} esta OK": $"{x.User.FullName} esta con algun problema",
-                Data = new
-                {
-                    Id= areYouOk.Id,
-                    TargetUserId= areYouOk.Target.Id,
-                    Ok=parameters.IAmOk,
-                    ReplyDatetime= areYouOk.ReplyDatetime,
-                }
-            }).ToList();
+                areYouOk.IAmOk = parameters.IAmOk;
+                areYouOk.ReplyDatetime = SystemDateTime.Now;
 
-            ExpoPushHelper.SendPushNotification(list);
-            
+                var list = areYouOk.Sender.Devices.Select(x => new BodySend()
+                {
+                    Token = x.Token,
+                    Body = parameters.IAmOk ? $"{x.User.FullName} ha indicado que está bien!" : $"{x.User.FullName} esta con algun problema",
+                    Title = "Encuentrame",
+                    Data = new
+                    {
+                        Id = areYouOk.Id,
+                        TargetUserId = areYouOk.Target.Id,
+                        Ok = parameters.IAmOk,
+                        ReplyDatetime = areYouOk.ReplyDatetime,
+                        Type = "Areyouok.Reply",
+                    }
+                }).ToList();
+
+                ExpoPushHelper.SendPushNotification(list);
+
+            }
+
 
         }
         public void Ask(AskParameters parameters)
@@ -73,13 +78,14 @@ namespace Encuentrame.Model.AreYouOks
             var list = areYouOk.Target.Devices.Select(x => new BodySend()
             {
                 Token = x.Token,
-                Body = "Ask",
-                Title = "¿Como estas?",
+                Body = "¿estas bien?",
+                Title = "Encuentrame",
                 Data = new
                 {
                     Id = areYouOk.Id,
                     SenderUserId = areYouOk.Target.Id,
                     AskDatetime = areYouOk.Created,
+                    Type = "Areyouok.Ask",
                 }
             }).ToList();
 

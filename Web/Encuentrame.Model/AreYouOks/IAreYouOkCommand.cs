@@ -7,7 +7,7 @@ namespace Encuentrame.Model.AreYouOks
         AreYouOk Get(int id);
         IList<AreYouOk> List();
         void Delete(int id);
-        void Reply(int id, AreYouOkCommand.ReplyParameters parameters);
+        void Reply(AreYouOkCommand.ReplyParameters parameters);
         void Ask(AreYouOkCommand.AskParameters parameters);
     }
 }

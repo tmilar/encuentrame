@@ -48,7 +48,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 return BadRequest(ModelState);
             }
 
-            AreYouOkCommand.Reply(replyApiModel.AreYouOkId,new AreYouOkCommand.ReplyParameters()
+            AreYouOkCommand.Reply(new AreYouOkCommand.ReplyParameters()
             {
                IAmOk = replyApiModel.IAmOk,
             });
