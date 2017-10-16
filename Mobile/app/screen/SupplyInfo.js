@@ -39,9 +39,10 @@ export default class SupplyInfo extends Component {
 
     try {
       //TODO create SupplyInfoService as soon as there is an API definition
-      console.log("Aportando datos..");
+      console.log("Aportando datos...", info);
     } catch (e) {
-      console.log("Error..");
+      console.error("Error al aportar datos: ", e);
+      Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));
       return;
     }
     hideLoading();
