@@ -1,6 +1,6 @@
 import {apiUrl} from '../config/apiProperties'
 import SessionService from './SessionService';
-
+import isJSON from '../util/isJSON';
 
 /**
  * Manage base session headers for all services after user has logged in
@@ -11,7 +11,7 @@ class Service {
     url = apiUrl + url;
     let userId = await SessionService.getSessionUserId();
     let token = await SessionService.getSessionToken();
-    if (!requestData.headers){
+    if (!requestData.headers) {
       requestData.headers = {};
     }
     Object.assign(requestData.headers, {
@@ -26,14 +26,30 @@ class Service {
     let finalResponse = await this.parseResponse(rawResponse);
     return finalResponse;
   }
+
   async parseResponse(rawResponse) {
     try {
-      return await rawResponse.json();
+      return await this._parseJSON(rawResponse);
     } catch (e) {
       console.error("Invalid server raw response", e);
       throw 'Ocurrió un problema en la comunicación con el servidor.'
     }
   }
+
+  /**
+   * Parse response body to always return a valid JS object,
+   * even if body is null or empty ("{}").
+   *
+   * @param response
+   * @returns {Promise.<{}>}
+   * @private
+   */
+  _parseJSON = async (response) => {
+    let text = await response.text();
+    let parsed = isJSON(text) ? JSON.parse(text) : {};
+    return parsed;
+  };
+
 
   checkResponseStatus(rawResponse) {
     let status = rawResponse.status;
