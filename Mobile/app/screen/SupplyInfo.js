@@ -5,6 +5,7 @@ import {MapView} from 'expo';
 import GeolocationService from '../service/GeolocationService';
 import {hideLoading, showLoading} from "react-native-notifyer";
 import mapStyles from '../style/map';
+import LoadingIndicator from "../component/LoadingIndicator";
 
 const SupplyInfo = React.createClass({
 
@@ -83,7 +84,7 @@ const SupplyInfo = React.createClass({
 
   render() {
     if (this.state.loading) {
-      return null;
+      return <LoadingIndicator/>;
     }
 
     return (
