@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'react-native';
 import {text} from '../style';
 import {MapView} from 'expo';
@@ -7,26 +7,28 @@ import {hideLoading, showLoading} from "react-native-notifyer";
 import mapStyles from '../style/map';
 import LoadingIndicator from "../component/LoadingIndicator";
 
-const SupplyInfo = React.createClass({
+export default class SupplyInfo extends Component {
 
-  getInitialState() {
-    const bsasCoordinates = GeolocationService.getBsAsRegion();
+  state = {
+    textInfo: ""
+  };
 
-    return {
-      textInfo: "",
-      initialMapRegionCoordinates: bsasCoordinates
-    };
-  },
+  initialMapRegionCoordinates;
 
-  setModalVisible(visible) {
+  constructor(props) {
+    super(props);
+    this.initialMapRegionCoordinates = GeolocationService.getBsAsRegion();
+  }
+
+  setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
-  },
+  };
 
-  _handleTextInfoChange(inputValue) {
+  _handleTextInfoChange = (inputValue) => {
     this.setState({textInfo: inputValue})
-  },
+  };
 
-  async _handleSupplyInfoButtonPress() {
+  _handleSupplyInfoButtonPress = async () => {
     showLoading("Aportando datos!...");
 
     let info = {
@@ -47,18 +49,18 @@ const SupplyInfo = React.createClass({
       'Gracias por tu ayuda!'
     );
     this._goToHome();
-  },
+  };
 
-  _handleCancelSupplyInfo() {
+  _handleCancelSupplyInfo = () => {
     this._goToHome();
-  },
+  };
 
-  _goToHome() {
+  _goToHome = () => {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
-  },
+  };
 
-  async componentWillMount() {
+  componentWillMount = async () => {
     this.setState({loading: true});
     try {
       let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
@@ -66,7 +68,7 @@ const SupplyInfo = React.createClass({
         "latitude": deviceLocation.latitude,
         "longitude": deviceLocation.longitude
       };
-      this.setState({"lastSeenLocation": lastSeenLocation  });
+      this.setState({"lastSeenLocation": lastSeenLocation});
     } catch (e) {
       console.log("Error retrieving location from device: ", e);
       Alert.alert(
@@ -76,11 +78,11 @@ const SupplyInfo = React.createClass({
     } finally {
       this.setState({loading: false});
     }
-  },
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setModalVisible(!this.state.modalVisible)
-  },
+  };
 
   render() {
     if (this.state.loading) {
@@ -121,7 +123,7 @@ const SupplyInfo = React.createClass({
               <MapView.Marker draggable
                               coordinate={this.state.lastSeenLocation}
                               title={"Donde fue?"}
-                              onDragEnd={(e) => this.setState({ lastSeenLocation: e.nativeEvent.coordinate })}
+                              onDragEnd={(e) => this.setState({lastSeenLocation: e.nativeEvent.coordinate})}
               />
             </MapView>
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
@@ -148,7 +150,7 @@ const SupplyInfo = React.createClass({
       </View>
     )
   }
-});
+}
 
 const styles = StyleSheet.create({
   message: {
@@ -180,5 +182,3 @@ const styles = StyleSheet.create({
     margin: 50
   }
 });
-
-export default SupplyInfo;
