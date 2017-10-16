@@ -13,8 +13,12 @@ const text = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#34495e'
-  }
-
+  },
+  textInput: {
+    width: 200,
+    height: 44,
+    padding: 8
+  },
 });
 
 export default text;
