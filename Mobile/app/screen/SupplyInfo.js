@@ -1,31 +1,30 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'react-native';
 import {text} from '../style';
 import {MapView} from 'expo';
 import GeolocationService from '../service/GeolocationService';
 import {hideLoading, showLoading} from "react-native-notifyer";
-import mapStyles from '../style/map';
+import mapStyles from '../config/map';
+import LoadingIndicator from "../component/LoadingIndicator";
 
-const SupplyInfo = React.createClass({
+export default class SupplyInfo extends Component {
 
-  getInitialState() {
-    const bsasCoordinates = GeolocationService.getBsAsRegion();
+  state = {
+    textInfo: ""
+  };
 
-    return {
-      textInfo: "",
-      initialMapRegionCoordinates: bsasCoordinates
-    };
-  },
+  initialMapRegionCoordinates;
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  },
+  constructor(props) {
+    super(props);
+    this.initialMapRegionCoordinates = GeolocationService.getBsAsRegion();
+  }
 
-  _handleTextInfoChange(inputValue) {
+  _handleTextInfoChange = (inputValue) => {
     this.setState({textInfo: inputValue})
-  },
+  };
 
-  async _handleSupplyInfoButtonPress() {
+  _handleSupplyInfoButtonPress = async () => {
     showLoading("Aportando datos!...");
 
     let info = {
@@ -36,28 +35,28 @@ const SupplyInfo = React.createClass({
 
     try {
       //TODO create SupplyInfoService as soon as there is an API definition
-      console.log("Aportando datos..");
+      console.log("Aportando datos...", info);
     } catch (e) {
-      console.log("Error..");
+      console.error("Error al aportar datos: ", e);
+      Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));
       return;
     }
     hideLoading();
     Alert.alert(
       'Gracias por tu ayuda!'
     );
-    this._goToHome();
-  },
+    this._goBack();
+  };
 
-  _handleCancelSupplyInfo() {
-    this._goToHome();
-  },
+  _handleCancelSupplyInfo = () => {
+    this._goBack();
+  };
 
-  _goToHome() {
-    this.setModalVisible(false);
+  _goBack = () => {
     this.props.navigation.goBack(null);
-  },
+  };
 
-  async componentWillMount() {
+  componentWillMount = async () => {
     this.setState({loading: true});
     try {
       let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
@@ -65,7 +64,7 @@ const SupplyInfo = React.createClass({
         "latitude": deviceLocation.latitude,
         "longitude": deviceLocation.longitude
       };
-      this.setState({"lastSeenLocation": lastSeenLocation  });
+      this.setState({"lastSeenLocation": lastSeenLocation});
     } catch (e) {
       console.log("Error retrieving location from device: ", e);
       Alert.alert(
@@ -75,15 +74,11 @@ const SupplyInfo = React.createClass({
     } finally {
       this.setState({loading: false});
     }
-  },
-
-  componentDidMount() {
-    this.setModalVisible(!this.state.modalVisible)
-  },
+  };
 
   render() {
     if (this.state.loading) {
-      return null;
+      return <LoadingIndicator/>;
     }
 
     return (
@@ -91,9 +86,8 @@ const SupplyInfo = React.createClass({
         <Modal
           animationType={"fade"}
           transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
-          }}
+          visible={true}
+          onRequestClose={() => {/* TODO reportar al Swiper de personas q restablezca la card de éste?*/}}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.supplyInfoTitle]}>
@@ -120,7 +114,7 @@ const SupplyInfo = React.createClass({
               <MapView.Marker draggable
                               coordinate={this.state.lastSeenLocation}
                               title={"Donde fue?"}
-                              onDragEnd={(e) => this.setState({ lastSeenLocation: e.nativeEvent.coordinate })}
+                              onDragEnd={(e) => this.setState({lastSeenLocation: e.nativeEvent.coordinate})}
               />
             </MapView>
             <View style={[styles.footer, {flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
@@ -141,13 +135,11 @@ const SupplyInfo = React.createClass({
 
             </View>
           </View>
-
         </Modal>
-
       </View>
     )
   }
-});
+}
 
 const styles = StyleSheet.create({
   message: {
@@ -179,5 +171,3 @@ const styles = StyleSheet.create({
     margin: 50
   }
 });
-
-export default SupplyInfo;

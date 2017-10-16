@@ -10,7 +10,7 @@ import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import mapStyles from '../style/map';
+import mapStyles from '../config/map';
 
 
 const ModalMap = React.createClass({

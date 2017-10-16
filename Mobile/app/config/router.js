@@ -1,9 +1,11 @@
 import React from 'react'
 
 import {StackNavigator, TabNavigator, NavigationActions, DrawerNavigator} from 'react-navigation';
+import {TouchableHighlight, View} from "react-native";
+import {Icon} from 'react-native-elements';
+
 import Login from '../screen/Login';
 import Register from '../screen/Register';
-import {Icon} from 'react-native-elements';
 import Home from "../screen/Home";
 import AreYouOk from "../screen/AreYouOk";
 import Find from "../screen/Find";
