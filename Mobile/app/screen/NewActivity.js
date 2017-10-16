@@ -9,7 +9,7 @@ import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
-import mapStyles from '../style/map';
+import mapStyles from '../config/map';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 

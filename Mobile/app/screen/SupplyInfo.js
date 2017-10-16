@@ -4,7 +4,7 @@ import {text} from '../style';
 import {MapView} from 'expo';
 import GeolocationService from '../service/GeolocationService';
 import {hideLoading, showLoading} from "react-native-notifyer";
-import mapStyles from '../style/map';
+import mapStyles from '../config/map';
 
 const SupplyInfo = React.createClass({
 
