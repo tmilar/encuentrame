@@ -46,7 +46,7 @@ export default class Login extends Component {
       password: this.state.password
     };
 
-    await UserService.checkCredentials(credentials);
+    await UserService.doLogin(credentials);
   }
 
   async _handleLoginButtonPress() {
