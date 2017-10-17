@@ -18,6 +18,14 @@ namespace Encuentrame.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetEventAdministratorUsers()
+        {
+            var result = ListItemsHelper.GetEventAdministratorUsersList();
+
+            return Json(JsReturnHelper.Return(result), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult GetEntities()
         {
             var result = ListItemsHelper.GetEntitiesList();

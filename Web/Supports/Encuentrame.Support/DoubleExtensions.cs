@@ -1,6 +1,4 @@
-using System;
-
-namespace EPA.Support
+namespace Encuentrame.Support
 {
     public static class DoubleExtensions
     {
@@ -10,4 +8,5 @@ namespace EPA.Support
         }
        
     }
+  
 }

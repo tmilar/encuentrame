@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace EPA.Support
+namespace Encuentrame.Support
 {
     public static class DecimalExtensions
     {

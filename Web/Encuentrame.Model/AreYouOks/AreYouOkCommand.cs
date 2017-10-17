@@ -37,7 +37,9 @@ namespace Encuentrame.Model.AreYouOks
 
         public void Reply(ReplyParameters parameters)
         {
-            var areYouOks = AreYouOks.Where(x=>x.ReplyDatetime==null);
+            var replyUser = Users[parameters.UserId];
+            var areYouOks = AreYouOks.Where(x=>x.ReplyDatetime==null && x.Target==replyUser );
+            
             foreach (var areYouOk in areYouOks)
             {
                 areYouOk.IAmOk = parameters.IAmOk;
@@ -46,7 +48,7 @@ namespace Encuentrame.Model.AreYouOks
                 var list = areYouOk.Sender.Devices.Select(x => new BodySend()
                 {
                     Token = x.Token,
-                    Body = parameters.IAmOk ? $"{x.User.FullName} ha indicado que está bien!" : $"{x.User.FullName} esta con algun problema",
+                    Body = parameters.IAmOk ? $"{replyUser.FullName} ha indicado que está bien!" : $"{replyUser.FullName} esta con algun problema",
                     Title = "Encuentrame",
                     Data = new
                     {
@@ -97,8 +99,8 @@ namespace Encuentrame.Model.AreYouOks
 
         public class ReplyParameters
         {
-            public int Id { get; set; }
             public bool IAmOk { get; set; }
+            public int UserId { get; set; }
         }
 
         public class AskParameters

@@ -112,13 +112,18 @@ namespace Encuentrame.Model.Accounts
         {
             var user = Users[deviceParameters.UserId];
 
-           var device=new Device()
-           {
-               Token = deviceParameters.Token,
-               User = user
-           };
+            if (!user.Devices.Where(x => x.Token == deviceParameters.Token).Any())
+            {
+                var device = new Device()
+                {
+                    Token = deviceParameters.Token,
+                    User = user
+                };
 
-            user.Devices.Add(device);
+                user.Devices.Add(device);
+            }
+
+         
         }
 
         public IList<User> List()

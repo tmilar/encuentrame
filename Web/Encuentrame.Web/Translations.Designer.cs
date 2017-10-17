@@ -1393,7 +1393,7 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Piso y Departamento.
+        ///   Looks up a localized string similar to Piso y Dto.
         /// </summary>
         public static string FloorAndDepartament {
             get {
@@ -1425,6 +1425,15 @@ namespace Encuentrame.Web {
         public static string FullName {
             get {
                 return ResourceManager.GetString("FullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ubicar.
+        /// </summary>
+        public static string GeoPosition {
+            get {
+                return ResourceManager.GetString("GeoPosition", resourceCulture);
             }
         }
         
@@ -2599,11 +2608,29 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organizador.
+        /// </summary>
+        public static string Organizer {
+            get {
+                return ResourceManager.GetString("Organizer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Origen.
         /// </summary>
         public static string Origin {
             get {
                 return ResourceManager.GetString("Origin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dueño.
+        /// </summary>
+        public static string Owner {
+            get {
+                return ResourceManager.GetString("Owner", resourceCulture);
             }
         }
         

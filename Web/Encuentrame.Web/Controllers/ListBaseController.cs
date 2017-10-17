@@ -31,7 +31,7 @@ namespace Encuentrame.Web.Controllers
         [Inject]
         public virtual ISeekerFactory<TModel> SeekerFactory { get; set; }
 
-        public virtual void ApplyDefaultFilters(IGenericSeeker<TModel> seeker)
+        protected virtual void ApplyDefaultFilters(IGenericSeeker<TModel> seeker)
         {
 
         }

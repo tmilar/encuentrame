@@ -122,6 +122,30 @@ namespace Encuentrame.Web.Controllers
 
             Users.Put(user2);
 
+            var user3 = new User()
+            {
+                Username = "juan.organizador",
+                Password = "123",
+                FirstName = "juan",
+                LastName = "organizador",
+                Email = "juan.organizador@Encuentrame.com",
+                Role = RoleEnum.EventAdministrator,
+            };
+
+            Users.Put(user3);
+
+            var user4 = new User()
+            {
+                Username = "fernando.organizador",
+                Password = "123",
+                FirstName = "fernando",
+                LastName = "organizador",
+                Email = "fernando.organizador@Encuentrame.com",
+                Role = RoleEnum.EventAdministrator,
+            };
+
+            Users.Put(user4);
+
             var systemUser = new SystemUser()
             {
                 Username = "System",
@@ -139,7 +163,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Name="Evento 1",
                 BeginDateTime = SystemDateTime.Now.AddHours(-3),
-                EndDateTime = SystemDateTime.Now.AddHours(3)
+                EndDateTime = SystemDateTime.Now.AddHours(3),
+                Organizer = user3,
             };
 
             Events.Put(eventt1);
@@ -148,7 +173,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Name = "Evento 2",
                 BeginDateTime = SystemDateTime.Now.AddHours(-3),
-                EndDateTime = SystemDateTime.Now.AddHours(3)
+                EndDateTime = SystemDateTime.Now.AddHours(3),
+                Organizer = user4,
             };
 
             Events.Put(eventt2);

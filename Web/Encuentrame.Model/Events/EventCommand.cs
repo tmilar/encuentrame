@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Addresses;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
@@ -14,6 +16,9 @@ namespace Encuentrame.Model.Events
     {
         [Inject]
         public IBag<Event> Events { get; set; }
+
+        [Inject]
+        public IBag<User> Users { get; set; }
 
         public Event Get(int id)
         {
@@ -53,6 +58,13 @@ namespace Encuentrame.Model.Events
                 Street = eventParameters.Street,
                 Zip = eventParameters.Zip
             };
+            eventt.Organizer = Users[eventParameters.OrganizerId];
+
+            if (eventParameters.UsersIds != null)
+            {
+                EditListFromIds(eventParameters.UsersIds, eventt.Users, i => Users[i]);
+            }
+            
         }
         public void Delete(int id)
         {
@@ -62,6 +74,8 @@ namespace Encuentrame.Model.Events
 
         public class CreateOrEditParameters
         {
+           
+
             public string Name { get; set; }
             public string City { get; set; }
             public string Province { get; set; }
@@ -73,6 +87,8 @@ namespace Encuentrame.Model.Events
             public decimal Longitude { get; set; }
             public DateTime BeginDateTime { get; set; }
             public DateTime EndDateTime { get; set; }
+            public int OrganizerId { get; set; }
+            public List<int> UsersIds { get; set; }
         }
     }
 }

@@ -50,6 +50,7 @@ namespace Encuentrame.Web.Controllers.Apis
 
             AreYouOkCommand.Reply(new AreYouOkCommand.ReplyParameters()
             {
+               UserId=GetIdUserLogged(),
                IAmOk = replyApiModel.IAmOk,
             });
         

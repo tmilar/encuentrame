@@ -14,7 +14,12 @@ namespace Encuentrame.Web.Helpers
     {
         [Inject]
         public static IAuthorization Authorization { get; set; }
-       
+
+        public static bool Validate(RoleEnum role)
+        {
+            var roles = new RoleEnum[] { role };
+            return Validate(roles);
+        }
         public static bool Validate(RoleEnum[] roles)
         {
             return Authorization.Validate(HttpContext.Current.User.Identity.Name, roles);
@@ -32,4 +37,5 @@ namespace Encuentrame.Web.Helpers
             
         }
     }
+   
 }

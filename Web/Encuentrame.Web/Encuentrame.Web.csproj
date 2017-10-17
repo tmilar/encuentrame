@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\ManagePersonUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
+    <Compile Include="Controllers\MyEventController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
@@ -495,6 +496,7 @@
     <Content Include="Scripts\app\appInit.js" />
     <Content Include="Scripts\app\arativa-bootstrap-treeview.js" />
     <Content Include="Scripts\app\commons.js" />
+    <Content Include="Scripts\app\controllers\ManageEvents\manageEvent.js" />
     <Content Include="Scripts\app\controllers\notificationsConfiguration.js" />
     <Content Include="Scripts\app\controllers\TestApis\testApi.js" />
     <Content Include="Scripts\app\less-than-other-property-validation.js" />
@@ -801,6 +803,11 @@
     <Content Include="Views\ManageEvent\Create.cshtml" />
     <Content Include="Views\ManageEvent\Details.cshtml" />
     <Content Include="Views\ManageEvent\Edit.cshtml" />
+    <Content Include="Views\MyEvent\_form.cshtml" />
+    <Content Include="Views\MyEvent\Create.cshtml" />
+    <Content Include="Views\MyEvent\Details.cshtml" />
+    <Content Include="Views\MyEvent\Edit.cshtml" />
+    <Content Include="Views\MyEvent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

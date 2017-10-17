@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Addresses;
 using Encuentrame.Support;
 
@@ -23,6 +25,15 @@ namespace Encuentrame.Model.Events
         public virtual DateTime? DeletedKey { get; set; }
         public virtual DateTime BeginDateTime { get; set; }
         public virtual DateTime EndDateTime { get; set; }
+
+        public virtual User Organizer { get; set; }
+
+        private IList<User> _users;
+        public virtual IList<User> Users
+        {
+            get { return _users ?? (_users = new List<User>()); }
+            set { _users = value; }
+        }
     }
 }
 

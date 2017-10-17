@@ -1,5 +1,4 @@
-﻿@using Encuentrame.Model.Accounts
-@using Encuentrame.Web
+﻿@using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @model Encuentrame.Web.Models.Events.EventModel
 @Html.ErrorSummary()
@@ -9,10 +8,7 @@
 {
     <div class="row">
         <div class="col-md-6">@Html.EditorFor(m => m.Name)</div>
-        @if (AuthorizationHelper.Validate(RoleEnum.Administrator))
-        {
-            <div class="col-md-6">@Html.EditorFor(m => m.Organizer)</div>
-        }
+        
     </div>
     <div class="row">
         <div class="col-md-6">@Html.EditorFor(m => m.BeginDateTime)</div>

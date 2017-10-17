@@ -1,5 +1,7 @@
 using System.IO;
 using System.Web.Mvc;
+using Encuentrame.Model.Accounts;
+using Encuentrame.Model.Supports.Interfaces;
 using NailsFramework.IoC;
 using NailsFramework.Logging;
 using NailsFramework.UnitOfWork;
@@ -23,6 +25,20 @@ namespace Encuentrame.Web.Controllers
         [Inject]
         public ILog Log { get; set; }
 
+        [Inject]
+        public IAuthenticationProvider AuthenticationProvider { get; set; }
+
+        protected User GetLoggedUser()
+        {
+            var user = AuthenticationProvider.GetLoggedUser() as User;
+            return user;
+        }
+
+        protected bool LoggedUserIs(RoleEnum role)
+        {
+            var user = AuthenticationProvider.GetLoggedUser() as User;
+            return user.Role==role;
+        }
 
         protected void ValidateReference()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NHibernate.Linq;
 
 namespace Encuentrame.Model.Events.Seekers
@@ -59,6 +60,27 @@ namespace Encuentrame.Model.Events.Seekers
                     Where(x => x.EndDateTime <= to.Value);
                 else
                     Where(x => x.EndDateTime >= from.Value);
+            return this;
+        }
+        public IEventSeeker ByOrganizer(int id)
+        {
+            Where(x => x.Organizer.Id==id);
+            return this;
+        }
+        public IEventSeeker ByOrganizer(IList<int> ids)
+        {
+            Where(x => ids.Contains(x.Organizer.Id));
+            return this;
+        }
+       
+        public IEventSeeker ByOrganizerUsername(string username)
+        {
+            Where(x => x.Organizer.Username.Like($"{username}"));
+            return this;
+        }
+        public IEventSeeker OrderByOrganizer(SortOrder sortOrder)
+        {
+            OrderBy(x => x.Organizer.FullName, sortOrder);
             return this;
         }
 

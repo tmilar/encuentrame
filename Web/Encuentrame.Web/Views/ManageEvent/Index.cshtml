@@ -1,4 +1,5 @@
-﻿@using Encuentrame.Web
+﻿@using Encuentrame.Model.Accounts
+@using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @using Encuentrame.Web.Helpers.DataTable
 @using Encuentrame.Web.Models.Events
@@ -18,21 +19,34 @@
 @Html.SuccessSummary()
 @Html.ActionLink(Translations.Create, "Create", new { }, new { @class = "btn btn-primary" })
 <div class="table-container">
-    @(Html.BuildTable<EventListModel>(Url.Action("GetItems", "ManageEvent"))
-          .InServer()
-          .AddColumn(x => x.Id)
-          .AddColumn(x => x.Name)
-          .AddColumn(x => x.Latitude)
-          .AddColumn(x => x.Longitude)
-          .AddColumn(x => x.BeginDateTime)
-          .AddColumn(x => x.EndDateTime)
-          .AddColumn(x => x.City)
-          .AddColumn("Actions", dataTemplate: "actionsTemplate")
-          .AddFilter(x => x.Name)
-          .AddFilter(x => x.BeginDateTime)
-          .AddFilter(x => x.EndDateTime)
-          .AddFilter(x => x.City)
-          .Build())
+    @{
+        var tableBuilder = Html.BuildTable<EventListModel>(Url.Action("GetItems", "ManageEvent"))
+            .InServer()
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Latitude)
+            .AddColumn(x => x.Longitude)
+            .AddColumn(x => x.BeginDateTime)
+            .AddColumn(x => x.EndDateTime)
+            .AddColumn(x => x.City);
+        if (AuthorizationHelper.Validate(RoleEnum.Administrator))
+        {
+            tableBuilder.AddColumn(x => x.Organizer, o => o.Name);
+        }
+        tableBuilder.AddColumn("Actions", dataTemplate: "actionsTemplate")
+        .AddFilter(x => x.Name)
+        .AddFilter(x => x.BeginDateTime)
+        .AddFilter(x => x.EndDateTime)
+        .AddFilter(x => x.City);
+        if (AuthorizationHelper.Validate(RoleEnum.Administrator))
+        {
+            tableBuilder.AddFilter(x => x.Organizer, x => x.Id, Url.Action("GetEventAdministratorUsers", "ReferenceItems"));
+        }
+
+
+    }
+    @(tableBuilder.Build())
+
 </div>
 
 <script id="actionsTemplate" type="text/template">

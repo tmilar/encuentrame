@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Encuentrame.Model.Events.Seekers
 {
@@ -10,7 +11,11 @@ namespace Encuentrame.Model.Events.Seekers
         IEventSeeker ByLongitude(decimal? minValue, decimal? maxValue);
         IEventSeeker ByBeginDateTime(DateTime? from, DateTime? to);
         IEventSeeker ByEndDateTime(DateTime? from, DateTime? to);
-
+        IEventSeeker ByOrganizer(int id);
+        IEventSeeker ByOrganizer(IList<int> ids);
+       
+        IEventSeeker ByOrganizerUsername(string username);
+        IEventSeeker OrderByOrganizer(SortOrder sortOrder);
         IEventSeeker OrderByName(SortOrder sortOrder);
         IEventSeeker OrderByLatitude(SortOrder sortOrder);
         IEventSeeker OrderByLongitude(SortOrder sortOrder);

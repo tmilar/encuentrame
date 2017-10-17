@@ -1210,7 +1210,7 @@
     <value>Zip</value>
   </data>
   <data name="FloorAndDepartament" xml:space="preserve">
-    <value>Piso y Departamento</value>
+    <value>Piso y Dto</value>
   </data>
   <data name="IsDefault" xml:space="preserve">
     <value>Principal</value>
@@ -1424,5 +1424,14 @@
   </data>
   <data name="Events" xml:space="preserve">
     <value>Eventos</value>
+  </data>
+  <data name="GeoPosition" xml:space="preserve">
+    <value>Ubicar</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Dueño</value>
+  </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>Organizador</value>
   </data>
 </root>

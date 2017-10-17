@@ -169,7 +169,7 @@ namespace Encuentrame.Web.Controllers
             return userListModel;
         }
 
-        public override void ApplyDefaultFilters(IGenericSeeker<User> seeker)
+        protected override void ApplyDefaultFilters(IGenericSeeker<User> seeker)
         {
             base.ApplyDefaultFilters(seeker);
             ((IUserSeeker) seeker).ByRole(RoleEnum.Administrator);

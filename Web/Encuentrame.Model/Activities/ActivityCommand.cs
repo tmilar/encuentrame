@@ -4,6 +4,7 @@ using System.Linq;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Events;
 using Encuentrame.Model.Supports;
+using Encuentrame.Support;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 
@@ -60,7 +61,7 @@ namespace Encuentrame.Model.Activities
             activity.Longitude = eventParameters.Longitude;
             activity.BeginDateTime = eventParameters.BeginDateTime;
             activity.EndDateTime = eventParameters.EndDateTime;
-            activity.Event = eventParameters.EventId.HasValue? Events[eventParameters.EventId]:null;
+            activity.Event = eventParameters.EventId.HasValueIdentifiable() ? Events[eventParameters.EventId]:null;
 
         }
         public void Delete(int id)

@@ -41,14 +41,22 @@ namespace Encuentrame.Web.Helpers
        
         public static ICollection<SelectListItem> GetUsers(int selectedId)
         {
-            return Users.Select(x => new SelectListItem
+            return Users.Where(x => x.DeletedKey == null).Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.ToDisplay(),
                 Selected = selectedId == x.Id,
             }).ToArray();
         }
-      
+        public static ICollection<SelectListItem> GetEventAdministratorUsers(int selectedId)
+        {
+            return Users.Where(x=>x.DeletedKey==null && x.Role==RoleEnum.EventAdministrator).Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.ToDisplay(),
+                Selected = selectedId == x.Id,
+            }).ToArray();
+        }
 
         #endregion
 
@@ -57,8 +65,24 @@ namespace Encuentrame.Web.Helpers
         
         public static IList<ReferenceItem> GetUsersList()
         {
-            return DeleteableToReferenceItems(Users, x => x.ToDisplay());
+            return Users.Where(x => x.DeletedKey == null).Select(x => new ReferenceItem
+            {
+                id = x.Id.ToString(),
+                text = x.ToDisplay(),
+
+            }).ToArray();
         }
+
+        public static IList<ReferenceItem> GetEventAdministratorUsersList()
+        {
+            return Users.Where(x => x.DeletedKey == null && x.Role == RoleEnum.EventAdministrator).Select(x => new ReferenceItem
+            {
+                id = x.Id.ToString(),
+                text = x.ToDisplay(),
+                
+            }).ToArray();
+        }
+        
 
         public static IList<SelectListItem> GetUserSelectListItems()
         {

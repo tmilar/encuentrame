@@ -23,6 +23,8 @@ namespace Encuentrame.Model.Mappings.Events
                 m.Map(x => x.FloorAndDepartament);
                 m.Map(x => x.Zip);
             }).ColumnPrefix("address");
+            References(x => x.Organizer).Not.Nullable();
+            HasManyToMany(x => x.Users).Table("EventsUsers");
         }
     }
 }

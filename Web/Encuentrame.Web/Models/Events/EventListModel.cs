@@ -4,7 +4,7 @@ namespace Encuentrame.Web.Models.Events
 {
     public class EventListModel
     {
-      
+        public int Id { get; set; }
         public string Name { get; set; }
 
        
@@ -20,6 +20,7 @@ namespace Encuentrame.Web.Models.Events
 
      
         public virtual string City { get; set; }
-        public int Id { get; set; }
+        public virtual ItemModel Organizer { get; set; }
+
     }
 }
