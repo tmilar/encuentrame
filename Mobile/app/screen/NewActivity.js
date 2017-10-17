@@ -116,6 +116,9 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
+      if (events.length > 0){
+        this.setState({selectedEventId: events[0].Id});
+      }
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
@@ -147,7 +150,9 @@ const NewActivity = React.createClass({
       longitude: location.longitude
     }})
   },
-
+  _handleEventSelected(itemValue, itemIndex){
+    this.setState({selectedEventId: itemValue});
+  },
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   },
@@ -186,12 +191,12 @@ const NewActivity = React.createClass({
                 <Picker
                   selectedValue={this.state.selectedEventId}
                   style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
+                  onValueChange={this._handleEventSelected}
                   color="red"
                 >
                   {this.state.events.map((event, i) => {
                     return (
-                      <Picker.Item label={event.Name} key={`event_${i}`} value={event.Id}/>
+                      <Picker.Item label={event.Name} key={event.Id} value={event.Id}/>
                     )
                   })}
                 </Picker>
