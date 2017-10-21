@@ -52,9 +52,9 @@ export default class Home extends Component {
     if (prevTrackingEnabled === trackingEnabled) {
       alertMsg = `Ocurrió un problema, no se pudo ${prevTrackingEnabled ? "desactivar" : "activar"} el Seguimiento.`;
     } else if (trackingEnabled) {
-      alertMsg = "Segumiento desactivado. \nRecuerda activarlo cuando quieras que te podamos cuidar!";
+      alertMsg = "Seguimiento activado! \uD83D\uDE00";
     } else {
-      alertMsg = "Seguimiento activado \uD83D\uDE00";
+      alertMsg = "Segumiento desactivado. \nRecuerda activarlo cuando quieras que te podamos cuidar!";
     }
     this.setState({trackingEnabled});
     Alert.alert("Seguime", alertMsg);
