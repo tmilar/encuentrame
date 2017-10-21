@@ -52,14 +52,14 @@ const NewActivity = React.createClass({
     return date.toISOString().slice(0,19).replace(/T/g," ");
   },
   _handleStartDatePicked(startDate){
-    var formatedDate = this._formatDateForBackend(startDate);
-    this.setState({ "startDate": formatedDate });
+    let formatedDate = this._formatDateForBackend(startDate);
+    this.setState({ startDate: formatedDate });
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
   },
   _handleEndDatePicked(endDate){
-    var formatedDate = this._formatDateForBackend(endDate);
-    this.setState({ "endDate": formatedDate });
+    let formatedDate = this._formatDateForBackend(endDate);
+    this.setState({ endDate: formatedDate });
     console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
   },
