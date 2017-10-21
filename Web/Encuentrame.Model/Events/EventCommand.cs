@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Addresses;
+using Encuentrame.Model.AreYouOks;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 using NailsFramework.IoC;
@@ -20,6 +21,9 @@ namespace Encuentrame.Model.Events
         [Inject]
         public IBag<User> Users { get; set; }
 
+        [Inject]
+        public AreYouOkCommand AreYouOkCommand { get; set; }
+
         public Event Get(int id)
         {
             return Events[id];
@@ -32,7 +36,14 @@ namespace Encuentrame.Model.Events
         {
             var eventt = new Event();
             UpdateWith(eventt, eventParameters);
-
+            if (SystemDateTime.Now.Between(eventt.BeginDateTime, eventt.EndDateTime))
+            {
+                eventt.Status = EventStatusEnum.InProgress;
+            }
+            else if (SystemDateTime.Now < eventt.BeginDateTime)
+            {
+                eventt.Status = EventStatusEnum.Pending;
+            }
             Events.Put(eventt);
         }
         public void Edit(int id, CreateOrEditParameters eventParameters)
@@ -42,6 +53,8 @@ namespace Encuentrame.Model.Events
 
             Events.Put(eventt);
         }
+
+     
         private void UpdateWith(Event eventt, CreateOrEditParameters eventParameters)
         {
             eventt.Name = eventParameters.Name;
@@ -70,6 +83,37 @@ namespace Encuentrame.Model.Events
         {
             var eventt=Events[id];
             eventt.DeletedKey = SystemDateTime.Now;
+        }
+
+        public void DeclareEmergency(int id)
+        {
+            var eventt = Events[id];
+            if (eventt.Status.In(EventStatusEnum.InProgress, EventStatusEnum.InEmergency))
+            {
+                eventt.Status = EventStatusEnum.InEmergency;
+                AreYouOkCommand.AskFromEvent(eventt);
+            }
+            else
+            {
+                throw new DeclareEmergencyException();
+            }
+
+        }
+
+        public void BeginEvent(int id)
+        {
+            var eventt = Events[id];
+            eventt.Status=EventStatusEnum.InProgress;
+            eventt.BeginDateTime = SystemDateTime.Now;
+            //TODO: hacer las notifications
+        }
+
+        public void FinalizeEvent(int id)
+        {
+            var eventt = Events[id];
+            eventt.Status = EventStatusEnum.Completed;
+            eventt.EndDateTime = SystemDateTime.Now;
+            //TODO: hacer las notifications
         }
 
         public class CreateOrEditParameters

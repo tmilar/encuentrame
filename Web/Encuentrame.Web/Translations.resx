@@ -787,7 +787,7 @@
     <value>Configuración general</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Fitrar</value>
+    <value>Filtrar</value>
   </data>
   <data name="Find" xml:space="preserve">
     <value>Encontrar</value>
@@ -1433,5 +1433,38 @@
   </data>
   <data name="Organizer" xml:space="preserve">
     <value>Organizador</value>
+  </data>
+  <data name="Begin" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="BeginMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea comenzar el evento {0}?</value>
+  </data>
+  <data name="Emergency" xml:space="preserve">
+    <value>En emergencia</value>
+  </data>
+  <data name="EmergencyMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea declarar una emergencia en el evento {0}?</value>
+  </data>
+  <data name="Finalize" xml:space="preserve">
+    <value>Finalizar</value>
+  </data>
+  <data name="FinalizeMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea finalizar el evento {0}?</value>
+  </data>
+  <data name="EventStatusEnumCancel" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="EventStatusEnumCompleted" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="EventStatusEnumInEmergency" xml:space="preserve">
+    <value>En emergencia</value>
+  </data>
+  <data name="EventStatusEnumInProgress" xml:space="preserve">
+    <value>En progreso</value>
+  </data>
+  <data name="EventStatusEnumPending" xml:space="preserve">
+    <value>Pendiente</value>
   </data>
 </root>

@@ -28,7 +28,7 @@ namespace Encuentrame.Model.Accounts
             var user = new User();
             user.Username = userParameters.Username;
             user.LastName = userParameters.LastName;
-            
+            user.Password = "123";
             user.FirstName = userParameters.FirstName;
             user.Email = userParameters.Email;
             user.EmailAlternative = userParameters.EmailAlternative;
@@ -131,7 +131,12 @@ namespace Encuentrame.Model.Accounts
             return Users.Where(x => x.DeletedKey == null).ToList();
         }
 
-       
+        public IList<User> ListUsers()
+        {
+            return Users.Where(x => x.DeletedKey == null && x.Role==RoleEnum.User).ToList();
+        }
+
+
 
         public class CreateOrEditParameters
         {

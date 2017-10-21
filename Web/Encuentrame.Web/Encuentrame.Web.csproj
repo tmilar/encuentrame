@@ -172,6 +172,7 @@
     <Compile Include="Controllers\Apis\ActivityController.cs" />
     <Compile Include="Controllers\Apis\AreYouOkController.cs" />
     <Compile Include="Controllers\Apis\BaseApiController.cs" />
+    <Compile Include="Controllers\Apis\ContactController.cs" />
     <Compile Include="Controllers\Apis\EventController.cs" />
     <Compile Include="Controllers\Apis\PositionController.cs" />
     <Compile Include="Controllers\ConfigureEmailServerController.cs" />
@@ -181,7 +182,6 @@
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\ManagePersonUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
-    <Compile Include="Controllers\MyEventController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
@@ -201,6 +201,7 @@
     <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Models\Apis\Accounts\UserListApiModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivitiesApiResultModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivityApiModel.cs" />
     <Compile Include="Models\Apis\Accounts\UserApiModel.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Models\Apis\Authentications\LoginApiResultModel.cs" />
     <Compile Include="Models\Apis\Authentications\LoginApiModel.cs" />
     <Compile Include="Models\Apis\Commons\AddressModel.cs" />
+    <Compile Include="Models\Apis\Contacts\ContactApiResultModel.cs" />
     <Compile Include="Models\Apis\Events\EventApiModel.cs" />
     <Compile Include="Models\Apis\Events\EventsApiResultModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiModel.cs" />
@@ -329,6 +331,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\csshake.min.css" />
     <Content Include="Content\datatable-site-custom.css" />
     <Content Include="Content\DataTables-1.10.12\extensions\AutoFill\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables-1.10.12\extensions\AutoFill\css\autoFill.bootstrap.min.css" />
@@ -485,6 +488,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\alarm.jpg" />
     <Content Include="images\menu.png" />
     <Content Include="images\details_close.png" />
     <Content Include="images\details_open.png" />
@@ -803,15 +807,9 @@
     <Content Include="Views\ManageEvent\Create.cshtml" />
     <Content Include="Views\ManageEvent\Details.cshtml" />
     <Content Include="Views\ManageEvent\Edit.cshtml" />
-    <Content Include="Views\MyEvent\_form.cshtml" />
-    <Content Include="Views\MyEvent\Create.cshtml" />
-    <Content Include="Views\MyEvent\Details.cshtml" />
-    <Content Include="Views\MyEvent\Edit.cshtml" />
-    <Content Include="Views\MyEvent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\AreYouOk\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

@@ -46,7 +46,8 @@ namespace Encuentrame.Web.Controllers
                 Street = eventt.Address.Street,
                 Zip = eventt.Address.Zip,
                 FloorAndDepartament = eventt.Address.FloorAndDepartament,
-                Organizer = eventt.Organizer.Id
+                OrganizerDisplay = eventt.Organizer.ToDisplay(),
+                Status = eventt.Status
             };
 
             return View(eventtModel);
@@ -125,6 +126,7 @@ namespace Encuentrame.Web.Controllers
                 Zip = eventt.Address.Zip,
                 FloorAndDepartament = eventt.Address.FloorAndDepartament,
                 Organizer = eventt.Organizer.Id,
+                Status = eventt.Status
             };
 
             return View(eventtModel);
@@ -152,11 +154,48 @@ namespace Encuentrame.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult ButtonAction(int id, string buttonAction)
+        {
+            switch (buttonAction)
+            {
+                case "delete":
+                    return Delete(id);
+                case "begin":
+                    return Begin(id);
+                case "finalize":
+                    return Finalize(id);
+                case "emergency":
+                    return Emergency(id);
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
+        protected ActionResult Delete(int id)
         {
             EventCommand.Delete(id);
 
             return RedirectToAction("Index");
+        }
+
+        protected ActionResult Begin(int id)
+        {
+            EventCommand.BeginEvent(id);
+
+            return RedirectToAction("Details",new {id});
+        }
+        protected ActionResult Finalize(int id)
+        {
+            EventCommand.FinalizeEvent(id);
+
+            return RedirectToAction("Details", new { id });
+        }
+        protected ActionResult Emergency(int id)
+        {
+            EventCommand.DeclareEmergency(id);
+
+            return RedirectToAction("Details", new { id });
         }
 
         protected override EventListModel GetViewModelFrom(Event eventt)
@@ -170,6 +209,7 @@ namespace Encuentrame.Web.Controllers
                 BeginDateTime = eventt.BeginDateTime,
                 EndDateTime = eventt.EndDateTime,
                 City = eventt.Address.City,
+                Status = eventt.Status,
                 Organizer = new ItemModel()
                 {
                     Id = eventt.Organizer.Id,

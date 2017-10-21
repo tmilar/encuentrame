@@ -51,7 +51,7 @@
                             'token': $token.val(),
                             'user': $user.val()
                         },
-                        type: 'POST',
+                        type: 'DELETE',
                         data: jQuery.parseJSON($textPost.val()),
                         dataType:'json'
 

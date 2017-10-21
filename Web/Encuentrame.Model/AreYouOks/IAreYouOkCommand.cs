@@ -4,8 +4,8 @@ namespace Encuentrame.Model.AreYouOks
 {
     public interface IAreYouOkCommand
     {
-        AreYouOk Get(int id);
-        IList<AreYouOk> List();
+        AreYouOkActivity Get(int id);
+        IList<AreYouOkActivity> List();
         void Delete(int id);
         void Reply(AreYouOkCommand.ReplyParameters parameters);
         void Ask(AreYouOkCommand.AskParameters parameters);

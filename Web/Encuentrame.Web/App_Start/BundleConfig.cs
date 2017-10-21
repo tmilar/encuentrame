@@ -82,6 +82,7 @@ namespace Encuentrame.Web
                 "~/Content/datatable-site-custom.css",
                 "~/Content/Treant.css",
                 "~/Content/Treant-site-custom.css",
+                "~/Content/csshake.min.css",
                 "~/Content/Site.css"));
         }
     }

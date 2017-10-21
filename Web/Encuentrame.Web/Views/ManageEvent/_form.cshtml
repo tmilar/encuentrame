@@ -8,10 +8,14 @@
 @using (Html.BeginEditSection(Translations.Data))
 {
     <div class="row">
-        <div class="col-md-6">@Html.EditorFor(m => m.Name)</div>
+        <div class="col-md-4">@Html.EditorFor(m => m.Name)</div>
         @if (AuthorizationHelper.Validate(RoleEnum.Administrator))
         {
-            <div class="col-md-6">@Html.EditorFor(m => m.Organizer)</div>
+            <div class="col-md-4">@Html.EditorFor(m => m.Organizer)</div>
+        }
+        @if (Model.Id>0)
+        {
+            <div class="col-md-4">@Html.DisplayFor(m => m.Status)</div>
         }
     </div>
     <div class="row">

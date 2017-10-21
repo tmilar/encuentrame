@@ -7,6 +7,7 @@ using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Accounts.Permissions;
+using Encuentrame.Model.Contacts;
 using Encuentrame.Model.Events;
 using Encuentrame.Model.Supports.Notifications;
 using Encuentrame.Support;
@@ -97,7 +98,18 @@ namespace Encuentrame.Web.Controllers
 
             DatabaseCreator.Create();
 
-           //Users
+            //Users
+            var userAdmin = new User()
+            {
+                Username = "user.admin",
+                Password = "123",
+                FirstName = "Admin",
+                LastName = "Admin",
+                Email = "Admin@Encuentrame.com",
+                Role = RoleEnum.Administrator,
+            };
+
+            Users.Put(userAdmin);
             var user1 = new User()
             {
                 Username = "javier.wamba",
@@ -119,8 +131,46 @@ namespace Encuentrame.Web.Controllers
                 Email = "emiliano.soto@Encuentrame.com",
                 Role = RoleEnum.User,
             };
-
             Users.Put(user2);
+
+            var user21 = new User()
+            {
+                Username = "lionel.messi",
+                Password = "123",
+                FirstName = "lionel",
+                LastName = "messi",
+                Email = "messi@Encuentrame.com",
+                Role = RoleEnum.User,
+            };
+
+            Users.Put(user21);
+
+            var user22 = new User()
+            {
+                Username = "gonzalo.bonadeo",
+                Password = "123",
+                FirstName = "gonzalo",
+                LastName = "bonadeo",
+                Email = "bonadeo@Encuentrame.com",
+                Role = RoleEnum.User,
+            };
+
+            Users.Put(user22);
+
+            user2.Contacts.Add(new Contact()
+            {
+                Created = SystemDateTime.Now,
+                AcceptedDatetime = SystemDateTime.Now.AddHours(5),
+                Status = ContactRequestStatus.Accepted,
+                User = user22
+            });
+            user2.Contacts.Add(new Contact()
+            {
+                Created = SystemDateTime.Now,
+                Status = ContactRequestStatus.Pending,
+                User = user21
+            });
+
 
             var user3 = new User()
             {
@@ -165,6 +215,7 @@ namespace Encuentrame.Web.Controllers
                 BeginDateTime = SystemDateTime.Now.AddHours(-3),
                 EndDateTime = SystemDateTime.Now.AddHours(3),
                 Organizer = user3,
+                Status = EventStatusEnum.InProgress
             };
 
             Events.Put(eventt1);
@@ -172,9 +223,10 @@ namespace Encuentrame.Web.Controllers
             var eventt2 = new Event()
             {
                 Name = "Evento 2",
-                BeginDateTime = SystemDateTime.Now.AddHours(-3),
+                BeginDateTime = SystemDateTime.Now.AddHours(1),
                 EndDateTime = SystemDateTime.Now.AddHours(3),
                 Organizer = user4,
+                Status = EventStatusEnum.Pending
             };
 
             Events.Put(eventt2);

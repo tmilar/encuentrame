@@ -1,5 +1,6 @@
 ﻿
 @using System.Configuration
+@using Encuentrame.Model.Events
 @using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @using Encuentrame.Support
@@ -14,7 +15,7 @@
 {
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=@ConfigurationManager.AppSettings["GoogleMapsKey"]&callback=initMap">
-        
+
     </script>
     <script src="@Scripts.Url(@"~/scripts/app/controllers/manageEvents/manageEvent.js")" type="text/javascript"></script>
 
@@ -27,7 +28,9 @@
 @using (Html.BeginEditSection(Translations.Data))
 {
     <div class="row">
-        <div class="col-md-6">@Html.DisplayFor(m => m.Name)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Name)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Status)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.OrganizerDisplay)</div>
     </div>
     <div class="row">
         <div class="col-md-6">@Html.DisplayFor(m => m.BeginDateTime)</div>
@@ -43,7 +46,7 @@
             <div class="row">
                 <div class="col-md-4">@Html.DisplayFor(m => m.Latitude) @Html.HiddenFor(m => m.Latitude)</div>
                 <div class="col-md-4">@Html.DisplayFor(m => m.Longitude) @Html.HiddenFor(m => m.Longitude)</div>
-              
+
             </div>
             <div class="row">
                 <div class="col-md-8">@Html.DisplayFor(m => m.Street)</div>
@@ -56,7 +59,7 @@
             <div class="row">
                 <div class="col-md-3">@Html.DisplayFor(m => m.FloorAndDepartament)</div>
                 <div class="col-md-3">@Html.DisplayFor(m => m.Zip)</div>
-                
+
             </div>
         </div>
         <div class="col-md-6">
@@ -67,12 +70,33 @@
 
 
 
-   
-<form method="POST" action="@Url.Action("Delete", new {id = Model.Id})">
-    <button type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+
+<form method="POST" action="@Url.Action("ButtonAction", new {id = Model.Id})">
+    <button name="buttonAction" value="delete" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
             data-modal-ok="@Translations.Delete" data-modal-title="@Translations.Delete" data-modal-message="@Translations.DeleteMessage.FormatWith(Model.Name)">
         @Translations.Delete
     </button>
+    @if (Model.Status == EventStatusEnum.Pending)
+    {
+        <button name="buttonAction" value="begin" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                data-modal-ok="@Translations.Begin" data-modal-title="@Translations.Begin" data-modal-message="@Translations.BeginMessage.FormatWith(Model.Name)">
+            @Translations.Begin
+        </button>
+    }
+    @if (Model.Status == EventStatusEnum.InProgress)
+    {
+        <button name="buttonAction" value="finalize" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                data-modal-ok="@Translations.Finalize" data-modal-title="@Translations.Finalize" data-modal-message="@Translations.FinalizeMessage.FormatWith(Model.Name)">
+            @Translations.Finalize
+        </button>
+    }
+    @if (Model.Status == EventStatusEnum.InProgress)
+    {
+        <button name="buttonAction" value="emergency" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                data-modal-ok="@Translations.Emergency" data-modal-title="@Translations.Emergency" data-modal-message="@Translations.EmergencyMessage.FormatWith(Model.Name)">
+            @Translations.Emergency
+        </button>
+    }
     @Html.ActionLink(Translations.Edit, "Edit", new { Id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
 
     @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })

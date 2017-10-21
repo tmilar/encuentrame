@@ -13,7 +13,9 @@ namespace Encuentrame.Model.Events.Seekers
         IEventSeeker ByEndDateTime(DateTime? from, DateTime? to);
         IEventSeeker ByOrganizer(int id);
         IEventSeeker ByOrganizer(IList<int> ids);
-       
+        IEventSeeker ByStatus(EventStatusEnum status);
+        IEventSeeker ByStatus(IList<EventStatusEnum> values);
+
         IEventSeeker ByOrganizerUsername(string username);
         IEventSeeker OrderByOrganizer(SortOrder sortOrder);
         IEventSeeker OrderByName(SortOrder sortOrder);
@@ -22,6 +24,7 @@ namespace Encuentrame.Model.Events.Seekers
         IEventSeeker OrderByBeginDateTime(SortOrder sortOrder);
         IEventSeeker OrderByEndDateTime(SortOrder sortOrder);
         IEventSeeker OrderByCity(SortOrder sortOrder);
+        IEventSeeker OrderByStatus(SortOrder sortOrder);
 
     }
 }

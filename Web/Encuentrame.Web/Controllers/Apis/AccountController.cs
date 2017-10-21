@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Accounts;
@@ -123,8 +124,35 @@ namespace Encuentrame.Web.Controllers.Apis
             };
 
             return Ok(userApiModel);
+        }
 
+        
+        [HttpGet]
+        public IHttpActionResult GetAll()
+        {
+            var users = UserCommand.ListUsers();
+            var list = new List<UserApiResultModel>();
+            foreach (var user in users)
+            {
+                var userApiModel = new UserApiResultModel()
+                {
+                    Id=user.Id,
+                    Username = user.Username,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    EmailAlternative = user.EmailAlternative,
+                    InternalNumber = user.InternalNumber,
+                    PhoneNumber = user.PhoneNumber,
+                    MobileNumber = user.MobileNumber,
+                };
 
+                list.Add(userApiModel);
+            }
+
+            
+
+            return Ok(list);
         }
     }
 

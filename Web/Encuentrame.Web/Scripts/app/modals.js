@@ -37,8 +37,17 @@
             var $buttonOk = $modal.find('.modal-ok');
             $buttonOk.text($ok);
             $buttonOk.on("click", function () {
-                if ($actionUrl !== "" && $actionUrl !== undefined && $actionUrl !== null)
+                if ($actionUrl !== "" && $actionUrl !== undefined && $actionUrl !== null) {
                     $form.attr('action', $actionUrl);
+                }
+                if ($button.attr("name") !== '' && $button.val() !== '') {
+                    var $tempElement = $("<input type='hidden'/>");
+
+                    $tempElement
+                        .attr("name", $button.attr("name"))
+                        .val($button.val())
+                        .appendTo($form);
+                }
                 $form.submit();
             });
         };

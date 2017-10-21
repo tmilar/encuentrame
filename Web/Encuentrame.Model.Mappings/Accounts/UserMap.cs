@@ -31,6 +31,7 @@ namespace Encuentrame.Model.Mappings.Accounts
         {
             DiscriminatorValue(typeof(User).Name);
             HasMany(x => x.Devices).Cascade.AllDeleteOrphan().AsBag();
+            HasMany(x => x.Contacts).KeyColumn("user_id").Cascade.AllDeleteOrphan();
         }
     }
 

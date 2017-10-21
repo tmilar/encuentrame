@@ -403,6 +403,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comenzar.
+        /// </summary>
+        public static string Begin {
+            get {
+                return ResourceManager.GetString("Begin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha inicio.
         /// </summary>
         public static string BeginDate {
@@ -426,6 +435,15 @@ namespace Encuentrame.Web {
         public static string BeginDatetimeException {
             get {
                 return ResourceManager.GetString("BeginDatetimeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Esta seguro que desea comenzar el evento {0}?.
+        /// </summary>
+        public static string BeginMessage {
+            get {
+                return ResourceManager.GetString("BeginMessage", resourceCulture);
             }
         }
         
@@ -1177,6 +1195,24 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to En emergencia.
+        /// </summary>
+        public static string Emergency {
+            get {
+                return ResourceManager.GetString("Emergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Esta seguro que desea declarar una emergencia en el evento {0}?.
+        /// </summary>
+        public static string EmergencyMessage {
+            get {
+                return ResourceManager.GetString("EmergencyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Habilitar SSL.
         /// </summary>
         public static string EnableSsl {
@@ -1312,6 +1348,51 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelado.
+        /// </summary>
+        public static string EventStatusEnumCancel {
+            get {
+                return ResourceManager.GetString("EventStatusEnumCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finalizado.
+        /// </summary>
+        public static string EventStatusEnumCompleted {
+            get {
+                return ResourceManager.GetString("EventStatusEnumCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En emergencia.
+        /// </summary>
+        public static string EventStatusEnumInEmergency {
+            get {
+                return ResourceManager.GetString("EventStatusEnumInEmergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En progreso.
+        /// </summary>
+        public static string EventStatusEnumInProgress {
+            get {
+                return ResourceManager.GetString("EventStatusEnumInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendiente.
+        /// </summary>
+        public static string EventStatusEnumPending {
+            get {
+                return ResourceManager.GetString("EventStatusEnumPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La extension {0} no esta permitida. No puede cargar archivos con una extension que no este en esta lista: {1}..
         /// </summary>
         public static string ExtensionNotAllowedErrorMessageResourceName {
@@ -1348,11 +1429,29 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fitrar.
+        ///   Looks up a localized string similar to Filtrar.
         /// </summary>
         public static string Filter {
             get {
                 return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finalizar.
+        /// </summary>
+        public static string Finalize {
+            get {
+                return ResourceManager.GetString("Finalize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Esta seguro que desea finalizar el evento {0}?.
+        /// </summary>
+        public static string FinalizeMessage {
+            get {
+                return ResourceManager.GetString("FinalizeMessage", resourceCulture);
             }
         }
         

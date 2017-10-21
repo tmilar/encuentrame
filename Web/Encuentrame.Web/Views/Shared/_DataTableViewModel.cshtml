@@ -106,16 +106,20 @@
 
     @if (Model.Filters.Count > 0 && Model.SearchEnabled)
     {
-        <div class="panel panel-info">
+        <div class="panel panel-info" id="@("filter"+Model.TableId)">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="panel-left col-xs-4">@Translations.Filter</div>
+                    <div class="panel-left col-xs-4">
+                        <a role="button" data-toggle="collapse" data-parent="#@("filter"+Model.TableId)" href="#@("filterBody"+Model.TableId)" aria-expanded="true" aria-controls="@("filterBody"+Model.TableId)">
+                            @Translations.Filter
+                        </a>
+                    </div>
                     <div class="panel-right col-xs-4 pull-right text-right">
                         <a href="#" class="filter-clear">@Translations.Clear</a>
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div  id="@("filterBody"+Model.TableId)" class="panel-body panel-collapse collapse in">
                 <div class="data-table-filters" role="form" data-table-id="@Model.TableId" @childProperty>
 
                     @foreach (var filters in rows)

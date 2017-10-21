@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Encuentrame.Model.Contacts;
 using Encuentrame.Model.Devices;
 using Encuentrame.Support;
 
@@ -44,6 +45,14 @@ namespace Encuentrame.Model.Accounts
             get { return _devices ?? (_devices = new List<Device>()); }
             set { _devices = value; }
         }
+
+        private IList<Contact> _contacts;
+        public virtual IList<Contact> Contacts
+        {
+            get { return _contacts ?? (_contacts = new List<Contact>()); }
+            set { _contacts = value; }
+        }
+
     }
 
     public class SystemUser : BaseUser

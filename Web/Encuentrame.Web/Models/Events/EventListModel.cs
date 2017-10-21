@@ -1,4 +1,5 @@
 ﻿using System;
+using Encuentrame.Model.Events;
 
 namespace Encuentrame.Web.Models.Events
 {
@@ -18,9 +19,10 @@ namespace Encuentrame.Web.Models.Events
        
         public DateTime EndDateTime { get; set; }
 
-     
-        public virtual string City { get; set; }
-        public virtual ItemModel Organizer { get; set; }
+        public  EventStatusEnum Status { get; set; }
+
+        public  string City { get; set; }
+        public  ItemModel Organizer { get; set; }
 
     }
 }

@@ -14,6 +14,7 @@ namespace Encuentrame.Model.Mappings.Events
             Map(x => x.Longitude);
             Map(x => x.BeginDateTime);
             Map(x => x.EndDateTime);
+            Map(x => x.Status).Not.Nullable();
             Component(x => x.Address, m =>
             {
                 m.Map(x => x.Number);

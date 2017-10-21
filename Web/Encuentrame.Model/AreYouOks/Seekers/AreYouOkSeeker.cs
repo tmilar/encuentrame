@@ -2,7 +2,7 @@
 
 namespace Encuentrame.Model.AreYouOks.Seekers
 {
-    public class AreYouOkSeeker : BaseSeeker<AreYouOk>, IAreYouOkSeeker
+    public class AreYouOkSeeker : BaseSeeker<AreYouOkActivity>, IAreYouOkSeeker
     {
         public IAreYouOkSeeker BySenderUserName(string userName)
         {

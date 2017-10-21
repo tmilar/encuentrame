@@ -78,6 +78,18 @@ namespace Encuentrame.Model.Events.Seekers
             Where(x => x.Organizer.Username.Like($"{username}"));
             return this;
         }
+
+        public IEventSeeker ByStatus(EventStatusEnum status)
+        {
+            Where(x => x.Status == status);
+            return this;
+        }
+
+        public IEventSeeker ByStatus(IList<EventStatusEnum> values)
+        {
+            Where(x => values.Contains(x.Status));
+            return this;
+        }
         public IEventSeeker OrderByOrganizer(SortOrder sortOrder)
         {
             OrderBy(x => x.Organizer.FullName, sortOrder);
@@ -114,6 +126,11 @@ namespace Encuentrame.Model.Events.Seekers
         public IEventSeeker OrderByCity(SortOrder sortOrder)
         {
             OrderBy(x => x.Address.City, sortOrder);
+            return this;
+        }
+        public IEventSeeker OrderByStatus(SortOrder sortOrder)
+        {
+            OrderBy(x => x.Status, sortOrder);
             return this;
         }
     }
