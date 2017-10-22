@@ -48,12 +48,19 @@ const NewActivity = React.createClass({
   _handleActivityLocationButtonpress(){
     this.setState({ showMapLocation: true });
   },
+  _formatDateForBackend(date){
+    return date.toISOString().slice(0,19).replace(/T/g," ");
+  },
   _handleStartDatePicked(startDate){
+    let formatedDate = this._formatDateForBackend(startDate);
+    this.setState({ startDate: formatedDate });
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
   },
-  _handleEndDatePicked(startDate){
-    console.log('A date has been picked: ', startDate);
+  _handleEndDatePicked(endDate){
+    let formatedDate = this._formatDateForBackend(endDate);
+    this.setState({ endDate: formatedDate });
+    console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
   },
 
@@ -68,20 +75,12 @@ const NewActivity = React.createClass({
 
   async _handleCreateActivityButtonPress() {
     showLoading("Espera...");
-    //TODO: add real inputs for activity start and end times. or now its mocked
-    let beginDateTime = new Date();
-    let endDateTime = new Date();
-    //dura 5 horas
-    let duration = 5 * 60 * 60 * 1000;
-    endDateTime.setTime(endDateTime.getTime() + duration);
-
-    // TODO add real input for activity latitude/longitude selection point.
-    let activity = {
+      let activity = {
       name: this.state.activityName,
       latitude: this.state.activityLocation.latitude,
       longitude: this.state.activityLocation.longitude,
-      beginDateTime: beginDateTime,
-      endDateTime: endDateTime,
+      beginDateTime: this.state.startDate,
+      endDateTime: this.state.endDate,
       eventId: this.state.selectedEventId
     };
 
@@ -117,6 +116,9 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
+      if (events.length > 0){
+        this.setState({selectedEventId: events[0].Id});
+      }
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
@@ -148,7 +150,9 @@ const NewActivity = React.createClass({
       longitude: location.longitude
     }})
   },
-
+  _handleEventSelected(itemValue, itemIndex){
+    this.setState({selectedEventId: itemValue});
+  },
   componentDidMount() {
     this.setModalVisible(!this.state.modalVisible)
   },
@@ -170,7 +174,7 @@ const NewActivity = React.createClass({
               Nueva Actividad
             </Text>
             <View style={{flex: 1.8}}>
-              <View style={{flex: 2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+              <View style={{flex: 0.25, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
                 <TextInput
                   value={this.state.activityName}
                   placeholder="Nombre de la actividad"
@@ -178,57 +182,75 @@ const NewActivity = React.createClass({
                   style={styles.activityName}
                   selectTextOnFocus
                   onChangeText={this._handleActivitynameTextChange}
+                  underlineColorAndroid='transparent'
                 />
-                <Text style={text.p}>
-                  {this.state.selectedEventName || "Si vas a un evento eligelo"}
-                </Text>
+              </View>
+
+              <View style={{flex: 0.3, flexDirection: 'column', justifyContent: 'space-around', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
+
                 <Picker
                   selectedValue={this.state.selectedEventId}
                   style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) => this.setState({selectedEventId: itemValue})}
+                  onValueChange={this._handleEventSelected}
                   color="red"
                 >
                   {this.state.events.map((event, i) => {
                     return (
-                      <Picker.Item label={event.Name} key={`event_${i}`} value={event.Id}/>
+                      <Picker.Item label={event.Name} key={event.Id} value={event.Id}/>
                     )
                   })}
                 </Picker>
 
               </View>
-              <View style={{flex: 0.5}}>
-                <Button
-                  title="Click para elegir Ubicacion de la Actividad"
-                  onPress={this._handleActivityLocationButtonpress}
-                />
+
+              <View style={{flex: 0.25, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
+                  <Text style={[text.p, styles.activityLocationLabel]}>
+                    Donde sera?
+                  </Text>
+                  <View style={{ flex: 1, justifyContent: "space-around" }}>
+                    <Button
+                      style={{width: 100, height: 50}}
+                      title="Mapa"
+                      onPress={this._handleActivityLocationButtonpress}
+                    />
+                  </View>
+                </View>
+                {this.state.showMapLocation ? <ModalMap saveActivityLocation={this.saveActivityLocation}/> : null}
               </View>
-              {this.state.showMapLocation ? <ModalMap saveActivityLocation={this.saveActivityLocation}/> : null}
+
+              <View style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+                <Text style={[text.p, styles.activityDatesLabel]}>
+                  Cuando sera?
+                </Text>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
+                  <View style={{ flex: 1 }}>
+                    <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
+                      <Text>{this.state.startDate || "Fecha inicio"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePicker
+                      mode="datetime"
+                      color="red"
+                      isVisible={this.state.isStartDateTimePickerVisible}
+                      onConfirm={this._handleStartDatePicked}
+                      onCancel={this._hideStartDateTimePicker}
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
+                      <Text>{this.state.endDate || "Fecha fin"}</Text>
+                    </TouchableOpacity>
+                    <DateTimePicker
+                      mode="datetime"
+                      isVisible={this.state.isEndDateTimePickerVisible}
+                      onConfirm={this._handleEndDatePicked}
+                      onCancel={this._hideEndDateTimePicker}
+                    />
+                  </View>
+                </View>
+              </View>
 
 
-              <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
-                <View style={{ flex: 1 }}>
-                  <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
-                    <Text>Fecha inicio</Text>
-                  </TouchableOpacity>
-                  <DateTimePicker
-                    mode="datetime"
-                    isVisible={this.state.isStartDateTimePickerVisible}
-                    onConfirm={this._handleStartDatePicked}
-                    onCancel={this._hideStartDateTimePicker}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
-                    <Text>Fecha fin</Text>
-                  </TouchableOpacity>
-                  <DateTimePicker
-                    mode="datetime"
-                    isVisible={this.state.isEndDateTimePickerVisible}
-                    onConfirm={this._handleEndDatePicked}
-                    onCancel={this._hideEndDateTimePicker}
-                  />
-                </View>
-              </View>
 
               <View style={[styles.footer, {flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
                 <View style={{flex: 0.5}}>
@@ -273,7 +295,10 @@ const styles = StyleSheet.create({
     width: 200,
     textAlign: 'center',
     paddingBottom: 10,
-    flex: 1
+    flex: 1,
+    borderColor: '#47315a',
+    borderWidth: 0,
+    height: 70
   },
   activityTitle: {
     backgroundColor: "#2962FF",
@@ -282,6 +307,20 @@ const styles = StyleSheet.create({
     width: 400,
     alignSelf: "center",
     textAlignVertical: "center"
+  },
+  activityLocationLabel: {
+    flex: 1,
+    width: 200,
+    alignSelf: "center",
+    textAlignVertical: "center",
+    fontSize: 14
+  },
+  activityDatesLabel: {
+    flex: 0.5,
+    width: 200,
+    alignSelf: "center",
+    textAlignVertical: "center",
+    fontSize: 14
   },
   map: {
     flex: 3,
