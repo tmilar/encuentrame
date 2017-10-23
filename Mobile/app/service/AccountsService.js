@@ -4,13 +4,19 @@ import {AsyncStorage} from 'react-native';
 
 class AccountsService {
 
-  async getAllUsersAccounts(accountData) {
+  async getAllUsersAccounts() {
+    let accountsJson, accounts;
+    accountsJson = await AsyncStorage.getItem("Accounts");
+    accounts = JSON.parse(accountsJson);
+    if (accounts){
+      return accounts;
+    }
     let accountsUrl = 'accounts';
-    let accountsResponse =  await Service.sendRequest(accountsUrl, {
+    accounts =  await Service.sendRequest(accountsUrl, {
       method: 'GET'
     });
-    await AsyncStorage.setItem("Accounts", accountsResponse);
-    return accountsResponse;
+    await AsyncStorage.setItem("Accounts", JSON.stringify(accounts));
+    return accounts;
   }
 }
 
