@@ -22,7 +22,7 @@ class FamilyListContainer extends Component {
   render() {
     return <View style={{flex: 1}}>
             <Text style={text.p}>
-              Familia
+              Contactos
             </Text>
             <FamilyList familyMembers={this.state.familyMembers}/>
           </View>

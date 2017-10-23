@@ -58,16 +58,27 @@ export default class FriendsAndFamily extends Component {
         />
       </View>)
   }
+  _handleNuevoContactoButtonpress= async () => {
+    const {navigate} = this.props.navigation;
+    navigate('NewContact');
+  };
 
   render() {
     return (
       <View style={{flex: 1}}>
-        <ScrollView style={{flex: 1.8}}>
+        <ScrollView style={{flex: 5.5}}>
           <FamilyListContainer/>
           {
             this.renderEstasBienSelector()
           }
         </ScrollView>
+        <View style={{ flex: 1, justifyContent: "space-around" }}>
+          <Button
+            style={{width: 100, height: 50}}
+            title="Agregar contacto"
+            onPress={this._handleNuevoContactoButtonpress}
+          />
+        </View>
       </View>
     )
   }

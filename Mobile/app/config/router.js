@@ -12,6 +12,7 @@ import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
 import SupplyInfo from "../screen/SupplyInfo";
+import NewContact from "../screen/NewContact";
 import RootDispatcher from "../screen/RootDispatcher";
 
 
@@ -132,7 +133,8 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}},
-  SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}}
+  SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}},
+  NewContact: {screen: NewContact, navigationOptions: {header: null}}
 },{
   initialRouteName: 'Root'
 });
