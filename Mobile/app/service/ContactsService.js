@@ -13,17 +13,16 @@ class ContactsService {
   }
 
   newContactRequest = async (userId) => {
-    const url = "contact/request";
+    const url = "Contact/request/" + userId;
     return await Service.sendRequest(url, {
       method: "POST",
       body: JSON.stringify({
-        userId: userId
       })
     });
   };
 
   reply = async (contactRequestUserId, response) => {
-    const url = "contact/" + contactRequestUserId + "/confirm";
+    const url = "Contact/confirm/"  +  contactRequestUserId;
     return await Service.sendRequest(url, {
       method: "POST",
       body: JSON.stringify({
