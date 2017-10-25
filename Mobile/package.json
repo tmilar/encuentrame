@@ -3,8 +3,8 @@
   "version": "0.6.0",
   "private": true,
   "devDependencies": {
-    "react-native-scripts": "0.0.40",
-    "jest-expo": "~19.0.0",
+    "react-native-scripts": "1.5.0",
+    "jest-expo": "^21.0.2",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
@@ -19,10 +19,10 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^19.0.1",
+    "expo": "^21.0.3",
     "fetch-mock": "^5.13.1",
     "react": "16.0.0-alpha.12",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-21.0.2.tar.gz",
     "react-native-action-button": "^2.8.1",
     "react-native-card-view": "0.0.3",
     "react-native-deck-swiper": "^1.4.2",

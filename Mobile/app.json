@@ -1,10 +1,10 @@
 {
   "expo": {
-    "sdkVersion": "19.0.0",
     "name": "Encuentrame",
+    "sdkVersion": "21.0.0",
     "icon": "./app/img/eme_icon.png",
-    "version": "1.0.0",
     "slug": "encuentrame",
+    "version": "0.6.0",
     "ios": {
       "bundleIdentifier": "com.encuentrame.encuentrame"
     },
