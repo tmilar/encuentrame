@@ -115,6 +115,23 @@ class PushNotificationsService {
         );
       }
 
+      if (notificationType === "Contact.Request.New") {
+        let contactRequestUserId = notification.data.Id;
+        let contactRequestUsername = notification.data.Username;
+
+        console.log(`[PushNotificationService] Notification '${notificationType}'!`);
+        navigation.navigate("ContactRequest",{contactRequestUserId: contactRequestUserId, contactRequestUsername: contactRequestUsername});
+      }
+
+      if (notificationType === "Contact.Request.Confirm") {
+        let contactRequestUsername = notification.data.Username;
+
+        console.log(`[PushNotificationService] Notification '${notificationType}'!`);
+        Alert.alert(
+          "Respondieron tu solicitud de amistad",
+          `{usuario ${contactRequestUsername}} ha aceptado tu solicitud.}`
+        );
+      }
       //TODO handle/switch over other types of notifications? Move this logic to a different service?
     });
   };
