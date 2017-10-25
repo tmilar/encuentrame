@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View, Alert, ScrollView} from 'react-native'
 import SessionService from '../service/SessionService';
-import AccountsService from '../service/AccountsService';
 import NewsListContainer from "../component/NewsListContainer";
 import {text} from '../style';
 
@@ -24,15 +23,11 @@ export default class Home extends Component {
 
   async componentWillMount() {
     let sessionAlive = await SessionService.isSessionAlive();
-    await this.fetchAllUsersAccounts();
     if (!sessionAlive) {
       showToast("La sesión ha caducado. Por favor, vuelva a iniciar sesión.");
       this.props.navigation.navigate('Logout');
     }
   }
-  fetchAllUsersAccounts = async () => {
-    await AccountsService.getAllUsersAccounts();
-  };
 
   componentDidMount = async () => {
     await this._refreshPositionTracking();
