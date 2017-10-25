@@ -1,50 +1,77 @@
 import React, {Component} from 'react';
 import {
-  FlatList, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
+  Button,
+  FlatList, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View
+} from 'react-native';
 import {text} from '../style';
 import AccountsService from '../service/AccountsService';
+import ContactsService from '../service/ContactsService';
 
 
 export default class NewContact extends Component {
+
   datasource = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 !== r2,
   });
+
   state = {
-    accounts: this.datasource.cloneWithRows([]),
+    loading: true,
+    accounts: [],
+    filteredAccounts: this.datasource.cloneWithRows([]),
     searchingContact: ""
   };
 
   componentWillMount = async () => {
     let accounts = await AccountsService.getAllUsersAccounts();
-    this.setState({ "accounts": this.datasource.cloneWithRows(accounts) });
+    this.setState({ "accounts": accounts });
+    this.setState({ "filteredAccounts": this.datasource.cloneWithRows(accounts) });
+    this.setState({ "loading": false });
   };
 
-  _pressRow = async (rowID) =>  {
+  _pressRow = (account, sectionID, rowID) =>  {
     debugger;
     console.log("clicked" + rowID)
   };
 
-  renderRow(account) {
+  searchingContactTextChanged = (searchingContact) => {
+    this.setState({searchingContact});
+    let filteredAccounts = this.state.accounts.filter((acct) => acct.Username.indexOf(searchingContact) >= 0);
+    this.setState({ "filteredAccounts": this.datasource.cloneWithRows(filteredAccounts) });
+  };
+
+  renderRow = (account: string, sectionID: number, rowID: number) => {
     return (
-      <View>
-        <TouchableHighlight onPress={this._pressRow}>
-          <View>
-            <Text>{account.Username}</Text>
-          </View>
-        </TouchableHighlight>
-      </View>
+      <TouchableHighlight style={{flex: 1, height: 30 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
+        <View>
+          <Text>{account.Username} - Agregar</Text>
+        </View>
+      </TouchableHighlight>
     )
-  }
+  };
+
 
   render() {
-    if (this.state.accounts.length == 0 )
+    if (this.state.loading )
       return null;
     return (
-      <ScrollView scrollsToTop={false}>
-        <ListView
-          dataSource={this.state.accounts}
-          renderRow={this.renderRow}
-        />
+      <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
+        <View style={{flex: 1, justifyContent: 'flex-start', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+          <TextInput
+            value={this.state.searchingContact}
+            placeholder="Buscar por nombre"
+            ref="searchingContact"
+            selectTextOnFocus
+            onChangeText={this.searchingContactTextChanged}
+            underlineColorAndroid='transparent'
+          />
+        </View>
+        <View style={{flex: 9, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+          <ListView style={{flex: 1}}
+            dataSource={this.state.filteredAccounts}
+            renderRow={this.renderRow}
+          />
+        </View>
+
       </ScrollView>
     )
   }
