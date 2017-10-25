@@ -4,6 +4,8 @@ import FamilyListContainer from "../component/FamilyListContainer";
 import {text} from '../style';
 import SessionService from "../service/SessionService";
 import AreYouOkService from "../service/AreYouOkService";
+import AccountsService from '../service/AccountsService';
+
 import {Alert} from "react-native";
 
 
@@ -19,6 +21,10 @@ export default class FriendsAndFamily extends Component {
   };
 
   componentWillMount = async () => {
+    // Load in shared storage all user accounts
+    await AccountsService.getAllUsersAccounts();
+
+    // show AreYouOk selector if user is Dev.
     let areYouOkSelectorVisible = await SessionService.isDevSession();
     console.log("Are you ok visibile? " + areYouOkSelectorVisible);
     this.setState({areYouOkSelectorVisible});
