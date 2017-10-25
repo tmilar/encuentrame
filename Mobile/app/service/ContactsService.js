@@ -22,11 +22,12 @@ class ContactsService {
   };
 
   reply = async (contactRequestUserId, response) => {
-    const url = "Contact/confirm/"  +  contactRequestUserId;
-    return await Service.sendRequest(url, {
+    let replyUrl = "Contact/reject/"  +  contactRequestUserId;
+    if (response)
+      replyUrl = "Contact/confirm/"  +  contactRequestUserId;
+    return await Service.sendRequest(replyUrl, {
       method: "POST",
       body: JSON.stringify({
-        confirm: response
       })
     });
   };
