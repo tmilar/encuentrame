@@ -8,6 +8,7 @@ import Login from '../screen/Login';
 import Register from '../screen/Register';
 import Home from "../screen/Home";
 import AreYouOk from "../screen/AreYouOk";
+import ContactRequest from "../screen/ContactRequest";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
@@ -132,6 +133,7 @@ const BaseStack = StackNavigator({
     navigationOptions: EncuentrameHeaderOptions
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
+  ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}},
   SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}},
   NewContact: {screen: NewContact, navigationOptions: {header: null}}
