@@ -29,8 +29,6 @@ export default class NewContact extends Component {
   constructor(props) {
     super(props);
     let {params} = props.navigation.state;
-    debugger;
-
     this.accounts = (params && params.accounts) || [];
   };
 
