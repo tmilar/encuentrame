@@ -47,7 +47,7 @@ class PushNotificationsService {
         })
       });
       console.log(`[PushNotificationsService] Register device token for push OK! ${JSON.stringify({token, username})}`);
-      if (SessionService.isDevSession()) {
+      if (await SessionService.isDevSession()) {
         showToast(`POST ${url}. \nRegistro con el servidor OK! \nToken: ${token}`);
       }
     } catch (e) {

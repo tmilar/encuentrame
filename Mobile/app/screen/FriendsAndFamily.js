@@ -20,7 +20,7 @@ export default class FriendsAndFamily extends Component {
 
   componentWillMount = async () => {
     let areYouOkSelectorVisible = await SessionService.isDevSession();
-    console.log("Are you ok visibile? " + areYouOkSelectorVisible);
+    console.log("[FriendsAndFamily] Are you ok selector visibile? " + areYouOkSelectorVisible);
     this.setState({areYouOkSelectorVisible});
   };
 
