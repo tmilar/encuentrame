@@ -71,9 +71,10 @@ export default class FriendsAndFamily extends Component {
         />
       </View>)
   }
-  _handleNuevoContactoButtonpress= async () => {
+
+  _handleNuevoContactoButtonpress = async () => {
     const {navigate} = this.props.navigation;
-    navigate('NewContact');
+    navigate('NewContact', {accounts: this.userAccounts});
   };
 
   render() {

@@ -4,7 +4,6 @@ import {
   FlatList, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View
 } from 'react-native';
 import {text} from '../style';
-import AccountsService from '../service/AccountsService';
 import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
 
@@ -17,15 +16,26 @@ export default class NewContact extends Component {
 
   state = {
     loading: true,
-    accounts: [],
     filteredAccounts: this.datasource.cloneWithRows([]),
     searchingContact: ""
   };
 
+  /**
+   * store accounts for username.
+   * @type {Array}
+   */
+  accounts = [];
+
+  constructor(props) {
+    super(props);
+    let {params} = props.navigation.state;
+    debugger;
+
+    this.accounts = (params && params.accounts) || [];
+  };
+
   componentWillMount = async () => {
-    let accounts = await AccountsService.getAllUsersAccounts();
-    this.setState({ "accounts": accounts });
-    this.setState({ "filteredAccounts": this.datasource.cloneWithRows(accounts) });
+    this.setState({ "filteredAccounts": this.datasource.cloneWithRows(this.accounts) });
     this.setState({ "loading": false });
   };
 
@@ -36,7 +46,7 @@ export default class NewContact extends Component {
 
   searchingContactTextChanged = (searchingContact) => {
     this.setState({searchingContact});
-    let filteredAccounts = this.state.accounts.filter((acct) => acct.Username.indexOf(searchingContact) >= 0);
+    let filteredAccounts = this.accounts.filter((acct) => acct.Username.indexOf(searchingContact) >= 0);
     this.setState({ "filteredAccounts": this.datasource.cloneWithRows(filteredAccounts) });
   };
 
