@@ -6,6 +6,7 @@ import {
 import {text} from '../style';
 import AccountsService from '../service/AccountsService';
 import ContactsService from '../service/ContactsService';
+import {Alert} from "react-native";
 
 
 export default class NewContact extends Component {
@@ -28,9 +29,9 @@ export default class NewContact extends Component {
     this.setState({ "loading": false });
   };
 
-  _pressRow = (account, sectionID, rowID) =>  {
-    debugger;
-    console.log("clicked" + rowID)
+   _pressRow = async (account, sectionID, rowID) =>  {
+    let requestContact = await ContactsService.newContactRequest(account.Id);
+    Alert.alert("Solicitud enviada con exito!", requestContact);
   };
 
   searchingContactTextChanged = (searchingContact) => {
