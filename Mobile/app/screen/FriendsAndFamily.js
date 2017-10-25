@@ -16,13 +16,20 @@ export default class FriendsAndFamily extends Component {
     areYouOkSelectorVisible: false
   };
 
+  /**
+   * Store all user account references for auto-complete functionality
+   *
+   * @type {Array}
+   */
+  userAccounts = [];
+
   _handleUserIdChange = (inputValue) => {
     this.setState({targetUserId: inputValue})
   };
 
   componentWillMount = async () => {
     // Load in shared storage all user accounts
-    await AccountsService.getAllUsersAccounts();
+    this.userAccounts = await AccountsService.getAllUserAccounts();
 
     // show AreYouOk selector if user is Dev.
     let areYouOkSelectorVisible = await SessionService.isDevSession();
