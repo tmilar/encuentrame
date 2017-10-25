@@ -21,6 +21,16 @@ class ContactsService {
       })
     });
   };
+
+  reply = async (contactRequestUserId, response) => {
+    const url = "contact/" + contactRequestUserId + "/confirm";
+    return await Service.sendRequest(url, {
+      method: "POST",
+      body: JSON.stringify({
+        confirm: response
+      })
+    });
+  };
 }
 
 let contactsService = new ContactsService();
