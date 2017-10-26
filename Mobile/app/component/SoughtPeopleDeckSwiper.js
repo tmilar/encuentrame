@@ -20,8 +20,13 @@ export default class SoughtPeopleDeckSwiper extends Component {
 
   static defaultProps = {
     soughtPeople: [],
-    onIveSeenHim: () => {},
-    onNotSeenHim: () => {}
+    onSupplySoughtPersonInfo: (soughtPersonId, info) => {
+      console.warn("onSupplySoughtPersonInfo() called, but was not defined.", soughtPersonId, info)
+    },
+    onDismissSoughtPerson: (soughtPersonId) => {
+      console.warn("onDismissSoughtPerson() called, but was not defined.", soughtPersonId)
+    },
+    navigation: {}
   };
 
   _deckSwiper;
@@ -33,7 +38,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
         dataSource={this.props.soughtPeople}
         renderEmpty={() =>
           <View style={{alignSelf: "center"}}>
-            <Text>Ya no queda nadie por buscar. \n¡Gracias por tu aporte!</Text>
+            <Text>Ya no queda nadie por buscar. ¡Gracias por tu aporte!</Text>
           </View>
         }
         renderItem={item =>

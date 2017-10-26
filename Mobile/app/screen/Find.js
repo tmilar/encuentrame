@@ -31,7 +31,7 @@ export default class Find extends Component {
 
   render() {
     return (
-      <SoughtPeopleContainer/>
+      <SoughtPeopleContainer navigation={this.props.navigation}/>
     )
   }
 }

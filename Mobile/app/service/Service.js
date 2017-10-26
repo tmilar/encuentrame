@@ -11,6 +11,9 @@ class Service {
     url = apiUrl + url;
     let userId = await SessionService.getSessionUserId();
     let token = await SessionService.getSessionToken();
+
+    requestData = requestData || {method: "GET"};
+
     if (!requestData.headers) {
       requestData.headers = {};
     }
