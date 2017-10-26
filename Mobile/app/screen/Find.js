@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native'
 import Swiper from "react-native-deck-swiper/Swiper";
 import EncuentraCard from "../component/EncuentraCard";
 import {containers} from '../style';
+import SoughtPeopleContainer from "../component/SoughtPeopleContainer";
 
 
 export default class Find extends Component {
@@ -30,16 +31,7 @@ export default class Find extends Component {
 
   render() {
     return (
-      <View style={containers.container}>
-        <Swiper cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
-                renderCard={this.renderCard}
-                onSwipedRight={this.onSwipedHandler}
-                onSwipedAll={this.onSwipedAllHandler}
-                cardIndex={0}
-                backgroundColor={'#E9E9EF'}
-                style={styles.swiper}>
-        </Swiper>
-      </View>
+      <SoughtPeopleContainer/>
     )
   }
 }
