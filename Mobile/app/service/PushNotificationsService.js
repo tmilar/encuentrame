@@ -21,7 +21,7 @@ class PushNotificationsService {
     await this._requireNotificationsPermission();
 
     // Get the token that uniquely identifies this device
-    let token = await Notifications.getExponentPushTokenAsync();
+    let token = await Notifications.getExpoPushTokenAsync();
 
     if (await this._checkRegistered(user)) {
       console.log(`[PushNotificationsService] Device already registered. Token: ${token}`);
@@ -47,7 +47,7 @@ class PushNotificationsService {
         })
       });
       console.log(`[PushNotificationsService] Register device token for push OK! ${JSON.stringify({token, username})}`);
-      if (SessionService.isDevSession()) {
+      if (await SessionService.isDevSession()) {
         showToast(`POST ${url}. \nRegistro con el servidor OK! \nToken: ${token}`);
       }
     } catch (e) {
