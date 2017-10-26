@@ -60,9 +60,16 @@ const AuthStack = StackNavigator({
 });
 
 
+let drawerOpened = false;
+const drawerToggle = (navigation) => {
+  let toggle = drawerOpened ? 'DrawerClose' : 'DrawerOpen';
+  navigation.navigate(toggle);
+  drawerOpened = !drawerOpened;
+};
+
 const EncuentrameHeaderOptions = ({navigation}) => ({
   headerTitle: "Encuentrame",
-  headerLeft: <TouchableHighlight onPress={() => navigation.navigate('DrawerOpen')}>
+  headerLeft: <TouchableHighlight onPress={() => drawerToggle(navigation)}>
     <View>
       <Icon name="menu" size={25}/>
     </View>
