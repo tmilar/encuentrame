@@ -14,6 +14,7 @@ import {
   Icon,
   Button
 } from 'native-base';
+import {showToast} from "react-native-notifyer";
 
 
 export default class SoughtPeopleDeckSwiper extends Component {
@@ -61,6 +62,17 @@ export default class SoughtPeopleDeckSwiper extends Component {
             </CardItem>
           </Card>
         }
+        onSwipeRight={person => {
+          this.navigation.navigate("SupplyInfo", {
+            soughtPersonId: person.soughtPersonId,
+            onSuccess: this.props.onSupplySoughtPersonInfo,
+            onClose: () => {
+              console.log("[SoughtPeopleDeckSwiper] onClose() called.");
+              showToast("Gracias igual!", {duration: 2000});
+            }
+          });
+        }}
+        onSwipeLeft={this.props.onDismissSoughtPerson}
       />
     </View>
   );
