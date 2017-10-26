@@ -24,9 +24,14 @@ export default class SupplyInfo extends Component {
     let navigationParams = props.navigation.state.params;
 
     this.soughtPersonId = navigationParams.soughtPersonId;
-    if(!this.soughtPersonId) {
+    if (!this.soughtPersonId) {
       throw 'Debe indicarse el id de la persona buscada!';
     }
+
+    this.onClose = navigationParams.onClose || (() => {
+      });
+    this.onSuccess = navigationParams.onSuccess || (() => {
+      });
   }
 
   _handleTextInfoChange = (inputValue) => {
@@ -55,10 +60,12 @@ export default class SupplyInfo extends Component {
     }
 
     showToast('Gracias por tu ayuda!', {duration: 1500});
+    this.onSuccess();
     this._goBack();
   };
 
   _handleCancelSupplyInfo = () => {
+    this.onClose();
     this._goBack();
   };
 
