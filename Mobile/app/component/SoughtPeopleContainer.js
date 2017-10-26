@@ -6,20 +6,28 @@ import SoughtPeopleService from "../service/SoughtPeopleService";
 
 export default class SoughtPeopleContainer extends Component {
 
-  soughtPeople = [];
+
+  state = {
+    soughtPeople: []
+  };
 
   componentWillMount = async () => {
-    this.soughtPeople = await SoughtPeopleService.getSoughtPeople();
+    // let soughtPeople = await SoughtPeopleService.getSoughtPeople();
+    // this.state.soughtPeople = soughtPeople || soughtPeopleFixture;
     // TODO remove soughtPeople fixtures when backend is working.
-    this.soughtPeople = this.soughtPeople || soughtPeople;
+    this.state.soughtPeople = soughtPeople;
+  };
+
   };
 
   render() {
-    if (!this.soughtPeople) {
+    if (!this.state.soughtPeople || !this.state.soughtPeople.length) {
       return <LoadingIndicator/>
     }
 
-    return <SoughtPeopleDeckSwiper soughtPeople={this.soughtPeople}/>;
+    return <SoughtPeopleDeckSwiper
+      soughtPeople={this.state.soughtPeople}
+    />;
   }
 
 }
