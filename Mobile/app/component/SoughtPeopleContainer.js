@@ -21,14 +21,6 @@ export default class SoughtPeopleContainer extends Component {
     this.state.soughtPeople = soughtPeople;
   };
 
-  _onSupplySoughtPersonInfo = async (soughtPersonId, info) => {
-    await SoughtPeopleService.soughtPersonSupplyInfo(soughtPersonId, info);
-  };
-
-  _onDismissSoughtPerson = async (soughtPersonId) => {
-    await SoughtPeopleService.soughtPersonDismiss(soughtPersonId);
-  };
-
   render() {
     if (!this.state.soughtPeople || !this.state.soughtPeople.length) {
       return <LoadingIndicator/>
@@ -36,8 +28,6 @@ export default class SoughtPeopleContainer extends Component {
 
     return <SoughtPeopleDeckSwiper
       soughtPeople={this.state.soughtPeople}
-      onSupplySoughtPersonInfo={this._onSupplySoughtPersonInfo}
-      onDismissSoughtPerson={this._onDismissSoughtPerson}
       navigation={this.props.navigation}
     />;
   }

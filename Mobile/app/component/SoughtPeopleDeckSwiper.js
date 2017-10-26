@@ -21,12 +21,6 @@ export default class SoughtPeopleDeckSwiper extends Component {
 
   static defaultProps = {
     soughtPeople: [],
-    onSupplySoughtPersonInfo: (soughtPersonId, info) => {
-      console.warn("onSupplySoughtPersonInfo() called, but was not defined.", soughtPersonId, info)
-    },
-    onDismissSoughtPerson: (soughtPersonId) => {
-      console.warn("onDismissSoughtPerson() called, but was not defined.", soughtPersonId)
-    },
     navigation: {}
   };
 
@@ -63,16 +57,24 @@ export default class SoughtPeopleDeckSwiper extends Component {
           </Card>
         }
         onSwipeRight={person => {
-          this.navigation.navigate("SupplyInfo", {
+          console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", person);
+          this.props.navigation.navigate("SupplyInfo", {
             soughtPersonId: person.soughtPersonId,
-            onSuccess: this.props.onSupplySoughtPersonInfo,
+            onSuccess: () => {
+              console.log("[SoughtPeopleDeckSwiper] onSuccess() called. Supplied info correctly.");
+              showToast("Gracias por tu ayuda!", {duration: 2000});
+              // TODO remove card here...
+            },
             onClose: () => {
-              console.log("[SoughtPeopleDeckSwiper] onClose() called.");
+              console.log("[SoughtPeopleDeckSwiper] onClose() called. Supply info aborted.");
               showToast("Gracias igual!", {duration: 2000});
             }
           });
         }}
-        onSwipeLeft={this.props.onDismissSoughtPerson}
+        onSwipeLeft={person => {
+          console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", person);
+          // TODO send card to back, then remove from list?
+        }}
       />
     </View>
   );

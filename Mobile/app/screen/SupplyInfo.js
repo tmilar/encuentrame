@@ -59,7 +59,6 @@ export default class SupplyInfo extends Component {
       hideLoading();
     }
 
-    showToast('Gracias por tu ayuda!', {duration: 1500});
     this.onSuccess();
     this._goBack();
   };
