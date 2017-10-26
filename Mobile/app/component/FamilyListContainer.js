@@ -3,20 +3,21 @@ import {Text, View, StyleSheet} from 'react-native'
 import FamilyList from "./FamilyList";
 import {familyMembers} from "../config/familyFixture";
 import {text} from '../style';
+import ContactsService from '../service/ContactsService';
 
-class FamilyListContainer extends Component {
+export default class FamilyListContainer extends Component {
   state = {
-    familyMembers: []
+    contacts: []
   };
 
-  async componentWillMount() {
-    let familyMembers = await this.fetchFamilyMembers();
-    this.setState({familyMembers});
-  }
+  componentWillMount = async () => {
+    let contacts = await this.fetchContacts();
+    this.setState({contacts});
+  };
 
-  fetchFamilyMembers() {
-    // TODO fetch familyMembers from actual remote API
-    return familyMembers;
+  fetchContacts = async () =>  {
+    let contacts = await ContactsService.getAllContacts();
+    return contacts;
   }
 
   render() {
@@ -24,10 +25,8 @@ class FamilyListContainer extends Component {
             <Text style={text.p}>
               Contactos
             </Text>
-            <FamilyList familyMembers={this.state.familyMembers}/>
+            <FamilyList familyMembers={this.state.contacts}/>
           </View>
    ;
   }
 }
-
-export default FamilyListContainer;
