@@ -26,6 +26,29 @@ export default class SoughtPeopleDeckSwiper extends Component {
 
   _deckSwiper;
 
+  onIveSeenHim = personCard => {
+    console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", personCard);
+    this.props.navigation.navigate("SupplyInfo", {
+      soughtPersonId: personCard.soughtPersonId,
+      onSuccess: () => {
+        console.log("[SoughtPeopleDeckSwiper] onSuccess() called. Supplied info correctly.");
+        showToast("Gracias por tu ayuda!", {duration: 2000});
+        // TODO remove card here...
+      },
+      onClose: () => {
+        console.log("[SoughtPeopleDeckSwiper] onClose() called. Supply info aborted.");
+        showToast("Gracias igual!", {duration: 2000});
+        // TODO put card back, here...
+      }
+    });
+  };
+
+
+  onIveNotSeenHim = personCard => {
+    console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
+    // TODO send card to end of list; if second time then remove? Or simply remove?
+  };
+
   _renderDeckSwiper = () => (
     <View>
       <DeckSwiper
@@ -56,29 +79,11 @@ export default class SoughtPeopleDeckSwiper extends Component {
             </CardItem>
           </Card>
         }
-        onSwipeRight={person => {
-          console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", person);
-          this.props.navigation.navigate("SupplyInfo", {
-            soughtPersonId: person.soughtPersonId,
-            onSuccess: () => {
-              console.log("[SoughtPeopleDeckSwiper] onSuccess() called. Supplied info correctly.");
-              showToast("Gracias por tu ayuda!", {duration: 2000});
-              // TODO remove card here...
-            },
-            onClose: () => {
-              console.log("[SoughtPeopleDeckSwiper] onClose() called. Supply info aborted.");
-              showToast("Gracias igual!", {duration: 2000});
-            }
-          });
-        }}
-        onSwipeLeft={person => {
-          console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", person);
-          // TODO send card to back, then remove from list?
-        }}
+        onSwipeRight={this.onIveSeenHim}
+        onSwipeLeft={this.onIveNotSeenHim}
       />
     </View>
   );
-
   _renderSwipeButtons = () => (
     <View style={{
       flexDirection: "row",
@@ -90,11 +95,19 @@ export default class SoughtPeopleDeckSwiper extends Component {
       justifyContent: 'space-between',
       padding: 15
     }}>
-      <Button iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
+      <Button iconLeft onPress={() => {
+        this._deckSwiper._root.swipeLeft();
+        let personCard = this._deckSwiper._root.state.selectedItem;
+        this.onIveNotSeenHim(personCard);
+      }}>
         <Icon name="arrow-back"/>
         <Text>No lo he visto :(</Text>
       </Button>
-      <Button iconRight onPress={() => this._deckSwiper._root.swipeRight()}>
+      <Button iconRight onPress={() => {
+        this._deckSwiper._root.swipeRight();
+        let personCard = this._deckSwiper._root.state.selectedItem;
+        this.onIveSeenHim(personCard);
+      }}>
         <Text>¡Lo he visto!</Text>
         <Icon name="arrow-forward"/>
       </Button>
