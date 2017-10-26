@@ -15,9 +15,15 @@ export default class SupplyInfo extends Component {
 
   initialMapRegionCoordinates;
 
+  soughtPersonId;
+
   constructor(props) {
     super(props);
     this.initialMapRegionCoordinates = GeolocationService.getBsAsRegion();
+    this.soughtPersonId = props.navigation.state.params.soughtPersonId;
+    if(!this.soughtPersonId) {
+      throw 'Debe indicarse el id de la persona buscada!';
+    }
   }
 
   _handleTextInfoChange = (inputValue) => {
@@ -36,6 +42,7 @@ export default class SupplyInfo extends Component {
     try {
       //TODO create SupplyInfoService as soon as there is an API definition
       console.log("Aportando datos...", info);
+      await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, info);
     } catch (e) {
       console.error("Error al aportar datos: ", e);
       Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));

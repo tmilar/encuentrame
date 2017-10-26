@@ -18,9 +18,10 @@ export default class Find extends Component {
   }
 
   onSwipedHandler(cardIndex) {
+    // TODO replace with actual card info, etc.
     console.log(cardIndex);
     const {navigate} = this.props.navigation;
-    navigate('SupplyInfo');
+    navigate('SupplyInfo', {soughtPersonId: cardIndex + 1});
   }
 
   onSwipedAllHandler() {

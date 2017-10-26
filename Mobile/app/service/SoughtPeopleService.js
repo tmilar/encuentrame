@@ -47,3 +47,6 @@ class SoughtPeopleService {
     // TODO send request to server
   }
 }
+
+let soughtPeopleService = new SoughtPeopleService();
+export default soughtPeopleService;
