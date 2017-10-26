@@ -58,9 +58,16 @@ const AuthStack = StackNavigator({
 });
 
 
+let drawerOpened = false;
+const drawerToggle = (navigation) => {
+  let toggle = drawerOpened ? 'DrawerClose' : 'DrawerOpen';
+  navigation.navigate(toggle);
+  drawerOpened = !drawerOpened;
+};
+
 const EncuentrameHeaderOptions = ({navigation}) => ({
   headerTitle: "Encuentrame",
-  headerLeft: <TouchableHighlight onPress={() => navigation.navigate('DrawerOpen')}>
+  headerLeft: <TouchableHighlight onPress={() => drawerToggle(navigation)}>
     <View>
       <Icon name="menu" size={25}/>
     </View>
@@ -133,7 +140,7 @@ const BaseStack = StackNavigator({
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   NewActivity: {screen: NewActivity, navigationOptions: {header: null}},
   SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}}
-},{
+}, {
   initialRouteName: 'Root'
 });
 
