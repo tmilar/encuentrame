@@ -21,7 +21,7 @@ class PushNotificationsService {
     await this._requireNotificationsPermission();
 
     // Get the token that uniquely identifies this device
-    let token = await Notifications.getExponentPushTokenAsync();
+    let token = await Notifications.getExpoPushTokenAsync();
 
     if (await this._checkRegistered(user)) {
       console.log(`[PushNotificationsService] Device already registered. Token: ${token}`);
