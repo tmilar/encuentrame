@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
-import {Text, Button, View, Image} from 'react-native'
-
+import {Alert, Text, Button, View, Image, TouchableHighlight} from 'react-native'
+import {Icon} from 'react-native-elements';
+import AreYouOkService from "../service/AreYouOkService";
 import {
-  Card,
-  CardImage,
-  CardTitle,
-  CardContent,
-  CardAction
+  Card
 } from 'react-native-card-view';
 
 export default class FamilyCard extends Component {
   constructor(props) {
     super(props);
+    this.personProps = this.props.personProps.User;
 
     this.analyzeState = this.analyzeState.bind(this);
     this.getStateColor = this.getStateColor.bind(this);
+    this._handleEstasBienButtonPress = this._handleEstasBienButtonPress.bind(this);
+
   }
 
   analyzeState(person) {
@@ -31,6 +31,11 @@ export default class FamilyCard extends Component {
       //TODO: De acuerdo al tiempo que paso desde que se disparo la pregunta, sera pending/amarillo o alert/naranja
       return "alert";
     }
+  }
+  async _handleEstasBienButtonPress (){
+    let targetUserId = this.personProps.Id;
+    await AreYouOkService.ask({id: targetUserId});
+    Alert.alert("Aviso", `Le preguntaste Estas Bien? al user ${targetUserId}`);
   }
 
   getStateColor(person) {
@@ -57,16 +62,14 @@ export default class FamilyCard extends Component {
   }
 
   render() {
-    let personProps = this.props.personProps;
-    let bgColor = this.getStateColor(personProps);
-
+    //let bgColor = this.getStateColor(personProps);
     return (
-      <Card styles={{card: {backgroundColor: bgColor}}}>
+      <Card styles={{card: {}}}>
         <View style={{
           flexDirection: 'row',
           height: 60,
         }}>
-          <Text style={{flex: 1, fontWeight: 'bold'}}>{personProps.name}</Text>
+          <Text style={{flex: 1, fontWeight: 'bold'}}>{this.personProps.Username}</Text>
           <View
             style={{
               flex: 1,
@@ -75,6 +78,12 @@ export default class FamilyCard extends Component {
             }}>
             <Image source={require('../img/personImgExample.jpg')} size={50}/>
           </View>
+          <TouchableHighlight onPress={this._handleEstasBienButtonPress}>
+            <View>
+              <Icon name="help" size={50} color='#43484d'/>
+            </View>
+           </TouchableHighlight>
+
 
         </View>
       </Card>
