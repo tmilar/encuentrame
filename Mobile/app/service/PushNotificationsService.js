@@ -101,29 +101,29 @@ class PushNotificationsService {
       let notificationType = notification.data.type || notification.data.Type;
 
       if (notificationType === "Areyouok.Ask") {
-        this.handleAreyouokaskNotif(navigation, notification);
+        this.handleAreyouokaskNotif(navigation, notification, notificationType);
       }
 
       if (notificationType === "Areyouok.Reply") {
-        this.handleAreyouokReplyNotif(navigation, notification);
+        this.handleAreyouokReplyNotif(navigation, notification, notificationType);
       }
 
       if (notificationType === "Contact.Request") {
-        this.handleContactRequestNotif(navigation, notification);
+        this.handleContactRequestNotif(navigation, notification, notificationType);
       }
 
       if (notificationType === "Contact.Confirm") {
-        this.handleContactRequestConfirmNotif(navigation, notification);
+        this.handleContactRequestConfirmNotif(navigation, notification, notificationType);
       }
     });
   };
 
-  handleAreyouokaskNotif = (navigation, notification) => {
+  handleAreyouokaskNotif = (navigation, notification, notificationType) => {
     console.log(`[PushNotificationService] Notification '${notificationType}'! Navigating to 'AreYouOk' screen.`);
     navigation.navigate("AreYouOk");
   };
 
-  handleAreyouokReplyNotif = (navigation, notification) => {
+  handleAreyouokReplyNotif = (navigation, notification, notificationType) => {
     let reply = notification.data.ok || notification.data.Ok;
     let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
     console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
@@ -133,7 +133,7 @@ class PushNotificationsService {
     );
   };
 
-  handleContactRequestNotif = (navigation, notification) => {
+  handleContactRequestNotif = (navigation, notification, notificationType) => {
     let contactRequestUserId = notification.data.UserId;
     let contactRequestUsername = notification.data.Username;
 
@@ -141,7 +141,7 @@ class PushNotificationsService {
     navigation.navigate("ContactRequest",{contactRequestUserId: contactRequestUserId, contactRequestUsername: contactRequestUsername});
   };
 
-  handleContactRequestConfirmNotif = (navigation, notification) => {
+  handleContactRequestConfirmNotif = (navigation, notification, notificationType) => {
     let contactRequestUsername = notification.data.Username;
 
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);

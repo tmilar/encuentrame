@@ -62,7 +62,6 @@ export default class NewContact extends Component {
   render() {
     if (this.state.loading )
       return null;
-    Expo.Notifications.presentLocalNotificationAsync({title:"Contact.Request.New", body:"Contact.Request.New",data:{type:"Contact.Request" ,UserId: 3, Username: "pepito"}});
     return (
       <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
         <View style={{flex: 1, justifyContent: 'flex-start', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
