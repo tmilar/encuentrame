@@ -15,24 +15,11 @@ import {
   Button
 } from 'native-base';
 
-const cards = [
-  {
-    text: 'Luisito Gomez',
-    name: 'Visto última vez hace 8 minutos, cerca tuyo.',
-    username: '@luisitoverduras',
-    image: require('../img/personImgExample.jpg'),
-  },
-  {
-    text: 'Jose Lopez',
-    name: 'Visto última vez hace 5 minutos, cerca tuyo.',
-    image: require('../img/personImgExample.jpg'),
-  },
-];
 
 export default class SoughtPeopleDeckSwiper extends Component {
 
   static defaultProps = {
-    soughtPeople: cards,
+    soughtPeople: [],
     onIveSeenHim: () => {},
     onNotSeenHim: () => {}
   };
@@ -46,7 +33,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
         dataSource={this.props.soughtPeople}
         renderEmpty={() =>
           <View style={{alignSelf: "center"}}>
-            <Text>Ya no queda nadie por buscar. Gracias!</Text>
+            <Text>Ya no queda nadie por buscar. \n¡Gracias por tu aporte!</Text>
           </View>
         }
         renderItem={item =>
@@ -55,7 +42,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
               <Left>
                 <Thumbnail source={item.image}/>
                 <Body>
-                <Text>{item.text}</Text>
+                <Text>{item.name}</Text>
                 <Text note>{item.username}</Text>
                 </Body>
               </Left>
@@ -65,7 +52,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
             </CardItem>
             <CardItem>
               <Icon name="heart" style={{color: '#ED4A6A'}}/>
-              <Text>{item.name}</Text>
+              <Text>{item.lastSeen}</Text>
             </CardItem>
           </Card>
         }
