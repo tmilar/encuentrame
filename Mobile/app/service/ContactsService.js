@@ -14,6 +14,7 @@ class ContactsService {
 
   newContactRequest = async (userId) => {
     const url = "Contact/request/" + userId;
+    //el backend no funciona bien si le mandas un POST sin body... por eso se envia
     return await Service.sendRequest(url, {
       method: "POST",
       body: JSON.stringify({
@@ -22,13 +23,9 @@ class ContactsService {
   };
 
   reply = async (contactRequestUserId, response) => {
-    let replyUrl = "Contact/reject/"  +  contactRequestUserId;
-    if (response)
-      replyUrl = "Contact/confirm/"  +  contactRequestUserId;
+    let replyUrl = `Contact/${response ? 'confirm' : 'reject'}/${contactRequestUserId}`;
     return await Service.sendRequest(replyUrl, {
-      method: "POST",
-      body: JSON.stringify({
-      })
+      method: "POST"
     });
   };
 }
