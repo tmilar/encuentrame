@@ -25,9 +25,7 @@ class ContactsService {
   reply = async (contactRequestUserId, response) => {
     let replyUrl = `Contact/${response ? 'confirm' : 'reject'}/${contactRequestUserId}`;
     return await Service.sendRequest(replyUrl, {
-      method: "POST",
-      body: JSON.stringify({
-      })
+      method: "POST"
     });
   };
 }

@@ -14,6 +14,10 @@ class Service {
     if (!requestData.headers) {
       requestData.headers = {};
     }
+    if (requestData.method == 'POST' && (!requestData.body)){
+      requestData.body = JSON.stringify({
+      });
+    }
     Object.assign(requestData.headers, {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
