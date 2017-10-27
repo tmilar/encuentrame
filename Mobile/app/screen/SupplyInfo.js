@@ -3,7 +3,8 @@ import {Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button} from 'r
 import {text} from '../style';
 import {MapView} from 'expo';
 import GeolocationService from '../service/GeolocationService';
-import {hideLoading, showLoading} from "react-native-notifyer";
+import SoughtPeopleService from '../service/SoughtPeopleService';
+import {hideLoading, showLoading, showToast} from "react-native-notifyer";
 import mapStyles from '../config/map';
 import LoadingIndicator from "../component/LoadingIndicator";
 
@@ -15,9 +16,22 @@ export default class SupplyInfo extends Component {
 
   initialMapRegionCoordinates;
 
+  soughtPersonId;
+
   constructor(props) {
     super(props);
     this.initialMapRegionCoordinates = GeolocationService.getBsAsRegion();
+    let navigationParams = props.navigation.state.params;
+
+    this.soughtPersonId = navigationParams.soughtPersonId;
+    if (!this.soughtPersonId) {
+      throw 'Debe indicarse el id de la persona buscada!';
+    }
+
+    this.onClose = navigationParams.onClose || (() => {
+      });
+    this.onSuccess = navigationParams.onSuccess || (() => {
+      });
   }
 
   _handleTextInfoChange = (inputValue) => {
@@ -36,19 +50,21 @@ export default class SupplyInfo extends Component {
     try {
       //TODO create SupplyInfoService as soon as there is an API definition
       console.log("Aportando datos...", info);
+      await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, info);
     } catch (e) {
       console.error("Error al aportar datos: ", e);
       Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));
       return;
+    } finally {
+      hideLoading();
     }
-    hideLoading();
-    Alert.alert(
-      'Gracias por tu ayuda!'
-    );
+
+    this.onSuccess();
     this._goBack();
   };
 
   _handleCancelSupplyInfo = () => {
+    this.onClose();
     this._goBack();
   };
 
@@ -68,8 +84,8 @@ export default class SupplyInfo extends Component {
     } catch (e) {
       console.log("Error retrieving location from device: ", e);
       Alert.alert(
-        'Error retrieving location from device.',
-        e.message || e
+        'Error',
+        `Ocurrió un problema al obtener la ubicación: ${e.message || e}`
       );
     } finally {
       this.setState({loading: false});
@@ -87,7 +103,8 @@ export default class SupplyInfo extends Component {
           animationType={"fade"}
           transparent={false}
           visible={true}
-          onRequestClose={() => {/* TODO reportar al Swiper de personas q restablezca la card de éste?*/}}
+          onRequestClose={() => {/* TODO reportar al Swiper de personas q restablezca la card de éste?*/
+          }}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.supplyInfoTitle]}>
