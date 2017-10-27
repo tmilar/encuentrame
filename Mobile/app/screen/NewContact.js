@@ -6,6 +6,7 @@ import {
 import {text} from '../style';
 import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
+import LoadingIndicator from "../component/LoadingIndicator";
 
 
 export default class NewContact extends Component {
@@ -33,13 +34,13 @@ export default class NewContact extends Component {
   };
 
   componentWillMount = async () => {
-    this.setState({ "filteredAccounts": this.datasource.cloneWithRows(this.accounts) });
-    this.setState({ "loading": false });
+    this.setState({ filteredAccounts: this.datasource.cloneWithRows(this.accounts) });
+    this.setState({ loading: false });
   };
 
    _pressRow = async (account, sectionID, rowID) =>  {
     let requestContact = await ContactsService.newContactRequest(account.Id);
-    Alert.alert("Solicitud enviada con exito!", requestContact);
+    Alert.alert("Solicitud enviada!", "Solicitud enviada con exito a " + requestContact.Username);
   };
 
   searchingContactTextChanged = (searchingContact) => {
@@ -61,7 +62,7 @@ export default class NewContact extends Component {
 
   render() {
     if (this.state.loading )
-      return null;
+      return <LoadingIndicator/>;
     return (
       <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
         <View style={{flex: 1, justifyContent: 'flex-start', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
