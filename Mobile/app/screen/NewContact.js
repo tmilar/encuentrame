@@ -57,9 +57,14 @@ export default class NewContact extends Component {
 
   renderRow = (account: string, sectionID: number, rowID: number) => {
     return (
-      <TouchableHighlight style={{flex: 1, height: 30 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
-        <View>
-          <Text>{account.Username} - Agregar</Text>
+      <TouchableHighlight style={{flex: 1, height: 50 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
+        <View style={{flex: 1, width: 400, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: 'grey'}}>
+          <View>
+            <Text>{account.Username}</Text>
+          </View>
+          <View style={{width: 75, height: 50, backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+            <Text style={{color: 'white', fontSize: 18}}>Agregar</Text>
+          </View>
         </View>
       </TouchableHighlight>
     )
@@ -71,7 +76,7 @@ export default class NewContact extends Component {
       return <LoadingIndicator/>;
     return (
       <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
-        <View style={{flex: 1, justifyContent: 'flex-start', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+        <View style={{flex: 1, justifyContent: 'space-around', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
           <TextInput
             value={this.state.searchingContact}
             placeholder="Buscar por nombre"
@@ -81,7 +86,7 @@ export default class NewContact extends Component {
             underlineColorAndroid='transparent'
           />
         </View>
-        <View style={{flex: 9, height: 200, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+        <View style={{flex: 9, height: 200, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
           <ListView style={{flex: 1}}
             dataSource={this.state.filteredAccounts}
             renderRow={this.renderRow}
