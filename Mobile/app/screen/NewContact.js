@@ -7,6 +7,7 @@ import {text} from '../style';
 import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
 import LoadingIndicator from "../component/LoadingIndicator";
+import AccountsService from '../service/AccountsService';
 
 
 export default class NewContact extends Component {
@@ -29,11 +30,11 @@ export default class NewContact extends Component {
 
   constructor(props) {
     super(props);
-    let {params} = props.navigation.state;
-    this.accounts = (params && params.accounts) || [];
   };
 
   componentWillMount = async () => {
+    let accounts = await AccountsService.getUnknownUsersAccounts();
+    this.accounts = accounts || [];
     this.setState({ filteredAccounts: this.datasource.cloneWithRows(this.accounts) });
     this.setState({ loading: false });
   };
@@ -41,6 +42,11 @@ export default class NewContact extends Component {
    _pressRow = async (account, sectionID, rowID) =>  {
     let requestContact = await ContactsService.newContactRequest(account.Id);
     Alert.alert("Solicitud enviada!", "Solicitud enviada con exito a " + account.Username);
+    this._goBack();
+  };
+
+  _goBack = () => {
+    this.props.navigation.goBack(null);
   };
 
   searchingContactTextChanged = (searchingContact) => {
@@ -75,11 +81,21 @@ export default class NewContact extends Component {
             underlineColorAndroid='transparent'
           />
         </View>
-        <View style={{flex: 9, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+        <View style={{flex: 9, height: 200, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
           <ListView style={{flex: 1}}
             dataSource={this.state.filteredAccounts}
             renderRow={this.renderRow}
           />
+        </View>
+        <View style={{flex: 1}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Button
+              title="Volver"
+              color='#ff5c5c'
+              onPress={this._goBack}
+            />
+
+          </View>
         </View>
 
       </ScrollView>
