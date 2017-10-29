@@ -17,12 +17,13 @@ const NewActivity = React.createClass({
 
   getInitialState() {
     const bsasCoordinates = GeolocationService.getBsAsRegion();
-
     return {
       activityName: "",
-      selectedEventId: 0,
+      selectedEventId: null,
       selectedEventName: "Selecciona un evento",
       events: [],
+      startDate: null,
+      endDate: null,
       isStartDateTimePickerVisible: false,
       isEndDateTimePickerVisible: false,
       showMapLocation: false,
@@ -30,7 +31,13 @@ const NewActivity = React.createClass({
       activityLocation: {
         latitude: 0,
         longitude: 0
-      }
+      },
+      formFields: [
+        {name: "activityName", errorMsg: "Nombre incompleto!"},
+        {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
+        {name: "startDate", errorMsg: "Elija fecha de inicio!"},
+        {name: "endDate", errorMsg: "Elija fecha de fin!"}
+        ]
     };
   },
   _showStartDateTimePicker(){
@@ -53,15 +60,29 @@ const NewActivity = React.createClass({
   },
   _handleStartDatePicked(startDate){
     let formatedDate = this._formatDateForBackend(startDate);
-    this.setState({ startDate: formatedDate });
+    this.setState({ startDate: formatedDate});
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
   },
   _handleEndDatePicked(endDate){
     let formatedDate = this._formatDateForBackend(endDate);
-    this.setState({ endDate: formatedDate });
+    this.setState({ endDate: formatedDate});
     console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
+  },
+  _isString(value){
+    return typeof value === 'string' || value instanceof String;
+  },
+  _validateForm(){
+    let errorMsg = "";
+    let self = this;
+    this.state.formFields.forEach(function(formField) {
+      let value = self.state[formField.name];
+      if ((value == null ) || ( self._isString(value) && value.length === 0)){
+        errorMsg += formField.errorMsg + "\n";
+      }
+    });
+    return errorMsg;
   },
 
 
@@ -70,10 +91,19 @@ const NewActivity = React.createClass({
   },
 
   _handleActivitynameTextChange(inputValue) {
-    this.setState({activityName: inputValue})
+    this.setState({activityName: inputValue});
   },
 
+
   async _handleCreateActivityButtonPress() {
+    let errorMsg = this._validateForm();
+    if (errorMsg.length > 0){
+      Alert.alert(
+        'Formulario incorrecto ',
+        errorMsg
+      );
+      return;
+    }
     showLoading("Espera...");
       let activity = {
       name: this.state.activityName,
@@ -145,10 +175,12 @@ const NewActivity = React.createClass({
     }
   },
   saveActivityLocation(location) {
-    this.setState({activityLocation: {
-      latitude: location.latitude,
-      longitude: location.longitude
-    }})
+    this.setState({
+      activityLocation: {
+        latitude: location.latitude,
+        longitude: location.longitude
+      }
+    });
   },
   _handleEventSelected(itemValue, itemIndex){
     this.setState({selectedEventId: itemValue});
