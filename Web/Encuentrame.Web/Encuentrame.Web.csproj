@@ -175,10 +175,12 @@
     <Compile Include="Controllers\Apis\ContactController.cs" />
     <Compile Include="Controllers\Apis\EventController.cs" />
     <Compile Include="Controllers\Apis\PositionController.cs" />
+    <Compile Include="Controllers\Apis\SoughtPersonController.cs" />
     <Compile Include="Controllers\ConfigureEmailServerController.cs" />
     <Compile Include="Controllers\ListBaseController.cs" />
     <Compile Include="Controllers\Apis\AuthenticationController.cs" />
     <Compile Include="Controllers\ManageAdministratorUserController.cs" />
+    <Compile Include="Controllers\ManageEventAdministratorUserController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\ManagePersonUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
@@ -233,6 +235,8 @@
     <Compile Include="Models\Events\EventListModel.cs" />
     <Compile Include="Models\Events\EventModel.cs" />
     <Compile Include="Models\Positions\PositionListModel.cs" />
+    <Compile Include="Models\SoughtPersons\SoughtPersonApiResultModel.cs" />
+    <Compile Include="Models\SoughtPersons\SoughtPersonSeenApiModel.cs" />
     <Compile Include="Models\Tests\TestEnum.cs" />
     <Compile Include="Models\Tests\TestModel.cs" />
     <Compile Include="Models\Tests\TestModel2.cs" />
@@ -489,6 +493,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\alarm.jpg" />
+    <Content Include="images\backgroundHome.jpg" />
+    <Content Include="images\logo.jpg" />
     <Content Include="images\menu.png" />
     <Content Include="images\details_close.png" />
     <Content Include="images\details_open.png" />
@@ -807,6 +813,10 @@
     <Content Include="Views\ManageEvent\Create.cshtml" />
     <Content Include="Views\ManageEvent\Details.cshtml" />
     <Content Include="Views\ManageEvent\Edit.cshtml" />
+    <Content Include="Views\ManageEventAdministratorUser\Index.cshtml" />
+    <Content Include="Views\ManageEventAdministratorUser\Create.cshtml" />
+    <Content Include="Views\ManageEventAdministratorUser\Details.cshtml" />
+    <Content Include="Views\ManageEventAdministratorUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

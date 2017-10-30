@@ -13,6 +13,17 @@ namespace Encuentrame.Web
             //config.EnableCors(new EnableCorsAttribute("http://localhost,http://encuentrameweb.azurewebsites.net", "*","*"));
 
             config.Routes.MapHttpRoute(
+                name: "ActivityApi",
+                routeTemplate: "api/Activities",
+                defaults: new { controller = "Activity", action = "GetAll" }
+            );
+            config.Routes.MapHttpRoute(
+                name: "SoughtPeopleApi",
+                routeTemplate: "api/SoughtPeople",
+                defaults: new { controller = "SoughtPerson", action = "GetAll" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "AccountsApi",
                 routeTemplate: "api/accounts",
                 defaults: new { controller = "Account", action = "GetAll" }

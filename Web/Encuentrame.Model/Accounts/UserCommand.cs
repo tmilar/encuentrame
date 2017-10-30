@@ -35,7 +35,11 @@ namespace Encuentrame.Model.Accounts
             user.InternalNumber = userParameters.InternalNumber;
             user.MobileNumber = userParameters.MobileNumber;
             user.PhoneNumber = userParameters.PhoneNumber;
-            user.Image = userParameters.Image;
+            if (userParameters.Image.NotIsNullOrEmpty())
+            {
+                user.Image = userParameters.Image;
+            }
+            
             user.Role = userParameters.Role;
 
             Users.Put(user);
@@ -62,9 +66,13 @@ namespace Encuentrame.Model.Accounts
                 InternalNumber = userParameters.InternalNumber,
                 MobileNumber = userParameters.MobileNumber,
                 PhoneNumber = userParameters.PhoneNumber,
-                Image = userParameters.Image,
                 Role = userParameters.Role
             };
+
+            if (userParameters.Image.NotIsNullOrEmpty())
+            {
+                user.Image = userParameters.Image;
+            }
 
             Users.Put(user);
         }
@@ -79,8 +87,11 @@ namespace Encuentrame.Model.Accounts
             user.InternalNumber = userParameters.InternalNumber;
             user.MobileNumber = userParameters.MobileNumber;
             user.PhoneNumber = userParameters.PhoneNumber;
-            user.Image = userParameters.Image;
-            
+            if (userParameters.Image.NotIsNullOrEmpty())
+            {
+                user.Image = userParameters.Image;
+            }
+
         }
 
         [Audit(BehaviorType = ActionsEnum.Edit, EntityType = typeof(User), IdField = "id")]
@@ -94,7 +105,12 @@ namespace Encuentrame.Model.Accounts
             user.InternalNumber = userParameters.InternalNumber;
             user.MobileNumber = userParameters.MobileNumber;
             user.PhoneNumber = userParameters.PhoneNumber;
-            user.Image = userParameters.Image;
+
+            if (userParameters.Image.NotIsNullOrEmpty())
+            {
+                user.Image = userParameters.Image;
+            }
+
             user.Role = userParameters.Role;
             AuditContextManager.SetObject(user);
         }

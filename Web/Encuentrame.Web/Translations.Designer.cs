@@ -1341,6 +1341,15 @@ namespace Encuentrame.Web {
         /// <summary>
         ///   Looks up a localized string similar to Eventos.
         /// </summary>
+        public static string EventMenu {
+            get {
+                return ResourceManager.GetString("EventMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eventos.
+        /// </summary>
         public static string Events {
             get {
                 return ResourceManager.GetString("Events", resourceCulture);
@@ -2505,6 +2514,15 @@ namespace Encuentrame.Web {
         public static string ModulesEnumWorkingTime {
             get {
                 return ResourceManager.GetString("ModulesEnumWorkingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitorear evento.
+        /// </summary>
+        public static string MonitorEvent {
+            get {
+                return ResourceManager.GetString("MonitorEvent", resourceCulture);
             }
         }
         

@@ -52,8 +52,9 @@ namespace Encuentrame.Model.Contacts
                 Title = "Encuentrame",
                 Data = new
                 {
-                    userId = user.Id,
-                    Type = "Contact.Request",
+                    UserId = user.Id,
+                    Username= user.Username,
+                    Type = "Contact.Request"
                 }
             }).ToList();
 
@@ -109,8 +110,9 @@ namespace Encuentrame.Model.Contacts
                 Title = "Encuentrame",
                 Data = new
                 {
-                    userId = user.Id,
-                    Type = "Contact.Confirm",
+                    UserId = user.Id,
+                    Username = user.Username,
+                    Type = "Contact.Confirm"
                 }
             }).ToList();
 

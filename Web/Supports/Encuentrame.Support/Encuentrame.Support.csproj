@@ -63,6 +63,7 @@
     <Compile Include="IDeleteAware.cs" />
     <Compile Include="IDisplayable.cs" />
     <Compile Include="IIdentifiable.cs" />
+    <Compile Include="ImageExtensions.cs" />
     <Compile Include="IntegerExtensions.cs" />
     <Compile Include="Pluralizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Support;
@@ -38,7 +47,6 @@ namespace Encuentrame.Web.Controllers.Apis
                 InternalNumber = userApiModel.InternalNumber,
                 PhoneNumber = userApiModel.PhoneNumber,
                 MobileNumber = userApiModel.MobileNumber,
-                Image = userApiModel.Image.IsNullOrEmpty() ? string.Empty : "data:image/jpeg;base64," + userApiModel.Image,
                 Role = RoleEnum.User
             };
 
@@ -81,7 +89,6 @@ namespace Encuentrame.Web.Controllers.Apis
                 InternalNumber = userApiModel.InternalNumber,
                 PhoneNumber = userApiModel.PhoneNumber,
                 MobileNumber = userApiModel.MobileNumber,
-                Image = userApiModel.Image.IsNullOrEmpty() ? string.Empty : "data:image/jpeg;base64," + userApiModel.Image,
             };
 
             UserCommand.EditRegister(userParameters);
@@ -120,13 +127,13 @@ namespace Encuentrame.Web.Controllers.Apis
                 InternalNumber = user.InternalNumber,
                 PhoneNumber = user.PhoneNumber,
                 MobileNumber = user.MobileNumber,
-                Image = user.Image,
+                
             };
 
             return Ok(userApiModel);
         }
 
-        
+
         [HttpGet]
         public IHttpActionResult GetAll()
         {
@@ -136,7 +143,7 @@ namespace Encuentrame.Web.Controllers.Apis
             {
                 var userApiModel = new UserApiResultModel()
                 {
-                    Id=user.Id,
+                    Id = user.Id,
                     Username = user.Username,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -150,11 +157,48 @@ namespace Encuentrame.Web.Controllers.Apis
                 list.Add(userApiModel);
             }
 
-            
+
 
             return Ok(list);
         }
+        
+        [HttpGet]
+        public HttpResponseMessage GetImage(int id)
+        {
+            var user = UserCommand.Get(id);
+            MemoryStream img = user.Image.Base64ToImageMemoryStreamMemory();
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new ByteArrayContent(img.ToArray());
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            return result;
+        }
+
+        [HttpPost]
+        public IHttpActionResult UploadImage()
+        {
+            var user = UserCommand.Get(this.GetIdUserLogged());
+
+            foreach (string file in HttpContext.Current.Request.Files)
+            {
+                var imageFile = HttpContext.Current.Request.Files[file];
+                if (imageFile != null && imageFile.ContentLength > 0)
+                {
+                    var isValid = imageFile.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                  imageFile.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                                  imageFile.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase) ||
+                                  imageFile.FileName.EndsWith("gif", StringComparison.OrdinalIgnoreCase);
+                    if (isValid)
+                    {
+                        var imageBase64 = imageFile.InputStream.ImageToBase64(500, 0, PixelFormat.Format32bppPArgb);
+                        if (imageBase64.NotIsNullOrEmpty())
+                        {
+                            user.Image = imageBase64;
+                            return Ok();
+                        }
+                    }
+                }
+            }
+            return BadRequest();
+        }
     }
-
-
 }

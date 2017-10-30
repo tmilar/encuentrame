@@ -20,7 +20,7 @@ namespace Encuentrame.Web.Models.Apis.Accounts
         public  string InternalNumber { get; set; }
         public  string PhoneNumber { get; set; }
         public  string MobileNumber { get; set; }
-        public  string Image { get; set; }
+        
 
 
     }

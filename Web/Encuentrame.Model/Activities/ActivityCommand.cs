@@ -28,10 +28,16 @@ namespace Encuentrame.Model.Activities
             return Activities[id];
         }
 
-        public IList<Activity> GetActivities(int userId)
+        public IList<Activity> GetAllByUser(int userId)
         {
             var user = Users[userId];
             return Activities.Where(x=>x.User==user).ToList();
+        }
+        public IList<Activity> GetActivesByUser(int userId)
+        {
+            var user = Users[userId];
+            var now = SystemDateTime.Now;
+            return Activities.Where(x => x.User == user && (x.BeginDateTime<=now && x.EndDateTime<=now)).ToList();
         }
 
         public IList<Activity> List()

@@ -9,16 +9,43 @@
 
         var $buttonLogin = $('#login');
 
-        var $methodPost = $('#methodPost');
-        var $textPost = $('#parametersPost');
-        var $resultPost = $('#resultPost');
-        var $buttonPost = $('#post');
+        var $image = $('#image');
+        var $buttonUploadImage = $('#uploadImage');
 
-        var $methodGet = $('#methodGet');
-        var $textGet = $('#parametersGet');
-        var $resultGet = $('#resultGet');
-        var $buttonGet = $('#get');
+        var $method = $('#method');
+        var $action = $('#action');
+        var $text = $('#parameters');
+        var $result = $('#result');
+        var $buttonRun = $('#run');
 
+        $buttonUploadImage
+            .on('click',
+                function () {
+                    var data = new FormData();
+                    var files = $image.get(0).files;
+                    if (files.length > 0) {
+                        data.append("image", files[0]);
+                    }
+                    $.ajax({
+                        url: $url.val() + '/account/UploadImage',
+                        headers: {
+                            'token': $token.val(),
+                            'user': $user.val()
+                        },
+                        type: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        success: function (response) {
+                            $result.val('Upload OK');
+                        },
+                        error: function (er) {
+                            console.log(er);
+                        }
+                    });
+
+                 
+                });
 
         $buttonLogin.on('click',
             function () {
@@ -38,51 +65,34 @@
                     })
                     .fail(function (x, y, z) {
 
-                        $resultPost.val(x.responseText);
+                        $result.val(x.responseText);
                     });
             });
 
-        $buttonPost.on('click',
+        $buttonRun.on('click',
             function () {
 
                 $.ajax({
-                        url: $url.val() + $methodPost.val(),
+                        url: $url.val() + $action.val(),
                         headers: {
                             'token': $token.val(),
                             'user': $user.val()
                         },
-                        type: 'DELETE',
-                        data: jQuery.parseJSON($textPost.val()),
+                        type: $method.val(),
+                        data: jQuery.parseJSON($text.val()),
                         dataType:'json'
 
                     }).done(function (data) {
                         
-                        $resultPost.val(JSON.stringify(data));
+                        $result.val(JSON.stringify(data, null, 4));
                     })
                     .fail(function (x, y, z) {
                         
-                        $resultPost.val(x.responseText);
+                        $result.val(x.responseText);
                     });
             });
 
-        $buttonGet.on('click',
-            function () {
-                $.ajax({
-                        url: $url.val() + $methodGet.val(),
-                        headers: {
-                            'token': $token.val(),
-                            'user': $user.val()
-                        },
-                        data: jQuery.parseJSON($textGet.val()),
-
-                    })
-                    .done(function (data) {
-                        $resultGet.val(JSON.stringify(data));
-                    })
-                    .fail(function (x, y, z) {
-                        $resultGet.val(x.responseText);
-                    });
-            });
+       
 
     });
 })();

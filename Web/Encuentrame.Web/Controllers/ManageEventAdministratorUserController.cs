@@ -1,21 +1,20 @@
-﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Encuentrame.Model;
-using NailsFramework.IoC;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Accounts.Seekers;
 using Encuentrame.Security.Authorizations;
-using Encuentrame.Web.Helpers;
-using Encuentrame.Web.Models.Accounts;
 using Encuentrame.Support;
 using Encuentrame.Support.Email;
 using Encuentrame.Support.Email.Templates;
 using Encuentrame.Support.Email.Templates.EmailModels;
+using Encuentrame.Web.Helpers;
+using Encuentrame.Web.Models.Accounts;
+using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(new []{ RoleEnum.Administrator})]
-    public class ManageAdministratorUserController : ListBaseController<User, UserListModel>
+    [AuthorizationPass(new[] { RoleEnum.Administrator })]
+    public class ManageEventAdministratorUserController : ListBaseController<User, UserListModel>
     {
         [Inject]
         public IUserCommand UserCommand { get; set; }
@@ -80,7 +79,7 @@ namespace Encuentrame.Web.Controllers
                     header.Subject = "Bienvenido a Encuentrame";
                     EmailService.Send<WelcomeUserTemplate>(header, welcomeUserEmailModel);
                 }
-                
+
                 return RedirectToAction("Index");
             }
             else
@@ -172,7 +171,7 @@ namespace Encuentrame.Web.Controllers
         protected override void ApplyDefaultFilters(IGenericSeeker<User> seeker)
         {
             base.ApplyDefaultFilters(seeker);
-            ((IUserSeeker) seeker).ByRole(RoleEnum.Administrator);
+            ((IUserSeeker)seeker).ByRole(RoleEnum.Administrator);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+
 
 @{
     ViewBag.Title = "Test Api";
@@ -11,82 +13,125 @@
 
 }
 <h2>@ViewBag.Title</h2>
-    <h3>Url base</h3>
-<div class="row">
-    <div class="col-lg-6">
-        <label for="url">URL base</label>
-        @Html.TextArea("url", Url.Action("Index", "Home"))
 
-    </div>
-</div>
-<h3>Login</h3>
-<div class="row">
-    <div class="col-lg-3">
-        <label for="username">Username</label>
-        @Html.TextBox("username", "emiliano.soto")
-    </div>
-    <div class="col-lg-3">
-        <label for="password">password</label>
-        @Html.TextBox("password", "123")
-    </div>
-    <div class="col-lg-3">
-        <button name="login" id="login">Login</button>
-    </div>
-</div>
+@using (Html.BeginEditSection("URL base"))
+{
 
-<div class="row">
-    <div class="col-lg-4">
-        <label for="token">Token</label>
-        @Html.TextBox("token", "")
-
-    </div>
-    <div class="col-lg-4">
-        <label for="user">Usuario id</label>
-        @Html.TextBox("user", "")
-
-    </div>
-</div>
-    <h3>Post</h3>
     <div class="row">
         <div class="col-lg-6">
-            <label for="methosPost">Metodo</label>
-            @Html.TextArea("methodPost", "")
+            <div class="form-group">
+                <label for="url">URL base</label>
+                @Html.TextArea("url", Url.Action("Index", "Home") + "api", new { @class = "form-control" })
+
+            </div>
         </div>
     </div>
+}
+@using (Html.BeginEditSection("Login"))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label for="username">Username</label>
+                @Html.TextBox("username", "emiliano.soto", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label for="password">password</label>
+                @Html.TextBox("password", "123", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <button name="login" id="login" class="btn bg-primary">Login</button>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-4">
-            <label for="parametersPost">parametros en JSON</label>
-            @Html.TextArea("parametersPost", "")
+            <div class="form-group">
+                <label for="token">Token</label>
+                @Html.TextBox("token", "", new { @class = "form-control" })
+
+            </div>
         </div>
         <div class="col-lg-4">
-            <button name="post" id="post">Post</button>
+            <div class="form-group">
+                <label for="user">Usuario id</label>
+                @Html.TextBox("user", "", new { @class = "form-control" })
+
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <label for="resultPost">Resultado</label>
-            @Html.TextArea("resultPost", "")
-        </div>
-    </div>
-    <h3>Get</h3>
-    <div class="row">
-        <div class="col-lg-6">
-            <label for="methosGet">Metodo</label>
-            @Html.TextArea("methodGet", "")
-        </div>
-    </div>
+}
+
+@using (Html.BeginEditSection("Subir imagen"))
+{
     <div class="row">
         <div class="col-lg-4">
-            <label for="parametersGet">parametros en JSON</label>
-            @Html.TextArea("parametersGet", "")
+            <div class="form-group">
+                <label for="image">Imagen</label>
+                <input type="file" id="image" name="image"/>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <button name="uploadImage" id="uploadImage" class="btn bg-primary">Subir</button>
+        </div>
+    </div>
+}
+@using (Html.BeginEditSection("RUN action"))
+{
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="method">Metodo</label>
+                <select id="method" name="method" class="form-control">
+                    <option value="POST" selected>POST</option>
+                    <option value="GET">GET</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="PUT">PUT</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="form-group">
+                <label for="action">Action</label>
+                @Html.TextBox("action", "", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="parameters">Parametros</label>
+                @Html.TextArea("parameters", "{ }", new { rows = 10, @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <button name="run" id="run" class="btn bg-primary">Run</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <label for="result">Resultado</label>
+                @Html.TextArea("result", "", new { rows = 20, @class = "form-control" })
+            </div>
         </div>
         <div class="col-lg-4">
-            <button name="get" id="get">Get</button>
+            <div class="form-group">
+                <label for="error">Error</label>
+                @Html.TextArea("error", "", new { rows = 20, @class = "form-control" })
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <label for="resultGet">Resultado</label>
-            @Html.TextArea("resultGet", "")
-        </div>
-    </div>
+
+}

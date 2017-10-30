@@ -2,9 +2,6 @@
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Web.Mvc;
-using NailsFramework.IoC;
-using NailsFramework.Persistence;
-using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 
 namespace Encuentrame.Web.Controllers

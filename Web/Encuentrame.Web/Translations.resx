@@ -1467,4 +1467,10 @@
   <data name="EventStatusEnumPending" xml:space="preserve">
     <value>Pendiente</value>
   </data>
+  <data name="EventMenu" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="MonitorEvent" xml:space="preserve">
+    <value>Monitorear evento</value>
+  </data>
 </root>
