@@ -18,7 +18,7 @@ class App extends Component {
   };
 
   render() {
-    if(this.state.isReady) {
+    if(!this.state.isReady) {
       return <AppLoading
         startAsync={this._loadFontsAsync}
         onFinish={() => this.setState({ isReady: true })}
