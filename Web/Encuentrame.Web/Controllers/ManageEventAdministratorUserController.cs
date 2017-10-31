@@ -101,7 +101,7 @@ namespace Encuentrame.Web.Controllers
                 PhoneNumber = userModel.PhoneNumber,
                 MobileNumber = userModel.MobileNumber,
                 Image = userModel.Image.Remove("data:image/png;base64,"),
-                Role = RoleEnum.Administrator
+                Role = RoleEnum.EventAdministrator
             };
 
             return userParameters;
@@ -171,7 +171,7 @@ namespace Encuentrame.Web.Controllers
         protected override void ApplyDefaultFilters(IGenericSeeker<User> seeker)
         {
             base.ApplyDefaultFilters(seeker);
-            ((IUserSeeker)seeker).ByRole(RoleEnum.Administrator);
+            ((IUserSeeker)seeker).ByRole(RoleEnum.EventAdministrator);
         }
     }
 }

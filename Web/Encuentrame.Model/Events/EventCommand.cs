@@ -100,6 +100,19 @@ namespace Encuentrame.Model.Events
 
         }
 
+        public void CancelEmergency(int id)
+        {
+            var eventt = Events[id];
+            if (eventt.Status.In( EventStatusEnum.InEmergency))
+            {
+                eventt.Status = EventStatusEnum.InProgress;
+            }
+            else
+            {
+                throw new DeclareEmergencyException();
+            }
+        }
+
         public void BeginEvent(int id)
         {
             var eventt = Events[id];

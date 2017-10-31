@@ -76,29 +76,9 @@
             data-modal-ok="@Translations.Delete" data-modal-title="@Translations.Delete" data-modal-message="@Translations.DeleteMessage.FormatWith(Model.Name)">
         @Translations.Delete
     </button>
-    @if (Model.Status == EventStatusEnum.Pending)
-    {
-        <button name="buttonAction" value="begin" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Begin" data-modal-title="@Translations.Begin" data-modal-message="@Translations.BeginMessage.FormatWith(Model.Name)">
-            @Translations.Begin
-        </button>
-    }
-    @if (Model.Status == EventStatusEnum.InProgress)
-    {
-        <button name="buttonAction" value="finalize" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Finalize" data-modal-title="@Translations.Finalize" data-modal-message="@Translations.FinalizeMessage.FormatWith(Model.Name)">
-            @Translations.Finalize
-        </button>
-    }
-    @if (Model.Status == EventStatusEnum.InProgress)
-    {
-        <button name="buttonAction" value="emergency" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Emergency" data-modal-title="@Translations.Emergency" data-modal-message="@Translations.EmergencyMessage.FormatWith(Model.Name)">
-            @Translations.Emergency
-        </button>
-    }
+   
     @Html.ActionLink(Translations.Edit, "Edit", new { Id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
-
+    @Html.ActionLink(Translations.MonitorEvent, "Monitor", new { Id = Model.Id }, new { @class = "btn btn-success", role = "button" })
     @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })
 </form>
 

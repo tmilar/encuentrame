@@ -493,6 +493,24 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelar emergencia.
+        /// </summary>
+        public static string CancelEmergency {
+            get {
+                return ResourceManager.GetString("CancelEmergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Esta seguro que desea cancelar la emergencia declarada para el evento {0}?.
+        /// </summary>
+        public static string CancelEmergencyMessage {
+            get {
+                return ResourceManager.GetString("CancelEmergencyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No se puede despachar mas de lo pedido. Pedido: {0} - Parte: {1}. Intentando entregar: {2} - Cantidad pendiente de Entregar: {3}.
         /// </summary>
         public static string CanNotDeliverMoreThanOrdered {
@@ -1339,11 +1357,29 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administrador de evento.
+        /// </summary>
+        public static string EventAdministratorUser {
+            get {
+                return ResourceManager.GetString("EventAdministratorUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eventos.
         /// </summary>
         public static string EventMenu {
             get {
                 return ResourceManager.GetString("EventMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monitor de evento.
+        /// </summary>
+        public static string EventMonitorTitle {
+            get {
+                return ResourceManager.GetString("EventMonitorTitle", resourceCulture);
             }
         }
         
@@ -2001,6 +2037,42 @@ namespace Encuentrame.Web {
         public static string ManageEditTitle {
             get {
                 return ResourceManager.GetString("ManageEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crear usuario administrado de eventor.
+        /// </summary>
+        public static string ManageEventAdministratorUserCreateTitle {
+            get {
+                return ResourceManager.GetString("ManageEventAdministratorUserCreateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalle de usuario administrador de evento.
+        /// </summary>
+        public static string ManageEventAdministratorUserDetailsTitle {
+            get {
+                return ResourceManager.GetString("ManageEventAdministratorUserDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar usuario administrador de evento.
+        /// </summary>
+        public static string ManageEventAdministratorUserEditTitle {
+            get {
+                return ResourceManager.GetString("ManageEventAdministratorUserEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listado de usuarios administradores.
+        /// </summary>
+        public static string ManageEventAdministratorUserListTitle {
+            get {
+                return ResourceManager.GetString("ManageEventAdministratorUserListTitle", resourceCulture);
             }
         }
         

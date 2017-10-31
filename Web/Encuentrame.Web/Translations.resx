@@ -1386,8 +1386,14 @@
   <data name="ManageAdministratorUserListTitle" xml:space="preserve">
     <value>Listado de usuarios administradores</value>
   </data>
+  <data name="ManageEventAdministratorUserListTitle" xml:space="preserve">
+    <value>Listado de usuarios administradores</value>
+  </data>
   <data name="AdministratorUser" xml:space="preserve">
     <value>Usuario administrador</value>
+  </data>
+  <data name="EventAdministratorUser" xml:space="preserve">
+    <value>Administrador de evento</value>
   </data>
   <data name="ManageAdministratorUserCreateTitle" xml:space="preserve">
     <value>Crear usuario administrador</value>
@@ -1397,6 +1403,15 @@
   </data>
   <data name="ManageAdministratorUserEditTitle" xml:space="preserve">
     <value>Editar usuario administrador</value>
+  </data>
+  <data name="ManageEventAdministratorUserCreateTitle" xml:space="preserve">
+    <value>Crear usuario administrado de eventor</value>
+  </data>
+  <data name="ManageEventAdministratorUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de usuario administrador de evento</value>
+  </data>
+  <data name="ManageEventAdministratorUserEditTitle" xml:space="preserve">
+    <value>Editar usuario administrador de evento</value>
   </data>
   <data name="ManagePersonUserDetailsTitle" xml:space="preserve">
     <value>Detalle de persona</value>
@@ -1440,6 +1455,9 @@
   <data name="BeginMessage" xml:space="preserve">
     <value>¿Esta seguro que desea comenzar el evento {0}?</value>
   </data>
+  <data name="CancelEmergencyMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea cancelar la emergencia declarada para el evento {0}?</value>
+  </data>
   <data name="Emergency" xml:space="preserve">
     <value>En emergencia</value>
   </data>
@@ -1472,5 +1490,11 @@
   </data>
   <data name="MonitorEvent" xml:space="preserve">
     <value>Monitorear evento</value>
+  </data>
+  <data name="EventMonitorTitle" xml:space="preserve">
+    <value>Monitor de evento</value>
+  </data>
+  <data name="CancelEmergency" xml:space="preserve">
+    <value>Cancelar emergencia</value>
   </data>
 </root>

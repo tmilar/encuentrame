@@ -506,6 +506,7 @@
     <Content Include="Scripts\app\appInit.js" />
     <Content Include="Scripts\app\arativa-bootstrap-treeview.js" />
     <Content Include="Scripts\app\commons.js" />
+    <Content Include="Scripts\app\controllers\ManageEvents\manageEventMonitor.js" />
     <Content Include="Scripts\app\controllers\ManageEvents\manageEvent.js" />
     <Content Include="Scripts\app\controllers\notificationsConfiguration.js" />
     <Content Include="Scripts\app\controllers\TestApis\testApi.js" />
@@ -813,10 +814,12 @@
     <Content Include="Views\ManageEvent\Create.cshtml" />
     <Content Include="Views\ManageEvent\Details.cshtml" />
     <Content Include="Views\ManageEvent\Edit.cshtml" />
-    <Content Include="Views\ManageEventAdministratorUser\Index.cshtml" />
+    <Content Include="Views\ManageEventAdministratorUser\_form.cshtml" />
     <Content Include="Views\ManageEventAdministratorUser\Create.cshtml" />
     <Content Include="Views\ManageEventAdministratorUser\Details.cshtml" />
     <Content Include="Views\ManageEventAdministratorUser\Edit.cshtml" />
+    <Content Include="Views\ManageEventAdministratorUser\Index.cshtml" />
+    <Content Include="Views\ManageEvent\Monitor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

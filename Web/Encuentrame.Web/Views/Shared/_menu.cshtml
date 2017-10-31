@@ -11,6 +11,10 @@
             {
                 <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.AdministratorUser), "Index", "ManageAdministratorUser")</li>
             }
+            @if (AuthorizationHelper.Validate<ManageEventAdministratorUserController>())
+            {
+                <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.EventAdministratorUser), "Index", "ManageEventAdministratorUser")</li>
+            }
             @if (AuthorizationHelper.Validate<ManagePersonUserController>())
             {
                 <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.PersonUser), "Index", "ManagePersonUser")</li>

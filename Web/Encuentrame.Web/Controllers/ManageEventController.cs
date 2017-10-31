@@ -53,6 +53,35 @@ namespace Encuentrame.Web.Controllers
             return View(eventtModel);
         }
 
+        public ActionResult Monitor(int id)
+        {
+            var eventt = EventCommand.Get(id);
+            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
+            {
+                return RedirectToAction("Index");
+            }
+            var eventtModel = new EventModel()
+            {
+                Id = eventt.Id,
+                Name = eventt.Name,
+                Latitude = eventt.Latitude,
+                Longitude = eventt.Longitude,
+                BeginDateTime = eventt.BeginDateTime,
+                EndDateTime = eventt.EndDateTime,
+                Number = eventt.Address.Number,
+                City = eventt.Address.City,
+                Province = eventt.Address.Province,
+                Street = eventt.Address.Street,
+                Zip = eventt.Address.Zip,
+                FloorAndDepartament = eventt.Address.FloorAndDepartament,
+                Organizer = eventt.Organizer.Id,
+                Status = eventt.Status
+            };
+
+
+            return View(eventtModel);
+        }
+
         public ActionResult Create()
         {
             var eventtModel = new EventModel();
@@ -156,6 +185,12 @@ namespace Encuentrame.Web.Controllers
         [HttpPost]
         public ActionResult ButtonAction(int id, string buttonAction)
         {
+            var eventt = EventCommand.Get(id);
+            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
+            {
+                return RedirectToAction("Index");
+            }
+
             switch (buttonAction)
             {
                 case "delete":
@@ -166,6 +201,8 @@ namespace Encuentrame.Web.Controllers
                     return Finalize(id);
                 case "emergency":
                     return Emergency(id);
+                case "cancelEmergency":
+                    return CancelEmergency(id);
             }
 
             return RedirectToAction("Index");
@@ -183,19 +220,26 @@ namespace Encuentrame.Web.Controllers
         {
             EventCommand.BeginEvent(id);
 
-            return RedirectToAction("Details",new {id});
+            return RedirectToAction("Monitor",new {id});
         }
         protected ActionResult Finalize(int id)
         {
             EventCommand.FinalizeEvent(id);
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("Monitor", new { id });
         }
         protected ActionResult Emergency(int id)
         {
             EventCommand.DeclareEmergency(id);
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("Monitor", new { id });
+        }
+
+        protected ActionResult CancelEmergency(int id)
+        {
+            EventCommand.CancelEmergency(id);
+
+            return RedirectToAction("Monitor", new { id });
         }
 
         protected override EventListModel GetViewModelFrom(Event eventt)
