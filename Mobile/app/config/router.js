@@ -14,6 +14,7 @@ import FriendsAndFamily from "../screen/FriendsAndFamily";
 import NewActivity from "../screen/NewActivity";
 import SupplyInfo from "../screen/SupplyInfo";
 import NewContact from "../screen/NewContact";
+import UserProfile from "../screen/UserProfile";
 import RootDispatcher from "../screen/RootDispatcher";
 
 
@@ -47,12 +48,6 @@ const Tabs = TabNavigator({
   },
   tabBarPosition: 'bottom'
 });
-Tabs.navigationOptions = {
-  drawerLabel: 'Encuentrame',
-  drawerIcon: ({tintColor}) => (
-    <Icon name="drafts" size={24} color={tintColor}/>
-  ),
-};
 
 const AuthStack = StackNavigator({
   Login: {screen: Login, navigationOptions: {header: null}},
@@ -107,6 +102,16 @@ const AppNavigator = DrawerNavigator({
       path: '/home',
       screen: Tabs,
       // navigationOptions: EncuentrameHeader
+    },
+    UserProfile: {
+      path: '/userProfile',
+      screen: UserProfile,
+      navigationOptions: {
+        drawerLabel: "UserProfile",
+        drawerIcon: ({tintColor}) => (
+          <Icon name="accessibility" size={24}/>
+        )
+      }
     },
     Logout: {
       path: '/logout',

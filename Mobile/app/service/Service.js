@@ -7,7 +7,7 @@ import isJSON from '../util/isJSON';
  */
 class Service {
 
-  async sendRequest(url, requestData) {
+  async sendRequest(url, requestData, returnRawResponse) {
     url = apiUrl + url;
     let userId = await SessionService.getSessionUserId();
     let token = await SessionService.getSessionToken();
@@ -21,15 +21,21 @@ class Service {
       requestData.body = JSON.stringify({
       });
     }
+    if (!requestData.headers['Content-Type']){
+      Object.assign(requestData.headers, {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      });
+    }
     Object.assign(requestData.headers, {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
       'token': token,
       'user': userId
     });
 
     let rawResponse = await fetch(url, requestData);
     this.checkResponseStatus(rawResponse);
+    if (returnRawResponse)
+      return rawResponse;
     let finalResponse = await this.parseResponse(rawResponse);
     return finalResponse;
   }
@@ -69,7 +75,7 @@ class Service {
       if (status === 401 || status === 400) {
         throw 'La sesión ha caducado. Por favor, vuelva a iniciar sesión. (' + status + ').';
       }
-
+      debugger;
       throw 'Ha ocurrido un error. (status: ' + status + ').';
 
     }

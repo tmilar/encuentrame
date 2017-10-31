@@ -2,6 +2,7 @@ import {apiUrl} from '../config/apiProperties'
 import SessionService from './SessionService';
 import fetchMock from 'fetch-mock';
 import PushNotificationsService from '../service/PushNotificationsService';
+import Service from './Service';
 
 class UserService {
 
@@ -151,6 +152,38 @@ class UserService {
       userData.username === testUser.username &&
       userData.password === testUser.password
   }
+
+  async uploadUserProfileImage(formData) {
+    let uploadUserImageUrl = 'account/uploadImage';
+    let uploadUserImageResponse =  await Service.sendRequest(uploadUserImageUrl, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return uploadUserImageResponse;
+  }
+
+  async getLoggedUserImg() {
+    let userId = await SessionService.getSessionUserId();
+    let userImgUrl = 'account/getImage/' + userId;
+    let rawResponse = true;
+    try {
+      let userImg =  await Service.sendRequest(userImgUrl, {
+        method: 'GET',
+        'Accept': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data'
+      }, rawResponse);
+      if (userImg._bodyText.length > 0){
+        let finalUrl = apiUrl + userImgUrl;
+        return finalUrl;
+      }
+    } catch (e) {
+      return false;
+    }
+  };
+
 }
 
 let userService = new UserService();
