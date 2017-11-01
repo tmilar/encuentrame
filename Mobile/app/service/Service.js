@@ -93,7 +93,8 @@ class Service {
   async checkResponseStatus(rawResponse, responseBody) {
     let status = rawResponse.status;
     if (status < 200 || status >= 300) {
-      console.debug(rawResponse);
+      console.log(`Something unexpected did happen (status: ${status}). Raw response: \n`, rawResponse);
+
       if (status === 403) {
         throw 'El servidor no está disponible. Por favor, vuelva a intentar más tarde :(';
       }

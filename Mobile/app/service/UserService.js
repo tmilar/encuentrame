@@ -2,6 +2,7 @@ import {apiUrl} from '../config/apiProperties'
 import SessionService from './SessionService';
 import fetchMock from 'fetch-mock';
 import PushNotificationsService from '../service/PushNotificationsService';
+import Service from './Service';
 
 class UserService {
 
@@ -23,30 +24,35 @@ class UserService {
   async checkCredentials(user) {
 
     // request server login
-    let rawResponse = await this.postLoginRequest(user);
-
-    // Check response status for errors
-    this.checkResponseStatus(rawResponse);
-
-    // Parse response data
-    let loginData = await this.parseLoginResponse(rawResponse);
+    let loginResponse = await this.tryUserLogin(user);
 
     // Login OK! Guardamos el token y el userId en la sesion.
-    await this.storeLoginSession(loginData, user.username);
+    await this.storeLoginSession(loginResponse, user.username);
 
   }
 
+  tryUserLogin = async (user) => {
+    let loginResponse;
+    try {
+      loginResponse = await this.postLoginRequest(user);
+    } catch (e) {
+      let errBody = {message: e.message || e, status: e.status || undefined};
+      if (errBody.status === 401) {
+        errBody.message = 'El usuario o la contraseña son inválidas. Por favor, verifique sus credenciales.';
+      }
+      console.log("Some error occured when doing postLoginRequest(): ", errBody);
+      throw errBody;
+    }
+    return loginResponse;
+  };
+
   async postLoginRequest(userData) {
-    let loginUrl = apiUrl + 'authentication/login/';
+    let loginUrl = 'authentication/login/';
 
     this.checkTestUser(userData, loginUrl);
 
-    return await fetch(loginUrl, {
+    return await Service.sendRequest(loginUrl, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         "Username": userData.username,
         "Password": userData.password
@@ -71,45 +77,17 @@ class UserService {
       UserId: "1"
     };
 
-    fetchMock.once(loginUrl, mockLoginResponse);
+    fetchMock.once(apiUrl + loginUrl, mockLoginResponse);
   }
 
-  checkResponseStatus(rawResponse) {
-    let status = rawResponse.status;
-    if (status < 200 || status > 300) {
-      console.debug(rawResponse);
-      this._manageLoginErrors(status);
-    }
-  }
-
-  async parseLoginResponse(rawResponse) {
-    try {
-      return await rawResponse.json();
-    } catch (e) {
-      console.error("Invalid server login raw response", e);
-      throw 'Ocurrió un problema en la comunicación con el servidor.'
-    }
-  }
 
   async storeLoginSession(loginResponse, username) {
     try {
       await SessionService.setSession({token: loginResponse.Token, userId: loginResponse.UserId, username: username});
     } catch (e) {
       console.error(e);
-      throw 'Problema al guardar la sesion.';
+      throw 'Ocurrió un problema al guardar la sesión.';
     }
-  }
-
-  _manageLoginErrors(loginResponseStatus){
-    if (loginResponseStatus === 403) {
-      throw 'El servidor no está disponible. Por favor vuelva a intentar más tarde :(';
-    }
-
-    if (loginResponseStatus === 401 || loginResponseStatus === 400) {
-      throw 'El usuario o la contraseña son inválidas (' + loginResponseStatus + ').';
-    }
-
-    throw 'Ha ocurrido un error. (status: ' + loginResponseStatus + ').';
   }
 
   async registerUser(userData) {
