@@ -279,7 +279,11 @@ export default class NewActivity extends Component {
                     />
                   </View>
                 </View>
-                {this.state.showMapLocation && <ModalMap saveActivityLocation={this.saveActivityLocation}/>}
+                {
+                  this.state.showMapLocation &&
+                  <ModalMap saveActivityLocation={this.saveActivityLocation}
+                            onClose={() => this.setState({showMapLocation: false})}/>
+                }
               </View>
 
               <View

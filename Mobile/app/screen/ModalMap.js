@@ -26,26 +26,24 @@ const ModalMap = React.createClass({
         longitude: 0
       },
       loading: true,
+      modalVisible: false
     };
   },
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  },
   _saveLocation() {
     this.props.saveActivityLocation({
-        latitude: this.state.activityLocation.latitude,
-        longitude: this.state.activityLocation.longitude
+      latitude: this.state.activityLocation.latitude,
+      longitude: this.state.activityLocation.longitude
     });
     this._goBack();
   },
 
   _goBack() {
-    this.setModalVisible(false);
+    this.setState({modalVisible: false});
+    this.props.onClose && this.props.onClose();
   },
 
   async componentWillMount() {
-    this.setState({loading: true});
     try {
       let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
       let activityLocation = {
@@ -60,12 +58,13 @@ const ModalMap = React.createClass({
         e.message || e
       );
     } finally {
+      this.setState({modalVisible: true});
       this.setState({loading: false});
     }
   },
 
   componentDidMount() {
-    this.setModalVisible(!this.state.modalVisible)
+    this.setState({modalVisible: true})
   },
 
   render() {
@@ -78,13 +77,13 @@ const ModalMap = React.createClass({
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
-          }}
+          onRequestClose={this._goBack}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.title]}>
               Escoge la ubicacion
             </Text>
+            {/* TODO: add some instructions text explaining how this MapView & MapMarker works... */}
             <MapView style={styles.map}
                      customMapStyle={mapStyles}
                      initialRegion={this.state.initialMapRegionCoordinates}
@@ -96,7 +95,7 @@ const ModalMap = React.createClass({
               />
             </MapView>
           </View>
-          <View style={[styles.footer,  {flex: 0.2, flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
+          <View style={[styles.footer, {flex: 0.2, flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
             <View style={{flex: 0.5}}>
               <Button
                 title="Aceptar"
