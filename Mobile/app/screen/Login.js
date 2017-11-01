@@ -147,6 +147,9 @@ export default class Login extends Component {
               ref="usuario"
               style={styles.textInput}
               selectTextOnFocus
+              autoCapitalize='none'
+              returnKeyType='next'
+              onSubmitEditing={() => this.refs.password.focus()}
               onChangeText={this._handleUsernameTextChange}
             />
             <TextInput
@@ -154,8 +157,10 @@ export default class Login extends Component {
               placeholder="Contraseña"
               ref="password"
               style={styles.textInput}
+              autoCapitalize='none'
+              autoCorrect={false}
               secureTextEntry
-              returnKeyType="done"
+              returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />
