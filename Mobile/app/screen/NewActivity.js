@@ -1,81 +1,113 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
-  Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button, TouchableOpacity,
-  ScrollView
+  Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button, TouchableOpacity
 } from 'react-native';
 import {text} from '../style';
-import {MapView} from 'expo';
 import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
-import mapStyles from '../config/map';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 
-const NewActivity = React.createClass({
+export default class NewActivity extends Component {
 
-  getInitialState() {
-    const bsasCoordinates = GeolocationService.getBsAsRegion();
+  state = {
+    activityName: "",
+    selectedEventId: null,
+    selectedEventName: "Selecciona un evento",
+    events: [],
+    startDate: null,
+    endDate: null,
+    isStartDateTimePickerVisible: false,
+    isEndDateTimePickerVisible: false,
+    showMapLocation: false,
+    initialMapRegionCoordinates: GeolocationService.getBsAsRegion(),
+    activityLocation: {
+      latitude: 0,
+      longitude: 0
+    }
+  };
 
-    return {
-      activityName: "",
-      selectedEventId: 0,
-      selectedEventName: "Selecciona un evento",
-      events: [],
-      isStartDateTimePickerVisible: false,
-      isEndDateTimePickerVisible: false,
-      showMapLocation: false,
-      initialMapRegionCoordinates: bsasCoordinates,
-      activityLocation: {
-        latitude: 0,
-        longitude: 0
-      }
-    };
-  },
-  _showStartDateTimePicker(){
-    this.setState({ isStartDateTimePickerVisible: true });
-  },
-  _hideStartDateTimePicker(){
-    this.setState({ isStartDateTimePickerVisible: false });
-  },
-  _showEndDateTimePicker(){
-    this.setState({ isEndDateTimePickerVisible: true });
-  },
-  _hideEndDateTimePicker(){
-    this.setState({ isEndDateTimePickerVisible: false });
-  },
-  _handleActivityLocationButtonpress(){
-    this.setState({ showMapLocation: true });
-  },
-  _formatDateForBackend(date){
-    return date.toISOString().slice(0,19).replace(/T/g," ");
-  },
-  _handleStartDatePicked(startDate){
-    let formatedDate = this._formatDateForBackend(startDate);
-    this.setState({ startDate: formatedDate });
+  formFields = [
+    {name: "activityName", errorMsg: "Nombre incompleto!"},
+    {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
+    {name: "startDate", errorMsg: "Elija fecha de inicio!"},
+    {name: "endDate", errorMsg: "Elija fecha de fin!"}
+  ];
+
+  _showStartDateTimePicker = () => {
+    this.setState({isStartDateTimePickerVisible: true});
+  };
+
+  _hideStartDateTimePicker = () => {
+    this.setState({isStartDateTimePickerVisible: false});
+  };
+
+  _showEndDateTimePicker = () => {
+    this.setState({isEndDateTimePickerVisible: true});
+  };
+
+  _hideEndDateTimePicker = () => {
+    this.setState({isEndDateTimePickerVisible: false});
+  };
+
+  _handleActivityLocationButtonpress = () => {
+    this.setState({showMapLocation: true});
+  };
+
+  _formatDateForBackend = (date) => {
+    return date.toISOString().slice(0, 19).replace(/T/g, " ");
+  };
+
+  _handleStartDatePicked = (startDate) => {
+    let formattedDate = this._formatDateForBackend(startDate);
+    this.setState({startDate: formattedDate});
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
-  },
-  _handleEndDatePicked(endDate){
-    let formatedDate = this._formatDateForBackend(endDate);
-    this.setState({ endDate: formatedDate });
+  };
+
+  _handleEndDatePicked = (endDate) => {
+    let formattedDate = this._formatDateForBackend(endDate);
+    this.setState({endDate: formattedDate});
     console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
-  },
+  };
 
+  _isString = (value) => {
+    return typeof value === 'string' || value instanceof String;
+  };
 
-  setModalVisible(visible) {
+  _validateForm = () => {
+    let errorMsg = "";
+    this.formFields.forEach((formField) => {
+      let value = this.state[formField.name];
+      if ((value === null ) || ( this._isString(value) && value.length === 0)) {
+        errorMsg += formField.errorMsg + "\n";
+      }
+    });
+    return errorMsg;
+  };
+
+  setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
-  },
+  };
 
-  _handleActivitynameTextChange(inputValue) {
-    this.setState({activityName: inputValue})
-  },
+  _handleActivitynameTextChange = (inputValue) => {
+    this.setState({activityName: inputValue});
+  };
 
-  async _handleCreateActivityButtonPress() {
+  _handleCreateActivityButtonPress = async () => {
+    let errorMsg = this._validateForm();
+    if (errorMsg.length > 0) {
+      Alert.alert(
+        'Formulario incorrecto ',
+        errorMsg
+      );
+      return;
+    }
     showLoading("Espera...");
-      let activity = {
+    let activity = {
       name: this.state.activityName,
       latitude: this.state.activityLocation.latitude,
       longitude: this.state.activityLocation.longitude,
@@ -87,42 +119,45 @@ const NewActivity = React.createClass({
     try {
       await ActivityService.createActivity(activity);
     } catch (e) {
-      hideLoading();
       console.log("Error creating activity in server: ", e);
       Alert.alert(
         'Ocurrió un problema al crear la actividad. ',
         e.message || e
       );
       return;
+    } finally {
+      hideLoading();
     }
-    hideLoading();
+
     Alert.alert(
-      'Actividad creada con exito!'
+      "¡Éxito!",
+      'Tu actividad fue creada correctamente.'
     );
     this._goToHome();
-  },
+  };
 
-  _handleCancelActivityCreation() {
+  _handleCancelActivityCreation = () => {
     this._goToHome();
-  },
+  };
 
-  _goToHome() {
+  _goToHome = () => {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
-  },
+  };
 
-  async componentWillMount() {
+  componentWillMount = async () => {
     this.setState({loading: true});
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
-      if (events.length > 0){
+      if (events.length > 0) {
         this.setState({selectedEventId: events[0].Id});
       }
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
-        'Error al cargar información de Eventos existentes.',
+        "Error",
+        'Error al cargar información de Eventos existentes. \n' +
         e.message || e
       );
     }
@@ -137,36 +172,45 @@ const NewActivity = React.createClass({
     } catch (e) {
       console.log("Error getting device location: ", e);
       Alert.alert(
-        'Error al obtener la ubicación del dispositivo.',
+        "Error",
+        'Error al obtener la ubicación del dispositivo.\n' +
         e.message || e
       );
     } finally {
       this.setState({loading: false});
     }
-  },
-  saveActivityLocation(location) {
-    this.setState({activityLocation: {
-      latitude: location.latitude,
-      longitude: location.longitude
-    }})
-  },
-  _handleEventSelected(itemValue, itemIndex){
+  };
+
+  saveActivityLocation = (location) => {
+    this.setState({
+      activityLocation: {
+        latitude: location.latitude,
+        longitude: location.longitude
+      }
+    })
+  };
+
+  _handleEventSelected = (itemValue, itemIndex) => {
     this.setState({selectedEventId: itemValue});
-  },
-  componentDidMount() {
+  };
+
+  componentDidMount = () => {
     this.setModalVisible(!this.state.modalVisible)
-  },
+  };
+
   render() {
     if (this.state.loading) {
       return null;
     }
+
     return (
       <View style={{marginTop: 22}}>
         <Modal
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
+          onRequestClose={() => {
+            // TODO go back navigation
           }}
         >
           <View style={{flex: 1}}>
@@ -174,7 +218,14 @@ const NewActivity = React.createClass({
               Nueva Actividad
             </Text>
             <View style={{flex: 1.8}}>
-              <View style={{flex: 0.25, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+              <View style={{
+                flex: 0.25,
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: "center",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1
+              }}>
                 <TextInput
                   value={this.state.activityName}
                   placeholder="Nombre de la actividad"
@@ -186,7 +237,14 @@ const NewActivity = React.createClass({
                 />
               </View>
 
-              <View style={{flex: 0.3, flexDirection: 'column', justifyContent: 'space-around', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
+              <View style={{
+                flex: 0.3,
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                alignItems: "center",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1
+              }}>
 
                 <Picker
                   selectedValue={this.state.selectedEventId}
@@ -203,12 +261,17 @@ const NewActivity = React.createClass({
 
               </View>
 
-              <View style={{flex: 0.25, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
-                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
+              <View style={{
+                flex: 0.25,
+                justifyContent: "space-around",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1
+              }}>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
                   <Text style={[text.p, styles.activityLocationLabel]}>
                     Donde sera?
                   </Text>
-                  <View style={{ flex: 1, justifyContent: "space-around" }}>
+                  <View style={{flex: 1, justifyContent: "space-around"}}>
                     <Button
                       style={{width: 100, height: 50}}
                       title="Mapa"
@@ -219,13 +282,14 @@ const NewActivity = React.createClass({
                 {this.state.showMapLocation ? <ModalMap saveActivityLocation={this.saveActivityLocation}/> : null}
               </View>
 
-              <View style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+              <View
+                style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
                 <Text style={[text.p, styles.activityDatesLabel]}>
                   Cuando sera?
                 </Text>
-                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
-                  <View style={{ flex: 1 }}>
-                    <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
+                  <View style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
                       <Text>{this.state.startDate || "Fecha inicio"}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -236,8 +300,8 @@ const NewActivity = React.createClass({
                       onCancel={this._hideStartDateTimePicker}
                     />
                   </View>
-                  <View style={{ flex: 1 }}>
-                    <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
+                  <View style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
                       <Text>{this.state.endDate || "Fecha fin"}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -249,7 +313,6 @@ const NewActivity = React.createClass({
                   </View>
                 </View>
               </View>
-
 
 
               <View style={[styles.footer, {flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
@@ -278,7 +341,7 @@ const NewActivity = React.createClass({
       </View>
     )
   }
-});
+}
 
 const styles = StyleSheet.create({
   message: {
@@ -327,5 +390,3 @@ const styles = StyleSheet.create({
     margin: 50
   }
 });
-
-export default NewActivity;
