@@ -12,13 +12,13 @@ export default class Login extends Component {
     // header: null
   };
 
+  state = {
+    username: '',
+    password: '',
+  };
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      username: '',
-      password: ''
-    };
 
     this._clearForm = this._clearForm.bind(this);
     this._doLogin = this._doLogin.bind(this);
