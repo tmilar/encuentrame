@@ -100,20 +100,26 @@ export default class Register extends Component {
             <TextInput
               value={this.state.username}
               placeholder="Usuario"
-              ref="Name"
+              ref="usuario"
               style={styles.input}
               selectTextOnFocus
+              autoCapitalize='none'
+              returnKeyType='next'
               onChangeText={this._handleUsernameTextChange}
+              onSubmitEditing={() => this.refs.email.focus()}
             />
 
             <TextInput
               value={this.state.email}
               placeholder="E-mail"
-              ref="mail"
+              ref="email"
               style={styles.input}
               keyboardType="email-address"
               selectTextOnFocus
+              autoCapitalize='none'
+              returnKeyType='next'
               onChangeText={this._handleEmailTextChange}
+              onSubmitEditing={() => this.refs.password.focus()}
             />
 
             <TextInput
@@ -121,8 +127,10 @@ export default class Register extends Component {
               placeholder="Contraseña"
               ref="password"
               style={styles.input}
+              autoCapitalize='none'
+              autoCorrect={false}
               secureTextEntry
-              returnKeyType="done"
+              returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />
@@ -137,6 +145,7 @@ export default class Register extends Component {
         </ScrollView>
       </View>
     )
+
   }
 }
 
