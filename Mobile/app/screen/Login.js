@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, Button, Alert, TextInput, Keyboard} from 'react-native'
+import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
-import ReactNative, {ScrollView, Dimensions} from 'react-native';
 import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
 
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -17,12 +16,8 @@ export default class Login extends Component {
 
   state = {
     username: '',
-    password: '',
-    visibleHeight: screenHeight
+    password: ''
   };
-
-  keyboardDidShowListener: Object;
-  keyboardDidHideListener: Object;
 
   constructor(props) {
     super(props);
@@ -89,13 +84,8 @@ export default class Login extends Component {
   }
 
   async componentWillMount() {
-    this._registerKeyboardListener();
     await this.checkLogout();
     await this.checkSessionAlive();
-  }
-
-  componentWillUnmount() {
-    this._removeKeyboardListener();
   }
 
   checkLogout = async () => {
@@ -139,39 +129,11 @@ export default class Login extends Component {
     navigate('PostLogin');
   }
 
-
-  _registerKeyboardListener = () => {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-  };
-
-  _removeKeyboardListener() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  _keyboardDidShow = (e) => {
-    let keyboardHeight = e.endCoordinates.height;
-    let newVisibleHeight = screenHeight - keyboardHeight;
-
-    this.setState({
-      visibleHeight: newVisibleHeight
-    });
-
-  };
-
-  _keyboardDidHide = () => {
-    this.setState({
-      visibleHeight: screenHeight,
-    });
-  };
-
   render() {
     return (
-      <View style={{height: this.state.visibleHeight}}>
       <View style={[containers.container, styles.scroll]}>
-
         <View style={[{flex: 1}]}>
+
           <View style={styles.header}>
             <Text style={text.title}>
               Encuentrame
@@ -214,8 +176,10 @@ export default class Login extends Component {
               </Text>
             </View>
           </View>
+
+          {/* The next view will animate to match the actual keyboards height */}
+          <KeyboardSpacer/>
         </View>
-      </View>
       </View>
     )
   }
