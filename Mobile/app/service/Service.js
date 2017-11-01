@@ -23,10 +23,14 @@ class Service {
       )
     };
 
-    if (requestData.method == 'POST' && (!requestData.body)){
-      requestData.body = JSON.stringify({
-      });
+    if (requestOptions.body) {
+      this._ensureBodyStringified(requestOptions);
     }
+
+    if (requestOptions.method === 'POST') {
+      this._ensureBodyPresent(requestOptions);
+    }
+
 
     let request = Object.assign(defaultRequest, requestOptions);
 
@@ -35,6 +39,32 @@ class Service {
     let finalResponse = await this.parseResponse(rawResponse);
     return finalResponse;
   }
+
+  /**
+   * Useful to save the need of always stringifying manually the body.
+   * @param requestOptions
+   * @private
+   */
+  _ensureBodyStringified = (requestOptions) => {
+    try {
+      JSON.parse(requestOptions.body);
+      // > is stringified. do nothing.
+    } catch (e) {
+      // > was not. do stringify.
+      requestOptions.body = JSON.stringify(requestOptions.body);
+    }
+  };
+
+  /**
+   * Useful when we need at least an empty body
+   * @param requestOptions
+   * @private
+   */
+  _ensureBodyPresent = (requestOptions) => {
+    if (!requestOptions.body) {
+      requestOptions.body = JSON.stringify({});
+    }
+  };
 
   async parseResponse(rawResponse) {
     try {
