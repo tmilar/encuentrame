@@ -31,15 +31,17 @@ const NewActivity = React.createClass({
       activityLocation: {
         latitude: 0,
         longitude: 0
-      },
-      formFields: [
-        {name: "activityName", errorMsg: "Nombre incompleto!"},
-        {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
-        {name: "startDate", errorMsg: "Elija fecha de inicio!"},
-        {name: "endDate", errorMsg: "Elija fecha de fin!"}
-      ]
+      }
     };
   },
+
+  formFields: [
+    {name: "activityName", errorMsg: "Nombre incompleto!"},
+    {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
+    {name: "startDate", errorMsg: "Elija fecha de inicio!"},
+    {name: "endDate", errorMsg: "Elija fecha de fin!"}
+  ],
+
   _showStartDateTimePicker(){
     this.setState({isStartDateTimePickerVisible: true});
   },
@@ -75,10 +77,9 @@ const NewActivity = React.createClass({
   },
   _validateForm(){
     let errorMsg = "";
-    let self = this;
-    this.state.formFields.forEach(function (formField) {
-      let value = self.state[formField.name];
-      if ((value === null ) || ( self._isString(value) && value.length === 0)) {
+    this.formFields.forEach((formField) => {
+      let value = this.state[formField.name];
+      if ((value === null ) || ( this._isString(value) && value.length === 0)) {
         errorMsg += formField.errorMsg + "\n";
       }
     });
