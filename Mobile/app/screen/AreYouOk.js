@@ -47,7 +47,8 @@ export default class AreYouOk extends Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
+          onRequestClose={() => {
+            Alert.alert("¿Estás Bien?", "Por favor, responde! Alguien está preocupado por vos.");
           }}
         >
           <View style={styles.message}>
