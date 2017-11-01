@@ -37,36 +37,36 @@ const NewActivity = React.createClass({
         {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
         {name: "startDate", errorMsg: "Elija fecha de inicio!"},
         {name: "endDate", errorMsg: "Elija fecha de fin!"}
-        ]
+      ]
     };
   },
   _showStartDateTimePicker(){
-    this.setState({ isStartDateTimePickerVisible: true });
+    this.setState({isStartDateTimePickerVisible: true});
   },
   _hideStartDateTimePicker(){
-    this.setState({ isStartDateTimePickerVisible: false });
+    this.setState({isStartDateTimePickerVisible: false});
   },
   _showEndDateTimePicker(){
-    this.setState({ isEndDateTimePickerVisible: true });
+    this.setState({isEndDateTimePickerVisible: true});
   },
   _hideEndDateTimePicker(){
-    this.setState({ isEndDateTimePickerVisible: false });
+    this.setState({isEndDateTimePickerVisible: false});
   },
   _handleActivityLocationButtonpress(){
-    this.setState({ showMapLocation: true });
+    this.setState({showMapLocation: true});
   },
   _formatDateForBackend(date){
-    return date.toISOString().slice(0,19).replace(/T/g," ");
+    return date.toISOString().slice(0, 19).replace(/T/g, " ");
   },
   _handleStartDatePicked(startDate){
-    let formatedDate = this._formatDateForBackend(startDate);
-    this.setState({ startDate: formatedDate});
+    let formattedDate = this._formatDateForBackend(startDate);
+    this.setState({startDate: formattedDate});
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
   },
   _handleEndDatePicked(endDate){
-    let formatedDate = this._formatDateForBackend(endDate);
-    this.setState({ endDate: formatedDate});
+    let formattedDate = this._formatDateForBackend(endDate);
+    this.setState({endDate: formattedDate});
     console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
   },
@@ -76,9 +76,9 @@ const NewActivity = React.createClass({
   _validateForm(){
     let errorMsg = "";
     let self = this;
-    this.state.formFields.forEach(function(formField) {
+    this.state.formFields.forEach(function (formField) {
       let value = self.state[formField.name];
-      if ((value == null ) || ( self._isString(value) && value.length === 0)){
+      if ((value === null ) || ( self._isString(value) && value.length === 0)) {
         errorMsg += formField.errorMsg + "\n";
       }
     });
@@ -97,7 +97,7 @@ const NewActivity = React.createClass({
 
   async _handleCreateActivityButtonPress() {
     let errorMsg = this._validateForm();
-    if (errorMsg.length > 0){
+    if (errorMsg.length > 0) {
       Alert.alert(
         'Formulario incorrecto ',
         errorMsg
@@ -105,7 +105,7 @@ const NewActivity = React.createClass({
       return;
     }
     showLoading("Espera...");
-      let activity = {
+    let activity = {
       name: this.state.activityName,
       latitude: this.state.activityLocation.latitude,
       longitude: this.state.activityLocation.longitude,
@@ -117,15 +117,16 @@ const NewActivity = React.createClass({
     try {
       await ActivityService.createActivity(activity);
     } catch (e) {
-      hideLoading();
       console.log("Error creating activity in server: ", e);
       Alert.alert(
         'Ocurrió un problema al crear la actividad. ',
         e.message || e
       );
       return;
+    } finally {
+      hideLoading();
     }
-    hideLoading();
+
     Alert.alert(
       'Actividad creada con exito!'
     );
@@ -146,7 +147,7 @@ const NewActivity = React.createClass({
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
-      if (events.length > 0){
+      if (events.length > 0) {
         this.setState({selectedEventId: events[0].Id});
       }
     } catch (e) {
@@ -198,7 +199,8 @@ const NewActivity = React.createClass({
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
+          onRequestClose={() => {
+            // TODO go back navigation
           }}
         >
           <View style={{flex: 1}}>
@@ -206,7 +208,14 @@ const NewActivity = React.createClass({
               Nueva Actividad
             </Text>
             <View style={{flex: 1.8}}>
-              <View style={{flex: 0.25, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+              <View style={{
+                flex: 0.25,
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: "center",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1
+              }}>
                 <TextInput
                   value={this.state.activityName}
                   placeholder="Nombre de la actividad"
@@ -218,7 +227,14 @@ const NewActivity = React.createClass({
                 />
               </View>
 
-              <View style={{flex: 0.3, flexDirection: 'column', justifyContent: 'space-around', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
+              <View style={{
+                flex: 0.3,
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                alignItems: "center",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1
+              }}>
 
                 <Picker
                   selectedValue={this.state.selectedEventId}
@@ -235,12 +251,17 @@ const NewActivity = React.createClass({
 
               </View>
 
-              <View style={{flex: 0.25, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
-                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
+              <View style={{
+                flex: 0.25,
+                justifyContent: "space-around",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1
+              }}>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
                   <Text style={[text.p, styles.activityLocationLabel]}>
                     Donde sera?
                   </Text>
-                  <View style={{ flex: 1, justifyContent: "space-around" }}>
+                  <View style={{flex: 1, justifyContent: "space-around"}}>
                     <Button
                       style={{width: 100, height: 50}}
                       title="Mapa"
@@ -251,13 +272,14 @@ const NewActivity = React.createClass({
                 {this.state.showMapLocation ? <ModalMap saveActivityLocation={this.saveActivityLocation}/> : null}
               </View>
 
-              <View style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+              <View
+                style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
                 <Text style={[text.p, styles.activityDatesLabel]}>
                   Cuando sera?
                 </Text>
-                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap" }}>
-                  <View style={{ flex: 1 }}>
-                    <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
+                  <View style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
                       <Text>{this.state.startDate || "Fecha inicio"}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -268,8 +290,8 @@ const NewActivity = React.createClass({
                       onCancel={this._hideStartDateTimePicker}
                     />
                   </View>
-                  <View style={{ flex: 1 }}>
-                    <TouchableOpacity style={{ flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
+                  <View style={{flex: 1}}>
+                    <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
                       <Text>{this.state.endDate || "Fecha fin"}</Text>
                     </TouchableOpacity>
                     <DateTimePicker
@@ -281,7 +303,6 @@ const NewActivity = React.createClass({
                   </View>
                 </View>
               </View>
-
 
 
               <View style={[styles.footer, {flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
