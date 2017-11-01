@@ -140,15 +140,6 @@ export default class Login extends Component {
   }
 
 
-  inputFocused(refName) {
-    setTimeout(() => {
-      let scrollResponder = this.refs.scrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        ReactNative.findNodeHandle(this.refs[refName]),
-        110, //additionalOffset
-        true
-      );
-    }, 50);
   _registerKeyboardListener = () => {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
@@ -193,7 +184,6 @@ export default class Login extends Component {
               placeholder="Usuario"
               ref="usuario"
               style={styles.textInput}
-              onFocus={this.inputFocused.bind(this, 'usuario')}
               selectTextOnFocus
               onChangeText={this._handleUsernameTextChange}
             />
@@ -205,7 +195,6 @@ export default class Login extends Component {
               style={styles.textInput}
               secureTextEntry
               returnKeyType="done"
-              onFocus={this.inputFocused.bind(this, 'password')}
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />
