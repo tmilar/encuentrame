@@ -90,14 +90,27 @@ class UserService {
     }
   }
 
-  async registerUser(userData) {
+  isValidEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
 
-    if (!userData.username || userData.username === ''
-      || !userData.password || userData.password === '') {
-      throw `Por favor, ingrese un Usuario y Contraseña válidos.`;
+  async registerUser(userData) {
+    let formErrMsg = "";
+    if (!userData.username || userData.username === '') {
+      formErrMsg += `\nPor favor, ingrese un nombre de usuario válido.`;
     }
 
+    if (!userData.email || userData.email === '' || !this.isValidEmail(userData.email)) {
+      formErrMsg +=  `\nPor favor, ingrese una dirección de Email válida.`;
+    }
 
+    if (!userData.password || userData.password === '') {
+      formErrMsg +=  `\nPor favor, ingrese una Contraseña válida.`;
+    }
+
+    if(formErrMsg) {
+      throw formErrMsg;
     }
 
 
