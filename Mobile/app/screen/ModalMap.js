@@ -11,6 +11,7 @@ import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import mapStyles from '../config/map';
+import LoadingIndicator from "../component/LoadingIndicator";
 
 
 const ModalMap = React.createClass({
@@ -23,7 +24,8 @@ const ModalMap = React.createClass({
       activityLocation: {
         latitude: 0,
         longitude: 0
-      }
+      },
+      loading: true,
     };
   },
 
@@ -68,7 +70,7 @@ const ModalMap = React.createClass({
 
   render() {
     if (this.state.loading) {
-      return null;
+      return <LoadingIndicator/>;
     }
     return (
       <View style={{marginTop: 22}}>
