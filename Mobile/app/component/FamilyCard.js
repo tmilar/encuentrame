@@ -10,6 +10,7 @@ export default class FamilyCard extends Component {
   constructor(props) {
     super(props);
     this.personProps = this.props.personProps.User;
+    this.pending = this.props.personProps.Pending;
 
     this.analyzeState = this.analyzeState.bind(this);
     this.getStateColor = this.getStateColor.bind(this);
@@ -32,7 +33,8 @@ export default class FamilyCard extends Component {
       return "alert";
     }
   }
-  async _handleEstasBienButtonPress (){
+
+  async _handleEstasBienButtonPress() {
     let targetUserId = this.personProps.Id;
     await AreYouOkService.ask({id: targetUserId});
     Alert.alert("Aviso", `Le preguntaste Estas Bien? al user ${targetUserId}`);
@@ -61,30 +63,46 @@ export default class FamilyCard extends Component {
     }
   }
 
+  _getRowAction() {
+    const contactActions = <TouchableHighlight onPress={this._handleEstasBienButtonPress}>
+      <View>
+        <Icon name="help" size={50} color='#43484d'/>
+      </View>
+    </TouchableHighlight>;
+
+    const pendingContactMessage = <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <Text style={{flex: 1, fontWeight: 'bold'}}>Solicitud pendiente</Text>
+    </View>;
+
+    if (this.pending) {
+      return pendingContactMessage;
+    }
+    return contactActions;
+  }
+
   render() {
     //let bgColor = this.getStateColor(personProps);
     return (
       <Card styles={{card: {}}}>
         <View style={{
           flexDirection: 'row',
-          height: 60,
+          height: 90,
         }}>
-          <Text style={{flex: 1, fontWeight: 'bold'}}>{this.personProps.Username}</Text>
+          <Text style={{flex: 1.5, fontWeight: 'bold'}}>{this.personProps.Username}</Text>
           <View
             style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <Image source={require('../img/personImgExample.jpg')} size={50}/>
+            <Image source={require('../img/personImgExample.jpg')} size={5}/>
           </View>
-          <TouchableHighlight onPress={this._handleEstasBienButtonPress}>
-            <View>
-              <Icon name="help" size={50} color='#43484d'/>
-            </View>
-           </TouchableHighlight>
-
-
+          {this._getRowAction()}
         </View>
       </Card>
     );

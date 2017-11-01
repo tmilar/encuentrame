@@ -11,7 +11,7 @@ export default class FamilyListContainer extends Component {
   };
 
   componentWillMount = async () => {
-    let contacts = await this.fetchContacts().filter((contact) => {return !contact.Pending;} );;
+    let contacts = await this.fetchContacts();
     this.setState({contacts});
   };
 

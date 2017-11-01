@@ -4,7 +4,7 @@ import FamilyListContainer from "../component/FamilyListContainer";
 import {text} from '../style';
 import SessionService from "../service/SessionService";
 import AreYouOkService from "../service/AreYouOkService";
-import AccountsService from '../service/AccountsService';
+
 
 import {Alert} from "react-native";
 
@@ -16,22 +16,12 @@ export default class FriendsAndFamily extends Component {
     areYouOkSelectorVisible: false
   };
 
-  /**
-   * Store all user account references for auto-complete functionality
-   *
-   * @type {Array}
-   */
-  userAccounts = [];
-
   _handleUserIdChange = (inputValue) => {
     this.setState({targetUserId: inputValue})
   };
 
   componentWillMount = async () => {
-    // Load in shared storage all user accounts
-    this.userAccounts = await AccountsService.getAllUserAccounts();
-
-    // show AreYouOk selector if user is Dev.
+  // show AreYouOk selector if user is Dev.
     let areYouOkSelectorVisible = await SessionService.isDevSession();
     console.log("[FriendsAndFamily] Are you ok selector visibile? " + areYouOkSelectorVisible);
     this.setState({areYouOkSelectorVisible});
@@ -74,7 +64,7 @@ export default class FriendsAndFamily extends Component {
 
   _handleNuevoContactoButtonpress = async () => {
     const {navigate} = this.props.navigation;
-    navigate('NewContact', {accounts: this.userAccounts});
+    navigate('NewContact');
   };
 
   render() {

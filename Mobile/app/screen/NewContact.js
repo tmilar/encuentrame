@@ -7,6 +7,7 @@ import {text} from '../style';
 import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
 import LoadingIndicator from "../component/LoadingIndicator";
+import AccountsService from '../service/AccountsService';
 
 
 export default class NewContact extends Component {
@@ -29,11 +30,10 @@ export default class NewContact extends Component {
 
   constructor(props) {
     super(props);
-    let {params} = props.navigation.state;
-    this.accounts = (params && params.accounts) || [];
   };
 
   componentWillMount = async () => {
+    this.accounts = await AccountsService.getUnknownUsersAccounts();
     this.setState({ filteredAccounts: this.datasource.cloneWithRows(this.accounts) });
     this.setState({ loading: false });
   };
@@ -41,6 +41,11 @@ export default class NewContact extends Component {
    _pressRow = async (account, sectionID, rowID) =>  {
     let requestContact = await ContactsService.newContactRequest(account.Id);
     Alert.alert("Solicitud enviada!", "Solicitud enviada con exito a " + account.Username);
+    this._goBack();
+  };
+
+  _goBack = () => {
+    this.props.navigation.goBack(null);
   };
 
   searchingContactTextChanged = (searchingContact) => {
@@ -51,9 +56,14 @@ export default class NewContact extends Component {
 
   renderRow = (account: string, sectionID: number, rowID: number) => {
     return (
-      <TouchableHighlight style={{flex: 1, height: 30 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
-        <View>
-          <Text>{account.Username} - Agregar</Text>
+      <TouchableHighlight style={{flex: 1, height: 50 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
+        <View style={{flex: 1, width: 400, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: 'grey'}}>
+          <View>
+            <Text>{account.Username}</Text>
+          </View>
+          <View style={{width: 75, height: 50, backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+            <Text style={{color: 'white', fontSize: 18}}>Agregar</Text>
+          </View>
         </View>
       </TouchableHighlight>
     )
@@ -65,7 +75,7 @@ export default class NewContact extends Component {
       return <LoadingIndicator/>;
     return (
       <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
-        <View style={{flex: 1, justifyContent: 'flex-start', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+        <View style={{flex: 1, justifyContent: 'space-around', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
           <TextInput
             value={this.state.searchingContact}
             placeholder="Buscar por nombre"
@@ -75,11 +85,21 @@ export default class NewContact extends Component {
             underlineColorAndroid='transparent'
           />
         </View>
-        <View style={{flex: 9, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+        <View style={{flex: 9, height: 200, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
           <ListView style={{flex: 1}}
             dataSource={this.state.filteredAccounts}
             renderRow={this.renderRow}
           />
+        </View>
+        <View style={{flex: 1}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Button
+              title="Volver"
+              color='#ff5c5c'
+              onPress={this._goBack}
+            />
+
+          </View>
         </View>
 
       </ScrollView>
