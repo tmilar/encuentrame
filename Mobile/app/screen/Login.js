@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
+import {Text, View, StyleSheet, Button, Alert, TextInput, Keyboard} from 'react-native'
 import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
-import ReactNative, {ScrollView} from 'react-native';
+import ReactNative, {ScrollView, Dimensions} from 'react-native';
 import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
+
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -15,7 +18,11 @@ export default class Login extends Component {
   state = {
     username: '',
     password: '',
+    visibleHeight: screenHeight
   };
+
+  keyboardDidShowListener: Object;
+  keyboardDidHideListener: Object;
 
   constructor(props) {
     super(props);
@@ -82,8 +89,13 @@ export default class Login extends Component {
   }
 
   async componentWillMount() {
+    this._registerKeyboardListener();
     await this.checkLogout();
     await this.checkSessionAlive();
+  }
+
+  componentWillUnmount() {
+    this._removeKeyboardListener();
   }
 
   checkLogout = async () => {
@@ -137,7 +149,31 @@ export default class Login extends Component {
         true
       );
     }, 50);
+  _registerKeyboardListener = () => {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  };
+
+  _removeKeyboardListener() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
+
+  _keyboardDidShow = (e) => {
+    let keyboardHeight = e.endCoordinates.height;
+    let newVisibleHeight = screenHeight - keyboardHeight;
+
+    this.setState({
+      visibleHeight: newVisibleHeight
+    });
+
+  };
+
+  _keyboardDidHide = () => {
+    this.setState({
+      visibleHeight: screenHeight,
+    });
+  };
 
   render() {
     return (
