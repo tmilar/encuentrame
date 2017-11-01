@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
 import {text} from '../style';
 import ContactsService from '../service/ContactsService';
+import {showToast} from "react-native-notifyer";
 
 export default class ContactRequest extends Component {
   state = {
@@ -42,7 +43,9 @@ export default class ContactRequest extends Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {/* handle modal 'back' close? */
+          onRequestClose={() => {
+            showToast("Podrás responder esta solicitud más tarde, desde tu pestaña Home.", {duration: 2000});
+            this.props.navigation.goBack(null);
           }}
         >
           <View style={styles.message}>
