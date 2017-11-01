@@ -86,10 +86,9 @@ export default class Register extends Component {
   }
 
   render() {
-
     return (
       <View style={containers.container}>
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps>
           <View style={styles.header}>
             <Text style={text.title}>
               Encuentrame
