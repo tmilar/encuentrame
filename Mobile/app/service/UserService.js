@@ -97,26 +97,35 @@ class UserService {
       throw `Por favor, ingrese un Usuario y Contraseña válidos.`;
     }
 
-    let userRegistrationResult = await fetch(apiUrl + 'account/create', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "Username": userData.username,
-        "Password": userData.password,
-        "Email": userData.email
-      })
-    });
 
-    let status = userRegistrationResult.status;
-    if (status < 200 || status >= 300) {
-      console.debug(userRegistrationResult);
-      throw 'Error en el registro. (status: ' + status + ').';
     }
 
+
+    await this.tryRegisterUserRequest(userData);
+
     console.log(`Registrado '${userData.username}' exitosamente!'`);
+  }
+
+  async tryRegisterUserRequest(userData) {
+    let registerUrl = 'account/create';
+    try {
+      await Service.sendRequest(registerUrl, {
+        method: 'POST',
+        body: {
+          "Username": userData.username,
+          "Password": userData.password,
+          "Email": userData.email
+        }
+      });
+    } catch (e) {
+      let errBody = {message: e.message || e, status: e.status || undefined};
+      if (errBody.status === 400) {
+        errBody.originalServerMessage = errBody.message;
+        errBody.message = `\nEl nombre de usuario "${userData.username}" ya existe.`;
+      }
+      console.log("Some error occured when doing registerUser(): ", errBody);
+      throw errBody;
+    }
   }
 
   isTestUser(userData) {
