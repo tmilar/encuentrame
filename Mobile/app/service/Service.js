@@ -35,9 +35,9 @@ class Service {
     let request = Object.assign(defaultRequest, requestOptions);
 
     let rawResponse = await fetch(url, request);
-    this.checkResponseStatus(rawResponse);
-    let finalResponse = await this.parseResponse(rawResponse);
-    return finalResponse;
+    let responseBody = await this.parseResponse(rawResponse);
+    await this.checkResponseStatus(rawResponse, responseBody);
+    return responseBody;
   }
 
   /**
@@ -90,24 +90,29 @@ class Service {
     return parsed;
   };
 
-
-  checkResponseStatus(rawResponse) {
+  async checkResponseStatus(rawResponse, responseBody) {
     let status = rawResponse.status;
     if (status < 200 || status >= 300) {
       console.debug(rawResponse);
       if (status === 403) {
-        throw 'El servidor no está disponible. Por favor vuelva a intentar más tarde :(';
+        throw 'El servidor no está disponible. Por favor, vuelva a intentar más tarde :(';
       }
 
-      if (status === 401 || status === 400) {
-        throw 'La sesión ha caducado. Por favor, vuelva a iniciar sesión. (' + status + ').';
+      if (status === 401) {
+        let defaultMsg = 'La sesión ha caducado. Por favor, vuelva a iniciar sesión.';
+        throw {message: defaultMsg, status};
+      }
+
+      if (status === 400) {
+        let responseJSON = JSON.stringify(responseBody);
+        console.error(`Error 400: bad request. Respuesta obtenida: ${responseJSON} `);
+        throw 'La solicitud es inválida.';
       }
 
       throw 'Ha ocurrido un error. (status: ' + status + ').';
 
     }
   }
-
 }
 
 let baseService = new Service();
