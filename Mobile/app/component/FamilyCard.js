@@ -33,7 +33,8 @@ export default class FamilyCard extends Component {
       return "alert";
     }
   }
-  async _handleEstasBienButtonPress (){
+
+  async _handleEstasBienButtonPress() {
     let targetUserId = this.personProps.Id;
     await AreYouOkService.ask({id: targetUserId});
     Alert.alert("Aviso", `Le preguntaste Estas Bien? al user ${targetUserId}`);
@@ -61,23 +62,27 @@ export default class FamilyCard extends Component {
         return "white";
     }
   }
-  _getRowAction(){
-    if (this.pending){
-      return <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-        <Text style={{flex: 1, fontWeight: 'bold'}}>Solicitud pendiente</Text>
+
+  _getRowAction() {
+    const contactActions = <TouchableHighlight onPress={this._handleEstasBienButtonPress}>
+      <View>
+        <Icon name="help" size={50} color='#43484d'/>
       </View>
-    } else {
-      return <TouchableHighlight onPress={this._handleEstasBienButtonPress}>
-        <View>
-          <Icon name="help" size={50} color='#43484d'/>
-        </View>
-      </TouchableHighlight>
+    </TouchableHighlight>;
+
+    const pendingContactMessage = <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <Text style={{flex: 1, fontWeight: 'bold'}}>Solicitud pendiente</Text>
+    </View>;
+
+    if (this.pending) {
+      return pendingContactMessage;
     }
+    return contactActions;
   }
 
   render() {

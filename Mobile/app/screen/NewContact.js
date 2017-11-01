@@ -33,8 +33,7 @@ export default class NewContact extends Component {
   };
 
   componentWillMount = async () => {
-    let accounts = await AccountsService.getUnknownUsersAccounts();
-    this.accounts = accounts || [];
+    this.accounts = await AccountsService.getUnknownUsersAccounts();
     this.setState({ filteredAccounts: this.datasource.cloneWithRows(this.accounts) });
     this.setState({ loading: false });
   };
