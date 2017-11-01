@@ -133,14 +133,14 @@ export default class NewActivity extends Component {
       "¡Éxito!",
       'Tu actividad fue creada correctamente.'
     );
-    this._goToHome();
+    this._goBack();
   };
 
   _handleCancelActivityCreation = () => {
-    this._goToHome();
+    this._goBack();
   };
 
-  _goToHome = () => {
+  _goBack = () => {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
   };
@@ -209,9 +209,7 @@ export default class NewActivity extends Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            // TODO go back navigation
-          }}
+          onRequestClose={this._handleCancelActivityCreation}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.activityTitle]}>
