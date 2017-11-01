@@ -1,81 +1,84 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
-  Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button, TouchableOpacity,
-  ScrollView
+  Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button, TouchableOpacity
 } from 'react-native';
 import {text} from '../style';
-import {MapView} from 'expo';
 import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
-import mapStyles from '../config/map';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 
-const NewActivity = React.createClass({
+export default class NewActivity extends Component {
 
-  getInitialState() {
-    const bsasCoordinates = GeolocationService.getBsAsRegion();
-    return {
-      activityName: "",
-      selectedEventId: null,
-      selectedEventName: "Selecciona un evento",
-      events: [],
-      startDate: null,
-      endDate: null,
-      isStartDateTimePickerVisible: false,
-      isEndDateTimePickerVisible: false,
-      showMapLocation: false,
-      initialMapRegionCoordinates: bsasCoordinates,
-      activityLocation: {
-        latitude: 0,
-        longitude: 0
-      }
-    };
-  },
+  state = {
+    activityName: "",
+    selectedEventId: null,
+    selectedEventName: "Selecciona un evento",
+    events: [],
+    startDate: null,
+    endDate: null,
+    isStartDateTimePickerVisible: false,
+    isEndDateTimePickerVisible: false,
+    showMapLocation: false,
+    initialMapRegionCoordinates: GeolocationService.getBsAsRegion(),
+    activityLocation: {
+      latitude: 0,
+      longitude: 0
+    }
+  };
 
-  formFields: [
+  formFields = [
     {name: "activityName", errorMsg: "Nombre incompleto!"},
     {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
     {name: "startDate", errorMsg: "Elija fecha de inicio!"},
     {name: "endDate", errorMsg: "Elija fecha de fin!"}
-  ],
+  ];
 
-  _showStartDateTimePicker(){
+  _showStartDateTimePicker = () => {
     this.setState({isStartDateTimePickerVisible: true});
-  },
-  _hideStartDateTimePicker(){
+  };
+
+  _hideStartDateTimePicker = () => {
     this.setState({isStartDateTimePickerVisible: false});
-  },
-  _showEndDateTimePicker(){
+  };
+
+  _showEndDateTimePicker = () => {
     this.setState({isEndDateTimePickerVisible: true});
-  },
-  _hideEndDateTimePicker(){
+  };
+
+  _hideEndDateTimePicker = () => {
     this.setState({isEndDateTimePickerVisible: false});
-  },
-  _handleActivityLocationButtonpress(){
+  };
+
+  _handleActivityLocationButtonpress = () => {
     this.setState({showMapLocation: true});
-  },
-  _formatDateForBackend(date){
+  };
+
+  _formatDateForBackend = (date) => {
     return date.toISOString().slice(0, 19).replace(/T/g, " ");
-  },
-  _handleStartDatePicked(startDate){
+  };
+
+  _handleStartDatePicked = (startDate) => {
     let formattedDate = this._formatDateForBackend(startDate);
     this.setState({startDate: formattedDate});
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
-  },
-  _handleEndDatePicked(endDate){
+  };
+
+  _handleEndDatePicked = (endDate) => {
     let formattedDate = this._formatDateForBackend(endDate);
     this.setState({endDate: formattedDate});
     console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
-  },
-  _isString(value){
+  };
+
+  _isString = (value) => {
     return typeof value === 'string' || value instanceof String;
-  },
-  _validateForm(){
+  };
+
+  _validateForm = () => {
     let errorMsg = "";
     this.formFields.forEach((formField) => {
       let value = this.state[formField.name];
@@ -84,19 +87,17 @@ const NewActivity = React.createClass({
       }
     });
     return errorMsg;
-  },
+  };
 
-
-  setModalVisible(visible) {
+  setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
-  },
+  };
 
-  _handleActivitynameTextChange(inputValue) {
+  _handleActivitynameTextChange = (inputValue) => {
     this.setState({activityName: inputValue});
-  },
+  };
 
-
-  async _handleCreateActivityButtonPress() {
+  _handleCreateActivityButtonPress = async () => {
     let errorMsg = this._validateForm();
     if (errorMsg.length > 0) {
       Alert.alert(
@@ -129,21 +130,22 @@ const NewActivity = React.createClass({
     }
 
     Alert.alert(
-      'Actividad creada con exito!'
+      "¡Éxito!",
+      'Tu actividad fue creada correctamente.'
     );
     this._goToHome();
-  },
+  };
 
-  _handleCancelActivityCreation() {
+  _handleCancelActivityCreation = () => {
     this._goToHome();
-  },
+  };
 
-  _goToHome() {
+  _goToHome = () => {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
-  },
+  };
 
-  async componentWillMount() {
+  componentWillMount = async () => {
     this.setState({loading: true});
     try {
       let events = await EventsService.getEvents();
@@ -154,7 +156,8 @@ const NewActivity = React.createClass({
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
       Alert.alert(
-        'Error al cargar información de Eventos existentes.',
+        "Error",
+        'Error al cargar información de Eventos existentes. \n' +
         e.message || e
       );
     }
@@ -169,31 +172,37 @@ const NewActivity = React.createClass({
     } catch (e) {
       console.log("Error getting device location: ", e);
       Alert.alert(
-        'Error al obtener la ubicación del dispositivo.',
+        "Error",
+        'Error al obtener la ubicación del dispositivo.\n' +
         e.message || e
       );
     } finally {
       this.setState({loading: false});
     }
-  },
-  saveActivityLocation(location) {
+  };
+
+  saveActivityLocation = (location) => {
     this.setState({
       activityLocation: {
         latitude: location.latitude,
         longitude: location.longitude
       }
-    });
-  },
-  _handleEventSelected(itemValue, itemIndex){
+    })
+  };
+
+  _handleEventSelected = (itemValue, itemIndex) => {
     this.setState({selectedEventId: itemValue});
-  },
-  componentDidMount() {
+  };
+
+  componentDidMount = () => {
     this.setModalVisible(!this.state.modalVisible)
-  },
+  };
+
   render() {
     if (this.state.loading) {
       return null;
     }
+
     return (
       <View style={{marginTop: 22}}>
         <Modal
@@ -332,7 +341,7 @@ const NewActivity = React.createClass({
       </View>
     )
   }
-});
+}
 
 const styles = StyleSheet.create({
   message: {
@@ -381,5 +390,3 @@ const styles = StyleSheet.create({
     margin: 50
   }
 });
-
-export default NewActivity;
