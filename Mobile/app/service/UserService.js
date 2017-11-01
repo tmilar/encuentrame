@@ -32,9 +32,9 @@ class UserService {
   }
 
   tryUserLogin = async (user) => {
-    let loginResponse;
+    let loginTokensResponse;
     try {
-      loginResponse = await this.postLoginRequest(user);
+      loginTokensResponse = await this.postLoginRequest(user);
     } catch (e) {
       let errBody = {message: e.message || e, status: e.status || undefined};
       if (errBody.status === 401) {
@@ -43,7 +43,7 @@ class UserService {
       console.log("Some error occured when doing postLoginRequest(): ", errBody);
       throw errBody;
     }
-    return loginResponse;
+    return loginTokensResponse;
   };
 
   async postLoginRequest(userData) {

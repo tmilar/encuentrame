@@ -101,13 +101,13 @@ class Service {
 
       if (status === 401) {
         let defaultMsg = 'La sesión ha caducado. Por favor, vuelva a iniciar sesión.';
-        throw {message: defaultMsg, status};
+        throw {message: defaultMsg, status, responseBody};
       }
 
       if (status === 400) {
         let responseJSON = JSON.stringify(responseBody);
-        console.error(`Error 400: bad request. Respuesta obtenida: ${responseJSON} `);
-        throw 'La solicitud es inválida.';
+        console.log(`Error 400: bad request. Respuesta obtenida: ${responseJSON} `);
+        throw {message: 'La solicitud es inválida.', status, responseBody};
       }
 
       throw 'Ha ocurrido un error. (status: ' + status + ').';

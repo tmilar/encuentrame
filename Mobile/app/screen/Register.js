@@ -65,7 +65,7 @@ export default class Register extends Component {
       console.log("Register error:", e);
       Alert.alert(
         "Error de registro",
-        `Hubo un problema: ${e}.`
+        `Hubo un problema: ${e.message || e}`
       );
       return;
     }
