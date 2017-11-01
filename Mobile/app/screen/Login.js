@@ -168,17 +168,17 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View style={containers.container}>
+      <View style={{height: this.state.visibleHeight}}>
+      <View style={[containers.container, styles.scroll]}>
 
-        <ScrollView ref='scrollView'
-                    style={styles.scroll}>
+        <View style={[{flex: 1}]}>
           <View style={styles.header}>
             <Text style={text.title}>
               Encuentrame
             </Text>
           </View>
 
-          <View style={styles.content}>
+          <View style={styles.loginForm}>
             <TextInput
               value={this.state.username}
               placeholder="Usuario"
@@ -187,7 +187,6 @@ export default class Login extends Component {
               selectTextOnFocus
               onChangeText={this._handleUsernameTextChange}
             />
-
             <TextInput
               value={this.state.password}
               placeholder="Contraseña"
@@ -200,23 +199,23 @@ export default class Login extends Component {
             />
           </View>
 
-          <View style={styles.footer}>
-            <Button
-              title="Login"
-              style={styles.Login}
-              onPress={this._handleLoginButtonPress}
-            />
+          <View style={{flex: 1}}>
+            <View style={styles.actionButtons}>
+              <Button
+                title="Login"
+                style={styles.Login}
+                onPress={this._handleLoginButtonPress}
+              />
 
-            <Text
-              onPress={this._handleRegisterTextPress}
-              style={styles.notRegistered}>
-              No estoy registrado
-            </Text>
+              <Text
+                onPress={this._handleRegisterTextPress}
+                style={styles.notRegistered}>
+                No estoy registrado
+              </Text>
+            </View>
           </View>
-
-        </ScrollView>
-
-
+        </View>
+      </View>
       </View>
     )
   }
@@ -225,15 +224,12 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   header: {
     flex: 1,
-    height: 100,
   },
-  content: {
-    flex: 4,
-    height: 400,
+  loginForm: {
+    flex: 2,
   },
-  footer: {
-    flex: 1,
-    height: 100,
+  actionButtons: {
+    bottom: 0
   },
   textInput: {
     width: 200,
@@ -241,13 +237,15 @@ const styles = StyleSheet.create({
     padding: 8
   },
   Login: {
-    marginTop: 200
+    // marginTop: 5, //200
+    // marginBottom: 10
   },
   scroll: {
     padding: 30,
-    flexDirection: 'column'
   },
   notRegistered: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 15,
+    fontSize: 16
   }
 });
