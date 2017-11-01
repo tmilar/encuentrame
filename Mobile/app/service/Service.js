@@ -7,28 +7,30 @@ import isJSON from '../util/isJSON';
  */
 class Service {
 
-  async sendRequest(url, requestData) {
+  async sendRequest(url, requestOptions) {
     url = apiUrl + url;
     let userId = await SessionService.getSessionUserId();
     let token = await SessionService.getSessionToken();
 
-    requestData = requestData || {method: "GET"};
+    let defaultRequest = {
+      method: 'GET',
+      headers: Object.assign({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        token && {'token': token},
+        userId && {'user': userId}
+      )
+    };
 
-    if (!requestData.headers) {
-      requestData.headers = {};
-    }
     if (requestData.method == 'POST' && (!requestData.body)){
       requestData.body = JSON.stringify({
       });
     }
-    Object.assign(requestData.headers, {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'token': token,
-      'user': userId
-    });
 
-    let rawResponse = await fetch(url, requestData);
+    let request = Object.assign(defaultRequest, requestOptions);
+
+    let rawResponse = await fetch(url, request);
     this.checkResponseStatus(rawResponse);
     let finalResponse = await this.parseResponse(rawResponse);
     return finalResponse;
@@ -42,6 +44,7 @@ class Service {
       throw 'Ocurrió un problema en la comunicación con el servidor.'
     }
   }
+
 
   /**
    * Parse response body to always return a valid JS object,
