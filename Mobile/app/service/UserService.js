@@ -151,6 +151,22 @@ class UserService {
       userData.username === testUser.username &&
       userData.password === testUser.password
   }
+
+  async uploadUserProfileImage(formData) {
+    let uploadUserImageUrl = 'account/uploadImage';
+    let uploadUserImageResponse =  await Service.sendMultipartFormDataRequest(uploadUserImageUrl, {
+      method: 'POST',
+      body: formData
+    });
+    return uploadUserImageResponse;
+  }
+
+  async getLoggedUserImgUrl() {
+    let userId = await SessionService.getSessionUserId();
+    let userImgUrl = 'account/getImage/' + userId;
+    return apiUrl + userImgUrl;
+  };
+
 }
 
 let userService = new UserService();

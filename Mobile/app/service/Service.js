@@ -6,38 +6,68 @@ import isJSON from '../util/isJSON';
  * Manage base session headers for all services after user has logged in
  */
 class Service {
-
-  async sendRequest(url, requestOptions) {
-    url = apiUrl + url;
+  /**
+   * Attachs session headers to request and returns it
+   * @param request
+   * @private
+   */
+  async _attachRequestSessionHeaders(request) {
     let userId = await SessionService.getSessionUserId();
     let token = await SessionService.getSessionToken();
-
-    let defaultRequest = {
-      method: 'GET',
-      headers: Object.assign({
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        token && {'token': token},
-        userId && {'user': userId}
-      )
+    let sessionHeaders = {
+        token: token,
+        user: userId
     };
+    let finalHeaders = request.headers || {};
+    finalHeaders = Object.assign(sessionHeaders, finalHeaders);
+    request.headers = finalHeaders;
+  }
 
+  /**
+   * Sends a json request to server
+   * @param url
+   * @param requestOptions
+   */
+  async sendRequest(url, requestOptions) {
+    url = apiUrl + url;
+    let request = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+    await this._attachRequestSessionHeaders(request);
     if (requestOptions.body) {
       this._ensureBodyStringified(requestOptions);
     }
-
     if (requestOptions.method === 'POST') {
       this._ensureBodyPresent(requestOptions);
     }
-
-
-    let request = Object.assign(defaultRequest, requestOptions);
-
+    request = Object.assign(request, requestOptions);
     let rawResponse = await fetch(url, request);
     let responseBody = await this.parseResponse(rawResponse);
     await this.checkResponseStatus(rawResponse, responseBody);
     return responseBody;
+  }
+  /**
+   * Sends a multipart/form-data request
+   * @param url
+   * @param requestOptions
+   */
+  async sendMultipartFormDataRequest(url, requestOptions) {
+    url = apiUrl + url;
+    let request = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    };
+    request = Object.assign(request, requestOptions);
+    await this._attachRequestSessionHeaders(request);
+    let rawResponse = await fetch(url, request);
+    await this.checkResponseStatus(rawResponse);
+    return rawResponse;
   }
 
   /**
@@ -105,11 +135,10 @@ class Service {
       }
 
       if (status === 400) {
-        let responseJSON = JSON.stringify(responseBody);
+        let responseJSON = responseBody && JSON.stringify(responseBody) || "";
         console.log(`Error 400: bad request. Respuesta obtenida: ${responseJSON} `);
         throw {message: 'La solicitud es inválida.', status, responseBody};
       }
-
       throw 'Ha ocurrido un error. (status: ' + status + ').';
 
     }
