@@ -161,7 +161,7 @@ class UserService {
     return uploadUserImageResponse;
   }
 
-  async getLoggedUserImg() {
+  async getLoggedUserImgUrl() {
     let userId = await SessionService.getSessionUserId();
     let userImgUrl = 'account/getImage/' + userId;
     return apiUrl + userImgUrl;
