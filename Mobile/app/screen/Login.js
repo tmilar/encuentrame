@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
 import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
-import ReactNative, {ScrollView} from 'react-native';
 import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
+
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -12,13 +14,13 @@ export default class Login extends Component {
     // header: null
   };
 
+  state = {
+    username: '',
+    password: ''
+  };
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      username: '',
-      password: ''
-    };
 
     this._clearForm = this._clearForm.bind(this);
     this._doLogin = this._doLogin.bind(this);
@@ -127,71 +129,62 @@ export default class Login extends Component {
     navigate('PostLogin');
   }
 
-
-  inputFocused(refName) {
-    setTimeout(() => {
-      let scrollResponder = this.refs.scrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        ReactNative.findNodeHandle(this.refs[refName]),
-        110, //additionalOffset
-        true
-      );
-    }, 50);
-  }
-
   render() {
     return (
-      <View style={containers.container}>
+      <View style={[containers.container, styles.scroll]}>
+        <View style={[{flex: 1}]}>
 
-        <ScrollView ref='scrollView'
-                    style={styles.scroll}>
           <View style={styles.header}>
             <Text style={text.title}>
               Encuentrame
             </Text>
           </View>
 
-          <View style={styles.content}>
+          <View style={styles.loginForm}>
             <TextInput
               value={this.state.username}
               placeholder="Usuario"
               ref="usuario"
               style={styles.textInput}
-              onFocus={this.inputFocused.bind(this, 'usuario')}
               selectTextOnFocus
+              autoCapitalize='none'
+              returnKeyType='next'
+              onSubmitEditing={() => this.refs.password.focus()}
               onChangeText={this._handleUsernameTextChange}
             />
-
             <TextInput
               value={this.state.password}
               placeholder="Contraseña"
               ref="password"
               style={styles.textInput}
+              autoCapitalize='none'
+              autoCorrect={false}
               secureTextEntry
-              returnKeyType="done"
-              onFocus={this.inputFocused.bind(this, 'password')}
+              returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />
           </View>
 
-          <View style={styles.footer}>
-            <Button
-              title="Login"
-              style={styles.Login}
-              onPress={this._handleLoginButtonPress}
-            />
+          <View style={{flex: 1}}>
+            <View style={styles.actionButtons}>
+              <Button
+                title="Login"
+                style={styles.Login}
+                onPress={this._handleLoginButtonPress}
+              />
 
-            <Text
-              onPress={this._handleRegisterTextPress}
-              style={styles.notRegistered}>
-              No estoy registrado
-            </Text>
+              <Text
+                onPress={this._handleRegisterTextPress}
+                style={styles.notRegistered}>
+                No estoy registrado
+              </Text>
+            </View>
           </View>
 
-        </ScrollView>
-
-
+          {/* The next view will animate to match the actual keyboards height */}
+          <KeyboardSpacer/>
+        </View>
       </View>
     )
   }
@@ -200,15 +193,12 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   header: {
     flex: 1,
-    height: 100,
   },
-  content: {
-    flex: 4,
-    height: 400,
+  loginForm: {
+    flex: 2,
   },
-  footer: {
-    flex: 1,
-    height: 100,
+  actionButtons: {
+    bottom: 0
   },
   textInput: {
     width: 200,
@@ -216,13 +206,15 @@ const styles = StyleSheet.create({
     padding: 8
   },
   Login: {
-    marginTop: 200
+    // marginTop: 5, //200
+    // marginBottom: 10
   },
   scroll: {
     padding: 30,
-    flexDirection: 'column'
   },
   notRegistered: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 15,
+    fontSize: 16
   }
 });

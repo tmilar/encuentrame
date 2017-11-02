@@ -6,6 +6,11 @@ import {containers, text} from '../style';
 
 export default class Register extends Component {
 
+  static navigationOptions = {
+    title: 'Registro'
+  };
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -80,27 +85,13 @@ export default class Register extends Component {
     this.props.navigation.goBack();
   }
 
-  inputFocused(refName) {
-    setTimeout(() => {
-      let scrollResponder = this.refs.scrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        ReactNative.findNodeHandle(this.refs[refName]),
-        110, //additionalOffset
-        true
-      );
-    }, 50);
-  }
-
-  static navigationOptions = {
-    title: 'Registro'
-  };
-
   render() {
-
     return (
       <View style={containers.container}>
-        <ScrollView ref='scrollView'
-                    style={styles.scroll}>
+        <ScrollView keyboardShouldPersistTaps="always"
+                    scrollEnabled={false}
+                    showsVerticalScrollIndicator={false}
+        >
           <View style={styles.header}>
             <Text style={text.title}>
               Encuentrame
@@ -111,32 +102,37 @@ export default class Register extends Component {
             <TextInput
               value={this.state.username}
               placeholder="Usuario"
-              onFocus={this.inputFocused.bind(this, 'Name')}
-              ref="Name"
+              ref="usuario"
               style={styles.input}
               selectTextOnFocus
+              autoCapitalize='none'
+              returnKeyType='next'
               onChangeText={this._handleUsernameTextChange}
+              onSubmitEditing={() => this.refs.email.focus()}
             />
 
             <TextInput
               value={this.state.email}
               placeholder="E-mail"
-              onFocus={this.inputFocused.bind(this, 'mail')}
-              ref="mail"
+              ref="email"
               style={styles.input}
               keyboardType="email-address"
               selectTextOnFocus
+              autoCapitalize='none'
+              returnKeyType='next'
               onChangeText={this._handleEmailTextChange}
+              onSubmitEditing={() => this.refs.password.focus()}
             />
 
             <TextInput
               value={this.state.password}
               placeholder="Contraseña"
-              onFocus={this.inputFocused.bind(this, 'password')}
               ref="password"
               style={styles.input}
+              autoCapitalize='none'
+              autoCorrect={false}
               secureTextEntry
-              returnKeyType="done"
+              returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}
               onSubmitEditing={this._handleLoginButtonPress}
             />
@@ -151,6 +147,7 @@ export default class Register extends Component {
         </ScrollView>
       </View>
     )
+
   }
 }
 

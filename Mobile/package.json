@@ -29,6 +29,7 @@
     "react-native-card-view": "0.0.3",
     "react-native-deck-swiper": "^1.4.2",
     "react-native-elements": "^0.17.0",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-notifyer": "^0.9.3",
     "react-navigation": "^1.0.0-beta.15"
