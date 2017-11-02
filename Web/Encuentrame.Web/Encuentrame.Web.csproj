@@ -234,6 +234,7 @@
     <Compile Include="Models\Devices\DeviceApiModel.cs" />
     <Compile Include="Models\Events\EventListModel.cs" />
     <Compile Include="Models\Events\EventModel.cs" />
+    <Compile Include="Models\Events\EventMonitorModel.cs" />
     <Compile Include="Models\Positions\PositionListModel.cs" />
     <Compile Include="Models\SoughtPersons\SoughtPersonApiResultModel.cs" />
     <Compile Include="Models\SoughtPersons\SoughtPersonSeenApiModel.cs" />

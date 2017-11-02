@@ -18,6 +18,10 @@ namespace Encuentrame.Model.Events
         [Inject]
         public IBag<Event> Events { get; set; }
 
+
+        [Inject]
+        public IBag<AreYouOkEvent> AreYouOkEvents { get; set; }
+
         [Inject]
         public IBag<User> Users { get; set; }
 
@@ -91,6 +95,7 @@ namespace Encuentrame.Model.Events
             if (eventt.Status.In(EventStatusEnum.InProgress, EventStatusEnum.InEmergency))
             {
                 eventt.Status = EventStatusEnum.InEmergency;
+                eventt.EmergencyDateTime = SystemDateTime.Now;
                 AreYouOkCommand.AskFromEvent(eventt);
             }
             else
@@ -106,6 +111,7 @@ namespace Encuentrame.Model.Events
             if (eventt.Status.In( EventStatusEnum.InEmergency))
             {
                 eventt.Status = EventStatusEnum.InProgress;
+                eventt.EmergencyDateTime = null;
             }
             else
             {
@@ -127,6 +133,17 @@ namespace Encuentrame.Model.Events
             eventt.Status = EventStatusEnum.Completed;
             eventt.EndDateTime = SystemDateTime.Now;
             //TODO: hacer las notifications
+        }
+
+        public void StartCollaborativeSearch(int id)
+        {
+            var eventt = Events[id];
+            if (eventt.Status == EventStatusEnum.InEmergency)
+            {
+                AreYouOkCommand.StartCollaborativeSearch(eventt);
+            }
+
+
         }
 
         public class CreateOrEditParameters

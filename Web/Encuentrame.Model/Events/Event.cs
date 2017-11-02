@@ -25,6 +25,9 @@ namespace Encuentrame.Model.Events
         public virtual DateTime? DeletedKey { get; set; }
         public virtual DateTime BeginDateTime { get; set; }
         public virtual DateTime EndDateTime { get; set; }
+
+        public virtual DateTime? EmergencyDateTime { get; set; }
+
         public virtual EventStatusEnum Status  { get; set; }
         public virtual User Organizer { get; set; }
 

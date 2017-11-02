@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Encuentrame.Model.Accounts
 {
@@ -13,6 +14,7 @@ namespace Encuentrame.Model.Accounts
         void Edit(int id, UserCommand.CreateOrEditParameters userParameters);
         void Delete(int id);
         void SetDevice(UserCommand.DeviceParameters deviceParameters);
-        
+
+        IList<User> GetUsersByIds(IEnumerable<int> ids);
     }
 }

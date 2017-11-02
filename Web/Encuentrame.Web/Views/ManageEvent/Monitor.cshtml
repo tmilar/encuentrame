@@ -4,7 +4,7 @@
 @using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @using Encuentrame.Support
-@model Encuentrame.Web.Models.Events.EventModel
+@model Encuentrame.Web.Models.Events.EventMonitorModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,7 +33,60 @@
 {
     <div class="row">
         <div class="col-md-6">
-           
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => Model.BeginDateTime)
+                </div>
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => Model.EndDateTime)
+                </div>
+
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => Model.OrganizerDisplay)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.DisplayFor(model => Model.Address)
+                </div>
+            </div>
+            @if (Model.Status == EventStatusEnum.Pending)
+                {
+                <span class="label label-info">
+                    @TranslationsHelper.Get(EventStatusEnum.Pending)
+                </span>
+            }
+            else if (Model.Status == EventStatusEnum.InProgress)
+            {
+                <span class="label label-warning">
+                    @TranslationsHelper.Get(EventStatusEnum.InProgress)
+                </span>
+            }
+            else if (Model.Status == EventStatusEnum.InEmergency)
+            {
+                @Html.DisplayFor(model => Model.EmergencyDateTime)
+                <span class="label label-danger  margin-right-xs">
+                    @TranslationsHelper.Get(EventStatusEnum.InEmergency)
+                </span>
+                    <div class="shake-slow shake-constant shake-opacity">
+                        <img src="@Url.Content("~/images/alarm.jpg")" width="21px" height="21px" alt="@TranslationsHelper.Get(EventStatusEnum.InEmergency)" />
+                    </div>
+            }
+            else if (Model.Status == EventStatusEnum.Completed)
+            {
+                <span class="label label-success">
+                    @TranslationsHelper.Get(EventStatusEnum.Completed)
+                </span>
+            }
+            else if (Model.Status == EventStatusEnum.Canceled)
+            {
+                <span class="label label-danger">
+                    @TranslationsHelper.Get(EventStatusEnum.Canceled)
+                </span>
+            }
+
+
+
         </div>
         <div class="col-md-6">
             <div class="map-container" id="mapContainer" style="position: relative; width: 100%; height: 288px; overflow: hidden"></div>
@@ -50,7 +103,7 @@
             @Translations.Begin
         </button>
     }
-    @if (Model.Status.In( EventStatusEnum.InProgress, EventStatusEnum.InEmergency))
+    @if (Model.Status.In(EventStatusEnum.InProgress, EventStatusEnum.InEmergency))
     {
         <button name="buttonAction" value="finalize" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
                 data-modal-ok="@Translations.Finalize" data-modal-title="@Translations.Finalize" data-modal-message="@Translations.FinalizeMessage.FormatWith(Model.Name)">
@@ -64,12 +117,16 @@
             @Translations.Emergency
         </button>
     }
-    
+
     @if (Model.Status == EventStatusEnum.InEmergency)
     {
         <button name="buttonAction" value="cancelEmergency" type="button" class="btn btn-warning  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
                 data-modal-ok="@Translations.Ok" data-modal-title="@Translations.CancelEmergency" data-modal-message="@Translations.CancelEmergencyMessage.FormatWith(Model.Name)">
             @Translations.CancelEmergency
+        </button>
+        <button name="buttonAction" value="startCollaborativeSearch" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                data-modal-ok="@Translations.Ok" data-modal-title="@Translations.StartCollaborativeSearch" data-modal-message="@Translations.StartCollaborativeSearchMessage.FormatWith(Model.Name)">
+            @Translations.StartCollaborativeSearch
         </button>
     }
 

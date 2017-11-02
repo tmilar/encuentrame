@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
-using Encuentrame.Model.Accounts.Permissions;
 using Encuentrame.Model.Contacts;
 using Encuentrame.Model.Events;
 using Encuentrame.Model.Supports.Notifications;
@@ -18,8 +17,10 @@ namespace Encuentrame.Web.Controllers
 {
     [AllowAnonymous]
     public class DatabaseController : BaseController
-    {        
-       
+    {
+
+        [Inject]
+        public INHibernateContext NHibernateContext { get; set; }
 
         [Inject]
         public IBag<User> Users { get; set; }
@@ -277,6 +278,8 @@ namespace Encuentrame.Web.Controllers
             return notificationTypes;
         }
 
+
        
+
     }
 }

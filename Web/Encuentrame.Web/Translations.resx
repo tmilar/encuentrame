@@ -1497,4 +1497,16 @@
   <data name="CancelEmergency" xml:space="preserve">
     <value>Cancelar emergencia</value>
   </data>
+  <data name="EmergencyDateTime" xml:space="preserve">
+    <value>Fecha y hora de emergencia</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="StartCollaborativeSearch" xml:space="preserve">
+    <value>Búsqueda colaborativa</value>
+  </data>
+  <data name="StartCollaborativeSearchMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea comenzar una búsqueda colaborativa?</value>
+  </data>
 </root>

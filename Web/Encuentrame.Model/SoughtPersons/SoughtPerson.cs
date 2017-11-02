@@ -1,9 +1,11 @@
-﻿using Encuentrame.Support;
+﻿using Encuentrame.Model.Accounts;
+using Encuentrame.Support;
 
 namespace Encuentrame.Model.SoughtPersons
 {
-    public class SoughtPerson:IIdentifiable
+    public class SoughtPerson
     {
-        public virtual int Id { get; protected set; }
+        public virtual int UserId { get; protected set; }
+        public double Distance { get; set; }
     }
 }

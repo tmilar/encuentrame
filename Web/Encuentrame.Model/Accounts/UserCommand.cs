@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Encuentrame.Model.Accounts.Permissions;
 using Encuentrame.Model.Devices;
@@ -140,6 +141,11 @@ namespace Encuentrame.Model.Accounts
             }
 
          
+        }
+
+        public IList<User> GetUsersByIds(IEnumerable<int> ids)
+        {
+            return Users.Where(x => x.DeletedKey == null && ids.Contains(x.Id)).ToList();
         }
 
         public IList<User> List()

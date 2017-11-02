@@ -259,6 +259,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dirección.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agregar fila.
         /// </summary>
         public static string AddRow {
@@ -1218,6 +1227,15 @@ namespace Encuentrame.Web {
         public static string Emergency {
             get {
                 return ResourceManager.GetString("Emergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha y hora de emergencia.
+        /// </summary>
+        public static string EmergencyDateTime {
+            get {
+                return ResourceManager.GetString("EmergencyDateTime", resourceCulture);
             }
         }
         
@@ -3585,6 +3603,24 @@ namespace Encuentrame.Web {
         public static string Start {
             get {
                 return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Búsqueda colaborativa.
+        /// </summary>
+        public static string StartCollaborativeSearch {
+            get {
+                return ResourceManager.GetString("StartCollaborativeSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Esta seguro que desea comenzar una búsqueda colaborativa?.
+        /// </summary>
+        public static string StartCollaborativeSearchMessage {
+            get {
+                return ResourceManager.GetString("StartCollaborativeSearchMessage", resourceCulture);
             }
         }
         

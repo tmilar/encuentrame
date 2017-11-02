@@ -20,7 +20,7 @@ namespace Encuentrame.Web
             config.Routes.MapHttpRoute(
                 name: "SoughtPeopleApi",
                 routeTemplate: "api/SoughtPeople",
-                defaults: new { controller = "SoughtPerson", action = "GetAll" }
+                defaults: new { controller = "SoughtPerson", action = "SoughtPeople" }
             );
 
             config.Routes.MapHttpRoute(

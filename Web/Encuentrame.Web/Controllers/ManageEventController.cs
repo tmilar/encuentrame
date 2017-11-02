@@ -12,8 +12,8 @@ using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(new[] { RoleEnum.Administrator,RoleEnum.EventAdministrator,   })]
-    public class ManageEventController : ListBaseController<Event,EventListModel>
+    [AuthorizationPass(new[] { RoleEnum.Administrator, RoleEnum.EventAdministrator, })]
+    public class ManageEventController : ListBaseController<Event, EventListModel>
     {
         [Inject]
         public IEventCommand EventCommand { get; set; }
@@ -27,7 +27,7 @@ namespace Encuentrame.Web.Controllers
         {
             var eventt = EventCommand.Get(id);
 
-            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id!=GetLoggedUser().Id)
+            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
             {
                 return RedirectToAction("Index");
             }
@@ -60,7 +60,7 @@ namespace Encuentrame.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
-            var eventtModel = new EventModel()
+            var eventtModel = new EventMonitorModel()
             {
                 Id = eventt.Id,
                 Name = eventt.Name,
@@ -68,16 +68,15 @@ namespace Encuentrame.Web.Controllers
                 Longitude = eventt.Longitude,
                 BeginDateTime = eventt.BeginDateTime,
                 EndDateTime = eventt.EndDateTime,
-                Number = eventt.Address.Number,
-                City = eventt.Address.City,
-                Province = eventt.Address.Province,
-                Street = eventt.Address.Street,
-                Zip = eventt.Address.Zip,
-                FloorAndDepartament = eventt.Address.FloorAndDepartament,
-                Organizer = eventt.Organizer.Id,
+                Address = eventt.Address.ToDisplay(),
+                OrganizerDisplay = eventt.Organizer.ToDisplay(),
                 Status = eventt.Status
             };
 
+            if (eventt.EmergencyDateTime.HasValue)
+            {
+                eventtModel.EmergencyDateTime = eventt.EmergencyDateTime.Value;
+            }
 
             return View(eventtModel);
         }
@@ -95,11 +94,11 @@ namespace Encuentrame.Web.Controllers
             if (ModelState.IsValid)
             {
                 var eventtParameters = GetCreateOrEditParameters(eventtModel);
-                if( LoggedUserIs(RoleEnum.EventAdministrator))
+                if (LoggedUserIs(RoleEnum.EventAdministrator))
                 {
                     eventtParameters.OrganizerId = GetLoggedUser().Id;
                 }
-                
+
                 EventCommand.Create(eventtParameters);
 
                 AddModelSuccess(Translations.CreateSuccess.FormatWith(TranslationsHelper.Get<Event>()));
@@ -203,10 +202,20 @@ namespace Encuentrame.Web.Controllers
                     return Emergency(id);
                 case "cancelEmergency":
                     return CancelEmergency(id);
+                case "startCollaborativeSearch":
+                    return StartCollaborativeSearch(id);
+
             }
 
             return RedirectToAction("Index");
 
+        }
+
+        protected ActionResult StartCollaborativeSearch(int id)
+        {
+            EventCommand.StartCollaborativeSearch(id);
+
+            return RedirectToAction("Monitor", new { id });
         }
 
         protected ActionResult Delete(int id)
@@ -220,7 +229,7 @@ namespace Encuentrame.Web.Controllers
         {
             EventCommand.BeginEvent(id);
 
-            return RedirectToAction("Monitor",new {id});
+            return RedirectToAction("Monitor", new { id });
         }
         protected ActionResult Finalize(int id)
         {
@@ -259,7 +268,7 @@ namespace Encuentrame.Web.Controllers
                     Id = eventt.Organizer.Id,
                     Name = eventt.Organizer.FullName
                 }
-                
+
             };
             return eventtListModel;
         }

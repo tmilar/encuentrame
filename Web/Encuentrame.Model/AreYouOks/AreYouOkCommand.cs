@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Activities;
 using Encuentrame.Model.Events;
+using Encuentrame.Model.SoughtPersons;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 using Encuentrame.Support.ExpoNotification;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
+using NHibernate.Transform;
 
 namespace Encuentrame.Model.AreYouOks
 {
@@ -18,7 +21,8 @@ namespace Encuentrame.Model.AreYouOks
         [Inject]
         public IBag<AreYouOkActivity> AreYouOkActivities { get; set; }
 
-   
+        
+
 
         [Inject]
         public IBag<AreYouOkEvent> AreYouOkEvents { get; set; }
@@ -27,17 +31,17 @@ namespace Encuentrame.Model.AreYouOks
 
         [Inject]
         public IBag<User> Users { get; set; }
-        
+
         public AreYouOkActivity Get(int id)
         {
             return AreYouOkActivities[id];
         }
-        
+
         public IList<AreYouOkActivity> List()
         {
             return AreYouOkActivities.ToList();
         }
-       
+
         public void Delete(int id)
         {
             var areYouOk = AreYouOkActivities[id];
@@ -48,8 +52,8 @@ namespace Encuentrame.Model.AreYouOks
         {
             var replyUser = Users[parameters.UserId];
 
-            var areYouOkActivities = AreYouOkActivities.Where(x=>x.ReplyDatetime==null && x.Target==replyUser );
-            
+            var areYouOkActivities = AreYouOkActivities.Where(x => x.ReplyDatetime == null && x.Target == replyUser);
+
             foreach (var areYouOkActivity in areYouOkActivities)
             {
                 areYouOkActivity.IAmOk = parameters.IAmOk;
@@ -129,7 +133,7 @@ namespace Encuentrame.Model.AreYouOks
 
                 AreYouOkEvents.Put(areYouOk);
             }
-           
+
 
             CurrentUnitOfWork.Checkpoint();
 
@@ -152,10 +156,56 @@ namespace Encuentrame.Model.AreYouOks
 
                 ExpoPushHelper.SendPushNotification(list);
             }
-           
+
+
+
+        }
+        public void StartCollaborativeSearch(Event eventt)
+        {
+            var searchers = AreYouOkEvents.Where(x => x.Event == eventt && x.ReplyDatetime != null).ToList();
+
+            foreach (var areYouOkEvent in searchers)
+            {
+                var list = areYouOkEvent.Target.Devices.Select(x => new BodySend()
+                {
+                    Token = x.Token,
+                    Body = $"Se declaro una emergencia en el evento {eventt.Name}",
+                    Title = "Encuentrame",
+                    Data = new
+                    {
+                        EventId = eventt.Id,
+                        EmergencyDateTime = eventt.EmergencyDateTime.Value,
+                        Type = "Event.StartCollaborativeSearch",
+                    }
+                }).ToList();
+
+                ExpoPushHelper.SendPushNotification(list);
+            }
 
         }
 
+        public IEnumerable<SoughtPerson> SoughtPeople(User userSearcher)
+        {
+
+            var currentActivity = Activities
+                .Where(x => x.Event != null && x.User == userSearcher && x.Event.Status == EventStatusEnum.InEmergency)
+                .FirstOrDefault();
+
+            if (currentActivity == null)
+            {
+                return new List<SoughtPerson>();
+            }
+             
+            var sql = @"EXEC SoughtPeople :userId, :eventId; ";
+
+            var list=NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("userId", userSearcher.Id)
+                .SetParameter("eventId", currentActivity.Event.Id)
+                .SetResultTransformer(Transformers.AliasToBean(typeof(SoughtPerson)));
+
+            return list.List<SoughtPerson>();
+
+        }
 
         public class ReplyParameters
         {
@@ -168,5 +218,8 @@ namespace Encuentrame.Model.AreYouOks
             public int SenderId { get; set; }
             public int TargetId { get; set; }
         }
+
+
+
     }
 }

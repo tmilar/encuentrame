@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Accounts;
@@ -22,8 +23,8 @@ namespace Encuentrame.Web.Controllers.Apis
         [Inject]
         public IUserCommand UserCommand { get; set; }
 
-        [AllowAnonymous]
-        [HttpPost]
+        [System.Web.Http.AllowAnonymous]
+        [System.Web.Http.HttpPost]
         public IHttpActionResult Create(UserApiModel userApiModel)
         {
 
@@ -66,7 +67,7 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public IHttpActionResult Update(UserApiModel userApiModel)
         {
 
@@ -98,7 +99,7 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public IHttpActionResult Devices(DeviceApiModel deviceApiModel)
         {
             var deviceParameters = new UserCommand.DeviceParameters
@@ -112,7 +113,7 @@ namespace Encuentrame.Web.Controllers.Apis
             return Ok();
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult Get()
         {
             var user = UserCommand.Get(GetIdUserLogged());
@@ -127,14 +128,14 @@ namespace Encuentrame.Web.Controllers.Apis
                 InternalNumber = user.InternalNumber,
                 PhoneNumber = user.PhoneNumber,
                 MobileNumber = user.MobileNumber,
-                
+
             };
 
             return Ok(userApiModel);
         }
 
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetAll()
         {
             var users = UserCommand.ListUsers();
@@ -161,19 +162,35 @@ namespace Encuentrame.Web.Controllers.Apis
 
             return Ok(list);
         }
-        
-        [HttpGet]
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.AllowAnonymous]
         public HttpResponseMessage GetImage(int id)
         {
-            var user = UserCommand.Get(id);
-            MemoryStream img = user.Image.Base64ToImageMemoryStreamMemory();
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(img.ToArray());
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-            return result;
+            try
+            {
+                var user = UserCommand.Get(id);
+                MemoryStream img = user.Image.Base64ToImageMemoryStreamMemory();
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new ByteArrayContent(img.ToArray());
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                return result;
+            }
+            catch (Exception )
+            {
+
+                MemoryStream img = ImageExtensions.ImageMemoryStreamFromContentFolder("no-image.png");
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new ByteArrayContent(img.ToArray());
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                return result;
+            }
+           
+
+
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public IHttpActionResult UploadImage()
         {
             var user = UserCommand.Get(this.GetIdUserLogged());

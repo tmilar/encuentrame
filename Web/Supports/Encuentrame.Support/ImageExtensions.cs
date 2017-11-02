@@ -27,6 +27,15 @@ namespace Encuentrame.Support
 
         }
 
+        public static MemoryStream ImageMemoryStreamFromContentFolder(string pathImage)
+        {
+            var root = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            var path = Path.Combine(root, "images/" + pathImage);
+
+            var imageBytes = File.ReadAllBytes(path);
+            return new MemoryStream(imageBytes, 0, imageBytes.Length);
+
+        }
 
         public static string ImageToBase64(this Image image, System.Drawing.Imaging.ImageFormat format)
         {

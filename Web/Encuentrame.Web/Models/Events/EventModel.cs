@@ -76,5 +76,8 @@ namespace Encuentrame.Web.Models.Events
         [Display(ResourceType = typeof(Translations), Name = "Organizer")]
         [Editable(false)]
         public string OrganizerDisplay { get; set; }
+
+        
+       
     }
 }
