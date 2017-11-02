@@ -51,8 +51,8 @@ export default class Register extends Component {
 
   async _handleRegisterButtonPress() {
     const registerData = {
-      username: this.state.username,
-      email: this.state.email,
+      username: this.state.username.trim(),
+      email: this.state.email.trim(),
       password: this.state.password
     };
 
@@ -65,7 +65,7 @@ export default class Register extends Component {
       console.log("Register error:", e);
       Alert.alert(
         "Error de registro",
-        `Hubo un problema: ${e}.`
+        `Hubo un problema: ${e.message || e}`
       );
       return;
     }

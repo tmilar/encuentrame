@@ -43,8 +43,8 @@ class SessionService {
     let sessionJson = await AsyncStorage.getItem(this.STORAGE_KEY);
     let param = null;
     if(!sessionJson) {
-      console.log("No hay sesion guardada!");
-      throw 'Problema al buscar ' + paramName + 'en la sesion.';
+      console.log(`No hay sesion guardada! No se pudo encontrar el parametro: ${paramName}`);
+      return;
     }
 
     let session = JSON.parse(sessionJson);
