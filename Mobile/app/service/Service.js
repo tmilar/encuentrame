@@ -37,7 +37,6 @@ class Service {
         'Content-Type': 'application/json'
       }
     };
-    debugger;
     await this._attachRequestSessionHeaders(request);
     if (requestOptions.body) {
       this._ensureBodyStringified(requestOptions);
@@ -46,7 +45,6 @@ class Service {
       this._ensureBodyPresent(requestOptions);
     }
     request = Object.assign(request, requestOptions);
-    debugger;
     let rawResponse = await fetch(url, request);
     let responseBody = await this.parseResponse(rawResponse);
     await this.checkResponseStatus(rawResponse, responseBody);
