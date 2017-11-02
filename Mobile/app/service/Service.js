@@ -56,7 +56,7 @@ class Service {
     let request = Object.assign(defaultRequest, requestOptions);
     let rawResponse = await fetch(url, request);
     await this.checkResponseStatus(rawResponse);
-    return rawResponse;;
+    return rawResponse;
   }
 
   /**

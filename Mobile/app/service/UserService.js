@@ -164,16 +164,7 @@ class UserService {
   async getLoggedUserImg() {
     let userId = await SessionService.getSessionUserId();
     let userImgUrl = 'account/getImage/' + userId;
-    let userImg =  await Service.sendMultipartFormDataRequest(userImgUrl, {
-      method: 'GET',
-      'Accept': 'multipart/form-data',
-      'Content-Type': 'multipart/form-data'
-    });
-    if (userImg._bodyText.length > 0){
-      let finalUrl = apiUrl + userImgUrl;
-      return finalUrl;
-    }
-    return false;
+    return apiUrl + userImgUrl;
   };
 
 }
