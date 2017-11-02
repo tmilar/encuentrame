@@ -9,6 +9,7 @@ import ActivityService from '../service/ActivityService';
 import {hideLoading, showLoading} from "react-native-notifyer";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
+import LoadingIndicator from "../component/LoadingIndicator";
 
 export default class NewActivity extends Component {
 
@@ -133,20 +134,20 @@ export default class NewActivity extends Component {
       "¡Éxito!",
       'Tu actividad fue creada correctamente.'
     );
-    this._goToHome();
+    this._goBack();
   };
 
   _handleCancelActivityCreation = () => {
-    this._goToHome();
+    this._goBack();
   };
 
-  _goToHome = () => {
+  _goBack = () => {
     this.setModalVisible(false);
     this.props.navigation.goBack(null);
   };
 
   componentWillMount = async () => {
-    this.setState({loading: true});
+    this.state.loading = true;
     try {
       let events = await EventsService.getEvents();
       this.setState({events});
@@ -176,9 +177,9 @@ export default class NewActivity extends Component {
         'Error al obtener la ubicación del dispositivo.\n' +
         e.message || e
       );
-    } finally {
-      this.setState({loading: false});
     }
+
+    this.setState({loading: false});
   };
 
   saveActivityLocation = (location) => {
@@ -200,7 +201,8 @@ export default class NewActivity extends Component {
 
   render() {
     if (this.state.loading) {
-      return null;
+      // TODO show loading text message? maybe: waiting for GPS or something?
+      return <LoadingIndicator/>;
     }
 
     return (
@@ -209,9 +211,7 @@ export default class NewActivity extends Component {
           animationType={"slide"}
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            // TODO go back navigation
-          }}
+          onRequestClose={this._handleCancelActivityCreation}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.activityTitle]}>
@@ -279,7 +279,11 @@ export default class NewActivity extends Component {
                     />
                   </View>
                 </View>
-                {this.state.showMapLocation ? <ModalMap saveActivityLocation={this.saveActivityLocation}/> : null}
+                {
+                  this.state.showMapLocation &&
+                  <ModalMap saveActivityLocation={this.saveActivityLocation}
+                            onClose={() => this.setState({showMapLocation: false})}/>
+                }
               </View>
 
               <View
