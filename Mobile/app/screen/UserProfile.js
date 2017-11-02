@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Image, View} from 'react-native';
+import { Button, Image, View, Alert} from 'react-native';
 import { ImagePicker } from 'expo';
 import UserService from '../service/UserService';
 
@@ -14,7 +14,7 @@ export default class UserProfile extends Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View style={{ flex: 6, alignItems: 'center', justifyContent: 'center' }}>
           <Button
-            title="Elige tu foto de usuario!"
+            title="¡Elige tu foto de usuario!"
             onPress={this._pickImage}
           />
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
@@ -59,13 +59,18 @@ export default class UserProfile extends Component {
     let formData = new FormData();
     // Assume "photo" is the name of the form field the server expects
     formData.append('image', { uri: localUri, name: filename, type });
+    try {
+      await UserService.uploadUserProfileImage(formData);
+    } catch (e) {
+      let errMessage = e.message || e;
+      Alert.alert("Error al subir la foto: ", errMessage);
+    }
 
-    await UserService.uploadUserProfileImage(formData);
     this._goBack();
   };
 
   componentWillMount = async () => {
-    let userImg = await UserService.getLoggedUserImg();
+    let userImg = await UserService.getLoggedUserImgUrl();
     //NECESARIO para evitar que react native cachee eternamente la imagen. No hay fix a esto por ahora para react, solo este workaround de cambiar la URI.....
     this.setState({ image: userImg + "?rand=" + Math.random().toString() });
   };
