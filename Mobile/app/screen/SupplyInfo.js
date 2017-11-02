@@ -103,8 +103,7 @@ export default class SupplyInfo extends Component {
           animationType={"fade"}
           transparent={false}
           visible={true}
-          onRequestClose={() => {/* TODO reportar al Swiper de personas q restablezca la card de éste?*/
-          }}
+          onRequestClose={this._handleCancelSupplyInfo}
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.supplyInfoTitle]}>

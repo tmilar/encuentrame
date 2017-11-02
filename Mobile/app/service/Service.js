@@ -7,32 +7,64 @@ import isJSON from '../util/isJSON';
  */
 class Service {
 
-  async sendRequest(url, requestData) {
+  async sendRequest(url, requestOptions) {
     url = apiUrl + url;
     let userId = await SessionService.getSessionUserId();
     let token = await SessionService.getSessionToken();
 
-    requestData = requestData || {method: "GET"};
+    let defaultRequest = {
+      method: 'GET',
+      headers: Object.assign({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        token && {'token': token},
+        userId && {'user': userId}
+      )
+    };
 
-    if (!requestData.headers) {
-      requestData.headers = {};
+    if (requestOptions.body) {
+      this._ensureBodyStringified(requestOptions);
     }
-    if (requestData.method == 'POST' && (!requestData.body)){
-      requestData.body = JSON.stringify({
-      });
-    }
-    Object.assign(requestData.headers, {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'token': token,
-      'user': userId
-    });
 
-    let rawResponse = await fetch(url, requestData);
-    this.checkResponseStatus(rawResponse);
-    let finalResponse = await this.parseResponse(rawResponse);
-    return finalResponse;
+    if (requestOptions.method === 'POST') {
+      this._ensureBodyPresent(requestOptions);
+    }
+
+
+    let request = Object.assign(defaultRequest, requestOptions);
+
+    let rawResponse = await fetch(url, request);
+    let responseBody = await this.parseResponse(rawResponse);
+    await this.checkResponseStatus(rawResponse, responseBody);
+    return responseBody;
   }
+
+  /**
+   * Useful to save the need of always stringifying manually the body.
+   * @param requestOptions
+   * @private
+   */
+  _ensureBodyStringified = (requestOptions) => {
+    try {
+      JSON.parse(requestOptions.body);
+      // > is stringified. do nothing.
+    } catch (e) {
+      // > was not. do stringify.
+      requestOptions.body = JSON.stringify(requestOptions.body);
+    }
+  };
+
+  /**
+   * Useful when we need at least an empty body
+   * @param requestOptions
+   * @private
+   */
+  _ensureBodyPresent = (requestOptions) => {
+    if (!requestOptions.body) {
+      requestOptions.body = JSON.stringify({});
+    }
+  };
 
   async parseResponse(rawResponse) {
     try {
@@ -42,6 +74,7 @@ class Service {
       throw 'Ocurrió un problema en la comunicación con el servidor.'
     }
   }
+
 
   /**
    * Parse response body to always return a valid JS object,
@@ -57,24 +90,30 @@ class Service {
     return parsed;
   };
 
-
-  checkResponseStatus(rawResponse) {
+  async checkResponseStatus(rawResponse, responseBody) {
     let status = rawResponse.status;
     if (status < 200 || status >= 300) {
-      console.debug(rawResponse);
+      console.log(`Something unexpected did happen (status: ${status}). Raw response: \n`, rawResponse);
+
       if (status === 403) {
-        throw 'El servidor no está disponible. Por favor vuelva a intentar más tarde :(';
+        throw 'El servidor no está disponible. Por favor, vuelva a intentar más tarde :(';
       }
 
-      if (status === 401 || status === 400) {
-        throw 'La sesión ha caducado. Por favor, vuelva a iniciar sesión. (' + status + ').';
+      if (status === 401) {
+        let defaultMsg = 'La sesión ha caducado. Por favor, vuelva a iniciar sesión.';
+        throw {message: defaultMsg, status, responseBody};
+      }
+
+      if (status === 400) {
+        let responseJSON = JSON.stringify(responseBody);
+        console.log(`Error 400: bad request. Respuesta obtenida: ${responseJSON} `);
+        throw {message: 'La solicitud es inválida.', status, responseBody};
       }
 
       throw 'Ha ocurrido un error. (status: ' + status + ').';
 
     }
   }
-
 }
 
 let baseService = new Service();
