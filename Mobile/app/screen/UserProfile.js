@@ -63,7 +63,7 @@ export default class UserProfile extends Component {
       await UserService.uploadUserProfileImage(formData);
     } catch (e) {
       let errMessage = e.message || e;
-      Alert.alert("Error al subir la foto: ", errMessage);
+      Alert.alert("Error al subir la foto", errMessage);
     }
 
     this._goBack();
