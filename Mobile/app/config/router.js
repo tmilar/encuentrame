@@ -107,7 +107,7 @@ const AppNavigator = DrawerNavigator({
       path: '/userProfile',
       screen: UserProfile,
       navigationOptions: {
-        drawerLabel: "UserProfile",
+        drawerLabel: "Mi Perfil",
         drawerIcon: ({tintColor}) => (
           <Icon name="accessibility" size={24}/>
         )
