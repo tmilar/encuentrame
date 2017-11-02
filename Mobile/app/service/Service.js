@@ -40,6 +40,25 @@ class Service {
     return responseBody;
   }
 
+  async sendMultipartFormDataRequest(url, requestOptions) {
+    url = apiUrl + url;
+    let userId = await SessionService.getSessionUserId();
+    let token = await SessionService.getSessionToken();
+    let defaultRequest = {
+      method: 'GET',
+      headers: Object.assign({
+          'Content-Type': 'multipart/form-data',
+        },
+        token && {'token': token},
+        userId && {'user': userId}
+      )
+    };
+    let request = Object.assign(defaultRequest, requestOptions);
+    let rawResponse = await fetch(url, request);
+    await this.checkResponseStatus(rawResponse);
+    return rawResponse;;
+  }
+
   /**
    * Useful to save the need of always stringifying manually the body.
    * @param requestOptions
@@ -105,11 +124,10 @@ class Service {
       }
 
       if (status === 400) {
-        let responseJSON = JSON.stringify(responseBody);
+        let responseJSON = responseBody && JSON.stringify(responseBody) || "";
         console.log(`Error 400: bad request. Respuesta obtenida: ${responseJSON} `);
         throw {message: 'La solicitud es inválida.', status, responseBody};
       }
-
       throw 'Ha ocurrido un error. (status: ' + status + ').';
 
     }
