@@ -203,6 +203,8 @@
     <Compile Include="Helpers\DataTable\Filters\Interfaces\ITableFilter.cs" />
     <Compile Include="Helpers\DataTable\Filters\IntValueFilter.cs" />
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
+    <Compile Include="Helpers\LoggedUserHelper.cs" />
+    <Compile Include="Models\Accounts\LoggedUserHeaderModel.cs" />
     <Compile Include="Models\Apis\Accounts\UserListApiModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivitiesApiResultModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivityApiModel.cs" />
@@ -494,6 +496,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\alarm.jpg" />
+    <Content Include="images\backgroundHomeold.jpg" />
     <Content Include="images\backgroundHome.jpg" />
     <Content Include="images\logo.jpg" />
     <Content Include="images\menu.png" />
@@ -821,6 +824,7 @@
     <Content Include="Views\ManageEventAdministratorUser\Edit.cshtml" />
     <Content Include="Views\ManageEventAdministratorUser\Index.cshtml" />
     <Content Include="Views\ManageEvent\Monitor.cshtml" />
+    <Content Include="Views\Shared\_loggedUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,6 +8,7 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
     .body-content.public.Account.Login {
         background: url(../images/backgroundHome.jpg);
         position: absolute;
@@ -29,15 +30,15 @@
         display: none;
     }
 
-    
+
 .navbar-brand {
     padding: 0px;
 }
-.navbar-brand>img {
-    height: 100%;
-   
-    width: auto;
-}
+
+    .navbar-brand > img {
+        height: 100%;
+        width: auto;
+    }
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -53,8 +54,9 @@ textarea {
 }
 
 .tokenfield input {
-        margin-right: 0px;
-    }
+    margin-right: 0px;
+}
+
     .tokenfield input[type=number]::-webkit-inner-spin-button,
     .tokenfield input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -62,9 +64,11 @@ textarea {
         appearance: none;
         margin: 0;
     }
-    .margin-top-l {
-        margin-top: 15px;
-    }
+
+.margin-top-l {
+    margin-top: 15px;
+}
+
 .margin-top-xl {
     margin-top: 20px;
 }
@@ -76,6 +80,7 @@ textarea {
 .margin-right-xs {
     margin-right: 5px;
 }
+
 .margin-left-xs {
     margin-left: 5px;
 }
@@ -89,9 +94,10 @@ textarea {
 .checkbox-list {
     list-style-type: none;
 }
-.checkbox-list li .checkbox {
-    margin-top: 0px;
-}
+
+    .checkbox-list li .checkbox {
+        margin-top: 0px;
+    }
 
 .form-group p.text-danger {
     margin-bottom: 5px;
@@ -123,12 +129,12 @@ textarea {
 
 .list-of-controls .row .checkbox label {
     display: inline-block !important;
-    white-space: nowrap;   
+    white-space: nowrap;
 }
 
 .list-of-controls .row .keep-visible {
     display: inline-block !important;
-    white-space: nowrap;   
+    white-space: nowrap;
 }
 
 .list-of-controls .row:first-child p.text-danger {
@@ -157,7 +163,7 @@ textarea {
     display: none;
 }
 
-.form-group.inline, .form-group.inline label, .form-group.inline .form-control{
+.form-group.inline, .form-group.inline label, .form-group.inline .form-control {
     display: inline-block;
     width: auto;
     padding: 1px;
@@ -439,34 +445,36 @@ canvas.chart {
     }
 
     .program-row .bar.completed {
-         -ms-opacity: 0.5;
+        -ms-opacity: 0.5;
         opacity: 0.5;
     }
-     
+
     .program-row .bar.color-30 {
         background-color: #5cb85c;
         border-color: #449d44;
     }
 
-     .program-row .bar.color-10 {
+    .program-row .bar.color-10 {
         background-color: #5bc0de;
         border-color: #31b0d5;
     }
 
-      .program-row .bar.color-20 {
+    .program-row .bar.color-20 {
         background-color: #f0ad4e;
         border-color: #ec971f;
     }
 
-       .program-row .bar.color-50 {
+    .program-row .bar.color-50 {
         background-color: #f0ad4e;
         border-color: #ec971f;
     }
-       .program-row .bar.color-90 {
+
+    .program-row .bar.color-90 {
         background-color: #d9534f;
         border-color: #c9302c;
     }
-       .program-row .bar.color-100 {
+
+    .program-row .bar.color-100 {
         background-color: #d9534f;
         border-color: #c9302c;
     }
@@ -505,9 +513,9 @@ canvas.chart {
     min-width: 330px;
 }
 
-.bar-popover .popover-buttons {
-    margin: auto;
-}
+    .bar-popover .popover-buttons {
+        margin: auto;
+    }
 
 
 .account.Login .glyphicon.glyphicon-asterisk.text-danger {
@@ -524,46 +532,47 @@ div.table-container {
     width: 20%;
 }
 
-.node .panel-heading span {
-    color: #ffffff;
-    white-space: normal;
-}
+    .node .panel-heading span {
+        color: #ffffff;
+        white-space: normal;
+    }
 
-.node .node-part .panel-heading {
-    background-color: #006400;
-}
+    .node .node-part .panel-heading {
+        background-color: #006400;
+    }
 
-.node .node-operation .panel-heading {
-    background-color: #00008b;
-}
-.node .node-raw-material .panel-heading {
-    background-color: #cc0000 ;
-}
+    .node .node-operation .panel-heading {
+        background-color: #00008b;
+    }
 
-.node  .collapse-switch {
-    background: url('../images/details_close.png') no-repeat center center;
-    height: 20px;
-    width: 20px;
-    background-color: transparent;
-    border: none;
-}
+    .node .node-raw-material .panel-heading {
+        background-color: #cc0000;
+    }
 
-.node.collapsed .collapse-switch {
-    background: url('../images/details_open.png') no-repeat center center;
-}
+    .node .collapse-switch {
+        background: url('../images/details_close.png') no-repeat center center;
+        height: 20px;
+        width: 20px;
+        background-color: transparent;
+        border: none;
+    }
 
-.node .menu-context {
-    background: url('../images/menu.png') no-repeat center center;
-    height: 32px;
-    width: 32px;
-}
+    .node.collapsed .collapse-switch {
+        background: url('../images/details_open.png') no-repeat center center;
+    }
+
+    .node .menu-context {
+        background: url('../images/menu.png') no-repeat center center;
+        height: 32px;
+        width: 32px;
+    }
 
 .table-style {
     width: 100% !important;
 }
 
 .filter-button-style {
-   float: right;
+    float: right;
 }
 
 .required-mark {
@@ -571,37 +580,34 @@ div.table-container {
 }
 
 .form-group-to-validate .required-mark {
-    display:initial;
+    display: initial;
 }
 
 .stock-table {
     border-collapse: collapse;
 }
 
-.stock-table .stock-title {
-    border-left: 2px solid #ddd;    
-}
+    .stock-table .stock-title {
+        border-left: 2px solid #ddd;
+    }
 
-.stock-table td
-{
-    text-align: right;
-}
+    .stock-table td {
+        text-align: right;
+    }
 
-.stock-table th
-{
-    text-align: right;
-}
+    .stock-table th {
+        text-align: right;
+    }
 
-.stock-table thead
-{
-    background-color: #EEEEEE;
-}
+    .stock-table thead {
+        background-color: #EEEEEE;
+    }
 
-.weekend{
+.weekend {
     color: gold !important;
 }
 
-hr { 
+hr {
     display: block;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -618,3 +624,27 @@ hr {
 .testapi.Index textarea {
     width: 100%;
 }
+
+
+/***logged user navbar****/
+.nav.navbar-nav li a.logged-user-name:hover {
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #b72222;
+}
+
+.login-session-container {
+    width: 351px
+}
+
+    .login-session-container .col-lg-6 {
+        padding-right: 0
+    }
+
+    .login-session-container .icon-size {
+        font-size: 87px;
+    }
+
+    .login-session-container .image-control label {
+        display: none;
+    }
