@@ -27,7 +27,7 @@ class AccountsService {
   }
 
   getAccountImageById(id) {
-    let userImgUrl = 'account/getImage/' + id;
+    let userImgUrl = 'account/getImage/' + id + "?rand=" + Math.random().toString();
     return apiUrl + userImgUrl;
 
   }
