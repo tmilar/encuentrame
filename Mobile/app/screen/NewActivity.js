@@ -10,6 +10,7 @@ import {hideLoading, showLoading} from "react-native-notifyer";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 import LoadingIndicator from "../component/LoadingIndicator";
+import {Icon} from 'react-native-elements';
 
 export default class NewActivity extends Component {
 
@@ -25,16 +26,18 @@ export default class NewActivity extends Component {
     showMapLocation: false,
     initialMapRegionCoordinates: GeolocationService.getBsAsRegion(),
     activityLocation: {
-      latitude: 0,
-      longitude: 0
-    }
+      latitude: null,
+      longitude: null
+    },
+    locationOk: false
   };
 
   formFields = [
     {name: "activityName", errorMsg: "Nombre incompleto!"},
     {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
     {name: "startDate", errorMsg: "Elija fecha de inicio!"},
-    {name: "endDate", errorMsg: "Elija fecha de fin!"}
+    {name: "endDate", errorMsg: "Elija fecha de fin!"},
+    {name: "locationOk", errorMsg: "Elija ubicacion!"}
   ];
 
   _showStartDateTimePicker = () => {
@@ -162,23 +165,6 @@ export default class NewActivity extends Component {
         e.message || e
       );
     }
-
-    try {
-      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
-      let activityLocation = {
-        latitude: deviceLocation.latitude,
-        longitude: deviceLocation.longitude
-      };
-      this.setState({activityLocation});
-    } catch (e) {
-      console.log("Error getting device location: ", e);
-      Alert.alert(
-        "Error",
-        'Error al obtener la ubicación del dispositivo.\n' +
-        e.message || e
-      );
-    }
-
     this.setState({loading: false});
   };
 
@@ -187,12 +173,18 @@ export default class NewActivity extends Component {
       activityLocation: {
         latitude: location.latitude,
         longitude: location.longitude
-      }
+      },
+      locationOk: true
     })
   };
 
-  _handleEventSelected = (itemValue, itemIndex) => {
+  _handleEventSelected = (itemIndex, itemValue) => {
     this.setState({selectedEventId: itemValue});
+    let selectedEvent = this.state.events.find((evt) => {return evt.Id == itemValue;});
+    this.setState({activityName: selectedEvent.Name});
+    this.saveActivityLocation({latitude: selectedEvent.Latitude, longitude: selectedEvent.Longitude});
+    this.setState({startDate: selectedEvent.BeginDateTime});
+    this.setState({endDate: selectedEvent.EndDateTime});
   };
 
   componentDidMount = () => {
@@ -219,25 +211,6 @@ export default class NewActivity extends Component {
             </Text>
             <View style={{flex: 1.8}}>
               <View style={{
-                flex: 0.25,
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: "center",
-                borderBottomColor: '#47315a',
-                borderBottomWidth: 1
-              }}>
-                <TextInput
-                  value={this.state.activityName}
-                  placeholder="Nombre de la actividad"
-                  ref="activityName"
-                  style={styles.activityName}
-                  selectTextOnFocus
-                  onChangeText={this._handleActivitynameTextChange}
-                  underlineColorAndroid='transparent'
-                />
-              </View>
-
-              <View style={{
                 flex: 0.3,
                 flexDirection: 'column',
                 justifyContent: 'space-around',
@@ -245,7 +218,9 @@ export default class NewActivity extends Component {
                 borderBottomColor: '#47315a',
                 borderBottomWidth: 1
               }}>
-
+                <Text>
+                  Evento:
+                </Text>
                 <Picker
                   selectedValue={this.state.selectedEventId}
                   style={styles.picker}
@@ -260,6 +235,30 @@ export default class NewActivity extends Component {
                 </Picker>
 
               </View>
+              <View style={{
+                flex: 0.25,
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: "center",
+                borderBottomColor: '#47315a',
+                borderBottomWidth: 1,
+                paddingTop: 10
+              }}>
+                <Text>
+                  Nombre de la actividad:
+                </Text>
+                <TextInput
+                  value={this.state.activityName}
+                  placeholder="Nombre de la actividad"
+                  ref="activityName"
+                  style={styles.activityName}
+                  selectTextOnFocus
+                  onChangeText={this._handleActivitynameTextChange}
+                  underlineColorAndroid='transparent'
+                />
+              </View>
+
+
 
               <View style={{
                 flex: 0.25,
@@ -268,20 +267,22 @@ export default class NewActivity extends Component {
                 borderBottomWidth: 1
               }}>
                 <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
-                  <Text style={[text.p, styles.activityLocationLabel]}>
-                    Donde sera?
-                  </Text>
-                  <View style={{flex: 1, justifyContent: "space-around"}}>
+                  <View style={{justifyContent: "space-around", width: 150}}>
                     <Button
                       style={{width: 100, height: 50}}
-                      title="Mapa"
+                      title="Ubicacion?"
                       onPress={this._handleActivityLocationButtonpress}
                     />
+                  </View>
+                  <View style={{justifyContent: "space-around", width: 40}}>
+                    {this.state.locationOk > 0 &&
+                    <Icon name="done" size={25} color='green'/>
+                    }
                   </View>
                 </View>
                 {
                   this.state.showMapLocation &&
-                  <ModalMap saveActivityLocation={this.saveActivityLocation}
+                  <ModalMap saveActivityLocation={this.saveActivityLocation} currentLocation={this.state.activityLocation}
                             onClose={() => this.setState({showMapLocation: false})}/>
                 }
               </View>
