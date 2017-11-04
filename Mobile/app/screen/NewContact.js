@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
   Button,
-  FlatList, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View
+  FlatList, Image, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View
 } from 'react-native';
 import {text} from '../style';
 import ContactsService from '../service/ContactsService';
@@ -54,16 +54,22 @@ export default class NewContact extends Component {
     this.setState({ "filteredAccounts": this.datasource.cloneWithRows(filteredAccounts) });
   };
 
-  renderRow = (account: string, sectionID: number, rowID: number) => {
+  renderRow = (account, sectionID: number, rowID: number) => {
     return (
-      <TouchableHighlight style={{flex: 1, height: 50 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
+      <TouchableHighlight style={{flex: 1, height: 100 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
         <View style={{flex: 1, width: 400, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: 'grey'}}>
-          <View>
+          <View style={{justifyContent: 'space-around',width: 120, height: 100 }}>
             <Text>{account.Username}</Text>
           </View>
-          <View style={{width: 75, height: 50, backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
-            <Text style={{color: 'white', fontSize: 18}}>Agregar</Text>
+          <View style={{justifyContent: 'space-around',width: 120, height: 100  }}>
+            <Image source={{ uri: account.imageUri }} style={{ width: 75, height: 75 }} />
           </View>
+          <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
+            <View style={{justifyContent: 'space-around',width: 100, height: 60 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+              <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>Agregar</Text>
+            </View>
+          </View>
+
         </View>
       </TouchableHighlight>
     )
@@ -75,7 +81,7 @@ export default class NewContact extends Component {
       return <LoadingIndicator/>;
     return (
       <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
-        <View style={{flex: 1, justifyContent: 'space-around', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
+        <View style={{paddingLeft: 10, flex: 1, justifyContent: 'space-around', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
           <TextInput
             value={this.state.searchingContact}
             placeholder="Buscar por nombre"
@@ -85,7 +91,7 @@ export default class NewContact extends Component {
             underlineColorAndroid='transparent'
           />
         </View>
-        <View style={{flex: 9, height: 200, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+        <View style={{flex: 9, height: 500, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", marginBottom: 20}}>
           <ListView style={{flex: 1}}
             dataSource={this.state.filteredAccounts}
             renderRow={this.renderRow}
