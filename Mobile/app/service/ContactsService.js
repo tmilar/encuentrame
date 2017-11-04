@@ -1,5 +1,6 @@
 import {apiUrl} from '../config/apiProperties'
 import Service from './Service';
+import AccountsService from '../service/AccountsService';
 import {AsyncStorage} from 'react-native';
 
 class ContactsService {
@@ -8,6 +9,11 @@ class ContactsService {
     let contactsUrl = 'contacts';
     let contactsResponse =  await Service.sendRequest(contactsUrl, {
       method: 'GET'
+    });
+    contactsResponse.forEach( function(cont) {
+      let user = cont.User;
+      user = Object.assign(user,{imageUri: AccountsService.getAccountImageById(user.Id)});
+      cont.User = user;
     });
     return contactsResponse;
   }
