@@ -22,8 +22,8 @@ const ModalMap = React.createClass({
     return {
       initialMapRegionCoordinates: bsasCoordinates,
       activityLocation: {
-        latitude: 0,
-        longitude: 0
+        latitude: this.props.currentLocation.latitude,
+        longitude: this.props.currentLocation.longitude
       },
       loading: true,
       modalVisible: false
@@ -42,25 +42,29 @@ const ModalMap = React.createClass({
     this.setState({modalVisible: false});
     this.props.onClose && this.props.onClose();
   },
+  _checkValidLocation(){
+    return this.state.activityLocation.latitude !== null && this.state.activityLocation.longitude !== null;
+  },
 
   async componentWillMount() {
-    try {
-      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
-      let activityLocation = {
-        latitude: deviceLocation.latitude,
-        longitude: deviceLocation.longitude
-      };
-      this.setState({activityLocation});
-    } catch (e) {
-      console.log("Error getting device location: ", e);
-      Alert.alert(
-        'Error al obtener la ubicación del dispositivo.',
-        e.message || e
-      );
-    } finally {
-      this.setState({modalVisible: true});
-      this.setState({loading: false});
+    if (!this._checkValidLocation()){
+      try {
+        let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+        let activityLocation = {
+          latitude: deviceLocation.latitude,
+          longitude: deviceLocation.longitude
+        };
+        this.setState({activityLocation});
+      } catch (e) {
+        console.log("Error getting device location: ", e);
+        Alert.alert(
+          'Error al obtener la ubicación del dispositivo.',
+          e.message || e
+        );
+      }
     }
+    this.setState({modalVisible: true});
+    this.setState({loading: false});
   },
 
   componentDidMount() {
