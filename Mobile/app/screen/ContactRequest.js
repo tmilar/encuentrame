@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
+import {Alert, Button, Image, Modal, StyleSheet, Text, View} from 'react-native';
 import {text} from '../style';
 import ContactsService from '../service/ContactsService';
 import {showToast} from "react-native-notifyer";
+import AccountsService from '../service/AccountsService';
 
 export default class ContactRequest extends Component {
   state = {
@@ -14,6 +15,11 @@ export default class ContactRequest extends Component {
 
   componentDidMount = () => {
     this.setModalVisible(!this.state.modalVisible)
+  };
+
+  componentWillMount = () => {
+    let accountImgUri = AccountsService.getAccountImageById(this.contactRequestUserId);
+    this.setState({ accountImgUri: accountImgUri});
   };
 
   setModalVisible = (visible) => {
@@ -49,7 +55,12 @@ export default class ContactRequest extends Component {
           }}
         >
           <View style={styles.message}>
-            <Text style={text.title}>{this.contactRequestUsername} quiere agregarte</Text>
+            <View style={{flex: 1}}>
+              <Text style={text.title}>{this.contactRequestUsername} quiere agregarte</Text>
+            </View>
+            <View style={{flex: 5}}>
+              <Image source={{ uri: this.state.accountImgUri }} style={{ width: 200, height: 200 }} />
+            </View>
           </View>
           <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
