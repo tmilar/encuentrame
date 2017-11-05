@@ -10,8 +10,7 @@ class AccountsService {
     let accounts = await Service.sendRequest(accountsUrl, {
       method: 'GET'
     });
-    let that = this;
-    accounts = accounts.map( function(acct) { return Object.assign(acct,{imageUri: that.getAccountImageById(acct.Id)}); } );
+    accounts = accounts.map( (acct) =>  Object.assign(acct,{imageUri: this.getAccountImageUriById(acct.Id)}) );
 
     return accounts;
   }
@@ -26,7 +25,7 @@ class AccountsService {
     return unknownPeople;
   }
 
-  getAccountImageById(id) {
+  getAccountImageUriById(id) {
     let userImgUrl = 'account/getImage/' + id + "?rand=" + Math.random().toString();
     return apiUrl + userImgUrl;
 

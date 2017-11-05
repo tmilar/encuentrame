@@ -18,7 +18,7 @@ export default class ContactRequest extends Component {
   };
 
   componentWillMount = () => {
-    let accountImgUri = AccountsService.getAccountImageById(this.contactRequestUserId);
+    let accountImgUri = AccountsService.getAccountImageUriById(this.contactRequestUserId);
     this.setState({ accountImgUri: accountImgUri});
   };
 

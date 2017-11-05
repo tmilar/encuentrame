@@ -12,7 +12,7 @@ class ContactsService {
     });
     contactsResponse.forEach( function(cont) {
       let user = cont.User;
-      user = Object.assign(user,{imageUri: AccountsService.getAccountImageById(user.Id)});
+      user = Object.assign(user,{imageUri: AccountsService.getAccountImageUriById(user.Id)});
       cont.User = user;
     });
     return contactsResponse;
