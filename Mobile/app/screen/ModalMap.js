@@ -1,76 +1,102 @@
-import React from 'react';
-import {
-  Modal, StyleSheet, Alert, Text, View, Picker, TextInput, Button, TouchableOpacity,
-  ScrollView
-} from 'react-native';
+import React, {Component} from 'react';
+import {Modal, StyleSheet, Alert, Text, View, Button} from 'react-native';
 import {text} from '../style';
 import {MapView} from 'expo';
-import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
-import ActivityService from '../service/ActivityService';
-import {hideLoading, showLoading} from "react-native-notifyer";
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import mapStyles from '../config/map';
 import LoadingIndicator from "../component/LoadingIndicator";
 
+export default class ModalMap extends Component {
 
-const ModalMap = React.createClass({
+  bsasCoordinates = GeolocationService.getBsAsRegion();
+  state = {
+    initialMapRegionCoordinates: this.bsasCoordinates,
+    activityLocation: {
+      latitude: this.props.currentLocation.latitude,
+      longitude: this.props.currentLocation.longitude
+    },
+    loading: true,
+    modalVisible: false
+  };
 
-  getInitialState() {
-    const bsasCoordinates = GeolocationService.getBsAsRegion();
-
-    return {
-      initialMapRegionCoordinates: bsasCoordinates,
-      activityLocation: {
-        latitude: 0,
-        longitude: 0
-      },
-      loading: true,
-      modalVisible: false
-    };
-  },
-
-  _saveLocation() {
+  _saveLocation = () => {
     this.props.saveActivityLocation({
       latitude: this.state.activityLocation.latitude,
       longitude: this.state.activityLocation.longitude
     });
     this._goBack();
-  },
+  };
 
-  _goBack() {
+  _goBack = () => {
     this.setState({modalVisible: false});
     this.props.onClose && this.props.onClose();
-  },
+  };
 
-  async componentWillMount() {
-    try {
-      let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
-      let activityLocation = {
-        latitude: deviceLocation.latitude,
-        longitude: deviceLocation.longitude
-      };
-      this.setState({activityLocation});
-    } catch (e) {
-      console.log("Error getting device location: ", e);
-      Alert.alert(
-        'Error al obtener la ubicación del dispositivo.',
-        e.message || e
-      );
-    } finally {
-      this.setState({modalVisible: true});
-      this.setState({loading: false});
+  _checkValidLocation = () => {
+    return this.state.activityLocation.latitude !== null && this.state.activityLocation.longitude !== null;
+  };
+
+  componentWillMount = async () => {
+    if (!this._checkValidLocation()) {
+      try {
+        let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
+        let activityLocation = {
+          latitude: deviceLocation.latitude,
+          longitude: deviceLocation.longitude
+        };
+        this.setState({activityLocation});
+      } catch (e) {
+        console.log("Error getting device location: ", e);
+        Alert.alert(
+          'Error al obtener la ubicación del dispositivo.',
+          e.message || e
+        );
+      }
     }
-  },
+    this.setState({modalVisible: true});
+    this.setState({loading: false});
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({modalVisible: true})
-  },
+  };
+
+  _renderActionButtons = () => {
+    let buttons = this.props.enableEditing ?
+      <View style={[styles.footer, {flex: 0.2, flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
+        <View style={{flex: 0.5}}>
+          <Button
+            title="Aceptar"
+            onPress={this._saveLocation}
+          />
+        </View>
+
+        <View style={{flex: 0.5}}>
+          <Button
+            color="grey"
+            title="Cancelar"
+            onPress={this._goBack}
+          />
+        </View>
+      </View>
+      :
+      <View style={[styles.footer, {flex: 0.2, flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
+        <View style={{flex: 0.5}}>
+          <Button
+            color="grey"
+            title="Volver"
+            onPress={this._goBack}
+          />
+        </View>
+      </View>;
+    return buttons;
+  };
 
   render() {
     if (this.state.loading) {
       return <LoadingIndicator/>;
     }
+    let draggable = this.props.enableEditing;
     return (
       <View style={{marginTop: 22}}>
         <Modal
@@ -86,39 +112,22 @@ const ModalMap = React.createClass({
             {/* TODO: add some instructions text explaining how this MapView & MapMarker works... */}
             <MapView style={styles.map}
                      customMapStyle={mapStyles}
-                     initialRegion={this.state.initialMapRegionCoordinates}
-            >
-              <MapView.Marker draggable
+                     initialRegion={this.state.initialMapRegionCoordinates}>
+                             <MapView.Marker draggable={draggable}
                               coordinate={this.state.activityLocation}
-                              title={"Actividad"}
-                              onDragEnd={(e) => this.setState({activityLocation: e.nativeEvent.coordinate})}
-              />
+                              title={"Ubicacion"}
+                              onValueChange={this._handleEventSelected}
+                              onDragEnd={(e) => this.setState({activityLocation: e.nativeEvent.coordinate})}/>
             </MapView>
           </View>
-          <View style={[styles.footer, {flex: 0.2, flexDirection: "row", justifyContent: "center", flexWrap: "wrap"}]}>
-            <View style={{flex: 0.5}}>
-              <Button
-                title="Aceptar"
-                onPress={this._saveLocation}
-              />
-            </View>
-
-            <View style={{flex: 0.5}}>
-              <Button
-                color="grey"
-                title="Cancelar"
-                onPress={this._goBack}
-              />
-            </View>
-
-          </View>
+          {this._renderActionButtons()}
 
         </Modal>
 
       </View>
     )
   }
-});
+};
 
 const styles = StyleSheet.create({
   map: {
@@ -134,5 +143,3 @@ const styles = StyleSheet.create({
     textAlignVertical: "center"
   }
 });
-
-export default ModalMap;

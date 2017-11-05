@@ -17,6 +17,29 @@ class ActivityService {
     });
     return activityCreationResponse;
   }
+  async getPersonActivities() {
+    let activitiesUrl = 'Activities';
+    let activities = await Service.sendRequest(activitiesUrl, {
+      method: 'GET'
+    });
+    return activities;
+  }
+
+  async activeEvent() {
+    let activities = await this.getPersonActivities();
+    activities.sort((act1, act2 ) => {return act1.BeginDateTime < act2.BeginDateTime;}).filter((act)=>{return act.EventId || false});
+    if (activities.length > 0)
+      return activities[0];
+    return false;
+  }
+
+  async deleteActivity(activityId) {
+    let deleteUrl = 'Activity/delete/' + activityId;
+    let activityDeletionResponse =  await Service.sendRequest(deleteUrl, {
+      method: 'DELETE'
+    });
+    return activityDeletionResponse;
+  }
 }
 
 let activityService = new ActivityService();
