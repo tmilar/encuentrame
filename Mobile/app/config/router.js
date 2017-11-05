@@ -11,7 +11,7 @@ import AreYouOk from "../screen/AreYouOk";
 import ContactRequest from "../screen/ContactRequest";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
-import NewActivity from "../screen/NewActivity";
+import NewActivity from "../screen/Activity";
 import SupplyInfo from "../screen/SupplyInfo";
 import NewContact from "../screen/NewContact";
 import UserProfile from "../screen/UserProfile";
