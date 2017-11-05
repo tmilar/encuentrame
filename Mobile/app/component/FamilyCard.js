@@ -64,9 +64,11 @@ export default class FamilyCard extends Component {
   }
 
   _getRowAction() {
-    const contactActions = <TouchableHighlight onPress={this._handleEstasBienButtonPress}>
-      <View>
-        <Icon name="help" size={50} color='#43484d'/>
+    const contactActions = <TouchableHighlight style={{justifyContent: 'space-around',width: 100, height: 100}} onPress={this._handleEstasBienButtonPress}>
+      <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
+        <View style={{justifyContent: 'space-around',width: 100, height: 60 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+          <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>Estas bien?</Text>
+        </View>
       </View>
     </TouchableHighlight>;
 
@@ -93,14 +95,11 @@ export default class FamilyCard extends Component {
           flexDirection: 'row',
           height: 90,
         }}>
-          <Text style={{flex: 1.5, fontWeight: 'bold'}}>{this.personProps.Username}</Text>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <Image source={require('../img/personImgExample.jpg')} size={5}/>
+          <View style={{justifyContent: 'space-around',width: 80, height: 90 }}>
+            <Text style={{textAlign: 'left', fontWeight: 'bold'}}>{this.personProps.Username}</Text>
+          </View>
+          <View style={{justifyContent: 'center', alignItems: 'center', width: 200, height: 90}}>
+            <Image source={{ uri: this.personProps.imageUri }} style={{justifyContent: 'space-around', width: 75, height: 75 }} />
           </View>
           {this._getRowAction()}
         </View>

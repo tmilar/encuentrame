@@ -1,5 +1,6 @@
 import Service from './Service';
 import ContactsService from '../service/ContactsService';
+import {apiUrl} from '../config/apiProperties'
 
 class AccountsService {
 
@@ -9,6 +10,7 @@ class AccountsService {
     let accounts = await Service.sendRequest(accountsUrl, {
       method: 'GET'
     });
+    accounts = accounts.map( (acct) =>  Object.assign(acct,{imageUri: this.getAccountImageUriById(acct.Id)}) );
 
     return accounts;
   }
@@ -21,6 +23,12 @@ class AccountsService {
     let unknownPeople = accounts.filter(isAcctUnknown);
 
     return unknownPeople;
+  }
+
+  getAccountImageUriById(id) {
+    let userImgUrl = 'account/getImage/' + id + "?rand=" + Math.random().toString();
+    return apiUrl + userImgUrl;
+
   }
 }
 
