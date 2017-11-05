@@ -11,8 +11,9 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 import LoadingIndicator from "../component/LoadingIndicator";
 import {Icon} from 'react-native-elements';
+import ActivityDetailsContentView from './ActivityDetailsContentView';
 
-export default class NewActivity extends Component {
+export default class Activity extends Component {
 
   state = {
     activityName: "",
@@ -43,8 +44,6 @@ export default class NewActivity extends Component {
   ];
 
   _showStartDateTimePicker = () => {
-    if (this.state.activeActivity)
-      return;
     this.setState({isStartDateTimePickerVisible: true});
   };
 
@@ -53,8 +52,6 @@ export default class NewActivity extends Component {
   };
 
   _showEndDateTimePicker = () => {
-    if (this.state.activeActivity)
-      return;
     this.setState({isEndDateTimePickerVisible: true});
   };
 
@@ -164,6 +161,10 @@ export default class NewActivity extends Component {
     this.setState({endDate: activeActivity.EndDateTime});
   };
 
+  _getSelectedEvent = () => {
+    return this.state.events.find((evt) => {return evt.Id == this.state.selectedEventId;});
+  };
+
   componentWillMount = async () => {
     this.state.loading = true;
     try {
@@ -223,13 +224,11 @@ export default class NewActivity extends Component {
   };
 
   _getNewActivityHeader = () => {
-    let header =
-      <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
         <Text style={styles.activityTitle}>
           {this._getTitle()}
         </Text>
       </View>;
-    return header;
   };
 
   _ViewActivityDetailsButtonpress = () => {
@@ -237,8 +236,7 @@ export default class NewActivity extends Component {
   };
 
   _getActiveActivityHeader = () => {
-    let header =
-      <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
         <View style={{justifyContent: "space-around", flexDirection: "row"}}>
           <View style={{justifyContent: "space-around"}}>
             <Text style={styles.activityTitle}>
@@ -261,12 +259,10 @@ export default class NewActivity extends Component {
           />
         </View>
       </View>;
-    return header;
   };
 
   _getNewActivityFooter = () => {
-    let footer =
-    <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap", borderWidth: 1, borderColor: 'white'}]}>
+    return <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap", borderWidth: 1, borderColor: 'white'}]}>
       <View style={{justifyContent: "space-around", flex: 1}}>
         <Button
           title="Crear Actividad"
@@ -282,12 +278,10 @@ export default class NewActivity extends Component {
         />
       </View>
     </View>;
-    return footer;
   };
 
   _getActiveActivityFooter = () => {
-    let footer =
-      <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
+    return <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
       <View style={{flex: 0.5,justifyContent: "space-around"}}>
         <Button
           color="grey"
@@ -296,16 +290,128 @@ export default class NewActivity extends Component {
         />
       </View>
     </View>;
-    return footer;
+  };
+
+  _renderActivityContent = () => {
+    let content = this.state.activeActivity ?
+    (<ActivityDetailsContentView activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>)
+    :
+      this._renderNewActivityContent();
+    return content;
+  };
+
+  _renderNewActivityContent = () => {
+    return <View style={{flex: 1}}>
+          <View style={{
+            flex: 0.3,
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            alignItems: "center",
+            borderBottomColor: '#47315a',
+            borderBottomWidth: 1
+          }}>
+            <Text>
+              Evento:
+            </Text>
+            <Picker
+              selectedValue={this.state.selectedEventId}
+              style={styles.picker}
+              onValueChange={this._handleEventSelected}
+              color="red"
+            >
+              {this.state.events.map((event, i) => {
+                return (
+                  <Picker.Item label={event.Name} key={event.Id} value={event.Id}/>
+                )
+              })}
+            </Picker>
+
+          </View>
+          <View style={{
+            flex: 0.25,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: "center",
+            borderBottomColor: '#47315a',
+            borderBottomWidth: 1,
+            paddingTop: 10
+          }}>
+            <Text>
+              Nombre de la actividad:
+            </Text>
+            <TextInput
+              value={this.state.activityName}
+              placeholder="Nombre de la actividad"
+              ref="activityName"
+              style={styles.activityName}
+              selectTextOnFocus
+              onChangeText={this._handleActivitynameTextChange}
+              underlineColorAndroid='transparent'
+            />
+          </View>
+          <View style={{
+            flex: 0.25,
+            justifyContent: "space-around",
+            borderBottomColor: '#47315a',
+            borderBottomWidth: 1
+          }}>
+            <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
+              <View style={{justifyContent: "space-around", width: 150}}>
+                <Button
+                  style={{width: 100, height: 50}}
+                  title="Ubicacion:"
+                  onPress={this._handleActivityLocationButtonpress}
+                />
+              </View>
+              {this.state.locationOk > 0 && <View style={{justifyContent: "space-around", width: 40}}>
+                <Icon name="done" size={25} color='green'/>
+              </View>}
+            </View>
+            {
+              this.state.showMapLocation &&
+              <ModalMap saveActivityLocation={this.saveActivityLocation} currentLocation={this.state.activityLocation} enableEditing={true}
+                        onClose={() => this.setState({showMapLocation: false})}/>
+            }
+          </View>
+
+          <View
+            style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
+            <Text style={[text.p, styles.activityDatesLabel]}>
+              Fecha - Horario:
+            </Text>
+            <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
+              <View style={{flex: 1}}>
+                <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
+                  <Text>{this.state.startDate || "Fecha inicio"}</Text>
+                </TouchableOpacity>
+                <DateTimePicker
+                  mode="datetime"
+                  color="red"
+                  isVisible={this.state.isStartDateTimePickerVisible}
+                  onConfirm={this._handleStartDatePicked}
+                  onCancel={this._hideStartDateTimePicker}
+                />
+              </View>
+              <View style={{flex: 1}}>
+                <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
+                  <Text>{this.state.endDate || "Fecha fin"}</Text>
+                </TouchableOpacity>
+                <DateTimePicker
+                  mode="datetime"
+                  isVisible={this.state.isEndDateTimePickerVisible}
+                  onConfirm={this._handleEndDatePicked}
+                  onCancel={this._hideEndDateTimePicker}
+                />
+              </View>
+            </View>
+          </View>
+        </View>;
   };
 
   render() {
     if (this.state.loading) {
-      // TODO show loading text message? maybe: waiting for GPS or something?
       return <LoadingIndicator/>;
     }
-    let editable = !this.state.activeActivity;
-
     return (
       <View style={{marginTop: 22}}>
         <Modal
@@ -318,122 +424,12 @@ export default class NewActivity extends Component {
             {this.state.activeActivity ? this._getActiveActivityHeader() : this._getNewActivityHeader()}
             <View style={{flex: 6}}>
               {this.state.showActivityDetails &&
-              <View style={{flex: 1}}>
-                <View style={{
-                  flex: 0.3,
-                  flexDirection: 'column',
-                  justifyContent: 'space-around',
-                  alignItems: "center",
-                  borderBottomColor: '#47315a',
-                  borderBottomWidth: 1
-                }}>
-                  <Text>
-                    Evento:
-                  </Text>
-                  <Picker
-                    enabled={editable}
-                    selectedValue={this.state.selectedEventId}
-                    style={styles.picker}
-                    onValueChange={this._handleEventSelected}
-                    color="red"
-                  >
-                    {this.state.events.map((event, i) => {
-                      return (
-                        <Picker.Item label={event.Name} key={event.Id} value={event.Id}/>
-                      )
-                    })}
-                  </Picker>
-
-                </View>
-                <View style={{
-                  flex: 0.25,
-                  flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  alignItems: "center",
-                  borderBottomColor: '#47315a',
-                  borderBottomWidth: 1,
-                  paddingTop: 10
-                }}>
-                  <Text>
-                    Nombre de la actividad:
-                  </Text>
-                  <TextInput
-                    value={this.state.activityName}
-                    placeholder="Nombre de la actividad"
-                    ref="activityName"
-                    style={styles.activityName}
-                    selectTextOnFocus
-                    editable={editable}
-                    onChangeText={this._handleActivitynameTextChange}
-                    underlineColorAndroid='transparent'
-                  />
-                </View>
-
-
-
-                <View style={{
-                  flex: 0.25,
-                  justifyContent: "space-around",
-                  borderBottomColor: '#47315a',
-                  borderBottomWidth: 1
-                }}>
-                  <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
-                    <View style={{justifyContent: "space-around", width: 150}}>
-                      <Button
-                        style={{width: 100, height: 50}}
-                        title="Ubicacion:"
-                        onPress={this._handleActivityLocationButtonpress}
-                      />
-                    </View>
-                    {this.state.locationOk > 0 && <View style={{justifyContent: "space-around", width: 40}}>
-                      <Icon name="done" size={25} color='green'/>
-                    </View>}
-                  </View>
-                  {
-                    this.state.showMapLocation &&
-                    <ModalMap saveActivityLocation={this.saveActivityLocation} currentLocation={this.state.activityLocation} enableEditing={editable}
-                              onClose={() => this.setState({showMapLocation: false})}/>
-                  }
-                </View>
-
-                <View
-                  style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
-                  <Text style={[text.p, styles.activityDatesLabel]}>
-                    Fecha - Horario:
-                  </Text>
-                  <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
-                    <View style={{flex: 1}}>
-                      <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
-                        <Text>{this.state.startDate || "Fecha inicio"}</Text>
-                      </TouchableOpacity>
-                      <DateTimePicker
-                        mode="datetime"
-                        color="red"
-                        isVisible={this.state.isStartDateTimePickerVisible}
-                        onConfirm={this._handleStartDatePicked}
-                        onCancel={this._hideStartDateTimePicker}
-                      />
-                    </View>
-                    <View style={{flex: 1}}>
-                      <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
-                        <Text>{this.state.endDate || "Fecha fin"}</Text>
-                      </TouchableOpacity>
-                      <DateTimePicker
-                        mode="datetime"
-                        isVisible={this.state.isEndDateTimePickerVisible}
-                        onConfirm={this._handleEndDatePicked}
-                        onCancel={this._hideEndDateTimePicker}
-                      />
-                    </View>
-                  </View>
-                </View>
-            </View>}
+                this._renderActivityContent()
+              }
             </View>
             {this.state.activeActivity ? this._getActiveActivityFooter() : this._getNewActivityFooter()}
           </View>
-
         </Modal>
-
       </View>
     )
   }
