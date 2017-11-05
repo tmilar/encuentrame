@@ -93,9 +93,9 @@ class PushNotificationsService {
    */
   setupNotificationsDispatcher = async (navigation) => {
     Notifications.addListener((notification) => {
-      /*if (!this._validRemoteNotification(notification)) {
+      if (!this._validRemoteNotification(notification)) {
         return;
-      }*/
+      }
 
       console.debug("[PushNotificationService] Received notification: ", notification);
       let notificationType = notification.data.type || notification.data.Type;
