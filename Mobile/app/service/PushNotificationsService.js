@@ -115,6 +115,10 @@ class PushNotificationsService {
       if (notificationType === "Contact.Confirm") {
         this.handleContactRequestConfirmNotif(navigation, notification, notificationType);
       }
+      if (notificationType === "Event/StartCollaborativeSearch") {
+        this.handleColaborativeSearchNotif(navigation, notification, notificationType);
+      }
+
     });
   };
 
@@ -149,6 +153,12 @@ class PushNotificationsService {
       "Respondieron tu solicitud de amistad",
       `{usuario ${contactRequestUsername}} ha aceptado tu solicitud.}`
     );
+  };
+
+  handleColaborativeSearchNotif = (navigation, notification, notificationType) => {
+    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
+    showToast("Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
+    navigation.navigate("Find",{emergency: true});
   };
 
   _validRemoteNotification = (notification) => {
