@@ -32,6 +32,14 @@ class ActivityService {
       return activities[0];
     return false;
   }
+
+  async deleteActivity(activityId) {
+    let deleteUrl = 'Activity/delete/' + activityId;
+    let activityDeletionResponse =  await Service.sendRequest(deleteUrl, {
+      method: 'DELETE'
+    });
+    return activityDeletionResponse;
+  }
 }
 
 let activityService = new ActivityService();

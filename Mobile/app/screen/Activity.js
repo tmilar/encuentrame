@@ -215,12 +215,21 @@ export default class Activity extends Component {
     }
     return title;
   };
-  _cancelActivityButtonpress = () => {
-    //TODO pegarle al endpoint de backend cuando exista
-    Alert.alert(
-      'Cancelando actividad',
-      "Cancelando actividad"
-    );
+  _cancelActivityButtonpress = async() => {
+    try {
+      await ActivityService.deleteActivity(this.activeActivity.Id);
+      Alert.alert(
+        'Eliminar actividad',
+        "Actividad eliminada."
+      );
+      this._goBack();
+    } catch (e) {
+      console.log("Error deleting activity in server: ", e);
+      Alert.alert(
+        'Ocurrió un problema al eliminar la actividad. ',
+        e.message || e
+      );
+    }
   };
 
   _getNewActivityHeader = () => {
