@@ -82,6 +82,10 @@ namespace Encuentrame.Support
         }
         public static string Remove(this string text, string textToRemove)
         {
+            if (text.IsNullOrEmpty())
+            {
+                return text;
+            }
             return text.Replace(textToRemove, string.Empty);
         }
 

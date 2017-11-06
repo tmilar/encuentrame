@@ -101,7 +101,7 @@ namespace Encuentrame.Web.Controllers
                 InternalNumber = userModel.InternalNumber,
                 PhoneNumber = userModel.PhoneNumber,
                 MobileNumber = userModel.MobileNumber,
-                Image = userModel.Image.Remove("data:image/png;base64,"),
+                Image = userModel.Image.RemoveBase64Prefix(),
                 Role = RoleEnum.Administrator
             };
 

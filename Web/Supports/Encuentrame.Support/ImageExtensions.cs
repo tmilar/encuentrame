@@ -37,6 +37,11 @@ namespace Encuentrame.Support
 
         }
 
+        public static string RemoveBase64Prefix(this string image)
+        {
+            return image.Remove("data:image/png;base64,").Remove("data:image/jpeg;base64,");
+        }
+
         public static string ImageToBase64(this Image image, System.Drawing.Imaging.ImageFormat format)
         {
             using (MemoryStream ms = new MemoryStream())
