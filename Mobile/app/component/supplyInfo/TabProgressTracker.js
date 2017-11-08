@@ -153,7 +153,7 @@ export default class TabProgressTracker extends Component {
     });
   }
 
-  cakculateCellDimensions(totalCount) {
+  calculateCellDimensions(totalCount) {
     let cellWidth = WIDTH;
     let progressBarWidth = WIDTH;
 
@@ -170,7 +170,7 @@ export default class TabProgressTracker extends Component {
 
   render() {
     let items = ['¿Cuándo?', '¿Bien o Mal?', '¿Dónde?'/*, 'Boton 3',/* 'Boton 4'*/];
-    let {cellWidth, progressBarWidth} = this.cakculateCellDimensions(items.length);
+    let {cellWidth, progressBarWidth} = this.calculateCellDimensions(items.length);
 
     return (
       <View>

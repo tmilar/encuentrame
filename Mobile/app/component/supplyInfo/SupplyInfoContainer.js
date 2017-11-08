@@ -6,6 +6,10 @@ export default class SupplyInfoContainer extends Component {
 
   state = {};
 
+  static navigationOptions = {
+    title: "Por favor, ayuda aportando datos"
+  };
+
   render() {
     return <View style={styles.container}>
       <TabProgressTracker/>
