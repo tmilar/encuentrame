@@ -36,7 +36,7 @@ const Tabs = TabNavigator({
   NewActivity: {
     screen: NewActivity,
     navigationOptions: {
-      tabBarLabel: 'Actividades/Eventos',
+      tabBarLabel: 'Eventos',
       tabBarIcon: ({tintColor}) => <Icon name="account-circle" size={23} color={tintColor}/>
     },
   },
