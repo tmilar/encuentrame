@@ -1,7 +1,7 @@
 import React from 'react';
-import {ActivityIndicator, View} from "react-native";
+import {ActivityIndicator, Text, View} from "react-native";
 
-export default LoadingIndicator = ({size}) =>
+export default LoadingIndicator = ({size, text}) =>
   <View style={{
     position: 'absolute',
     left: 0,
@@ -12,4 +12,5 @@ export default LoadingIndicator = ({size}) =>
     justifyContent: 'center'
   }}>
     <ActivityIndicator size={size || "small"}/>
+    { (text && text.length) && <Text>{text}</Text>}
   </View>
