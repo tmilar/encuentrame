@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import TabProgressTracker from "./TabProgressTracker";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, Alert} from "react-native";
+import {hideLoading, showLoading} from "react-native-notifyer";
+import SoughtPeopleService from '../../service/SoughtPeopleService';
 
 export default class SupplyInfoContainer extends Component {
 
@@ -13,6 +15,20 @@ export default class SupplyInfoContainer extends Component {
   static navigationOptions = {
     title: "Por favor, ayuda aportando datos"
   };
+
+  constructor(props) {
+    super(props);
+    let {soughtPersonId, onClose, onSuccess} = props.navigation.state.params;
+    this.soughtPersonId = soughtPersonId;
+    if (!this.soughtPersonId) {
+      throw 'Debe indicarse el id de la persona buscada!';
+    }
+
+    this.onClose = onClose || (() => {
+      });
+    this.onSuccess = onSuccess || (() => {
+      });
+  }
 
   /**
    * Questions to show for supply info.
