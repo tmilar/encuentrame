@@ -33,10 +33,10 @@ const Tabs = TabNavigator({
       tabBarIcon: ({tintColor}) => <Icon name="search" size={23} color={tintColor}/>
     }
   },
-  FriendsAndFamily: {
-    screen: FriendsAndFamily,
+  NewActivity: {
+    screen: NewActivity,
     navigationOptions: {
-      tabBarLabel: 'Familia/Amigos',
+      tabBarLabel: 'Actividades/Eventos',
       tabBarIcon: ({tintColor}) => <Icon name="account-circle" size={23} color={tintColor}/>
     },
   },
@@ -69,7 +69,7 @@ const EncuentrameHeaderOptions = ({navigation}) => ({
       <Icon name="menu" size={25}/>
     </View>
   </TouchableHighlight>,
-  headerRight: <TouchableHighlight onPress={() => navigation.navigate('NewActivity')}>
+  headerRight: <TouchableHighlight onPress={() => navigation.navigate('FriendsAndFamily')}>
     <View>
       <Icon name="people" size={25}/>
     </View>
@@ -146,7 +146,7 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
-  NewActivity: {screen: NewActivity, navigationOptions: {header: null}},
+  FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {header: null}},
   SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}},
   NewContact: {screen: NewContact, navigationOptions: {header: null}}
 },{
