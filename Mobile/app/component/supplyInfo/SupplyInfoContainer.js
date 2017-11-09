@@ -3,6 +3,7 @@ import TabProgressTracker from "./TabProgressTracker";
 import {View, StyleSheet, Alert} from "react-native";
 import {hideLoading, showLoading} from "react-native-notifyer";
 import SoughtPeopleService from '../../service/SoughtPeopleService';
+import formatDateForBackend from "../../util/formatDateForBackend";
 
 export default class SupplyInfoContainer extends Component {
 
@@ -41,10 +42,26 @@ export default class SupplyInfoContainer extends Component {
       text: "¿Cuándo?",
       answers: [{
         text: "Recién",
+        value: () => {
+          let now = new Date();
+          return formatDateForBackend(now);
+        }
       }, {
-        text: "Hace un rato\n(10 a 30 minutos)"
+        text: "Hace un rato\n(10 a 30 minutos)",
+        value: () => {
+          let now = new Date();
+          let minutes20 = 20 * 60 * 1000;
+          let minutes20ago = new Date(now.getTime() - minutes20);
+          return formatDateForBackend(minutes20ago);
+        }
       }, {
-        text: "Hace bastante\n(más de media hora)"
+        text: "Hace bastante\n(más de media hora)",
+        value: () => {
+          let now = new Date();
+          let minutes60 = 60 * 60 * 1000;
+          let minutes60ago = new Date(now.getTime() - minutes60);
+          return formatDateForBackend(minutes60ago);
+        }
       }],
       onAnswer: (option) => {
         this.setState({whenAnswer: option});
@@ -52,22 +69,14 @@ export default class SupplyInfoContainer extends Component {
     }, {
       text: "¿Bien o Mal?",
       answers: [{
-        text: "Bien \ud83d\udc4d"
+        text: "Bien \ud83d\udc4d",
+        value: () => true
       }, {
-        text: "Necesitaba Ayuda \u{26A0} \u{1F198}"
+        text: "Necesitaba Ayuda \u{26A0} \u{1F198}",
+        value: false
       }],
       onAnswer: (option) => {
         this.setState({personStateAnswer: option});
-      }
-    }, {
-      text: "¿Dónde?",
-      answers: [{
-        text: "Cerca mio (indicar en el mapa)"
-      }, {
-        text: "No me acuerdo"
-      }],
-      onAnswer: (option) => {
-        this.setState({whereAnswer: option});
       }
     }
   ];
