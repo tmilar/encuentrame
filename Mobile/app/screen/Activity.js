@@ -6,7 +6,7 @@ import {text} from '../style';
 import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
-import {hideLoading, showLoading} from "react-native-notifyer";
+import {hideLoading, showLoading, showToast} from "react-native-notifyer";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 import LoadingIndicator from "../component/LoadingIndicator";
@@ -208,13 +208,11 @@ export default class Activity extends Component {
     }
     return title;
   };
-  _cancelActivityButtonpress = async() => {
+
+  _deleteActivity = async() => {
     try {
       await ActivityService.deleteActivity(this.activeActivity.Id);
-      Alert.alert(
-        'Eliminar actividad',
-        "Actividad eliminada."
-      );
+      showToast("Actividad eliminada.", {duration: 5000});
       this._goBack();
     } catch (e) {
       console.log("Error deleting activity in server: ", e);
@@ -223,6 +221,18 @@ export default class Activity extends Component {
         e.message || e
       );
     }
+  };
+
+  _cancelActivityButtonpress = async() => {
+    Alert.alert(
+      'Confirma',
+      '¿Eliminar la Actividad?',
+      [
+        {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirmar', onPress: () => this._deleteActivity()},
+      ],
+      { cancelable: false }
+    )
   };
 
   _getNewActivityHeader = () => {
