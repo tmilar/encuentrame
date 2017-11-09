@@ -96,9 +96,6 @@ export default class Activity extends Component {
     return errorMsg;
   };
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  };
 
   _handleActivitynameTextChange = (inputValue) => {
     this.setState({activityName: inputValue});
@@ -148,7 +145,6 @@ export default class Activity extends Component {
   };
 
   _goBack = () => {
-    this.setModalVisible(false);
     this.props.navigation.goBack(null);
   };
   _loadActiveActivity = (activeActivity) => {
@@ -205,9 +201,6 @@ export default class Activity extends Component {
     this.setState({endDate: selectedEvent.EndDateTime});
   };
 
-  componentDidMount = () => {
-    this.setModalVisible(!this.state.modalVisible)
-  };
   _getTitle = () => {
     let title = "Nueva Actividad";
     if (this.state.activeActivity){
@@ -422,13 +415,7 @@ export default class Activity extends Component {
       return <LoadingIndicator/>;
     }
     return (
-      <View style={{marginTop: 22}}>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={this._handleCancelActivityCreation}
-        >
+      <View style={{marginTop: 22, flex: 1}}>
           <View style={{flex: 1}}>
             {this.state.activeActivity ? this._getActiveActivityHeader() : this._getNewActivityHeader()}
             <View style={{flex: 6}}>
@@ -438,7 +425,6 @@ export default class Activity extends Component {
             </View>
             {this.state.activeActivity ? this._getActiveActivityFooter() : this._getNewActivityFooter()}
           </View>
-        </Modal>
       </View>
     )
   }
