@@ -9,6 +9,7 @@ import PositionTrackingService from '../service/PositionTrackingService';
 
 import {Icon} from 'react-native-elements';
 import ActionButton from "react-native-action-button";
+import {version} from '../../package.json';
 
 export default class Home extends Component {
 
@@ -22,6 +23,9 @@ export default class Home extends Component {
   }
 
   async componentWillMount() {
+    if (await SessionService.isDevSession()) {
+      showToast(`App version: ${version}`, {duration: 2000});
+    }
     let sessionAlive = await SessionService.isSessionAlive();
     if (!sessionAlive) {
       showToast("La sesión ha caducado. Por favor, vuelva a iniciar sesión.");
