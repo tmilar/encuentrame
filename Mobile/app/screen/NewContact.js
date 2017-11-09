@@ -39,9 +39,21 @@ export default class NewContact extends Component {
     this.setState({ loading: false });
   };
 
-   _pressRow = async (account, sectionID, rowID) =>  {
+  _pressRow = async(account, sectionID, rowID) => {
+    Alert.alert(
+      'Confirma',
+      '¿Agregar contacto?',
+      [
+        {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirmar', onPress: () => this._addContactRequest(account, sectionID, rowID)},
+      ],
+      { cancelable: false }
+    )
+  };
+
+   _addContactRequest = async (account, sectionID, rowID) =>  {
      this.setState({ loading: true });
-    let requestContact = await ContactsService.newContactRequest(account.Id);
+     let requestContact = await ContactsService.newContactRequest(account.Id);
      this.setState({ loading: false});
      showToast("¡Solicitud enviada a " + account.Username + " !", {duration: 5000});
     this._goBack();
