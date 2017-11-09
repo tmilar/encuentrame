@@ -18,8 +18,14 @@ const selectedColor = '#FFFD00'; //'#363a45';
 const notSelectedColor = '#959400'; //'#252831';
 
 export default class TabProgressTracker extends Component {
+
+  static defaultProps = {
+    items:  ['¿Cuándo?', '¿Bien o Mal?', '¿Dónde?'/*, 'Boton 3',/* 'Boton 4'*/],
+    selectedIndex: 0
+  };
+
   state = {
-    selectedIndex: 0,
+    selectedIndex: this.props.selectedIndex,
   };
 
   // _arrowView() returns a view containing a triangle A, or a view containing two small triangles, C and D.
@@ -169,7 +175,7 @@ export default class TabProgressTracker extends Component {
   }
 
   render() {
-    let items = ['¿Cuándo?', '¿Bien o Mal?', '¿Dónde?'/*, 'Boton 3',/* 'Boton 4'*/];
+    let items = this.props.items;
     let {cellWidth, progressBarWidth} = this.calculateCellDimensions(items.length);
 
     return (

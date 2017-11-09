@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import TabProgressTracker from "./TabProgressTracker";
 import {View, StyleSheet, Alert} from "react-native";
 import {hideLoading, showLoading} from "react-native-notifyer";
 import SoughtPeopleService from '../../service/SoughtPeopleService';
+import SupplyInfo from "./SupplyInfo";
 import formatDateForBackend from "../../util/formatDateForBackend";
 
 export default class SupplyInfoContainer extends Component {
@@ -123,7 +123,7 @@ export default class SupplyInfoContainer extends Component {
 
   render() {
     return <View style={styles.container}>
-      <TabProgressTracker
+      <SupplyInfo
         questions={this.questions}
         onSubmit={this.handleSubmitAnswers}
         onClose={this.handleClose}
