@@ -151,7 +151,7 @@ class PushNotificationsService {
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
     Alert.alert(
       "Respondieron tu solicitud de amistad",
-      contactRequestUsername + " ha aceptado tu solicitud."
+      `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
     );
   };
 

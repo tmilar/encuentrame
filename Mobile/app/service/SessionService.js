@@ -70,13 +70,13 @@ class SessionService {
 
   _validateSessionData(data) {
     if (!data) {
-      throw '¡Session data is empty!';
+      throw 'Session data is empty!';
     }
     if(!data.token) {
-      throw '¡Session tokenId is missing!';
+      throw 'Session tokenId is missing!';
     }
     if(!data.userId) {
-      throw '¡User Id is missing!';
+      throw 'User Id is missing!';
     }
   }
 
