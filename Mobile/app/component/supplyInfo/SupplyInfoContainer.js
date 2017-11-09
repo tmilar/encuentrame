@@ -122,21 +122,10 @@ export default class SupplyInfoContainer extends Component {
   };
 
   render() {
-    return <View style={styles.container}>
-      <SupplyInfo
-        questions={this.questions}
-        onSubmit={this.handleSubmitAnswers}
-        onClose={this.handleClose}
-      />
-    </View>;
+    return <SupplyInfo
+      questions={this.questions}
+      onSubmit={this.handleSubmitAnswers}
+      onClose={this.handleClose}
+    />
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#D2D100', // '#D2D100', //#ecf0f1',
-  }
-});
