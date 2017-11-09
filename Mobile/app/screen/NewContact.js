@@ -8,6 +8,7 @@ import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
 import LoadingIndicator from "../component/LoadingIndicator";
 import AccountsService from '../service/AccountsService';
+import {showToast} from "react-native-notifyer";
 
 
 export default class NewContact extends Component {
@@ -38,9 +39,23 @@ export default class NewContact extends Component {
     this.setState({ loading: false });
   };
 
-   _pressRow = async (account, sectionID, rowID) =>  {
-    let requestContact = await ContactsService.newContactRequest(account.Id);
-    Alert.alert("Solicitud enviada!", "Solicitud enviada con exito a " + account.Username);
+  _pressRow = async(account, sectionID, rowID) => {
+    Alert.alert(
+      'Confirma',
+      '¿Agregar contacto?',
+      [
+        {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirmar', onPress: () => this._addContactRequest(account, sectionID, rowID)},
+      ],
+      { cancelable: false }
+    )
+  };
+
+   _addContactRequest = async (account, sectionID, rowID) =>  {
+     this.setState({ loading: true });
+     let requestContact = await ContactsService.newContactRequest(account.Id);
+     this.setState({ loading: false});
+     showToast("¡Solicitud enviada a " + account.Username + " !", {duration: 5000});
     this._goBack();
   };
 
@@ -65,8 +80,8 @@ export default class NewContact extends Component {
             <Image source={{ uri: account.imageUri }} style={{ width: 75, height: 75 }} />
           </View>
           <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
-            <View style={{justifyContent: 'space-around',width: 100, height: 60 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
-              <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>Agregar</Text>
+            <View style={{borderRadius: 40, justifyContent: 'space-around',width: 50, height: 50 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+              <Text style={{textAlign: 'center',color: 'white', fontSize:45}}>+</Text>
             </View>
           </View>
 
@@ -91,21 +106,11 @@ export default class NewContact extends Component {
             underlineColorAndroid='transparent'
           />
         </View>
-        <View style={{flex: 9, height: 500, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", marginBottom: 20}}>
+        <View style={{flex: 10, height: 500, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", marginBottom: 20}}>
           <ListView style={{flex: 1}}
             dataSource={this.state.filteredAccounts}
             renderRow={this.renderRow}
           />
-        </View>
-        <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Button
-              title="Volver"
-              color='#ff5c5c'
-              onPress={this._goBack}
-            />
-
-          </View>
         </View>
 
       </ScrollView>

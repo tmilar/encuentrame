@@ -38,12 +38,12 @@ export default class FriendsAndFamily extends Component {
     try {
       await AreYouOkService.ask({id: targetUserId});
     } catch (e) {
-      let errMsg = `Problema al preguntar Estas Bien al user: ${targetUserId}. `;
+      let errMsg = `Problema al preguntar ¿Estás Bien al user: ${targetUserId}. `;
       console.log(errMsg, e);
       Alert.alert("Error", errMsg);
       return;
     }
-    Alert.alert("Aviso", `Le preguntaste Estas Bien? al user ${targetUserId}`);
+    Alert.alert("Aviso", `Le preguntaste ¿Estás Bien? al user ${targetUserId}`);
   };
 
   renderEstasBienSelector() {
@@ -55,7 +55,7 @@ export default class FriendsAndFamily extends Component {
           onChangeText={this._handleUserIdChange}
         />
         <Button
-          title="Estas Bien?"
+          title="¿Estás Bien?"
           style={{flex: 1}}
           onPress={this._handleEstasBienButtonPress}
         />

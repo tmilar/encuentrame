@@ -1,5 +1,6 @@
 import Service from './Service';
 import ContactsService from '../service/ContactsService';
+import SessionService from './SessionService';
 import {apiUrl} from '../config/apiProperties'
 
 class AccountsService {
@@ -16,10 +17,11 @@ class AccountsService {
   }
 
   async getUnknownUsersAccounts() {
+    let userId = await SessionService.getSessionUserId();
     let accounts = await this.getAllUserAccounts();
     let contacts = await ContactsService.getAllContacts();
 
-    let isAcctUnknown = (acct) => contacts.every((contact) => contact.User.Id !== acct.Id);
+    let isAcctUnknown = (acct) => contacts.every((contact) => contact.User.Id !== acct.Id && acct.Id !== userId);
     let unknownPeople = accounts.filter(isAcctUnknown);
 
     return unknownPeople;
