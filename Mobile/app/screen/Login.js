@@ -40,7 +40,7 @@ export default class Login extends Component {
   async _doLogin() {
 
     if (this.state.username === '' || this.state.password === '') {
-      throw "El usuario o la contraseña no pueden estar vacíos!";
+      throw "¡El usuario o la contraseña no pueden estar vacíos!";
     }
 
     const credentials = {
@@ -60,15 +60,15 @@ export default class Login extends Component {
       hideLoading();
       console.log("Login error: ", e);
       Alert.alert(
-        'Login Error',
+        'Error de Login',
         e.message || e
       );
       return;
     }
     hideLoading();
     Alert.alert(
-      'Login!',
-      `Bienvenido, ${this.state.username}!`
+      '¡Login!',
+      `¡Bienvenido, ${this.state.username}!`
     );
 
     this._clearForm();

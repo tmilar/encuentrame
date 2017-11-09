@@ -116,7 +116,7 @@ class UserService {
 
     await this.tryRegisterUserRequest(userData);
 
-    console.log(`Registrado '${userData.username}' exitosamente!'`);
+    console.log(`¡Registrado '${userData.username}' exitosamente!'`);
   }
 
   async tryRegisterUserRequest(userData) {

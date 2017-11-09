@@ -6,7 +6,7 @@ import {text} from '../style';
 import EventsService from '../service/EventsService';
 import GeolocationService from '../service/GeolocationService';
 import ActivityService from '../service/ActivityService';
-import {hideLoading, showLoading} from "react-native-notifyer";
+import {hideLoading, showLoading, showToast} from "react-native-notifyer";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ModalMap from './ModalMap';
 import LoadingIndicator from "../component/LoadingIndicator";
@@ -36,11 +36,11 @@ export default class Activity extends Component {
   };
 
   formFields = [
-    {name: "activityName", errorMsg: "Nombre incompleto!"},
-    {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
-    {name: "startDate", errorMsg: "Elija fecha de inicio!"},
-    {name: "endDate", errorMsg: "Elija fecha de fin!"},
-    {name: "locationOk", errorMsg: "Elija ubicacion!"}
+    {name: "activityName", errorMsg: "¡Nombre incompleto!"},
+    {name: "selectedEventId", errorMsg: "¡Selecciona un evento!"},
+    {name: "startDate", errorMsg: "¡Elija fecha de inicio!"},
+    {name: "endDate", errorMsg: "¡Elija fecha de fin!"},
+    {name: "locationOk", errorMsg: "¡Elija ubicación!"}
   ];
 
   _showStartDateTimePicker = () => {
@@ -96,9 +96,6 @@ export default class Activity extends Component {
     return errorMsg;
   };
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  };
 
   _handleActivitynameTextChange = (inputValue) => {
     this.setState({activityName: inputValue});
@@ -148,7 +145,6 @@ export default class Activity extends Component {
   };
 
   _goBack = () => {
-    this.setModalVisible(false);
     this.props.navigation.goBack(null);
   };
   _loadActiveActivity = (activeActivity) => {
@@ -205,9 +201,6 @@ export default class Activity extends Component {
     this.setState({endDate: selectedEvent.EndDateTime});
   };
 
-  componentDidMount = () => {
-    this.setModalVisible(!this.state.modalVisible)
-  };
   _getTitle = () => {
     let title = "Nueva Actividad";
     if (this.state.activeActivity){
@@ -215,13 +208,11 @@ export default class Activity extends Component {
     }
     return title;
   };
-  _cancelActivityButtonpress = async() => {
+
+  _deleteActivity = async() => {
     try {
       await ActivityService.deleteActivity(this.activeActivity.Id);
-      Alert.alert(
-        'Eliminar actividad',
-        "Actividad eliminada."
-      );
+      showToast("Actividad eliminada.", {duration: 5000});
       this._goBack();
     } catch (e) {
       console.log("Error deleting activity in server: ", e);
@@ -230,6 +221,18 @@ export default class Activity extends Component {
         e.message || e
       );
     }
+  };
+
+  _cancelActivityButtonpress = async() => {
+    Alert.alert(
+      'Confirma',
+      '¿Eliminar la Actividad?',
+      [
+        {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirmar', onPress: () => this._deleteActivity()},
+      ],
+      { cancelable: false }
+    )
   };
 
   _getNewActivityHeader = () => {
@@ -422,13 +425,7 @@ export default class Activity extends Component {
       return <LoadingIndicator/>;
     }
     return (
-      <View style={{marginTop: 22}}>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={this._handleCancelActivityCreation}
-        >
+      <View style={{marginTop: 22, flex: 1}}>
           <View style={{flex: 1}}>
             {this.state.activeActivity ? this._getActiveActivityHeader() : this._getNewActivityHeader()}
             <View style={{flex: 6}}>
@@ -438,7 +435,6 @@ export default class Activity extends Component {
             </View>
             {this.state.activeActivity ? this._getActiveActivityFooter() : this._getNewActivityFooter()}
           </View>
-        </Modal>
       </View>
     )
   }

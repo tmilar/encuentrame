@@ -79,7 +79,7 @@ export default class Register extends Component {
 
     Alert.alert(
       "Registro exitoso",
-      `Bienvenido, ${registerData.username}!`
+      `¡Bienvenido, ${registerData.username}!`
     );
     this.onDone && this.onDone(this.state.username);
     this.props.navigation.goBack();

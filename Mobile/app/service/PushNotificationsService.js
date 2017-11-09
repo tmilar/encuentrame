@@ -132,7 +132,7 @@ class PushNotificationsService {
     let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
     console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
     Alert.alert(
-      "Te respondieron: Estas Bien?",
+      "Te respondieron: Estás Bien?",
       `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
     );
   };
@@ -151,13 +151,13 @@ class PushNotificationsService {
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
     Alert.alert(
       "Respondieron tu solicitud de amistad",
-      `{usuario ${contactRequestUsername}} ha aceptado tu solicitud.}`
+      `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
     );
   };
 
   handleColaborativeSearchNotif = (navigation, notification, notificationType) => {
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    showToast("Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
+    showToast("¡Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
     navigation.navigate("Find",{emergency: true});
   };
 
