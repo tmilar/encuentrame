@@ -8,6 +8,7 @@ import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
 import LoadingIndicator from "../component/LoadingIndicator";
 import AccountsService from '../service/AccountsService';
+import {showToast} from "react-native-notifyer";
 
 
 export default class NewContact extends Component {
@@ -39,8 +40,10 @@ export default class NewContact extends Component {
   };
 
    _pressRow = async (account, sectionID, rowID) =>  {
+     this.setState({ loading: true });
     let requestContact = await ContactsService.newContactRequest(account.Id);
-    Alert.alert("¡Solicitud enviada!", "Solicitud enviada con exito a " + account.Username);
+     this.setState({ loading: false});
+     showToast("¡Solicitud enviada a " + account.Username + " !", {duration: 5000});
     this._goBack();
   };
 
