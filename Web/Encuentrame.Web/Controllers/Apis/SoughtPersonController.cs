@@ -3,12 +3,10 @@ using System.Linq;
 using System.Web.Http;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.AreYouOks;
-using Encuentrame.Model.Contacts;
 using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Accounts;
-using Encuentrame.Web.Models.SoughtPersons;
+using Encuentrame.Web.Models.Apis.SoughtPersons;
 using NailsFramework.IoC;
-using NHibernate.Util;
 
 namespace Encuentrame.Web.Controllers.Apis
 {
@@ -16,6 +14,8 @@ namespace Encuentrame.Web.Controllers.Apis
     {
         [Inject]
         public AreYouOkCommand AreYouOkCommand { get; set; }
+
+      
 
         [Inject]
         public IUserCommand UserCommand { get; set; }
@@ -58,15 +58,53 @@ namespace Encuentrame.Web.Controllers.Apis
             return Ok(list);
         }
 
+
+
         [HttpPost]
         public IHttpActionResult Seen(int id, SoughtPersonSeenApiModel model )
         {
+            if (model == null || id<=0)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var parameter=new AreYouOkCommand.SoughtPersonSeenParameters()
+            {
+                Info = model.Info,
+                IsOk = model.IsOk,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude,
+                SourceUserId = this.GetIdUserLogged(),
+                TargetUserId = id,
+                When = model.When
+            };
+
+            AreYouOkCommand.SoughtPersonSeen(parameter);
+
             return Ok();
         }
 
         [HttpPost]
         public IHttpActionResult Dismiss(int id)
         {
+            if ( id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var parameter = new AreYouOkCommand.SoughtPersonDismissParameters()
+            {
+                SourceUserId = this.GetIdUserLogged(),
+                TargetUserId = id,
+                When = SystemDateTime.Now
+            };
+
+            AreYouOkCommand.SoughtPersonDismiss(parameter);
+
             return Ok();
         }
     }

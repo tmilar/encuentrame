@@ -9,5 +9,9 @@ namespace Encuentrame.Model.AreYouOks
         void Delete(int id);
         void Reply(AreYouOkCommand.ReplyParameters parameters);
         void Ask(AreYouOkCommand.AskParameters parameters);
+
+        void SoughtPersonSeen(AreYouOkCommand.SoughtPersonSeenParameters parameters);
+        void SoughtPersonDismiss(AreYouOkCommand.SoughtPersonDismissParameters parameters);
+
     }
 }

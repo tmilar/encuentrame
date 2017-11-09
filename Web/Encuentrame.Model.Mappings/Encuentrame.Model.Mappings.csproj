@@ -57,6 +57,7 @@
     <Compile Include="Devices\DeviceMap.cs" />
     <Compile Include="Events\EventMap.cs" />
     <Compile Include="Positions\PositionMap.cs" />
+    <Compile Include="SoughtPersons\SoughtPersonAnswerMap.cs" />
     <Compile Include="SqlTypeExtensions.cs" />
     <Compile Include="Accounts\UserMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

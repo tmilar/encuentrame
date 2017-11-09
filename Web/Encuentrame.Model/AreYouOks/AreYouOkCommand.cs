@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Encuentrame.Model.Accounts;
@@ -21,7 +20,8 @@ namespace Encuentrame.Model.AreYouOks
         [Inject]
         public IBag<AreYouOkActivity> AreYouOkActivities { get; set; }
 
-        
+        [Inject]
+        public IBag<SoughtPersonAnswer> SoughtPersonAnswers { get; set; }
 
 
         [Inject]
@@ -119,6 +119,7 @@ namespace Encuentrame.Model.AreYouOks
 
         }
 
+     
         public void AskFromEvent(Event eventt)
         {
 
@@ -184,7 +185,7 @@ namespace Encuentrame.Model.AreYouOks
 
         }
 
-        public IEnumerable<SoughtPerson> SoughtPeople(User userSearcher)
+        public IEnumerable<SoughtPersonInfo> SoughtPeople(User userSearcher)
         {
 
             var currentActivity = Activities
@@ -193,7 +194,7 @@ namespace Encuentrame.Model.AreYouOks
 
             if (currentActivity == null)
             {
-                return new List<SoughtPerson>();
+                return new List<SoughtPersonInfo>();
             }
              
             var sql = @"EXEC SoughtPeople :userId, :eventId; ";
@@ -201,10 +202,60 @@ namespace Encuentrame.Model.AreYouOks
             var list=NHibernateContext.CurrentSession.CreateSQLQuery(sql)
                 .SetParameter("userId", userSearcher.Id)
                 .SetParameter("eventId", currentActivity.Event.Id)
-                .SetResultTransformer(Transformers.AliasToBean(typeof(SoughtPerson)));
+                .SetResultTransformer(Transformers.AliasToBean(typeof(SoughtPersonInfo)));
 
-            return list.List<SoughtPerson>();
+            return list.List<SoughtPersonInfo>();
 
+        }
+
+        public void SoughtPersonSeen(SoughtPersonSeenParameters parameters)
+        {
+            var soughtPersonAswer=new SoughtPersonAnswer()
+            {
+                When = parameters.When,
+                Seen=true,
+                Info = parameters.Info,
+                Latitude = parameters.Latitude,
+                Longitude = parameters.Longitude,
+                IsOk = parameters.IsOk,
+                SourceUser =Users[parameters.SourceUserId],
+                TargetUser = Users[parameters.TargetUserId],
+            };
+
+            SoughtPersonAnswers.Put(soughtPersonAswer);
+
+        }
+
+        public void SoughtPersonDismiss(SoughtPersonDismissParameters parameters)
+        {
+            var soughtPersonAswer = new SoughtPersonAnswer()
+            {
+                When = parameters.When,
+                Seen=false,
+                SourceUser = Users[parameters.SourceUserId],
+                TargetUser = Users[parameters.TargetUserId],
+            };
+
+            SoughtPersonAnswers.Put(soughtPersonAswer);
+        }
+
+
+        public class SoughtPersonSeenParameters
+        {
+            public DateTime When { get; set; }
+            public  decimal Latitude { get; set; }
+            public  decimal Longitude { get; set; }
+            public  int SourceUserId { get; set; }
+            public  int TargetUserId { get; set; }
+            public  bool IsOk { get; set; }
+            public  string Info { get; set; }
+        }
+
+        public class SoughtPersonDismissParameters
+        {
+            public DateTime When { get; set; }
+            public int SourceUserId { get; set; }
+            public int TargetUserId { get; set; }
         }
 
         public class ReplyParameters

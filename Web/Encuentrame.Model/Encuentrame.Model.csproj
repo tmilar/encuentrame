@@ -122,6 +122,7 @@
     <Compile Include="Accounts\User.cs" />
     <Compile Include="SeekerFactory.cs" />
     <Compile Include="SoughtPersons\SoughtPerson.cs" />
+    <Compile Include="SoughtPersons\SoughtPersonAnswer.cs" />
     <Compile Include="Supports\EmailConfigurations\EmailConfiguration.cs" />
     <Compile Include="Supports\EmailConfigurations\EmailConfigurationCommand.cs" />
     <Compile Include="Supports\EmailConfigurations\IEmailConfigurationCommand.cs" />
