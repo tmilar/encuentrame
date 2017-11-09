@@ -72,9 +72,53 @@ export default class SupplyInfoContainer extends Component {
     }
   ];
 
+  /**
+   * Get submitted answers and send them to server.
+   *
+   * // TODO
+   * 1. read state answers data
+   * 2. send to SoughtPeopleService.soughtPersonSupplyInfo()
+   */
+  handleSubmitAnswers = async () => {
+    showLoading("Aportando datos!...");
+
+    // TODO get correct data structure to send to SoughtPeopleService.soughtPersonSupplyInfo()
+    let info = {
+      when: this.state.whenAnswer,
+      personState: this.state.personStateAnswer,
+      where: this.state.whereAnswer
+    };
+
+    try {
+      console.log("Aportando datos...", info);
+      // await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, info);
+    } catch (e) {
+      console.error("Error al aportar datos: ", e);
+      Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));
+      return;
+    } finally {
+      hideLoading();
+    }
+
+    this.onSuccess();
+    this.props.navigation.goBack(null);
+  };
+
+  /**
+   * User closed form or navigated back: no sending info to server.
+   */
+  handleClose = () => {
+    this.onClose();
+    this.props.navigation.goBack(null)
+  };
+
   render() {
     return <View style={styles.container}>
-      <TabProgressTracker/>
+      <TabProgressTracker
+        questions={this.questions}
+        onSubmit={this.handleSubmitAnswers}
+        onClose={this.handleClose}
+      />
     </View>;
   }
 }
