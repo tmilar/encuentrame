@@ -55,6 +55,8 @@
         urlData = "data-url={0}".FormatWith(Model.Url);
     }
 
+    var urlLanguage= "data-url-language={0}".FormatWith(Scripts.Url(@"~/scripts/app/datatable-spanish.js"));
+
     var childUrlData = string.Empty;
 
     if (Model.HasChildTable && !string.IsNullOrEmpty(Model.ChildTable.Url))
@@ -141,7 +143,7 @@
         </div>
     }
     <table class='table table-striped table-style @Model.ClassName @Model.ChildTableClass' id="@Model.TableId" data-server-side="@Model.ServerSide.ToString().ToLower()"
-           data-allow-search="@Model.SearchEnabled.ToString().ToLower()" @urlData @sortByColumnIndexData @sortOrderData @parentPropertyNameData
+           data-allow-search="@Model.SearchEnabled.ToString().ToLower()" @urlLanguage @urlData @sortByColumnIndexData @sortOrderData @parentPropertyNameData
            @lengthString @defaultLengthString data-hide-show-all="@((!Model.ShowAllOption).ToString().ToLower())" data-allow-selection="@Model.AllowSelection.ToString().ToLower()">
         <thead>
         <tr>

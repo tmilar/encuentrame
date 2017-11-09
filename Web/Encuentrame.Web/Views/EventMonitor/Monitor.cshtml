@@ -4,7 +4,9 @@
 @using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @using Encuentrame.Support
-@model Encuentrame.Web.Models.Events.EventMonitorModel
+@using Encuentrame.Web.Helpers.DataTable
+@using Encuentrame.Web.Models.EventMonitors
+@model Encuentrame.Web.Models.EventMonitors.EventMonitorModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,6 +19,8 @@
             src="https://maps.googleapis.com/maps/api/js?key=@ConfigurationManager.AppSettings["GoogleMapsKey"]&callback=initMap">
 
     </script>
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/form")
     <script src="@Scripts.Url(@"~/scripts/app/controllers/manageEvents/manageEventMonitor.js")" type="text/javascript"></script>
 
     
@@ -92,7 +96,7 @@
             <div class="map-container" id="mapContainer" style="position: relative; width: 100%; height: 288px; overflow: hidden"></div>
         </div>
     </div>
-}
+
 
 
 <form method="POST" action="@Url.Action("ButtonAction", new {id = Model.Id})">
@@ -130,6 +134,55 @@
         </button>
     }
 
-    @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })
+    @Html.ActionLink(Translations.GoBack, "Index","ManageEvent", new { }, new { @class = "btn btn-link", role = "button" })
 </form>
+}
+@using (Html.BeginEditSection(Translations.SectionBasicData))
+{
+    <div class="table-container">
+        @{ var tableBuilder = Html.BuildTable<EventMonitorUserListModel>(Url.Action("GetItems", "EventMonitor", new {eventId = Model.Id}))
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.Lastname)
+                .AddColumn(x => x.Firstname);
+            if (Model.Status == EventStatusEnum.InEmergency)
+            {
+                tableBuilder= tableBuilder
+                    .AddColumn(x => x.IAmOk, dataTemplate: "IAmOkTemplate")
+                    .AddColumn(x => x.WasSeen, visible: false)
+                    .AddColumn(x => x.Seen)
+                    .AddColumn(x => x.NotSeen);
+            }
 
+            tableBuilder.AddColumn(x => x.LastPositionUpdate)
+                .AddFilter(x => x.Lastname)
+                .AddFilter(x => x.Firstname);
+            if (Model.Status == EventStatusEnum.InEmergency)
+            {
+                tableBuilder = tableBuilder
+                    .AddFilter(x => x.IAmOk)
+                    .AddFilter(x => x.WasSeen);
+            }
+
+            tableBuilder=tableBuilder
+                .AddFilter(x => x.LastPositionUpdate);
+        }
+        
+        @(tableBuilder.Build())
+    </div>
+}
+
+<script id="IAmOkTemplate" type="text/template">
+    <%  if(row.IAmOk === @(IAmOkEnum.Ok.ToInt())) { %>
+    <span class="label label-success">
+        @TranslationsHelper.Get(IAmOkEnum.Ok)
+    </span>
+    <% } else if( row.IAmOk === @(IAmOkEnum.WithoutAnswer.ToInt())) { %>
+    <span class="label label-info">
+        @TranslationsHelper.Get(IAmOkEnum.WithoutAnswer)
+    </span>
+    <% } else if( row.IAmOk === @(IAmOkEnum.NotOk.ToInt())) { %>
+    <span class="label label-danger">
+      @TranslationsHelper.Get(IAmOkEnum.NotOk)
+    </span>
+    <% }  %>
+</script>

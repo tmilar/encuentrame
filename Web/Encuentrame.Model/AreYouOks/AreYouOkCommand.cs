@@ -214,9 +214,7 @@ namespace Encuentrame.Model.AreYouOks
             {
                 When = parameters.When,
                 Seen=true,
-                Info = parameters.Info,
-                Latitude = parameters.Latitude,
-                Longitude = parameters.Longitude,
+              
                 IsOk = parameters.IsOk,
                 SourceUser =Users[parameters.SourceUserId],
                 TargetUser = Users[parameters.TargetUserId],
@@ -243,12 +241,11 @@ namespace Encuentrame.Model.AreYouOks
         public class SoughtPersonSeenParameters
         {
             public DateTime When { get; set; }
-            public  decimal Latitude { get; set; }
-            public  decimal Longitude { get; set; }
+           
             public  int SourceUserId { get; set; }
             public  int TargetUserId { get; set; }
             public  bool IsOk { get; set; }
-            public  string Info { get; set; }
+            
         }
 
         public class SoughtPersonDismissParameters

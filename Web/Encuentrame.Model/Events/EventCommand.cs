@@ -9,6 +9,7 @@ using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
+using NHibernate.Transform;
 
 namespace Encuentrame.Model.Events
 {
@@ -143,6 +144,20 @@ namespace Encuentrame.Model.Events
                 AreYouOkCommand.StartCollaborativeSearch(eventt);
             }
 
+
+        }
+
+        public IList<EventMonitorUserInfo> EventMonitorUsers(int eventId)
+        {
+            var eventt = Events[eventId];
+            
+            var sql = @"EXEC EventMonitorUsers :eventId; ";
+
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("eventId", eventt.Id)
+                .SetResultTransformer(Transformers.AliasToBean(typeof(EventMonitorUserInfo)));
+
+            return list.List<EventMonitorUserInfo>();
 
         }
 

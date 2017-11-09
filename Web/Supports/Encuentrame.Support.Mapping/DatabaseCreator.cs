@@ -46,7 +46,7 @@ namespace Encuentrame.Support.Mappings
             GetSchemaExport("ScriptDrop.sql", writeScripts).Execute(true, true, true);
             GetSchemaExport("ScriptCreate.sql", writeScripts).Execute(true, true, false);
 
-            CreateStoredSoughtPeople();
+            //CreateStoredSoughtPeople();
 
 
         }
@@ -73,54 +73,54 @@ namespace Encuentrame.Support.Mappings
 
         }
 
-        private static void CreateStoredSoughtPeople()
-        {
-            var dropSpSoughtPeople = @"
-                                    IF OBJECT_ID('SoughtPeople', 'P') IS NOT NULL
-                                    DROP PROC SoughtPeople
-                                    ";
+        //private static void CreateStoredSoughtPeople()
+        //{
+        //    var dropSpSoughtPeople = @"
+        //                            IF OBJECT_ID('SoughtPeople', 'P') IS NOT NULL
+        //                            DROP PROC SoughtPeople
+        //                            ";
 
-            var addSpSoughtPeople = @"
-                                    CREATE PROCEDURE SoughtPeople 
-	                                    @userId int , @eventId int
-                                    AS
-                                    BEGIN
-	                                    DECLARE @source geography 
-                                    set @source = (select top 1 geography::Point(Latitude, Longitude , 4326) from Positions where UserId=@userId order by Creation desc);
+        //    var addSpSoughtPeople = @"
+        //                            CREATE PROCEDURE SoughtPeople 
+	       //                             @userId int , @eventId int
+        //                            AS
+        //                            BEGIN
+	       //                             DECLARE @source geography 
+        //                            set @source = (select top 1 geography::Point(Latitude, Longitude , 4326) from Positions where UserId=@userId order by Creation desc);
 
-                                    SELECT top 20 aa.Target_id AS [UserId], min( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ) as Distance
-                                        FROM BaseAreYouOks aa 
-                                        inner join positions pp 
-                                        on aa.Target_id=pp.UserId  
-                                        where aa.Event_id=@eventId and aa.ReplyDatetime is null and aa.Target_id<>@userId
-                                        group by Target_id
-                                        order by min( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ); 
-                                    END
+        //                            SELECT top 20 aa.Target_id AS [UserId], min( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ) as Distance
+        //                                FROM BaseAreYouOks aa 
+        //                                inner join positions pp 
+        //                                on aa.Target_id=pp.UserId  
+        //                                where aa.Event_id=@eventId and aa.ReplyDatetime is null and aa.Target_id<>@userId
+        //                                group by Target_id
+        //                                order by min( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ); 
+        //                            END
                                     
-                                                                        ";
+        //                                                                ";
 
-            var dropCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
+        //    var dropCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
 
-            dropCommand.CommandText = dropSpSoughtPeople;
+        //    dropCommand.CommandText = dropSpSoughtPeople;
 
-            NHibernateContext.CurrentSession.Transaction.Enlist(dropCommand);
+        //    NHibernateContext.CurrentSession.Transaction.Enlist(dropCommand);
 
-            dropCommand.ExecuteNonQuery();
-
-
-
-            var addCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
-
-            addCommand.CommandText = addSpSoughtPeople;
-
-            NHibernateContext.CurrentSession.Transaction.Enlist(addCommand);
-
-            addCommand.ExecuteNonQuery();
+        //    dropCommand.ExecuteNonQuery();
 
 
 
+        //    var addCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
+
+        //    addCommand.CommandText = addSpSoughtPeople;
+
+        //    NHibernateContext.CurrentSession.Transaction.Enlist(addCommand);
+
+        //    addCommand.ExecuteNonQuery();
 
 
-        }
+
+
+
+        //}
     }
 }

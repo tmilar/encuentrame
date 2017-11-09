@@ -74,10 +74,7 @@ namespace Encuentrame.Web.Controllers.Apis
 
             var parameter=new AreYouOkCommand.SoughtPersonSeenParameters()
             {
-                Info = model.Info,
                 IsOk = model.IsOk,
-                Latitude = model.Latitude,
-                Longitude = model.Longitude,
                 SourceUserId = this.GetIdUserLogged(),
                 TargetUserId = id,
                 When = model.When

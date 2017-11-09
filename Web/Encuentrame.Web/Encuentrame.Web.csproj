@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -184,6 +185,7 @@
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\ManagePersonUserController.cs" />
     <Compile Include="Controllers\MasterDetailBaseController.cs" />
+    <Compile Include="Controllers\EventMonitorController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ReferenceItemsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
@@ -234,9 +236,11 @@
     <Compile Include="Models\DataTable\SearchModel.cs" />
     <Compile Include="Models\DataTable\SelectFilterModel.cs" />
     <Compile Include="Models\Devices\DeviceApiModel.cs" />
+    <Compile Include="Models\EventMonitors\EventMonitorUserListModel.cs" />
+    <Compile Include="Models\EventMonitors\IAmOkEnum.cs" />
     <Compile Include="Models\Events\EventListModel.cs" />
     <Compile Include="Models\Events\EventModel.cs" />
-    <Compile Include="Models\Events\EventMonitorModel.cs" />
+    <Compile Include="Models\EventMonitors\EventMonitorModel.cs" />
     <Compile Include="Models\Positions\PositionListModel.cs" />
     <Compile Include="Models\Apis\SoughtPersons\SoughtPersonApiResultModel.cs" />
     <Compile Include="Models\Apis\SoughtPersons\SoughtPersonSeenApiModel.cs" />
@@ -827,7 +831,7 @@
     <Content Include="Views\ManageEventAdministratorUser\Details.cshtml" />
     <Content Include="Views\ManageEventAdministratorUser\Edit.cshtml" />
     <Content Include="Views\ManageEventAdministratorUser\Index.cshtml" />
-    <Content Include="Views\ManageEvent\Monitor.cshtml" />
+    <Content Include="Views\EventMonitor\Monitor.cshtml" />
     <Content Include="Views\Shared\_loggedUser.cshtml" />
   </ItemGroup>
   <ItemGroup>

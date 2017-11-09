@@ -19,7 +19,7 @@ namespace Encuentrame.Web {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Translations {
@@ -1548,9 +1548,9 @@ namespace Encuentrame.Web {
         /// <summary>
         ///   Looks up a localized string similar to Nombre.
         /// </summary>
-        public static string FirstName {
+        public static string Firstname {
             get {
-                return ResourceManager.GetString("FirstName", resourceCulture);
+                return ResourceManager.GetString("Firstname", resourceCulture);
             }
         }
         
@@ -1753,6 +1753,42 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estoy bien.
+        /// </summary>
+        public static string IAmOk {
+            get {
+                return ResourceManager.GetString("IAmOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No estoy bien.
+        /// </summary>
+        public static string IAmOkEnumNotOk {
+            get {
+                return ResourceManager.GetString("IAmOkEnumNotOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estoy bien.
+        /// </summary>
+        public static string IAmOkEnumOk {
+            get {
+                return ResourceManager.GetString("IAmOkEnumOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sin respuesta.
+        /// </summary>
+        public static string IAmOkEnumWithoutAnswer {
+            get {
+                return ResourceManager.GetString("IAmOkEnumWithoutAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
         public static string Id {
@@ -1854,9 +1890,18 @@ namespace Encuentrame.Web {
         /// <summary>
         ///   Looks up a localized string similar to Apellido.
         /// </summary>
-        public static string LastName {
+        public static string Lastname {
             get {
-                return ResourceManager.GetString("LastName", resourceCulture);
+                return ResourceManager.GetString("Lastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ultima act. de posición.
+        /// </summary>
+        public static string LastPositionUpdate {
+            get {
+                return ResourceManager.GetString("LastPositionUpdate", resourceCulture);
             }
         }
         
@@ -2752,6 +2797,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No visto.
+        /// </summary>
+        public static string NotSeen {
+            get {
+                return ResourceManager.GetString("NotSeen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Número.
         /// </summary>
         public static string Number {
@@ -3472,6 +3526,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visto.
+        /// </summary>
+        public static string Seen {
+            get {
+                return ResourceManager.GetString("Seen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seleccione....
         /// </summary>
         public static string SelectItemDropDownCaption {
@@ -4170,6 +4233,15 @@ namespace Encuentrame.Web {
         public static string ViewMonthDaily {
             get {
                 return ResourceManager.GetString("ViewMonthDaily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fue visto.
+        /// </summary>
+        public static string WasSeen {
+            get {
+                return ResourceManager.GetString("WasSeen", resourceCulture);
             }
         }
         

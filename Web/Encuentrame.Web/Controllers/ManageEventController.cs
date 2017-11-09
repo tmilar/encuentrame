@@ -53,34 +53,7 @@ namespace Encuentrame.Web.Controllers
             return View(eventtModel);
         }
 
-        public ActionResult Monitor(int id)
-        {
-            var eventt = EventCommand.Get(id);
-            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
-            {
-                return RedirectToAction("Index");
-            }
-            var eventtModel = new EventMonitorModel()
-            {
-                Id = eventt.Id,
-                Name = eventt.Name,
-                Latitude = eventt.Latitude,
-                Longitude = eventt.Longitude,
-                BeginDateTime = eventt.BeginDateTime,
-                EndDateTime = eventt.EndDateTime,
-                Address = eventt.Address.ToDisplay(),
-                OrganizerDisplay = eventt.Organizer.ToDisplay(),
-                Status = eventt.Status
-            };
-
-            if (eventt.EmergencyDateTime.HasValue)
-            {
-                eventtModel.EmergencyDateTime = eventt.EmergencyDateTime.Value;
-            }
-
-            return View(eventtModel);
-        }
-
+       
         public ActionResult Create()
         {
             var eventtModel = new EventModel();
@@ -181,75 +154,7 @@ namespace Encuentrame.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult ButtonAction(int id, string buttonAction)
-        {
-            var eventt = EventCommand.Get(id);
-            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
-            {
-                return RedirectToAction("Index");
-            }
-
-            switch (buttonAction)
-            {
-                case "delete":
-                    return Delete(id);
-                case "begin":
-                    return Begin(id);
-                case "finalize":
-                    return Finalize(id);
-                case "emergency":
-                    return Emergency(id);
-                case "cancelEmergency":
-                    return CancelEmergency(id);
-                case "startCollaborativeSearch":
-                    return StartCollaborativeSearch(id);
-
-            }
-
-            return RedirectToAction("Index");
-
-        }
-
-        protected ActionResult StartCollaborativeSearch(int id)
-        {
-            EventCommand.StartCollaborativeSearch(id);
-
-            return RedirectToAction("Monitor", new { id });
-        }
-
-        protected ActionResult Delete(int id)
-        {
-            EventCommand.Delete(id);
-
-            return RedirectToAction("Index");
-        }
-
-        protected ActionResult Begin(int id)
-        {
-            EventCommand.BeginEvent(id);
-
-            return RedirectToAction("Monitor", new { id });
-        }
-        protected ActionResult Finalize(int id)
-        {
-            EventCommand.FinalizeEvent(id);
-
-            return RedirectToAction("Monitor", new { id });
-        }
-        protected ActionResult Emergency(int id)
-        {
-            EventCommand.DeclareEmergency(id);
-
-            return RedirectToAction("Monitor", new { id });
-        }
-
-        protected ActionResult CancelEmergency(int id)
-        {
-            EventCommand.CancelEmergency(id);
-
-            return RedirectToAction("Monitor", new { id });
-        }
+       
 
         protected override EventListModel GetViewModelFrom(Event eventt)
         {

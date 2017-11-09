@@ -21,6 +21,7 @@ function getIndex(jqueryObj, hasDetails, hasSelection) {
 function processTable(table, jsonData, addChildTable, addFilters, isChildTable) {
     var $table = table;
     var dataUrl = $table.data('url');
+    var urlLanguage = $table.data('url-language');
     var $ths = $table.find("th");
     var columnDefs = [];
     var columnsToTotalize = [];
@@ -196,7 +197,7 @@ function processTable(table, jsonData, addChildTable, addFilters, isChildTable) 
         dom: 'lrtip', //https://datatables.net/reference/option/dom
         //stateSave: true,
         "language": {
-            "url": "Scripts/app/datatable-spanish.js"
+            "url": urlLanguage
         }
         //"ajax": ,
         //"columnDefs": columnDefs        

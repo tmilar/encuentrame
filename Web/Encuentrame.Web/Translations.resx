@@ -450,10 +450,10 @@
   <data name="ManageUserListTitle" xml:space="preserve">
     <value>Listado de usuarios</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
+  <data name="Firstname" xml:space="preserve">
     <value>Nombre</value>
   </data>
-  <data name="LastName" xml:space="preserve">
+  <data name="Lastname" xml:space="preserve">
     <value>Apellido</value>
   </data>
   <data name="Username" xml:space="preserve">
@@ -1508,5 +1508,29 @@
   </data>
   <data name="StartCollaborativeSearchMessage" xml:space="preserve">
     <value>¿Esta seguro que desea comenzar una búsqueda colaborativa?</value>
+  </data>
+  <data name="IAmOk" xml:space="preserve">
+    <value>Estoy bien</value>
+  </data>
+  <data name="LastPositionUpdate" xml:space="preserve">
+    <value>Ultima act. de posición</value>
+  </data>
+  <data name="NotSeen" xml:space="preserve">
+    <value>No visto</value>
+  </data>
+  <data name="Seen" xml:space="preserve">
+    <value>Visto</value>
+  </data>
+  <data name="WasSeen" xml:space="preserve">
+    <value>Fue visto</value>
+  </data>
+  <data name="IAmOkEnumNotOk" xml:space="preserve">
+    <value>No estoy bien</value>
+  </data>
+  <data name="IAmOkEnumOk" xml:space="preserve">
+    <value>Estoy bien</value>
+  </data>
+  <data name="IAmOkEnumWithoutAnswer" xml:space="preserve">
+    <value>Sin respuesta</value>
   </data>
 </root>

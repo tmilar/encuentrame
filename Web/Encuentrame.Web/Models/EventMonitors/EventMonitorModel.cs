@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using Encuentrame.Model.Events;
 using Encuentrame.Web.Helpers;
 
-namespace Encuentrame.Web.Models.Events
+namespace Encuentrame.Web.Models.EventMonitors
 {
     public class EventMonitorModel
     {

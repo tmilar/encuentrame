@@ -22,7 +22,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 Name = x.Name,
                 BeginDateTime = x.BeginDateTime,
                 EndDateTime = x.EndDateTime,
-                Latitude = x.Longitude,
+                Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Address = new AddressModel()
                 {
