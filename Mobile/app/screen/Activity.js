@@ -12,6 +12,7 @@ import ModalMap from './ModalMap';
 import LoadingIndicator from "../component/LoadingIndicator";
 import {Icon} from 'react-native-elements';
 import ActivityDetailsContentView from './ActivityDetailsContentView';
+import formatDateForBackend from "../util/formatDateForBackend";
 
 export default class Activity extends Component {
 
@@ -63,19 +64,15 @@ export default class Activity extends Component {
     this.setState({showMapLocation: true});
   };
 
-  _formatDateForBackend = (date) => {
-    return date.toISOString().slice(0, 19).replace(/T/g, " ");
-  };
-
   _handleStartDatePicked = (startDate) => {
-    let formattedDate = this._formatDateForBackend(startDate);
+    let formattedDate = formatDateForBackend(startDate);
     this.setState({startDate: formattedDate});
     console.log('A date has been picked: ', startDate);
     this._hideStartDateTimePicker();
   };
 
   _handleEndDatePicked = (endDate) => {
-    let formattedDate = this._formatDateForBackend(endDate);
+    let formattedDate = formatDateForBackend(endDate);
     this.setState({endDate: formattedDate});
     console.log('A date has been picked: ', endDate);
     this._hideEndDateTimePicker();
