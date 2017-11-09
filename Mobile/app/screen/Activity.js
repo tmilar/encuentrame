@@ -40,7 +40,7 @@ export default class Activity extends Component {
     {name: "selectedEventId", errorMsg: "¡Selecciona un evento!"},
     {name: "startDate", errorMsg: "¡Elija fecha de inicio!"},
     {name: "endDate", errorMsg: "¡Elija fecha de fin!"},
-    {name: "locationOk", errorMsg: "¡Elija ubicacion!"}
+    {name: "locationOk", errorMsg: "¡Elija ubicación!"}
   ];
 
   _showStartDateTimePicker = () => {

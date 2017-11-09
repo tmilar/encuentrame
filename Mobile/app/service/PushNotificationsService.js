@@ -132,7 +132,7 @@ class PushNotificationsService {
     let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
     console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
     Alert.alert(
-      "Te respondieron: Estas Bien?",
+      "Te respondieron: Estás Bien?",
       `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
     );
   };

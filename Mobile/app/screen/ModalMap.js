@@ -107,7 +107,7 @@ export default class ModalMap extends Component {
         >
           <View style={{flex: 1}}>
             <Text style={[text.p, styles.title]}>
-              Escoge la ubicacion
+              Escoge la ubicación
             </Text>
             {/* TODO: add some instructions text explaining how this MapView & MapMarker works... */}
             <MapView style={styles.map}

@@ -52,7 +52,7 @@ export default class AreYouOk extends Component {
           }}
         >
           <View style={styles.message}>
-            <Text style={text.title}>Estas bien?</Text>
+            <Text style={text.title}>¿Estás bien?</Text>
           </View>
           <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>

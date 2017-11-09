@@ -37,7 +37,7 @@ export default class FamilyCard extends Component {
   async _handleEstasBienButtonPress() {
     let targetUserId = this.personProps.Id;
     await AreYouOkService.ask({id: targetUserId});
-    Alert.alert("Aviso", `Le preguntaste Estas Bien? al user ${targetUserId}`);
+    Alert.alert("Aviso", `Le preguntaste ¿Estás Bien? al user ${targetUserId}`);
   }
 
   getStateColor(person) {
@@ -67,7 +67,7 @@ export default class FamilyCard extends Component {
     const contactActions = <TouchableHighlight style={{justifyContent: 'space-around',width: 100, height: 100}} onPress={this._handleEstasBienButtonPress}>
       <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
         <View style={{justifyContent: 'space-around',width: 100, height: 60 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
-          <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>Estas bien?</Text>
+          <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>¿Estás bien?</Text>
         </View>
       </View>
     </TouchableHighlight>;
