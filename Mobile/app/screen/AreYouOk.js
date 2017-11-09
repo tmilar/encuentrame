@@ -18,7 +18,7 @@ export default class AreYouOk extends Component {
 
   _handleImOk = async () => {
     Alert.alert(
-      'Ok!',
+      '¡Ok!',
       `Avisando a tus amigos`
     );
     await AreYouOkService.reply(true);
@@ -27,7 +27,7 @@ export default class AreYouOk extends Component {
 
   _handleINeedHelp = async () => {
     Alert.alert(
-      'No te muevas!',
+      '¡No te muevas!',
       `Vamos a buscar ayuda`
     );
     await AreYouOkService.reply(false);
@@ -48,7 +48,7 @@ export default class AreYouOk extends Component {
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            Alert.alert("¿Estás Bien?", "Por favor, responde! Alguien está preocupado por vos.");
+            Alert.alert("¿Estás Bien?", "¡Por favor, responde! Alguien está preocupado por vos.");
           }}
         >
           <View style={styles.message}>
@@ -57,7 +57,7 @@ export default class AreYouOk extends Component {
           <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <Button
-                title="Estoy bien!"
+                title="¡Estoy bien!"
                 color="#64DD17"
                 onPress={this._handleImOk}
               />

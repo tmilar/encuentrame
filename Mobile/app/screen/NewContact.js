@@ -40,7 +40,7 @@ export default class NewContact extends Component {
 
    _pressRow = async (account, sectionID, rowID) =>  {
     let requestContact = await ContactsService.newContactRequest(account.Id);
-    Alert.alert("Solicitud enviada!", "Solicitud enviada con exito a " + account.Username);
+    Alert.alert("¡Solicitud enviada!", "Solicitud enviada con exito a " + account.Username);
     this._goBack();
   };
 

@@ -34,7 +34,7 @@ export default class EncuentraCard extends Component {
         </CardContent>
         <CardAction >
           <Button color="green"
-            title="Lo he visto!"
+            title="¡Lo he visto!"
             style={styles.confirmButton}
             onPress={this._handleIveSeenHim}>
             Button 1

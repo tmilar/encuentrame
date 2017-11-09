@@ -157,7 +157,7 @@ class PushNotificationsService {
 
   handleColaborativeSearchNotif = (navigation, notification, notificationType) => {
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    showToast("Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
+    showToast("¡Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
     navigation.navigate("Find",{emergency: true});
   };
 

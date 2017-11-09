@@ -36,11 +36,11 @@ export default class Activity extends Component {
   };
 
   formFields = [
-    {name: "activityName", errorMsg: "Nombre incompleto!"},
-    {name: "selectedEventId", errorMsg: "Selecciona un evento!"},
-    {name: "startDate", errorMsg: "Elija fecha de inicio!"},
-    {name: "endDate", errorMsg: "Elija fecha de fin!"},
-    {name: "locationOk", errorMsg: "Elija ubicacion!"}
+    {name: "activityName", errorMsg: "¡Nombre incompleto!"},
+    {name: "selectedEventId", errorMsg: "¡Selecciona un evento!"},
+    {name: "startDate", errorMsg: "¡Elija fecha de inicio!"},
+    {name: "endDate", errorMsg: "¡Elija fecha de fin!"},
+    {name: "locationOk", errorMsg: "¡Elija ubicacion!"}
   ];
 
   _showStartDateTimePicker = () => {
