@@ -106,21 +106,11 @@ export default class NewContact extends Component {
             underlineColorAndroid='transparent'
           />
         </View>
-        <View style={{flex: 9, height: 500, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", marginBottom: 20}}>
+        <View style={{flex: 10, height: 500, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", marginBottom: 20}}>
           <ListView style={{flex: 1}}
             dataSource={this.state.filteredAccounts}
             renderRow={this.renderRow}
           />
-        </View>
-        <View style={{flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Button
-              title="Volver"
-              color='#ff5c5c'
-              onPress={this._goBack}
-            />
-
-          </View>
         </View>
 
       </ScrollView>

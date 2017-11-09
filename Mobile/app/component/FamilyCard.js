@@ -72,13 +72,10 @@ export default class FamilyCard extends Component {
       </View>
     </TouchableHighlight>;
 
-    const pendingContactMessage = <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-      <Text style={{flex: 1, fontWeight: 'bold'}}>Solicitud pendiente</Text>
+    const pendingContactMessage = <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
+      <View style={{justifyContent: 'space-around',width: 100, height: 60 }}>
+        <Text style={{textAlign: 'center', fontSize: 14}}>Solicitud enviada</Text>
+      </View>
     </View>;
 
     if (this.pending) {
