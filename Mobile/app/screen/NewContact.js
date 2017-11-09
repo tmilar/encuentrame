@@ -68,8 +68,8 @@ export default class NewContact extends Component {
             <Image source={{ uri: account.imageUri }} style={{ width: 75, height: 75 }} />
           </View>
           <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
-            <View style={{justifyContent: 'space-around',width: 100, height: 60 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
-              <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>Agregar</Text>
+            <View style={{borderRadius: 40, justifyContent: 'space-around',width: 50, height: 50 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+              <Text style={{textAlign: 'center',color: 'white', fontSize:45}}>+</Text>
             </View>
           </View>
 
