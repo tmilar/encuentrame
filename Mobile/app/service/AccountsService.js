@@ -21,7 +21,7 @@ class AccountsService {
     let accounts = await this.getAllUserAccounts();
     let contacts = await ContactsService.getAllContacts();
 
-    let isAcctUnknown = (acct) => contacts.every((contact) => contact.User.Id !== acct.Id && acct.Id !== userId);
+    let isAcctUnknown = (acct) => {return acct.Id !== userId && contacts.every((contact) => contact.User.Id !== acct.Id)};
     let unknownPeople = accounts.filter(isAcctUnknown);
 
     return unknownPeople;
