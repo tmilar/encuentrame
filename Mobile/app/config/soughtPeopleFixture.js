@@ -1,15 +1,32 @@
 export const soughtPeople = [
   {
-    name: 'Luisito Gomez',
-    username: '@luisitoverduras',
-    lastSeen: 'Visto última vez hace 8 minutos, cerca tuyo.',
-    image: require('../img/personImgExample.jpg'),
-    soughtPersonId: 1
+    User: {
+      FirstName: 'Luisito',
+      LastName: 'Gomez',
+      Username: 'luisitoverduras',
+      imageUri: require('../img/personImgExample.jpg'),
+      Id: 1
+    },
+    Distance: "123.22"
   },
   {
-    name: 'Jose Lopez',
-    lastSeen: 'Visto última vez hace 5 minutos, cerca tuyo.',
-    image: require('../img/personImgExample.jpg'),
-    soughtPersonId: 2
+    User: {
+      FirstName: 'Jose',
+      LastName: 'Lopez',
+      Username: 'Josesitoverduras',
+      imageUri: require('../img/personImgExample.jpg'),
+      Id: 2
+    },
+    Distance: "33.22"
+  },
+  {
+    User: {
+      FirstName: 'Mercos',
+      LastName: 'The Kid',
+      Username: 'elmerquitos',
+      imageUri: require('../img/personImgExample.jpg'),
+      Id: 3
+    },
+    Distance: "53.21"
   },
 ];

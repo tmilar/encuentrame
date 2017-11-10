@@ -82,19 +82,19 @@ export default class SoughtPeopleDeckSwiper extends Component {
           <Card style={{elevation: 3}}>
             <CardItem>
               <Left>
-                <Thumbnail source={item.image}/>
+                <Thumbnail source={{uri: item.User.imageUri}}/>
                 <Body>
-                <Text>{item.name}</Text>
-                <Text note>{item.username}</Text>
+                <Text>{`${item.User.FirstName || "[nombre]"} ${item.User.LastName || "[apellido]"}`}</Text>
+                <Text note>{`@${item.User.Username}`}</Text>
                 </Body>
               </Left>
             </CardItem>
             <CardItem cardBody>
-              <Image style={{height: 250, flex: 1}} source={item.image}/>
+              <Image style={{height: 250, flex: 1}} source={{uri: item.User.imageUri}}/>
             </CardItem>
             <CardItem>
               <Icon name="heart" style={{color: '#ED4A6A'}}/>
-              <Text>{item.lastSeen}</Text>
+              <Text>{`Se lo vio a ${item.Distance} mts tuyos.`}</Text>
             </CardItem>
           </Card>
         }
