@@ -17,10 +17,10 @@ export default class SupplyInfo extends Component {
     questions: []
   };
 
-  renderAnswerItem = (answerText, index, answersCount) => {
+  renderAnswerItem = (answerText, index = 0, answersCount = 1) => {
     // TODO convert to actual touchable button.
-    return <View style={{flex: 1 / answersCount, alignItems: 'center'}} key={index}>
-      <Text style={{textAlign: 'center'}}>{answerText}</Text>
+    return <View style={[styles.answerButton, {flex: 1 / answersCount}]} key={index}>
+      <Text style={styles.answerText} adjustsFontSizeToFit={true}>{answerText}</Text>
     </View>
   };
 
@@ -35,9 +35,7 @@ export default class SupplyInfo extends Component {
     let currentQuestion = this.props.questions[currentIndex];
     let answers = currentQuestion.answers;
 
-    return <View style={{flex: 1}}>
-      {answers.map((a, i) => this.renderAnswerItem(a.text, i, questionsCount))}
-    </View>;
+    return answers.map((a, i) => this.renderAnswerItem(a.text, i, questionsCount));
   };
 
   render() {
@@ -62,6 +60,23 @@ const styles = StyleSheet.create({
   },
   answersContainer: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: 'center',
+    width: "100%",
+    paddingRight: 3,
+    paddingLeft: 3,
+  },
+  answerButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 5,
+    borderColor: "lightgray",
+    margin: 3,
+    padding: 3,
+    width: "100%",
+  },
+  answerText: {
+    textAlign: 'center',
+    // textAlignVertical: "center"
   }
 });
