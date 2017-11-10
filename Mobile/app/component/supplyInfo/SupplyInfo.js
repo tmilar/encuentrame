@@ -86,10 +86,19 @@ export default class SupplyInfo extends Component {
    * @param newIndex
    */
   checkBackPreviousQuestion = (newIndex) => {
-    this.setState(({currentQuestionIndex}) => {
-      let newIdx = Math.min(newIndex, currentQuestionIndex);
-      return {currentQuestionIndex: newIdx};
-    });
+    this.setState((prevState) => {
+      let {currentQuestionIndex, skippedQuestions, answeredQuestions} = prevState;
+
+      if (newIndex < currentQuestionIndex) {
+        return {
+          currentQuestionIndex: newIndex,
+          skippedQuestions: skippedQuestions.filter(q => q !== newIndex),
+          answeredQuestions: answeredQuestions.filter(q => q !== newIndex)
+        };
+      }
+
+      return prevState;
+    })
   };
 
   renderAnswerItem = ({answerText, backgroundColor = "transparent", index, answersCount = 1}) => {

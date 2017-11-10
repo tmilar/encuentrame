@@ -41,7 +41,8 @@ export default class SupplyInfoContainer extends Component {
         getValue: () => {
           let now = new Date();
           return formatDateForBackend(now);
-        }
+        },
+        color: "#64dd17"
       }, {
         text: "Hace un rato\n(10 a 30 minutos)",
         getValue: () => {
