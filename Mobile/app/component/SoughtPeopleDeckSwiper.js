@@ -28,7 +28,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
   };
 
   state = {
-    empty: false
+    empty: this.props.soughtPeople.length === 0
   };
 
   _deckSwiper;
@@ -59,8 +59,13 @@ export default class SoughtPeopleDeckSwiper extends Component {
   };
 
   checkEmpty = () => {
-    let empty = (this._deckSwiper && this._deckSwiper._root.state.disabled);
+    let empty = this._isEmpty();
     this.setState({empty});
+  };
+
+  _isEmpty = () => {
+    return (this._deckSwiper && this._deckSwiper._root.state.disabled) ||
+      (!this.props.soughtPeople || !this.props.soughtPeople.length);
   };
 
   _renderEmptySwiper = () => (

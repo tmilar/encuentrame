@@ -13,7 +13,7 @@ export default class SoughtPeopleContainer extends Component {
   };
 
   state = {
-    soughtPeople: []
+    soughtPeople: null
   };
 
   componentDidMount = async () => {
@@ -55,14 +55,15 @@ export default class SoughtPeopleContainer extends Component {
       await SoughtPeopleService.soughtPersonDismiss(soughtPersonId);
     } catch (e) {
       console.error("Error al indicar que no lo has visto: ", e);
+      this._pushSoughtPerson(soughtPerson);
       Alert.alert("Error", "¡Ups! Ocurrió un error al indicar que no lo has visto. \n" + (e.message || e));
       return;
     }
   };
 
   render() {
-    if (!this.state.soughtPeople || !this.state.soughtPeople.length) {
-      return <LoadingIndicator/>
+    if (!this.state.soughtPeople) {
+      return <LoadingIndicator text={"Cargando..."}/>
     }
 
     return <SoughtPeopleDeckSwiper
