@@ -27,6 +27,7 @@ export default class TabProgressTracker extends Component {
     selectedIndex: 0,
     skippedItems: [],
     resolvedItems: [],
+    onItemPress: (index) => console.log(`Prsesed item: #${index} : ${items[index]}`)
   };
 
   state = {
@@ -129,7 +130,7 @@ export default class TabProgressTracker extends Component {
 
     return items.map((item, index) => {
       let left = 0;
-      let isSelected = index === this.state.selectedIndex;
+      let isSelected = index === this.props.selectedIndex;
 
       if (totalCount === 1 || index === 0) {
         left = 0;
@@ -149,7 +150,7 @@ export default class TabProgressTracker extends Component {
           key={index}
           style={positionStyle}
           onPress={() => {
-            this.setState({selectedIndex: index});
+            this.props.onItemPress(index);
           }}>
           {// Left arrow view
             this._arrowView(index, totalCount, true, isSelected)

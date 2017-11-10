@@ -79,6 +79,19 @@ export default class SupplyInfo extends Component {
     return currentIndex >= questionsCount;
   };
 
+  /**
+   * This allows going back to previous question only.
+   * Not to the next one (so it can only be skipped explicitly)
+   *
+   * @param newIndex
+   */
+  checkBackPreviousQuestion = (newIndex) => {
+    this.setState(({currentQuestionIndex}) => {
+      let newIdx = Math.min(newIndex, currentQuestionIndex);
+      return {currentQuestionIndex: newIdx};
+    });
+  };
+
   renderAnswerItem = ({answerText, backgroundColor = "transparent", index, answersCount = 1}) => {
     return (
       <TouchableHighlight style={[styles.answerButton, {flex: 1 / answersCount}, {backgroundColor}]} key={index || 0}
@@ -117,6 +130,7 @@ export default class SupplyInfo extends Component {
         selectedIndex={this.state.currentQuestionIndex}
         skippedItems={this.state.skippedQuestions}
         resolvedItems={this.state.answeredQuestions}
+        onItemPress={this.checkBackPreviousQuestion}
       />
       <View style={[{flex: 1}, styles.questionAnswersContainer]}>
         {this.renderCurrentQuestionAnswers()}
