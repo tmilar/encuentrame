@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Alert, Text, TouchableHighlight, TouchableOpacity} from "react-native";
 import TabProgressTracker from "./TabProgressTracker";
+import LoadingIndicator from "../LoadingIndicator";
 
 //
 // - get the questions
@@ -19,7 +20,9 @@ export default class SupplyInfo extends Component {
   };
 
   static defaultProps = {
-    questions: []
+    questions: [],
+    onSubmit: () => {console.log("No more questions, submit!")},
+    onClose: () => {console.log("View closed, going back...")}
   };
 
   onAnswerPress = (answerIndex) => {
@@ -53,6 +56,13 @@ export default class SupplyInfo extends Component {
     }
   };
 
+  validateAllAnswers = () => {
+    let questionsCount = this.props.questions.length;
+    let currentIndex = this.state.currentQuestionIndex;
+
+    return currentIndex >= questionsCount;
+  };
+
   renderAnswerItem = ({answerText, backgroundColor = "transparent", index, answersCount = 1}) => {
     return (
       <TouchableHighlight style={[styles.answerButton, {flex: 1 / answersCount}, {backgroundColor}]} key={index || 0}
@@ -72,10 +82,6 @@ export default class SupplyInfo extends Component {
   };
 
   renderCurrentQuestionAnswers = () => {
-    if (this.validateAllAnswers()) {
-      return <Text>No quedan preguntas por responder.</Text>
-    }
-
     let currentQuestion = this.props.questions[this.state.currentQuestionIndex];
     let answers = currentQuestion.answers;
     let answersCount = answers.length;
@@ -85,6 +91,10 @@ export default class SupplyInfo extends Component {
   };
 
   render() {
+    if(this.validateAllAnswers()) {
+      return <LoadingIndicator text={"Gracias!"}/>
+    }
+
     return <View style={styles.container}>
       <TabProgressTracker
         items={this.props.questions.map(q => q.text)}
@@ -97,13 +107,6 @@ export default class SupplyInfo extends Component {
         {this.renderDontKnowAnswer()}
       </View>
     </View>
-  }
-
-  validateAllAnswers = () => {
-    let questionsCount = this.props.questions.length;
-    let currentIndex = this.state.currentQuestionIndex;
-
-    return currentIndex >= questionsCount;
   }
 }
 
