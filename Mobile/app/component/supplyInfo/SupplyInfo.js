@@ -44,8 +44,11 @@ export default class SupplyInfo extends Component {
         items={this.props.questions.map(q => q.text)}
         selectedIndex={this.state.currentQuestionIndex}
       />
-      <View style={styles.answersContainer}>
+      <View style={[{flex: 1}, styles.answersContainer]}>
         {this.renderCurrentQuestionAnswers()}
+      </View>
+      <View style={[{height: 100, backgroundColor: "gray"}, styles.answersContainer]}>
+        {this.renderAnswerItem("No lo se")}
       </View>
     </View>
   }
@@ -59,7 +62,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#D2D100', // '#D2D100', //#ecf0f1',
   },
   answersContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: 'center',
     width: "100%",
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
     margin: 3,
     padding: 3,
     width: "100%",
+    height: "100%"
   },
   answerText: {
     textAlign: 'center',
