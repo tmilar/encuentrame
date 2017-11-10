@@ -70,12 +70,14 @@ export default class FriendsAndFamily extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <ScrollView style={{flex: 5.5}}>
-          <FamilyListContainer/>
-          {
-            this.renderEstasBienSelector()
-          }
-        </ScrollView>
+        <View style={{ flex: 8, justifyContent: "space-around" }}>
+          <ScrollView style={{flex: 1}}>
+            <FamilyListContainer/>
+            {
+              this.renderEstasBienSelector()
+            }
+          </ScrollView>
+        </View>
         <View style={{ flex: 1, justifyContent: "space-around" }}>
           <Button
             style={{width: 100, height: 50}}
