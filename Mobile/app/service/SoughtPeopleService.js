@@ -26,13 +26,12 @@ class SoughtPeopleService {
     let url = `/soughtPerson/seen/${soughtPersonId}`;
 
     return await Service.sendRequest(url, {
-        method: 'POST',
-        body: JSON.stringify({
-          "When": suppliedInfo.when,
-          "IsOk": suppliedInfo.isOk
-        })
-      }
-    )
+      method: 'POST',
+      body: JSON.stringify({
+        "When": suppliedInfo.when,
+        "IsOk": suppliedInfo.isOk
+      })
+    })
   };
 
   /**
@@ -42,8 +41,11 @@ class SoughtPeopleService {
    * @returns {Promise.<void>}
    */
   soughtPersonDismiss = async (soughtPersonId) => {
-    console.log(`[SoughtPeopleService] Dismissing sought person ${soughtPersonId}`);
-    // TODO send request to server
+    let url = `/soughtPerson/dismiss/${soughtPersonId}`;
+
+    return await Service.sendRequest(url, {
+      method: 'POST'
+    })
   }
 }
 
