@@ -50,7 +50,8 @@ export default class SupplyInfoContainer extends Component {
           let minutes20 = 20 * 60 * 1000;
           let minutes20ago = new Date(now.getTime() - minutes20);
           return formatDateForBackend(minutes20ago);
-        }
+        },
+        color: "#ffea00"
       }, {
         text: "Hace bastante\n(más de media hora)",
         getValue: () => {
@@ -58,7 +59,8 @@ export default class SupplyInfoContainer extends Component {
           let minutes60 = 60 * 60 * 1000;
           let minutes60ago = new Date(now.getTime() - minutes60);
           return formatDateForBackend(minutes60ago);
-        }
+        },
+        color: "#ff3d00"
       }],
       onAnswer: (option) => {
         this.setState({whenAnswer: option});
@@ -67,10 +69,12 @@ export default class SupplyInfoContainer extends Component {
       text: "¿Bien o Mal?",
       answers: [{
         text: "Bien \ud83d\udc4d",
-        getValue: () => true
+        getValue: () => true,
+        color: "#64DD17"
       }, {
         text: "Necesitaba Ayuda \u{26A0} \u{1F198}",
-        getValue: () => false
+        getValue: () => false,
+        color: '#ff1919'
       }],
       onAnswer: (option) => {
         this.setState({personStateAnswer: option});
@@ -83,7 +87,7 @@ export default class SupplyInfoContainer extends Component {
    */
   handleSubmitAnswers = async () => {
     this.props.navigation.goBack(null);
-    showToast("Aportando datos...", {duration: 1000});
+    showToast("Aportando datos...", {duration: 2000});
 
     let suppliedInfo = {
       when: this.state.whenAnswer,
