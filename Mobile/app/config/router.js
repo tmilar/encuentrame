@@ -11,7 +11,7 @@ import AreYouOk from "../screen/AreYouOk";
 import ContactRequest from "../screen/ContactRequest";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
-import NewActivity from "../screen/Activity";
+import ActivityContainer from "../screen/ActivityContainer";
 import SupplyInfo from "../screen/SupplyInfo";
 import NewContact from "../screen/NewContact";
 import UserProfile from "../screen/UserProfile";
@@ -34,8 +34,8 @@ const Tabs = TabNavigator({
       tabBarIcon: ({tintColor}) => <Icon name="search" size={23} color={tintColor}/>
     }
   },
-  NewActivity: {
-    screen: NewActivity,
+  ActivityContainer: {
+    screen: ActivityContainer,
     navigationOptions: {
       tabBarLabel: 'Eventos',
       tabBarIcon: ({tintColor}) => <Icon name="account-circle" size={23} color={tintColor}/>
