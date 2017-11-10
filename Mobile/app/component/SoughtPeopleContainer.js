@@ -27,9 +27,9 @@ export default class SoughtPeopleContainer extends Component {
    * Send sought person suppliedInfo to server.
    * @returns {Promise.<void>}
    */
-  handleIveSeenHim = async (soughtPersonId, suppliedInfo) => {
+  handleIveSeenHimSubmit = async (soughtPerson, suppliedInfo) => {
     showToast("Aportando datos...", {duration: 2000});
-
+    let {soughtPersonId} = soughtPerson;
     try {
       console.log("Aportando datos...", soughtPersonId, suppliedInfo);
       await SoughtPeopleService.soughtPersonSupplyInfo(soughtPersonId, suppliedInfo);
@@ -42,9 +42,13 @@ export default class SoughtPeopleContainer extends Component {
     showToast("¡Gracias por tu ayuda!", {duration: 1000});
   };
 
-  handleIveNotSeenHim = async (soughtPersonId) => {
+  handleIveSeenHimCancel = (soughtPerson) => {
+  };
+
+  handleIveNotSeenHim = async (soughtPerson) => {
+    let {soughtPersonId} = soughtPerson;
     try {
-      console.log("Quitando persona...", soughtPersonId);
+      console.log("Quitando persona...", soughtPerson);
       await SoughtPeopleService.soughtPersonDismiss(soughtPersonId);
     } catch (e) {
       console.error("Error al indicar que no lo has visto: ", e);
@@ -61,9 +65,9 @@ export default class SoughtPeopleContainer extends Component {
     return <SoughtPeopleDeckSwiper
       soughtPeople={this.state.soughtPeople}
       navigation={this.props.navigation}
-      onIveSeenHimSubmit={this.handleIveSeenHim}
+      onIveSeenHimSubmit={this.handleIveSeenHimSubmit}
+      onIveSeenHimCancel={this.handleIveSeenHimCancel}
       onIveNotSeenHim={this.handleIveNotSeenHim}
     />;
   }
-
 }

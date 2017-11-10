@@ -23,47 +23,35 @@ export default class SoughtPeopleDeckSwiper extends Component {
     soughtPeople: [],
     navigation: {},
     onIveSeenHimSubmit: () => console.log("Submitting IveSeenHim"),
+    onIveSeenHimCancel: () => console.log("Canceling IveSeenHim"),
     onIveNotSeenHim: () => console.log("Submitting IveNotSeenHim")
   };
 
   state = {
-    soughtPeople: this.props.soughtPeople
     empty: false
   };
 
   _deckSwiper;
 
-  /**
-   * Esto coloca la carta de vuelta, al fondo .
-   * //TODO:  Habria q poder ponerla adelante, pero x ahora el swiper NO lo soporta asi nomas (hay q meter mano)
-   */
-  _restoreCard = (personCard) => {
-    this.setState(({soughtPeople}) => {
-      return {
-        soughtPeople: [...soughtPeople, personCard]
-      }
-    });
-  };
-
-  onIveSeenHim = personCard => {
+  handleIveSeenHimSwipe = async personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", personCard);
     this.props.navigation.navigate("SupplyInfo", {
       soughtPersonId: personCard.soughtPersonId,
-      onSubmit: (suppliedInfo) => {
+      onSubmit: async (suppliedInfo) => {
         console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onSubmit() called. Supplying info to server.", suppliedInfo);
-        this.props.onIveSeenHimSubmit(personCard.soughtPersonId, suppliedInfo);
+        await this.props.onIveSeenHimSubmit(personCard, suppliedInfo);
       },
-      onClose: () => {
+      onClose: async () => {
         console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. Restoring swiped person card.");
-        this._restoreCard(personCard);
+        await this.props.onIveSeenHimCancel(personCard);
       }
     });
     this.checkEmpty();
   };
 
-  onIveNotSeenHim = personCard => {
+  handleIveNotSeenHimSwipe = async personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
-    this.props.onIveNotSeenHim(personCard.soughtPersonId);
+    await this.props.onIveNotSeenHim(personCard);
     // TODO send card to end of list; if second time then remove? Or simply remove?
     this.checkEmpty();
   };
@@ -85,7 +73,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
     <View>
       <DeckSwiper
         ref={(c) => this._deckSwiper = c}
-        dataSource={this.state.soughtPeople}
+        dataSource={this.props.soughtPeople}
         renderEmpty={this._renderEmptySwiper}
         looping={false}
         renderItem={item =>
@@ -108,11 +96,23 @@ export default class SoughtPeopleDeckSwiper extends Component {
             </CardItem>
           </Card>
         }
-        onSwipeRight={this.onIveSeenHim}
-        onSwipeLeft={this.onIveNotSeenHim}
+        onSwipeRight={this.handleIveSeenHimSwipe}
+        onSwipeLeft={this.handleIveNotSeenHimSwipe}
       />
     </View>
   );
+
+  handleSwipeLeftButtonPress = async () => {
+    this._deckSwiper._root.swipeLeft();
+    let personCard = this._deckSwiper._root.state.selectedItem;
+    await this.handleIveNotSeenHimSwipe(personCard);
+  };
+
+  handleSwipeRightButtonPress = () => {
+    this._deckSwiper._root.swipeRight();
+    let personCard = this._deckSwiper._root.state.selectedItem;
+    this.handleIveSeenHimSwipe(personCard);
+  };
 
   _renderSwipeButtons = () => {
     return !this.state.empty && (
@@ -126,24 +126,16 @@ export default class SoughtPeopleDeckSwiper extends Component {
           justifyContent: 'space-between',
           padding: 15
         }}>
-          <Button iconLeft onPress={() => {
-            this._deckSwiper._root.swipeLeft();
-            let personCard = this._deckSwiper._root.state.selectedItem;
-            this.onIveNotSeenHim(personCard);
-          }}>
+          <Button iconLeft onPress={this.handleSwipeLeftButtonPress}>
             <Icon name="arrow-back"/>
             <Text>No lo he visto :(</Text>
           </Button>
-          <Button iconRight onPress={() => {
-            this._deckSwiper._root.swipeRight();
-            let personCard = this._deckSwiper._root.state.selectedItem;
-            this.onIveSeenHim(personCard);
-          }}>
+          <Button iconRight onPress={this.handleSwipeRightButtonPress}>
             <Text>¡Lo he visto!</Text>
             <Icon name="arrow-forward"/>
           </Button>
         </View>
-      )
+      );
   };
 
   render() {
