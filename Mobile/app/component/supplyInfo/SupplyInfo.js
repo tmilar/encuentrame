@@ -24,10 +24,7 @@ export default class SupplyInfo extends Component {
   static defaultProps = {
     questions: [],
     onSubmit: () => {
-      console.log("No more questions, submit!")
-    },
-    onClose: () => {
-      console.log("View closed, going back...")
+      console.log("[SupplyInfo] No more questions left, submitting answers.")
     }
   };
 
