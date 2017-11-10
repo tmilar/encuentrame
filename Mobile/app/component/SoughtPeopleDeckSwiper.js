@@ -14,7 +14,7 @@ import {
   Icon,
   Button
 } from 'native-base';
-import {showToast} from "react-native-notifyer";
+import sleep from "../util/sleep";
 
 
 export default class SoughtPeopleDeckSwiper extends Component {
@@ -40,19 +40,21 @@ export default class SoughtPeopleDeckSwiper extends Component {
       onSubmit: async (suppliedInfo) => {
         console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onSubmit() called. Supplying info to server.", suppliedInfo);
         await this.props.onIveSeenHimSubmit(personCard, suppliedInfo);
+        this.checkEmpty();
       },
       onClose: async () => {
         console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. Restoring swiped person card.");
         await this.props.onIveSeenHimCancel(personCard);
+        this.checkEmpty();
       }
     });
-    this.checkEmpty();
   };
 
   handleIveNotSeenHimSwipe = async personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
     await this.props.onIveNotSeenHim(personCard);
     // TODO send card to end of list; if second time then remove? Or simply remove?
+    await sleep(50);
     this.checkEmpty();
   };
 
