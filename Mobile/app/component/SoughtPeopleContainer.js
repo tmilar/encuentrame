@@ -16,11 +16,14 @@ export default class SoughtPeopleContainer extends Component {
     soughtPeople: []
   };
 
-  componentWillMount = async () => {
-    // let soughtPeople = await SoughtPeopleService.getSoughtPeople();
-    // this.state.soughtPeople = soughtPeople || soughtPeopleFixture;
-    // TODO remove soughtPeople fixtures when backend is working.
-    this.state.soughtPeople = soughtPeople;
+  componentDidMount = async () => {
+    // TODO get ACTUAL soughtPeople fixtures when backend is working.
+    let soughtPeople = await SoughtPeopleService.getSoughtPeople();
+    let debuggingPeople = soughtPeople.map(p => ({
+      ...(p.User), Distance: p.Distance
+    }));
+    console.table(debuggingPeople);
+    this.setState({soughtPeople});
   };
 
   /**
