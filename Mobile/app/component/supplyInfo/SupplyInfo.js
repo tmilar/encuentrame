@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Alert, Text} from "react-native";
+import {View, StyleSheet, Alert, Text, TouchableHighlight, TouchableOpacity} from "react-native";
 import TabProgressTracker from "./TabProgressTracker";
 
 //
@@ -18,10 +18,16 @@ export default class SupplyInfo extends Component {
   };
 
   renderAnswerItem = ({answerText, backgroundColor = "transparent", index = 0, answersCount = 1}) => {
-    // TODO convert to actual touchable button.
-    return <View style={[styles.answerButton, {backgroundColor, flex: 1 / answersCount}]} key={index}>
-      <Text style={styles.answerText} adjustsFontSizeToFit={true}>{answerText}</Text>
-    </View>
+    return (
+      <TouchableHighlight style={[styles.answerButton, {flex: 1 / answersCount}, {backgroundColor}]} key={index}
+                          underlayColor="white"
+                          activeOpacity={0.5}
+      >
+        <Text style={styles.answerText} adjustsFontSizeToFit={true}>
+          {answerText}
+        </Text>
+      </TouchableHighlight>
+    );
   };
 
   renderDontKnowAnswer = () => {
@@ -50,10 +56,10 @@ export default class SupplyInfo extends Component {
         items={this.props.questions.map(q => q.text)}
         selectedIndex={this.state.currentQuestionIndex}
       />
-      <View style={[{flex: 1}, styles.answersContainer]}>
+      <View style={[{flex: 1}, styles.questionAnswersContainer]}>
         {this.renderCurrentQuestionAnswers()}
       </View>
-      <View style={[{height: 100}, styles.answersContainer]}>
+      <View style={[{height: 100}, styles.questionAnswersContainer]}>
         {this.renderDontKnowAnswer()}
       </View>
     </View>
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#D2D100', // '#D2D100', //#ecf0f1',
   },
-  answersContainer: {
+  questionAnswersContainer: {
     alignItems: "center",
     justifyContent: 'center',
     width: "100%",
