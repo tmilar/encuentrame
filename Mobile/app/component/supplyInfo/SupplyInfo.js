@@ -17,14 +17,28 @@ export default class SupplyInfo extends Component {
     questions: []
   };
 
-  renderCurrentQuestionView() {
+  renderAnswerItem = (answerText, index, answersCount) => {
+    // TODO convert to actual touchable button.
+    return <View style={{flex: 1 / answersCount, alignItems: 'center'}} key={index}>
+      <Text style={{textAlign: 'center'}}>{answerText}</Text>
+    </View>
+  };
+
+  renderCurrentQuestionAnswers = () => {
     let questionsCount = this.props.questions.length;
     let currentIndex = this.state.currentQuestionIndex;
-    //TODO remove this and replace with actual answers.
-    return <Text>No quedan preguntas por responder.</Text>;
 
-    // TODO render the current question: answers, text.
-  }
+    if (currentIndex > questionsCount) {
+      return <Text>No quedan preguntas por responder.</Text>
+    }
+
+    let currentQuestion = this.props.questions[currentIndex];
+    let answers = currentQuestion.answers;
+
+    return <View style={{flex: 1}}>
+      {answers.map((a, i) => this.renderAnswerItem(a.text, i, questionsCount))}
+    </View>;
+  };
 
   render() {
     return <View style={styles.container}>
@@ -32,8 +46,8 @@ export default class SupplyInfo extends Component {
         items={this.props.questions.map(q => q.text)}
         selectedIndex={this.state.currentQuestionIndex}
       />
-      <View style={{flex: 1}}>
-        {this.renderCurrentQuestionView()}
+      <View style={styles.answersContainer}>
+        {this.renderCurrentQuestionAnswers()}
       </View>
     </View>
   }
@@ -45,5 +59,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#D2D100', // '#D2D100', //#ecf0f1',
+  },
+  answersContainer: {
+    flex: 1,
+    alignItems: "center"
   }
 });
