@@ -24,6 +24,10 @@ export default class SupplyInfo extends Component {
     </View>
   };
 
+  renderDontKnowAnswer = () => {
+    return this.renderAnswerItem({answerText: "No lo se", backgroundColor: "gray"});
+  };
+
   renderCurrentQuestionAnswers = () => {
     let questionsCount = this.props.questions.length;
     let currentIndex = this.state.currentQuestionIndex;
@@ -50,7 +54,7 @@ export default class SupplyInfo extends Component {
         {this.renderCurrentQuestionAnswers()}
       </View>
       <View style={[{height: 100}, styles.answersContainer]}>
-        {this.renderAnswerItem({answerText: "No lo se", backgroundColor: "gray"})}
+        {this.renderDontKnowAnswer()}
       </View>
     </View>
   }
