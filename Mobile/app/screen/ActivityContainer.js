@@ -4,27 +4,31 @@ import Activity from "./Activity";
 
 export default class ActivityContainer extends Component {
   state = {
-    activityCreated: false,
-    activityDeleted: false
+    key: Math.random()
   };
 
   activityCreated = () =>  {
-    this.setState({activityCreated: true});
-    this.setState({activityDeleted: false});
+    this.setRandomKeyUpdate();
+  };
+  activityDeleted = () =>  {
+    this.setRandomKeyUpdate();
   };
 
-  activityDeleted = () =>  {
-    this.setState({activityCreated: false});
-    this.setState({activityDeleted: true});
+  setRandomKeyUpdate = () =>  {
+    this.setState({key: Math.random()});
   };
 
   _goBack = () => {
     this.props.navigation.goBack(null);
   };
 
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return this.state.key !== nextState.key;
+  };
+
   render() {
     return <View style={{flex: 1}}>
-            <Activity key={Math.random()} goBack={this._goBack} activityCreated={this.activityCreated} activityDeleted={this.activityDeleted}/>
+            <Activity key={this.state.key} goBack={this._goBack} activityCreated={this.activityCreated} activityDeleted={this.activityDeleted}/>
           </View>
    ;
   }
