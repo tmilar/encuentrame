@@ -6,7 +6,8 @@ export default class SupplyInfoContainer extends Component {
 
   state = {
     whenAnswer: null,
-    personStateAnswer: null
+    personStateAnswer: null,
+    submitted: false
   };
 
   static navigationOptions = {
@@ -83,18 +84,24 @@ export default class SupplyInfoContainer extends Component {
    * Get submitted answers and submit them.
    */
   handleSubmitAnswers = async () => {
-    this.props.navigation.goBack(null);
     let suppliedInfo = {
       when: this.state.whenAnswer,
       isOk: this.state.personStateAnswer,
     };
     this.onSubmit(suppliedInfo);
+    this.setState({submitted: true}, () =>
+      this.props.navigation.goBack(null)
+    );
   };
 
   /**
    * User closed form or navigated back.
    */
   componentWillUnmount() {
+    if(this.state.submitted) {
+      console.log("[SupplyInfoContainer] Unmounting. Answers already submitted.");
+      return;
+    }
     console.log("[SupplyInfoContainer] Canceling (closing or going back). ");
     this.onClose();
   }
