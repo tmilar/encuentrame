@@ -64,17 +64,17 @@ export default class FamilyCard extends Component {
   }
 
   _getRowAction() {
-    const contactActions = <TouchableHighlight style={{justifyContent: 'space-around',width: 100, height: 100}} onPress={this._handleEstasBienButtonPress}>
-      <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
-        <View style={{justifyContent: 'space-around',width: 100, height: 60 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
-          <Text style={{textAlign: 'center',color: 'white', fontSize: 18}}>¿Estás bien?</Text>
+    const contactActions = <TouchableHighlight style={{justifyContent: 'space-around',width: 80, height: 80}} onPress={this._handleEstasBienButtonPress}>
+      <View style={{justifyContent: 'space-around',alignItems: 'center',width: 80, height: 80}}>
+        <View style={{borderRadius: 40, alignItems: 'center', justifyContent: 'space-around',width: 50, height: 50 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
+          <Icon name="location-searching" size={35} color='white'/>
         </View>
       </View>
     </TouchableHighlight>;
 
-    const pendingContactMessage = <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
-      <View style={{justifyContent: 'space-around',width: 100, height: 60 }}>
-        <Text style={{textAlign: 'center', fontSize: 14}}>Solicitud enviada</Text>
+    const pendingContactMessage = <View style={{justifyContent: 'space-around',width: 80, height: 80, }}>
+      <View style={{justifyContent: 'space-around',width: 80, height: 60 }}>
+        <Text style={{textAlign: 'center', fontSize: 12}}>Solicitud enviada</Text>
       </View>
     </View>;
 
@@ -87,13 +87,14 @@ export default class FamilyCard extends Component {
   render() {
     //let bgColor = this.getStateColor(personProps);
     return (
-      <Card styles={{card: {}}}>
+      <Card styles={{flex: 1, card: {}}}>
         <View style={{
           flexDirection: 'row',
           height: 90,
+          flex: 1
         }}>
-          <View style={{justifyContent: 'space-around',width: 80, height: 90 }}>
-            <Text style={{textAlign: 'left', fontWeight: 'bold'}}>{this.personProps.Username}</Text>
+          <View style={{justifyContent: 'space-around',width: 60, height: 90 }}>
+            <Text style={{textAlign: 'left', fontWeight: 'bold', fontSize: 12}}>{this.personProps.Username}</Text>
           </View>
           <View style={{justifyContent: 'center', alignItems: 'center', width: 200, height: 90}}>
             <Image source={{ uri: this.personProps.imageUri }} style={{justifyContent: 'space-around', width: 75, height: 75 }} />

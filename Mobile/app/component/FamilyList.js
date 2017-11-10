@@ -3,7 +3,7 @@ import {StyleSheet, View} from "react-native";
 import FamilyCard from "./FamilyCard";
 
 const FamilyList = props =>
-  <View>
+  <View style={{flex: 1}}>
     {props.familyMembers.map((person, i) => {
       return (
         <FamilyCard key={i} style={styles.familyCard} personProps={person}/>
