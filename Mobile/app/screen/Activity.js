@@ -122,6 +122,7 @@ export default class Activity extends Component {
 
     try {
       await ActivityService.createActivity(activity);
+      this.props.activityCreated();
     } catch (e) {
       console.log("Error creating activity in server: ", e);
       Alert.alert(
@@ -145,7 +146,7 @@ export default class Activity extends Component {
   };
 
   _goBack = () => {
-    this.props.navigation.goBack(null);
+    this.props.goBack(null);
   };
   _loadActiveActivity = (activeActivity) => {
     this.setState({activeActivity: true});
@@ -213,6 +214,7 @@ export default class Activity extends Component {
     try {
       await ActivityService.deleteActivity(this.activeActivity.Id);
       showToast("Actividad eliminada.", {duration: 5000});
+      this.props.activityDeleted();
       this._goBack();
     } catch (e) {
       console.log("Error deleting activity in server: ", e);
