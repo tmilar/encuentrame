@@ -20,7 +20,7 @@ const notSelectedColor = '#959400'; //'#252831';
 export default class TabProgressTracker extends Component {
 
   static defaultProps = {
-    items:  ['¿Cuándo?', '¿Bien o Mal?', '¿Dónde?'/*, 'Boton 3',/* 'Boton 4'*/],
+    items: ['¿Cuándo?', '¿Bien o Mal?', '¿Dónde?'/*, 'Boton 3',/* 'Boton 4'*/],
     selectedIndex: 0
   };
 
@@ -179,7 +179,7 @@ export default class TabProgressTracker extends Component {
     let {cellWidth, progressBarWidth} = this.calculateCellDimensions(items.length);
 
     return (
-      <View>
+      <View style={{height: HEIGHT}}>
         <ScrollView
           style={styles.progressTracker}
           horizontal={true}
