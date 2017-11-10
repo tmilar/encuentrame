@@ -1533,4 +1533,13 @@
   <data name="IAmOkEnumWithoutAnswer" xml:space="preserve">
     <value>Sin respuesta</value>
   </data>
+  <data name="IAmNotOk" xml:space="preserve">
+    <value>No estoy bien</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Ultima actualización</value>
+  </data>
+  <data name="WithoutAnswer" xml:space="preserve">
+    <value>Sin respuesta</value>
+  </data>
 </root>

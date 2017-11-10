@@ -161,6 +161,20 @@ namespace Encuentrame.Model.Events
 
         }
 
+        public IList<EventMonitorPositionInfo> PositionsFromEvent(int eventId, DateTime? datetimeTo)
+        {
+            var eventt = Events[eventId];
+
+            var sql = @"EXEC EventMonitorPositions :eventId, :datetimeTo; ";
+
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("eventId", eventt.Id)
+                .SetParameter("datetimeTo", datetimeTo ?? SystemDateTime.Now.AddDays(1))
+                .SetResultTransformer(Transformers.AliasToBean(typeof(EventMonitorPositionInfo)));
+
+            return list.List<EventMonitorPositionInfo>();
+        }
+
         public class CreateOrEditParameters
         {
            

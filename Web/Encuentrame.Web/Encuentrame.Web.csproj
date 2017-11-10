@@ -505,10 +505,15 @@
     <Content Include="images\backgroundHomeold.jpg" />
     <Content Include="images\backgroundHome.jpg" />
     <Content Include="images\logo.jpg" />
-    <Content Include="images\MapMarker_Blue_Point.png" />
-    <Content Include="images\MapMarker_Flag.png" />
-    <Content Include="images\MapMarker_Green_Point.png" />
-    <Content Include="images\MapMarker_Red_Point.png" />
+    <Content Include="images\maps\1.png" />
+    <Content Include="images\maps\2.png" />
+    <Content Include="images\maps\3.png" />
+    <Content Include="images\maps\4.png" />
+    <Content Include="images\maps\5.png" />
+    <Content Include="images\maps\MapMarker_Blue_Point.png" />
+    <Content Include="images\maps\MapMarker_Flag.png" />
+    <Content Include="images\maps\MapMarker_Green_Point.png" />
+    <Content Include="images\maps\MapMarker_Red_Point.png" />
     <Content Include="images\menu.png" />
     <Content Include="images\details_close.png" />
     <Content Include="images\details_open.png" />
@@ -722,6 +727,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\markerclusterer.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />

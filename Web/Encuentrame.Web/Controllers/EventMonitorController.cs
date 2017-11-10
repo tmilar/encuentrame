@@ -4,13 +4,16 @@ using System.Web.Mvc;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Events;
 using Encuentrame.Security.Authorizations;
+using Encuentrame.Support;
+using Encuentrame.Web.Helpers;
 using Encuentrame.Web.Models.EventMonitors;
 using Encuentrame.Web.Models.Events;
+using Microsoft.SqlServer.Server;
 using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(new[] { RoleEnum.Administrator, RoleEnum.EventAdministrator, })]
+    [AuthorizationPass(new[] {RoleEnum.Administrator, RoleEnum.EventAdministrator,})]
     public class EventMonitorController : ListBaseController<EventMonitorUserInfo, EventMonitorUserListModel>
     {
 
@@ -37,7 +40,12 @@ namespace Encuentrame.Web.Controllers
                 EndDateTime = eventt.EndDateTime,
                 Address = eventt.Address.ToDisplay(),
                 OrganizerDisplay = eventt.Organizer.ToDisplay(),
-                Status = eventt.Status
+                Status = eventt.Status,
+
+                IAmOk = true,
+                LastUpdate = SystemDateTime.Now,
+                WithoutAnswer = true,
+                IAmNotOk = true,
             };
 
             if (eventt.EmergencyDateTime.HasValue)
@@ -59,7 +67,7 @@ namespace Encuentrame.Web.Controllers
 
             switch (buttonAction)
             {
-              
+
                 case "begin":
                     return Begin(id);
                 case "finalize":
@@ -81,35 +89,37 @@ namespace Encuentrame.Web.Controllers
         {
             EventCommand.StartCollaborativeSearch(id);
 
-            return RedirectToAction("Monitor", new { id });
+            return RedirectToAction("Monitor", new {id});
         }
 
-     
+
 
         protected ActionResult Begin(int id)
         {
             EventCommand.BeginEvent(id);
 
-            return RedirectToAction("Monitor", new { id });
+            return RedirectToAction("Monitor", new {id});
         }
+
         protected ActionResult Finalize(int id)
         {
             EventCommand.FinalizeEvent(id);
 
-            return RedirectToAction("Monitor", new { id });
+            return RedirectToAction("Monitor", new {id});
         }
+
         protected ActionResult Emergency(int id)
         {
             EventCommand.DeclareEmergency(id);
 
-            return RedirectToAction("Monitor", new { id });
+            return RedirectToAction("Monitor", new {id});
         }
 
         protected ActionResult CancelEmergency(int id)
         {
             EventCommand.CancelEmergency(id);
 
-            return RedirectToAction("Monitor", new { id });
+            return RedirectToAction("Monitor", new {id});
         }
 
         protected override EventMonitorUserListModel GetViewModelFrom(EventMonitorUserInfo item)
@@ -117,12 +127,13 @@ namespace Encuentrame.Web.Controllers
             return new EventMonitorUserListModel()
             {
                 Id = item.Id,
+                Username=item.Username,
                 Firstname = item.Firstname,
                 Lastname = item.Lastname,
                 LastPositionUpdate = item.LastPositionUpdate,
                 Seen = item.Seen,
                 NotSeen = item.NotSeen,
-                IAmOk =(IAmOkEnum) item.IAmOk,
+                IAmOk = (IAmOkEnum) item.IAmOk,
                 WasSeen = item.WasSeen
             };
         }
@@ -131,6 +142,16 @@ namespace Encuentrame.Web.Controllers
         {
 
             return EventCommand.EventMonitorUsers(EventId);
+        }
+
+
+        [HttpPost]
+        public JsonResult Positions(int eventId, DateTime? datetimeTo)
+        {
+
+            var positions=EventCommand.PositionsFromEvent(eventId, datetimeTo);
+
+            return Json(JsReturnHelper.Return(positions));
         }
     }
 }

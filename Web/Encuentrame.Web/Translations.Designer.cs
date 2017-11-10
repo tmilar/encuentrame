@@ -1753,6 +1753,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No estoy bien.
+        /// </summary>
+        public static string IAmNotOk {
+            get {
+                return ResourceManager.GetString("IAmNotOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estoy bien.
         /// </summary>
         public static string IAmOk {
@@ -1902,6 +1911,15 @@ namespace Encuentrame.Web {
         public static string LastPositionUpdate {
             get {
                 return ResourceManager.GetString("LastPositionUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ultima actualización.
+        /// </summary>
+        public static string LastUpdate {
+            get {
+                return ResourceManager.GetString("LastUpdate", resourceCulture);
             }
         }
         
@@ -4260,6 +4278,15 @@ namespace Encuentrame.Web {
         public static string Width {
             get {
                 return ResourceManager.GetString("Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sin respuesta.
+        /// </summary>
+        public static string WithoutAnswer {
+            get {
+                return ResourceManager.GetString("WithoutAnswer", resourceCulture);
             }
         }
         

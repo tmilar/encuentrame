@@ -286,9 +286,84 @@ namespace Encuentrame.Web.Controllers
         {
             CreateStoredEventMonitorUsers();
             CreateStoredSoughtPeople();
+            CreateStoredEventMonitorPositions();
         }
 
 
+
+        private void CreateStoredEventMonitorPositions()
+        {
+            var drop = @"
+IF OBJECT_ID('EventMonitorPositions', 'P') IS NOT NULL
+	DROP PROC EventMonitorPositions
+";
+
+            var add = @"
+CREATE PROCEDURE EventMonitorPositions @eventId int, @datetimeTo datetime AS BEGIN
+	SELECT aa.user_id AS Id,
+		   uu.username As Username,
+		   iif(bayo.iamok is null,0,  iif(bayo.iamok=0 , 10 , 20)  ) as IAmOk, 
+		   bayo.replydatetime AS ReplyDatetime,
+		   pp.latitude AS Latitude,
+		   pp.longitude AS Longitude,
+		   pp.creation AS LastPositionUpdate
+	FROM activities aa
+	INNER JOIN users uu ON uu.id=aa.user_id
+	LEFT JOIN
+	  (SELECT iamok,
+			  created,
+			  target_id,
+			  replydatetime
+	   FROM
+		 (SELECT iamok,
+				 created,
+				 target_id,
+				 replydatetime,
+				 Row_number() OVER (PARTITION BY target_id
+									ORDER BY created DESC) rank
+		  FROM baseareyouoks
+		  WHERE created < @datetimeTo) ba
+	   WHERE ba.rank = 1) bayo ON bayo.target_id = aa.user_id
+	AND NOT bayo.replydatetime IS NULL
+	LEFT JOIN
+	  (SELECT id,
+			  userid,
+			  latitude,
+			  longitude,
+			  creation
+	   FROM
+		 (SELECT id,
+				 userid,
+				 latitude,
+				 longitude,
+				 creation,
+				 Row_number() OVER (PARTITION BY userid
+									ORDER BY creation DESC) rank
+		  FROM positions
+		  WHERE creation < @datetimeTo) po
+	   WHERE po.rank = 1) pp ON aa.user_id = pp.userid
+	WHERE aa.event_id = @eventId 
+END 
+                                                                        ";
+
+            var dropCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
+
+            dropCommand.CommandText = drop;
+
+            NHibernateContext.CurrentSession.Transaction.Enlist(dropCommand);
+
+            dropCommand.ExecuteNonQuery();
+
+
+
+            var addCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
+
+            addCommand.CommandText = add;
+
+            NHibernateContext.CurrentSession.Transaction.Enlist(addCommand);
+
+            addCommand.ExecuteNonQuery();
+        }
 
         private void CreateStoredEventMonitorUsers()
         {
@@ -303,6 +378,7 @@ namespace Encuentrame.Web.Controllers
 	                                    AS
 	                                    BEGIN
 		                                    SELECT	aa.User_id as Id, 
+                                                    uu.Username as Username , 
 				                                    uu.LastName as Lastname , 
 				                                    uu.FirstName as Firstname, 
 				                                    iif(bayo.IAmOk is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
@@ -317,7 +393,7 @@ namespace Encuentrame.Web.Controllers
 			                                    left join SoughtPersonAnswers spn on spn.TargetUser_id=aa.User_id and spn.Seen=0
                                                 left join Positions po on po.UserId=aa.User_id
 		                                    WHERE aa.Event_id=@eventId
-		                                    GROUP BY aa.User_id,uu.LastName, uu.FirstName, bayo.IAmOk;
+		                                    GROUP BY aa.User_id,uu.Username,uu.LastName, uu.FirstName, bayo.IAmOk;
                                     END
                                     
                                                                         ";

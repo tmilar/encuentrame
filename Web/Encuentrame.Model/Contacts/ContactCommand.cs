@@ -88,9 +88,9 @@ namespace Encuentrame.Model.Contacts
 
         public void AcceptContact(AcceptParameters parameters)
         {
-            var user = Users[parameters.AcceptUserId];
+            var user = Users[parameters.UserId];
 
-            var accepterUser = Users[parameters.UserId];
+            var accepterUser = Users[parameters.AcceptUserId];
 
 
             var contacts = user.Contacts.Where(x => x.User.Id == parameters.UserId && x.Status==ContactRequestStatus.Pending);

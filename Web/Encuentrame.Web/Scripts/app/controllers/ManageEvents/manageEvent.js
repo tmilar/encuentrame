@@ -1,6 +1,9 @@
 ﻿
 var markers = [];
 function initMap() {
+
+   
+
     var $latitude = $('#Latitude');
     var $longitude = $('#Longitude');
     var $mapContainer = $('#mapContainer');
@@ -40,6 +43,10 @@ function initMap() {
         geocodeAddress(geocoder, map);
     });
 }
+
+
+
+
 
 function geocodeAddress(geocoder, resultsMap) {
     var $street = $('#Street');

@@ -10,8 +10,8 @@ namespace Encuentrame.Model.Mappings.SoughtPersons
             References(x => x.SourceUser);
             References(x => x.TargetUser);
             Map(x => x.Seen);
-            Map(x => x.When).Not.Nullable().Column("seenwhen");
-            Map(x => x.IsOk );
+            Map(x => x.When).Nullable().Column("seenwhen");
+            Map(x => x.IsOk ).Nullable();
         }
     }
 }

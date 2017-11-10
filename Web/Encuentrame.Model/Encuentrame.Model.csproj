@@ -106,6 +106,7 @@
     <Compile Include="Contacts\ContactRequestStatus.cs" />
     <Compile Include="Contacts\IContactCommand.cs" />
     <Compile Include="Devices\Device.cs" />
+    <Compile Include="Events\EventMonitorPositionInfo.cs" />
     <Compile Include="Events\EventMonitorUserInfo.cs" />
     <Compile Include="Events\DeclareEmergencyException.cs" />
     <Compile Include="Events\Event.cs" />

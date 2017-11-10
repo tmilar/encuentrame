@@ -41,5 +41,26 @@ namespace Encuentrame.Web.Models.EventMonitors
 
         [Display(ResourceType = typeof(Translations), Name = "EmergencyDateTime")]
         public DateTime EmergencyDateTime { get; set; }
+
+
+
+        [Display(ResourceType = typeof(Translations), Name = "IAmOk")]
+        [UIHint("bool")]
+        public bool IAmOk { get; set; }
+
+        [Display(ResourceType = typeof(Translations), Name = "IAmNotOk")]
+        [UIHint("bool")]
+        public bool IAmNotOk { get; set; }
+
+
+        [Display(ResourceType = typeof(Translations), Name = "WithoutAnswer")]
+        [UIHint("bool")]
+        public bool WithoutAnswer { get; set; }
+
+        [Display(ResourceType = typeof(Translations), Name = "LastUpdate")]
+        [UIHint("datetime")]
+        public DateTime LastUpdate { get; set; }
+
+
     }
 }

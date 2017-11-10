@@ -18,5 +18,6 @@ namespace Encuentrame.Web.Models.EventMonitors
         public int NotSeen { get; set; }
 
         public DateTime LastPositionUpdate { get; set; }
+        public string Username { get; set; }
     }
 }

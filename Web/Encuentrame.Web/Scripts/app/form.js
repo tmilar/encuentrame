@@ -21,6 +21,11 @@ var configureThisControls = function configureThisControls($dom) {
         });
     });
 
+    $dom.find('.checkbox').each(function (idx, chk) {
+        var $chk = $(chk);
+        $chk.find('input:hidden').appendTo($chk);
+    });
+
     $dom.find('.date-control').datepicker({
         format: "dd/mm/yyyy",
         startDate: "01/01/1920",

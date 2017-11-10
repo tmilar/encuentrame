@@ -240,11 +240,11 @@ namespace Encuentrame.Model.AreYouOks
 
         public class SoughtPersonSeenParameters
         {
-            public DateTime When { get; set; }
+            public DateTime? When { get; set; }
            
             public  int SourceUserId { get; set; }
             public  int TargetUserId { get; set; }
-            public  bool IsOk { get; set; }
+            public  bool? IsOk { get; set; }
             
         }
 

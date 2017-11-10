@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Encuentrame.Model.Events
 {
@@ -17,5 +18,6 @@ namespace Encuentrame.Model.Events
         void FinalizeEvent(int id);
         void StartCollaborativeSearch(int id);
         IList<EventMonitorUserInfo> EventMonitorUsers(int eventId);
+        IList<EventMonitorPositionInfo> PositionsFromEvent(int eventId, DateTime? datetimeTo);
     }
 }
