@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Alert} from "react-native";
-import {hideLoading, showLoading} from "react-native-notifyer";
+import {hideLoading, showLoading, showToast} from "react-native-notifyer";
 import SoughtPeopleService from '../../service/SoughtPeopleService';
 import SupplyInfo from "./SupplyInfo";
 import formatDateForBackend from "../../util/formatDateForBackend";
@@ -9,8 +9,7 @@ export default class SupplyInfoContainer extends Component {
 
   state = {
     whenAnswer: null,
-    personStateAnswer: null,
-    whereAnswer: null
+    personStateAnswer: null
   };
 
   static navigationOptions = {
@@ -32,10 +31,7 @@ export default class SupplyInfoContainer extends Component {
   }
 
   /**
-   * Questions to show for supply info.
-   * //TODO : bind answer values/structure to latest server API (after v0.92).
-   *
-   * @type {[*]}
+   * Questions for supply info view.
    */
   questions = [
     {
@@ -83,38 +79,32 @@ export default class SupplyInfoContainer extends Component {
 
   /**
    * Get submitted answers and send them to server.
-   *
-   * // TODO
-   * 1. read state answers data
-   * 2. send to SoughtPeopleService.soughtPersonSupplyInfo()
    */
   handleSubmitAnswers = async () => {
-    showLoading("Aportando datos!...");
+    this.props.navigation.goBack(null);
+    showToast("Aportando datos...", {duration: 1000});
 
-    // TODO get correct data structure to send to SoughtPeopleService.soughtPersonSupplyInfo()
-    let info = {
+    let suppliedInfo = {
       when: this.state.whenAnswer,
-      personState: this.state.personStateAnswer,
-      where: this.state.whereAnswer
+      isOk: this.state.personStateAnswer,
     };
 
     try {
-      console.log("Aportando datos...", info);
-      // await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, info);
+      console.log("Aportando datos...", suppliedInfo);
+      await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, suppliedInfo);
     } catch (e) {
       console.error("Error al aportar datos: ", e);
-      Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));
+      Alert.alert("Error", "Ups, ocurrio un error al aportar los datos! " + (e.message || e));
+      // TODO callback this.onError
       return;
-    } finally {
-      hideLoading();
     }
 
     this.onSuccess();
-    this.props.navigation.goBack(null);
   };
 
   /**
    * User closed form or navigated back: no sending info to server.
+   * // TODO decide: dismiss the soughtPerson, or put card back, or send back to bottom.
    */
   handleClose = () => {
     this.onClose();
