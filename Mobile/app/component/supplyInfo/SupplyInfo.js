@@ -17,9 +17,9 @@ export default class SupplyInfo extends Component {
     questions: []
   };
 
-  renderAnswerItem = (answerText, index = 0, answersCount = 1) => {
+  renderAnswerItem = ({answerText, backgroundColor = "transparent", index = 0, answersCount = 1}) => {
     // TODO convert to actual touchable button.
-    return <View style={[styles.answerButton, {flex: 1 / answersCount}]} key={index}>
+    return <View style={[styles.answerButton, {backgroundColor, flex: 1 / answersCount}]} key={index}>
       <Text style={styles.answerText} adjustsFontSizeToFit={true}>{answerText}</Text>
     </View>
   };
@@ -34,8 +34,10 @@ export default class SupplyInfo extends Component {
 
     let currentQuestion = this.props.questions[currentIndex];
     let answers = currentQuestion.answers;
+    let answersCount = answers.length;
 
-    return answers.map((a, i) => this.renderAnswerItem(a.text, i, questionsCount));
+    return answers.map((a, index) =>
+      this.renderAnswerItem({answerText: a.text, backgroundColor: a.color, index, answersCount}));
   };
 
   render() {
@@ -47,8 +49,8 @@ export default class SupplyInfo extends Component {
       <View style={[{flex: 1}, styles.answersContainer]}>
         {this.renderCurrentQuestionAnswers()}
       </View>
-      <View style={[{height: 100, backgroundColor: "gray"}, styles.answersContainer]}>
-        {this.renderAnswerItem("No lo se")}
+      <View style={[{height: 100}, styles.answersContainer]}>
+        {this.renderAnswerItem({answerText: "No lo se", backgroundColor: "gray"})}
       </View>
     </View>
   }
@@ -76,10 +78,11 @@ const styles = StyleSheet.create({
     margin: 3,
     padding: 3,
     width: "100%",
-    height: "100%"
+    height: "100%",
+    borderRadius: 5
   },
   answerText: {
     textAlign: 'center',
-    // textAlignVertical: "center"
+    fontSize: 16
   }
 });
