@@ -19,18 +19,17 @@ class SoughtPeopleService {
    * Send sought person info.
    *
    * @param soughtPersonId
-   * @param info {latitude, longitude, text}
+   * @param suppliedInfo (when, isOk)
    * @returns {Promise.<void>}
    */
-  soughtPersonSupplyInfo = async (soughtPersonId, {latitude, longitude, text}) => {
+  soughtPersonSupplyInfo = async (soughtPersonId, suppliedInfo) => {
     let url = `/soughtPerson/seen/${soughtPersonId}`;
 
     return await Service.sendRequest(url, {
         method: 'POST',
         body: JSON.stringify({
-          "Latitude": latitude,
-          "Longitude": longitude,
-          "Info": text,
+          "When": suppliedInfo.when,
+          "IsOk": suppliedInfo.isOk
         })
       }
     )

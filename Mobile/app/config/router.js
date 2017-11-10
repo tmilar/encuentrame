@@ -16,6 +16,7 @@ import SupplyInfo from "../screen/SupplyInfo";
 import NewContact from "../screen/NewContact";
 import UserProfile from "../screen/UserProfile";
 import RootDispatcher from "../screen/RootDispatcher";
+import SupplyInfoContainer from "../component/supplyInfo/SupplyInfoContainer";
 
 
 const Tabs = TabNavigator({
@@ -147,9 +148,9 @@ const BaseStack = StackNavigator({
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
   FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {}},
-  SupplyInfo: {screen: SupplyInfo, navigationOptions: {header: null}},
+  SupplyInfo: {screen: SupplyInfoContainer},
   NewContact: {screen: NewContact, navigationOptions: {}}
-},{
+}, {
   initialRouteName: 'Root'
 });
 
