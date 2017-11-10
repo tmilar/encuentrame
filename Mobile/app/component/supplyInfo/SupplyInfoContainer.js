@@ -42,13 +42,13 @@ export default class SupplyInfoContainer extends Component {
       text: "¿Cuándo?",
       answers: [{
         text: "Recién",
-        value: () => {
+        getValue: () => {
           let now = new Date();
           return formatDateForBackend(now);
         }
       }, {
         text: "Hace un rato\n(10 a 30 minutos)",
-        value: () => {
+        getValue: () => {
           let now = new Date();
           let minutes20 = 20 * 60 * 1000;
           let minutes20ago = new Date(now.getTime() - minutes20);
@@ -56,7 +56,7 @@ export default class SupplyInfoContainer extends Component {
         }
       }, {
         text: "Hace bastante\n(más de media hora)",
-        value: () => {
+        getValue: () => {
           let now = new Date();
           let minutes60 = 60 * 60 * 1000;
           let minutes60ago = new Date(now.getTime() - minutes60);
@@ -70,10 +70,10 @@ export default class SupplyInfoContainer extends Component {
       text: "¿Bien o Mal?",
       answers: [{
         text: "Bien \ud83d\udc4d",
-        value: () => true
+        getValue: () => true
       }, {
         text: "Necesitaba Ayuda \u{26A0} \u{1F198}",
-        value: false
+        getValue: () => false
       }],
       onAnswer: (option) => {
         this.setState({personStateAnswer: option});

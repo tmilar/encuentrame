@@ -7,6 +7,11 @@ import TabProgressTracker from "./TabProgressTracker";
 // - build the views
 // - pass them to the progress tracker
 //
+
+const NULL_ANSWER = {
+  getValue: () => null
+};
+
 export default class SupplyInfo extends Component {
 
   state = {
@@ -17,9 +22,41 @@ export default class SupplyInfo extends Component {
     questions: []
   };
 
-  renderAnswerItem = ({answerText, backgroundColor = "transparent", index = 0, answersCount = 1}) => {
+  onAnswerPress = (answerIndex) => {
+    let question = this.props.questions[this.state.currentQuestionIndex];
+    let answer = question.answers[answerIndex] || NULL_ANSWER;
+    let answerValue = answer.getValue();
+    question.onAnswer(answerValue);
+
+    console.log(`
+      question #${this.state.currentQuestionIndex}
+      text: ${question.text},
+      respuesta #${answerIndex},
+      value: ${answerValue}
+      button press!`
+    );
+
+    this.setNextAnswer();
+  };
+
+  setNextAnswer = () => {
+    this.setState(({currentQuestionIndex}) => ({
+        currentQuestionIndex: currentQuestionIndex + 1
+      }),
+      this.checkAllAnswered
+    )
+  };
+
+  checkAllAnswered = () => {
+    if (this.validateAllAnswers()) {
+      this.props.onSubmit();
+    }
+  };
+
+  renderAnswerItem = ({answerText, backgroundColor = "transparent", index, answersCount = 1}) => {
     return (
-      <TouchableHighlight style={[styles.answerButton, {flex: 1 / answersCount}, {backgroundColor}]} key={index}
+      <TouchableHighlight style={[styles.answerButton, {flex: 1 / answersCount}, {backgroundColor}]} key={index || 0}
+                          onPress={() => this.onAnswerPress(index)}
                           underlayColor="white"
                           activeOpacity={0.5}
       >
