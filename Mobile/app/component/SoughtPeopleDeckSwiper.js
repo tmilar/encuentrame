@@ -26,7 +26,23 @@ export default class SoughtPeopleDeckSwiper extends Component {
     onIveNotSeenHim: () => console.log("Submitting IveNotSeenHim")
   };
 
+  state = {
+    soughtPeople: this.props.soughtPeople
+  };
+
   _deckSwiper;
+
+  /**
+   * Esto coloca la carta de vuelta, al fondo .
+   * //TODO:  Habria q poder ponerla adelante, pero x ahora el swiper NO lo soporta asi nomas (hay q meter mano)
+   */
+  _restoreCard = (personCard) => {
+    this.setState(({soughtPeople}) => {
+      return {
+        soughtPeople: [...soughtPeople, personCard]
+      }
+    });
+  };
 
   onIveSeenHim = personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", personCard);
@@ -37,12 +53,11 @@ export default class SoughtPeopleDeckSwiper extends Component {
         this.props.onIveSeenHimSubmit(personCard.soughtPersonId, suppliedInfo);
       },
       onClose: () => {
-        // TODO put card back, here...
-        console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. Doing nothing.");
+        console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. Restoring swiped person card.");
+        this._restoreCard(personCard);
       }
     });
   };
-
 
   onIveNotSeenHim = personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
@@ -54,12 +69,13 @@ export default class SoughtPeopleDeckSwiper extends Component {
     <View>
       <DeckSwiper
         ref={(c) => this._deckSwiper = c}
-        dataSource={this.props.soughtPeople}
+        dataSource={this.state.soughtPeople}
         renderEmpty={() =>
-          <View style={{alignSelf: "center"}}>
+          <View style={{alignSelf: "center", justifyContent: "center"}}>
             <Text>Ya no queda nadie por buscar. ¡Gracias por tu aporte!</Text>
           </View>
         }
+        looping={false}
         renderItem={item =>
           <Card style={{elevation: 3}}>
             <CardItem>
@@ -85,6 +101,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
       />
     </View>
   );
+
   _renderSwipeButtons = () => (
     <View style={{
       flexDirection: "row",
