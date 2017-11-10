@@ -32,12 +32,12 @@ export default class SoughtPeopleDeckSwiper extends Component {
       soughtPersonId: personCard.soughtPersonId,
       onSuccess: () => {
         console.log("[SoughtPeopleDeckSwiper] onSuccess() called. Supplied info correctly.");
-        showToast("Gracias por tu ayuda!", {duration: 2000});
+        showToast("¡Gracias por tu ayuda!", {duration: 2000});
         // TODO remove card here...
       },
       onClose: () => {
         console.log("[SoughtPeopleDeckSwiper] onClose() called. Supply info aborted.");
-        showToast("Gracias igual!", {duration: 2000});
+        showToast("¡Gracias igual!", {duration: 2000});
         // TODO put card back, here...
       }
     });

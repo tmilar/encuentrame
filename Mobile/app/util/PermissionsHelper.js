@@ -8,7 +8,7 @@ class PermissionsHelper {
     if (response.status !== 'granted') {
       Alert.alert(
         "Ocurrió un problema.",
-        `El permiso de ${permissionI18n} es necesario para el uso de esta app!`
+        `¡El permiso de ${permissionI18n} es necesario para el uso de esta app!`
       );
       await this._sleep(timeInterval);
       await this.askPermission();

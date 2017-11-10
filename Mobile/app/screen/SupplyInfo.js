@@ -25,7 +25,7 @@ export default class SupplyInfo extends Component {
 
     this.soughtPersonId = navigationParams.soughtPersonId;
     if (!this.soughtPersonId) {
-      throw 'Debe indicarse el id de la persona buscada!';
+      throw '¡Debe indicarse el id de la persona buscada!';
     }
 
     this.onClose = navigationParams.onClose || (() => {
@@ -39,7 +39,7 @@ export default class SupplyInfo extends Component {
   };
 
   _handleSupplyInfoButtonPress = async () => {
-    showLoading("Aportando datos!...");
+    showLoading("¡Aportando datos!...");
 
     let info = {
       text: this.state.textInfo,
@@ -53,7 +53,7 @@ export default class SupplyInfo extends Component {
       await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, info);
     } catch (e) {
       console.error("Error al aportar datos: ", e);
-      Alert.alert("Error", "Ups, ocurrio un error! " + (e.message || e));
+      Alert.alert("Error", "¡Ups, ocurrio un error! " + (e.message || e));
       return;
     } finally {
       hideLoading();

@@ -147,12 +147,10 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
-  FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {header: null}},
-  SupplyInfo: {
-    screen: SupplyInfoContainer/*SupplyInfo*/,
-  },
-  NewContact: {screen: NewContact, navigationOptions: {header: null}}
-},{
+  FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {}},
+  SupplyInfo: {screen: SupplyInfoContainer},
+  NewContact: {screen: NewContact, navigationOptions: {}}
+}, {
   initialRouteName: 'Root'
 });
 
