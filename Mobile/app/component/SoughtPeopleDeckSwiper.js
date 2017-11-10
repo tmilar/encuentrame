@@ -28,6 +28,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
 
   state = {
     soughtPeople: this.props.soughtPeople
+    empty: false
   };
 
   _deckSwiper;
@@ -57,24 +58,35 @@ export default class SoughtPeopleDeckSwiper extends Component {
         this._restoreCard(personCard);
       }
     });
+    this.checkEmpty();
   };
 
   onIveNotSeenHim = personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
     this.props.onIveNotSeenHim(personCard.soughtPersonId);
     // TODO send card to end of list; if second time then remove? Or simply remove?
+    this.checkEmpty();
   };
+
+  checkEmpty = () => {
+    let empty = (this._deckSwiper && this._deckSwiper._root.state.disabled);
+    this.setState({empty});
+  };
+
+  _renderEmptySwiper = () => (
+    <View style={{height: "100%", alignItems: "center", justifyContent: "center"}}>
+      <Text style={{textAlign: "center"}} note>
+        {"Ya no queda nadie por buscar. \n¡Gracias por tu aporte!"}
+      </Text>
+    </View>
+  );
 
   _renderDeckSwiper = () => (
     <View>
       <DeckSwiper
         ref={(c) => this._deckSwiper = c}
         dataSource={this.state.soughtPeople}
-        renderEmpty={() =>
-          <View style={{alignSelf: "center", justifyContent: "center"}}>
-            <Text>Ya no queda nadie por buscar. ¡Gracias por tu aporte!</Text>
-          </View>
-        }
+        renderEmpty={this._renderEmptySwiper}
         looping={false}
         renderItem={item =>
           <Card style={{elevation: 3}}>
@@ -102,40 +114,41 @@ export default class SoughtPeopleDeckSwiper extends Component {
     </View>
   );
 
-  _renderSwipeButtons = () => (
-    <View style={{
-      flexDirection: "row",
-      flex: 1,
-      position: "absolute",
-      bottom: 30,
-      left: 0,
-      right: 0,
-      justifyContent: 'space-between',
-      padding: 15
-    }}>
-      <Button iconLeft onPress={() => {
-        this._deckSwiper._root.swipeLeft();
-        let personCard = this._deckSwiper._root.state.selectedItem;
-        this.onIveNotSeenHim(personCard);
-      }}>
-        <Icon name="arrow-back"/>
-        <Text>No lo he visto :(</Text>
-      </Button>
-      <Button iconRight onPress={() => {
-        this._deckSwiper._root.swipeRight();
-        let personCard = this._deckSwiper._root.state.selectedItem;
-        this.onIveSeenHim(personCard);
-      }}>
-        <Text>¡Lo he visto!</Text>
-        <Icon name="arrow-forward"/>
-      </Button>
-    </View>
-  );
+  _renderSwipeButtons = () => {
+    return !this.state.empty && (
+        <View style={{
+          flexDirection: "row",
+          flex: 1,
+          position: "absolute",
+          bottom: 30,
+          left: 0,
+          right: 0,
+          justifyContent: 'space-between',
+          padding: 15
+        }}>
+          <Button iconLeft onPress={() => {
+            this._deckSwiper._root.swipeLeft();
+            let personCard = this._deckSwiper._root.state.selectedItem;
+            this.onIveNotSeenHim(personCard);
+          }}>
+            <Icon name="arrow-back"/>
+            <Text>No lo he visto :(</Text>
+          </Button>
+          <Button iconRight onPress={() => {
+            this._deckSwiper._root.swipeRight();
+            let personCard = this._deckSwiper._root.state.selectedItem;
+            this.onIveSeenHim(personCard);
+          }}>
+            <Text>¡Lo he visto!</Text>
+            <Icon name="arrow-forward"/>
+          </Button>
+        </View>
+      )
+  };
 
   render() {
     return (
       <Container>
-        {/*<Header />*/}
         {this._renderDeckSwiper()}
         {this._renderSwipeButtons()}
       </Container>
