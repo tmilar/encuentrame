@@ -21,7 +21,9 @@ export default class SoughtPeopleDeckSwiper extends Component {
 
   static defaultProps = {
     soughtPeople: [],
-    navigation: {}
+    navigation: {},
+    onIveSeenHimSubmit: () => console.log("Submitting IveSeenHim"),
+    onIveNotSeenHim: () => console.log("Submitting IveNotSeenHim")
   };
 
   _deckSwiper;
@@ -30,15 +32,13 @@ export default class SoughtPeopleDeckSwiper extends Component {
     console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", personCard);
     this.props.navigation.navigate("SupplyInfo", {
       soughtPersonId: personCard.soughtPersonId,
-      onSuccess: () => {
-        console.log("[SoughtPeopleDeckSwiper] onSuccess() called. Supplied info correctly.");
-        showToast("¡Gracias por tu ayuda!", {duration: 2000});
-        // TODO remove card here...
+      onSubmit: (suppliedInfo) => {
+        console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onSubmit() called. Supplying info to server.", suppliedInfo);
+        this.props.onIveSeenHimSubmit(personCard.soughtPersonId, suppliedInfo);
       },
       onClose: () => {
-        console.log("[SoughtPeopleDeckSwiper] onClose() called. Supply info aborted.");
-        showToast("¡Gracias igual!", {duration: 2000});
         // TODO put card back, here...
+        console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. Doing nothing.");
       }
     });
   };
@@ -46,6 +46,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
 
   onIveNotSeenHim = personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
+    this.props.onIveNotSeenHim(personCard.soughtPersonId);
     // TODO send card to end of list; if second time then remove? Or simply remove?
   };
 

@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Alert} from "react-native";
-import {hideLoading, showLoading, showToast} from "react-native-notifyer";
-import SoughtPeopleService from '../../service/SoughtPeopleService';
 import SupplyInfo from "./SupplyInfo";
 import formatDateForBackend from "../../util/formatDateForBackend";
 
@@ -87,23 +84,10 @@ export default class SupplyInfoContainer extends Component {
    */
   handleSubmitAnswers = async () => {
     this.props.navigation.goBack(null);
-    showToast("Aportando datos...", {duration: 2000});
-
     let suppliedInfo = {
       when: this.state.whenAnswer,
       isOk: this.state.personStateAnswer,
     };
-
-    try {
-      console.log("Aportando datos...", suppliedInfo);
-      await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, suppliedInfo);
-    } catch (e) {
-      console.error("Error al aportar datos: ", e);
-      Alert.alert("Error", "Ups, ocurrio un error al aportar los datos! " + (e.message || e));
-      // TODO callback this.onError
-      return;
-    }
-
     this.onSubmit(suppliedInfo);
   };
 
