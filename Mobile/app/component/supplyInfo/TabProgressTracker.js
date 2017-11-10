@@ -17,11 +17,16 @@ const MIN_CELL_WIDTH = 100;
 const selectedColor = '#FFFD00'; //'#363a45';
 const notSelectedColor = '#959400'; //'#252831';
 
+const successColor = "#4eff4d"; // or "#AAFB00" //check: http://paletton.com/#uid=51S0u0kSFT-3Mtj7K8UGjqjlz1W
+const skippedColor = "#6A6A6A";
+
 export default class TabProgressTracker extends Component {
 
   static defaultProps = {
     items: ['¿Cuándo?', '¿Bien o Mal?', '¿Dónde?'/*, 'Boton 3',/* 'Boton 4'*/],
-    selectedIndex: 0
+    selectedIndex: 0,
+    skippedItems: [],
+    resolvedItems: [],
   };
 
   state = {
@@ -46,7 +51,7 @@ export default class TabProgressTracker extends Component {
              totalCount: number,
              isLeft: boolean,
              isSelected: boolean) {
-    let color = isSelected ? selectedColor : notSelectedColor;
+    let color = this.getItemColor(index, isSelected);
     if (isLeft) {
       if (index === 0) {
         // For the first cell, add a rect arrow view
@@ -83,9 +88,7 @@ export default class TabProgressTracker extends Component {
               style={[
                 styles.triangleA,
                 {
-                  borderLeftColor: isSelected
-                    ? selectedColor
-                    : notSelectedColor,
+                  borderLeftColor: this.getItemColor(index, isSelected),
                 },
               ]}
             />
@@ -109,6 +112,17 @@ export default class TabProgressTracker extends Component {
       }
     }
   }
+
+  getItemColor(index, isSelected) {
+    if(this.props.skippedItems.includes(index))
+      return skippedColor;
+
+    if(this.props.resolvedItems.includes(index))
+      return successColor;
+
+    return isSelected ? selectedColor : notSelectedColor;
+  }
+
 
   _arrowButtons(items: Array<string>, cellWidth: number) {
     let totalCount = items.length;
@@ -146,7 +160,7 @@ export default class TabProgressTracker extends Component {
               styles.center,
               styles.bgColor,
               {
-                backgroundColor: isSelected ? selectedColor : notSelectedColor,
+                backgroundColor: this.getItemColor(index, isSelected),
               },
             ]}>
             <Text style={styles.titleActionText}>{item}</Text>

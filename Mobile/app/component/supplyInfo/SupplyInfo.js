@@ -16,19 +16,27 @@ const NULL_ANSWER = {
 export default class SupplyInfo extends Component {
 
   state = {
-    currentQuestionIndex: 0
+    currentQuestionIndex: 0,
+    skippedQuestions: [],
+    answeredQuestions: []
   };
 
   static defaultProps = {
     questions: [],
-    onSubmit: () => {console.log("No more questions, submit!")},
-    onClose: () => {console.log("View closed, going back...")}
+    onSubmit: () => {
+      console.log("No more questions, submit!")
+    },
+    onClose: () => {
+      console.log("View closed, going back...")
+    }
   };
 
   onAnswerPress = (answerIndex) => {
     let question = this.props.questions[this.state.currentQuestionIndex];
     let answer = question.answers[answerIndex] || NULL_ANSWER;
     let answerValue = answer.getValue();
+    this._markQuestionAnswered(answerValue);
+
     question.onAnswer(answerValue);
 
     console.log(`
@@ -41,6 +49,14 @@ export default class SupplyInfo extends Component {
 
     this.setNextAnswer();
   };
+
+  _markQuestionAnswered(answerValue) {
+    if (answerValue === NULL_ANSWER.getValue()) {
+      this.setState({skippedQuestions: [...this.state.skippedQuestions, this.state.currentQuestionIndex]});
+    } else {
+      this.setState({answeredQuestions: [...this.state.answeredQuestions, this.state.currentQuestionIndex]});
+    }
+  }
 
   setNextAnswer = () => {
     this.setState(({currentQuestionIndex}) => ({
@@ -91,7 +107,7 @@ export default class SupplyInfo extends Component {
   };
 
   render() {
-    if(this.validateAllAnswers()) {
+    if (this.validateAllAnswers()) {
       return <LoadingIndicator text={"Gracias!"}/>
     }
 
@@ -99,6 +115,8 @@ export default class SupplyInfo extends Component {
       <TabProgressTracker
         items={this.props.questions.map(q => q.text)}
         selectedIndex={this.state.currentQuestionIndex}
+        skippedItems={this.state.skippedQuestions}
+        resolvedItems={this.state.answeredQuestions}
       />
       <View style={[{flex: 1}, styles.questionAnswersContainer]}>
         {this.renderCurrentQuestionAnswers()}
