@@ -1,5 +1,6 @@
 import {Permissions} from 'expo';
 import {Alert} from 'react-native';
+import sleep from "./sleep";
 
 class PermissionsHelper {
   static askPermission = async (permissionName, permissionI18n, timeInterval = 3000) => {
@@ -10,7 +11,7 @@ class PermissionsHelper {
         "Ocurrió un problema.",
         `¡El permiso de ${permissionI18n} es necesario para el uso de esta app!`
       );
-      await this._sleep(timeInterval);
+      await sleep(timeInterval);
       await this.askPermission();
     }
   };
@@ -29,17 +30,6 @@ class PermissionsHelper {
       finalStatus = status;
     }
     return finalStatus;
-  };
-
-  /**
-   * Auxiliar function to have a delay in ms, compatible with async/await.
-   *
-   * @param time
-   * @returns {Promise}
-   * @private
-   */
-  static _sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
   };
 }
 
