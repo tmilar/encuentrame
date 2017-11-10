@@ -32,7 +32,7 @@ export default class SoughtPeopleContainer extends Component {
    */
   handleIveSeenHimSubmit = async (soughtPerson, suppliedInfo) => {
     showToast("Aportando datos...", {duration: 2000});
-    let {soughtPersonId} = soughtPerson;
+    let soughtPersonId = soughtPerson.User.Id;
     try {
       console.log("Aportando datos...", soughtPersonId, suppliedInfo);
       await SoughtPeopleService.soughtPersonSupplyInfo(soughtPersonId, suppliedInfo);
@@ -49,7 +49,7 @@ export default class SoughtPeopleContainer extends Component {
   };
 
   handleIveNotSeenHim = async (soughtPerson) => {
-    let {soughtPersonId} = soughtPerson;
+    let soughtPersonId = soughtPerson.User.Id;
     try {
       console.log("Quitando persona...", soughtPerson);
       await SoughtPeopleService.soughtPersonDismiss(soughtPersonId);

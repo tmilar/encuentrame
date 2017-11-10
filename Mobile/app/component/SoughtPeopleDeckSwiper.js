@@ -36,7 +36,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
   handleIveSeenHimSwipe = async personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped right: ", personCard);
     this.props.navigation.navigate("SupplyInfo", {
-      soughtPersonId: personCard.soughtPersonId,
+      soughtPersonId: personCard.User.Id,
       onSubmit: async (suppliedInfo) => {
         console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onSubmit() called. Supplying info to server.", suppliedInfo);
         await this.props.onIveSeenHimSubmit(personCard, suppliedInfo);
@@ -89,7 +89,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
               <Left>
                 <Thumbnail source={{uri: item.User.imageUri}}/>
                 <Body>
-                <Text>{`${item.User.FirstName || "[nombre]"} ${item.User.LastName || "[apellido]"}`}</Text>
+                <Text>{`${item.User.FirstName || "[FirstName]"} ${item.User.LastName || "[LastName]"}`}</Text>
                 <Text note>{`@${item.User.Username}`}</Text>
                 </Body>
               </Left>
