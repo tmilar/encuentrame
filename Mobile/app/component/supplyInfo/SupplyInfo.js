@@ -31,18 +31,15 @@ export default class SupplyInfo extends Component {
   };
 
   renderDontKnowAnswer = () => {
-    return this.renderAnswerItem({answerText: "No lo se", backgroundColor: "gray"});
+    return this.renderAnswerItem({answerText: "No lo sé", backgroundColor: "gray"});
   };
 
   renderCurrentQuestionAnswers = () => {
-    let questionsCount = this.props.questions.length;
-    let currentIndex = this.state.currentQuestionIndex;
-
-    if (currentIndex > questionsCount) {
+    if (this.validateAllAnswers()) {
       return <Text>No quedan preguntas por responder.</Text>
     }
 
-    let currentQuestion = this.props.questions[currentIndex];
+    let currentQuestion = this.props.questions[this.state.currentQuestionIndex];
     let answers = currentQuestion.answers;
     let answersCount = answers.length;
 
@@ -63,6 +60,13 @@ export default class SupplyInfo extends Component {
         {this.renderDontKnowAnswer()}
       </View>
     </View>
+  }
+
+  validateAllAnswers = () => {
+    let questionsCount = this.props.questions.length;
+    let currentIndex = this.state.currentQuestionIndex;
+
+    return currentIndex >= questionsCount;
   }
 }
 
