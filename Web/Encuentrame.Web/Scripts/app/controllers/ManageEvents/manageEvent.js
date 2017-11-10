@@ -3,27 +3,40 @@ var markers = [];
 function initMap() {
     var $latitude = $('#Latitude');
     var $longitude = $('#Longitude');
+    var $mapContainer = $('#mapContainer');
 
-    var coordinates = { lat: -34.397, lng: 150.644 };
-    var map = new google.maps.Map(document.getElementById('mapContainer'), {
+    var flagUrl = $mapContainer.data("icon-event");
+    var position = { lat: -34.397, lng: 150.644 };
+
+
+    var map = new google.maps.Map($mapContainer.get(0), {
         zoom: 8,
-        center: coordinates
+        center: position,
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: true,
+        streetViewControl: false,
+        rotateControl: true,
+        fullscreenControl: true
     });
 
+  
+
     if ($latitude.val() !== '') {
-        coordinates.lat = parseFloat($latitude.val().replace(',', '.'));
-        coordinates.lng = parseFloat($longitude.val().replace(',', '.'));
+        position.lat = parseFloat($latitude.val().replace(',', '.'));
+        position.lng = parseFloat($longitude.val().replace(',', '.'));
         var marker = new google.maps.Marker({
             map: map,
-            position: coordinates
+            position: position,
+            icon: flagUrl
         });
         markers.push(marker);
         map.setZoom(16);
-        map.setCenter(coordinates);
+        map.setCenter(position);
     }
     var geocoder = new google.maps.Geocoder();
 
-    document.getElementById('geocoder').addEventListener('click', function () {
+    $('#geocoder').on('click', function () {
         geocodeAddress(geocoder, map);
     });
 }

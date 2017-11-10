@@ -505,6 +505,10 @@
     <Content Include="images\backgroundHomeold.jpg" />
     <Content Include="images\backgroundHome.jpg" />
     <Content Include="images\logo.jpg" />
+    <Content Include="images\MapMarker_Blue_Point.png" />
+    <Content Include="images\MapMarker_Flag.png" />
+    <Content Include="images\MapMarker_Green_Point.png" />
+    <Content Include="images\MapMarker_Red_Point.png" />
     <Content Include="images\menu.png" />
     <Content Include="images\details_close.png" />
     <Content Include="images\details_open.png" />
@@ -516,7 +520,7 @@
     <Content Include="Scripts\app\appInit.js" />
     <Content Include="Scripts\app\arativa-bootstrap-treeview.js" />
     <Content Include="Scripts\app\commons.js" />
-    <Content Include="Scripts\app\controllers\ManageEvents\manageEventMonitor.js" />
+    <Content Include="Scripts\app\controllers\EventMonitors\eventMonitors.js" />
     <Content Include="Scripts\app\controllers\ManageEvents\manageEvent.js" />
     <Content Include="Scripts\app\controllers\notificationsConfiguration.js" />
     <Content Include="Scripts\app\controllers\TestApis\testApi.js" />

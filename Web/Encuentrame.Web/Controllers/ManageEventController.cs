@@ -154,7 +154,13 @@ namespace Encuentrame.Web.Controllers
             }
         }
 
-       
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            EventCommand.Delete(id);
+
+            return RedirectToAction("Index");
+        }
 
         protected override EventListModel GetViewModelFrom(Event eventt)
         {

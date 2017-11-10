@@ -6,6 +6,12 @@ namespace Encuentrame.Model.Events.Seekers
 {
     public class EventSeeker : BaseSeeker<Event>, IEventSeeker
     {
+        protected override void ApplyDefaultFilters()
+        {
+            base.ApplyDefaultFilters();
+            Where(x => x.DeletedKey == null);
+        }
+
         public IEventSeeker ByName(string name)
         {
             Where(x => x.Name.Like($"%{name}%"));

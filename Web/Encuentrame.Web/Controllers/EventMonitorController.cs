@@ -59,8 +59,7 @@ namespace Encuentrame.Web.Controllers
 
             switch (buttonAction)
             {
-                case "delete":
-                    return Delete(id);
+              
                 case "begin":
                     return Begin(id);
                 case "finalize":
@@ -85,12 +84,7 @@ namespace Encuentrame.Web.Controllers
             return RedirectToAction("Monitor", new { id });
         }
 
-        protected ActionResult Delete(int id)
-        {
-            EventCommand.Delete(id);
-
-            return RedirectToAction("Index", "ManageEvent");
-        }
+     
 
         protected ActionResult Begin(int id)
         {

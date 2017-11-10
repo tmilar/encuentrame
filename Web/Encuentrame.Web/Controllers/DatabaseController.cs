@@ -83,7 +83,10 @@ namespace Encuentrame.Web.Controllers
             }
 
             UpdateNotifications();
-            CreateStoredSoughtPeople();
+
+            CreateStoredProcedures();
+
+
             return View("IndexMessage", null, "La base de datos se modificó con exito");
         }
 
@@ -232,9 +235,7 @@ namespace Encuentrame.Web.Controllers
 
             Events.Put(eventt2);
 
-            CreateNotifications();
-
-            CreateStoredSoughtPeople();
+            CreateStoredProcedures();
 
             return View("IndexMessage", null, "La base de datos se creo con exito");
         }
@@ -279,6 +280,14 @@ namespace Encuentrame.Web.Controllers
                 typeof(Notification).Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(Notification)) && !x.IsAbstract);
             return notificationTypes;
         }
+
+
+        private void CreateStoredProcedures()
+        {
+            CreateStoredEventMonitorUsers();
+            CreateStoredSoughtPeople();
+        }
+
 
 
         private void CreateStoredEventMonitorUsers()
