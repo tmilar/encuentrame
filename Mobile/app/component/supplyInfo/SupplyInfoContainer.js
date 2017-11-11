@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Alert} from "react-native";
-import {hideLoading, showLoading, showToast} from "react-native-notifyer";
-import SoughtPeopleService from '../../service/SoughtPeopleService';
 import SupplyInfo from "./SupplyInfo";
 import formatDateForBackend from "../../util/formatDateForBackend";
 
@@ -9,7 +6,8 @@ export default class SupplyInfoContainer extends Component {
 
   state = {
     whenAnswer: null,
-    personStateAnswer: null
+    personStateAnswer: null,
+    submitted: false
   };
 
   static navigationOptions = {
@@ -18,7 +16,7 @@ export default class SupplyInfoContainer extends Component {
 
   constructor(props) {
     super(props);
-    let {soughtPersonId, onClose, onSuccess} = props.navigation.state.params;
+    let {soughtPersonId, onClose, onSubmit} = props.navigation.state.params;
     this.soughtPersonId = soughtPersonId;
     if (!this.soughtPersonId) {
       throw 'Debe indicarse el id de la persona buscada!';
@@ -26,7 +24,7 @@ export default class SupplyInfoContainer extends Component {
 
     this.onClose = onClose || (() => {
       });
-    this.onSuccess = onSuccess || (() => {
+    this.onSubmit = onSubmit || (() => {
       });
   }
 
@@ -83,44 +81,35 @@ export default class SupplyInfoContainer extends Component {
   ];
 
   /**
-   * Get submitted answers and send them to server.
+   * Get submitted answers and submit them.
    */
   handleSubmitAnswers = async () => {
-    this.props.navigation.goBack(null);
-    showToast("Aportando datos...", {duration: 2000});
-
     let suppliedInfo = {
       when: this.state.whenAnswer,
       isOk: this.state.personStateAnswer,
     };
-
-    try {
-      console.log("Aportando datos...", suppliedInfo);
-      await SoughtPeopleService.soughtPersonSupplyInfo(this.soughtPersonId, suppliedInfo);
-    } catch (e) {
-      console.error("Error al aportar datos: ", e);
-      Alert.alert("Error", "Ups, ocurrio un error al aportar los datos! " + (e.message || e));
-      // TODO callback this.onError
-      return;
-    }
-
-    this.onSuccess();
+    this.onSubmit(suppliedInfo);
+    this.setState({submitted: true}, () =>
+      this.props.navigation.goBack(null)
+    );
   };
 
   /**
-   * User closed form or navigated back: no sending info to server.
-   * // TODO decide: dismiss the soughtPerson, or put card back, or send back to bottom.
+   * User closed form or navigated back.
    */
-  handleClose = () => {
+  componentWillUnmount() {
+    if(this.state.submitted) {
+      console.log("[SupplyInfoContainer] Unmounting. Answers already submitted.");
+      return;
+    }
+    console.log("[SupplyInfoContainer] Canceling (closing or going back). ");
     this.onClose();
-    this.props.navigation.goBack(null)
-  };
+  }
 
   render() {
     return <SupplyInfo
       questions={this.questions}
       onSubmit={this.handleSubmitAnswers}
-      onClose={this.handleClose}
     />
   }
 }
