@@ -7,6 +7,7 @@ namespace Encuentrame.Web.Models.Accounts
     {
         public string Email { get; set; }
         public string FullName { get; set; }
+        public string Business { get; set; }
         public RoleEnum Role { get; set; }
         public int Id { get; set; }
 

@@ -112,7 +112,7 @@ namespace Encuentrame.Model.Supports.Notifications
             var loggedUser = AuthenticationProvider.GetLoggedUser();
 
             var email = new ObjectCreatedEmailModel();
-            email.UserName = loggedUser.ToDisplay();
+            email.Username = loggedUser.ToDisplay();
             email.ObjectTypeCreated = TranslationService.Translate(type.Name);
             email.Description = description;
             var notification = GetCreatedNotification(type);
@@ -124,7 +124,7 @@ namespace Encuentrame.Model.Supports.Notifications
             var loggedUser = AuthenticationProvider.GetLoggedUser();
 
             var email = new ObjectUpdatedEmailModel();
-            email.UserName = loggedUser.ToDisplay();
+            email.Username = loggedUser.ToDisplay();
             email.ObjectTypeCreated = TranslationService.Translate(type.Name);
             email.Description = description;
             email.Id = id;
@@ -137,7 +137,7 @@ namespace Encuentrame.Model.Supports.Notifications
             var loggedUser = AuthenticationProvider.GetLoggedUser();
 
             var email = new ObjectDeletedEmailModel();
-            email.UserName = loggedUser.ToDisplay();
+            email.Username = loggedUser.ToDisplay();
             email.ObjectTypeCreated = TranslationService.Translate(type.Name);
             email.Description = description;
             email.Id = id;

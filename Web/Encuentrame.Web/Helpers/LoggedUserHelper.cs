@@ -1,5 +1,6 @@
 using System;
 using System.Web.Security;
+using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Supports.Interfaces;
 using Encuentrame.Web.Models.Accounts;
 using NailsFramework.IoC;
@@ -15,7 +16,8 @@ namespace Encuentrame.Web.Helpers
         {
             try
             {
-                var loggedUser = AuthenticationProvider.GetLoggedUser();
+                var loggedUser = AuthenticationProvider.GetLoggedUser() as User;
+               
                 if (loggedUser == null)
                 {
                     FormsAuthentication.SignOut();
@@ -28,7 +30,8 @@ namespace Encuentrame.Web.Helpers
                     Email = loggedUser.Email,
                     FullName = loggedUser.FullName,
                     Image= loggedUser.Image,
-                    Role = loggedUser.Role
+                    Role = loggedUser.Role,
+                    Business= loggedUser.Role==RoleEnum.EventAdministrator? loggedUser.Business.ToDisplay():"",
                 };
                 return userModel;
             }

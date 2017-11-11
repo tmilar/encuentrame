@@ -53,6 +53,7 @@
     <Compile Include="Accounts\TokenApiSessionMap.cs" />
     <Compile Include="Activities\ActivityMap.cs" />
     <Compile Include="AreYouOks\AreYouOkMap.cs" />
+    <Compile Include="Businesses\BusinessMap.cs" />
     <Compile Include="Contacts\ContactMap.cs" />
     <Compile Include="Devices\DeviceMap.cs" />
     <Compile Include="Events\EventMap.cs" />

@@ -75,8 +75,8 @@ namespace Encuentrame.Web.Controllers.Apis
                 {
                     Id = contact.User.Id,
                     Username = contact.User.Username,
-                    FirstName = contact.User.FirstName,
-                    LastName = contact.User.LastName,
+                    Firstname = contact.User.Firstname,
+                    Lastname = contact.User.Lastname,
                     Email = contact.User.Email,
                     EmailAlternative = contact.User.EmailAlternative,
                     InternalNumber = contact.User.InternalNumber,

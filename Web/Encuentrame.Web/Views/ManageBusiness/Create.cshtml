@@ -1,0 +1,23 @@
+﻿@using System.Configuration
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Businesses.BusinessModel
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManageBusinessCreateTitle;
+}
+@section scripts
+{
+    <script src="@Html.ScriptUrl(@"~/scripts/app/controllers/manageBusinesses/manageBusiness.js")" type="text/javascript"></script>
+   
+    @Scripts.Render("~/bundles/form")
+}
+<h2 class="page-header">@ViewBag.Title</h2>
+
+<form method="POST" action="@Url.Action("Create")">
+    @Html.Partial("_form", Model)
+    <button type="submit" class="btn btn-primary">@Translations.Create</button>
+    @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link" })
+</form>
+

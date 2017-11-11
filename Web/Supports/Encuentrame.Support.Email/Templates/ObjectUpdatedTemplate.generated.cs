@@ -39,7 +39,7 @@ WriteLiteral(" fue actualizado.</title>\r\n</head>\r\n<body>\r\n    <h2>El usuar
 
             
             #line 8 "..\..\Templates\ObjectUpdatedTemplate.cshtml"
-              Write(Model.UserName);
+              Write(Model.Username);
 
             
             #line default

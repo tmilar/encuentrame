@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Encuentrame.Model.Accounts;
+using Encuentrame.Web.Helpers;
 using Encuentrame.Web.MetadataProviders;
 
 namespace Encuentrame.Web.Models.Accounts
@@ -14,13 +15,13 @@ namespace Encuentrame.Web.Models.Accounts
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
         public string Username { get; set; }
        
-        [Display(ResourceType = typeof(Translations), Name = "LastName")]
+        [Display(ResourceType = typeof(Translations), Name = "Lastname")]
         [StringLength(100, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "MaxLengthError")]
-        public string LastName { get; set; }
+        public string Lastname { get; set; }
         
-        [Display(ResourceType = typeof(Translations), Name = "FirstName")]
+        [Display(ResourceType = typeof(Translations), Name = "Firstname")]
         [StringLength(100, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "MaxLengthError")]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
 
         [Display(ResourceType = typeof(Translations), Name = "Email")]
         [StringLength(100, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "MaxLengthError")]
@@ -57,5 +58,14 @@ namespace Encuentrame.Web.Models.Accounts
         [EnumReference(ExcludeValues = new []{(int)RoleEnum.User})]
         public RoleEnum Role { get; set; }
 
+
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
+        [Display(ResourceType = typeof(Translations), Name = "Business")]
+        [Reference(SourceType = typeof(ListItemsHelper), SourceName = "GetBusinesses")]
+        public int Business { get; set; }
+
+        [Display(ResourceType = typeof(Translations), Name = "Business")]
+        [Editable(false)]
+        public string BusinessDisplay { get; set; }
     }
 }

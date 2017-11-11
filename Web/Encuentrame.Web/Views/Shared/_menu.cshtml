@@ -19,7 +19,10 @@
             {
                 <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.PersonUser), "Index", "ManagePersonUser")</li>
             }
-         
+            @if (AuthorizationHelper.Validate<ManageBusinessController>())
+            {
+                <li>@Html.ActionLink(Translations.ManageMenuOption.FormatWith(Translations.Business), "Index", "ManageBusiness")</li>
+            }
         </ul>
     </li>
     <li class="dropdown">

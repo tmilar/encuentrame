@@ -24,7 +24,11 @@ namespace Encuentrame.Model.Accounts.Seekers
             Where(x => x.Username.Like($"%{email}%"));
             return this;
         }
-
+        public IUserSeeker ByBusiness(int id)
+        {
+            Where(x => x.Business.Id == id);
+            return this;
+        }
         public IUserSeeker ByFullName(string fullName)
         {
             Where(x => x.Username.Like($"%{fullName}%"));

@@ -39,7 +39,7 @@ WriteLiteral(" fue creado.</title>\r\n</head>\r\n<body>\r\n    <h2>El usuario ")
 
             
             #line 8 "..\..\Templates\ObjectCreatedTemplate.cshtml"
-              Write(Model.UserName);
+              Write(Model.Username);
 
             
             #line default

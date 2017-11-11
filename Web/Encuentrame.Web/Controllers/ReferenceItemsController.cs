@@ -24,7 +24,13 @@ namespace Encuentrame.Web.Controllers
 
             return Json(JsReturnHelper.Return(result), JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public ActionResult GetBusinesses()
+        {
+            var result = ListItemsHelper.GetBusinessesList();
 
+            return Json(JsReturnHelper.Return(result), JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult GetEntities()
         {

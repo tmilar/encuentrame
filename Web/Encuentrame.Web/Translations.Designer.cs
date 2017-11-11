@@ -493,6 +493,24 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Empresa.
+        /// </summary>
+        public static string Business {
+            get {
+                return ResourceManager.GetString("Business", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empresas.
+        /// </summary>
+        public static string Businesses {
+            get {
+                return ResourceManager.GetString("Businesses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelar.
         /// </summary>
         public static string Cancel {
@@ -727,6 +745,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creado.
+        /// </summary>
+        public static string Created {
+            get {
+                return ResourceManager.GetString("Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha de creación.
         /// </summary>
         public static string CreatedDate {
@@ -822,6 +849,15 @@ namespace Encuentrame.Web {
         public static string CreationDateTime {
             get {
                 return ResourceManager.GetString("CreationDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuit.
+        /// </summary>
+        public static string Cuit {
+            get {
+                return ResourceManager.GetString("Cuit", resourceCulture);
             }
         }
         
@@ -2086,6 +2122,42 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crear empresa.
+        /// </summary>
+        public static string ManageBusinessCreateTitle {
+            get {
+                return ResourceManager.GetString("ManageBusinessCreateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalle de empresa.
+        /// </summary>
+        public static string ManageBusinessDetailsTitle {
+            get {
+                return ResourceManager.GetString("ManageBusinessDetailsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar empresa.
+        /// </summary>
+        public static string ManageBusinessEditTitle {
+            get {
+                return ResourceManager.GetString("ManageBusinessEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listado de empresas.
+        /// </summary>
+        public static string ManageBusinessListTitle {
+            get {
+                return ResourceManager.GetString("ManageBusinessListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crear {0}.
         /// </summary>
         public static string ManageCreateTitle {
@@ -3220,6 +3292,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reescriba contraseña.
+        /// </summary>
+        public static string RePassword {
+            get {
+                return ResourceManager.GetString("RePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Repetir contraseña.
         /// </summary>
         public static string RepeatPassword {
@@ -3486,6 +3567,15 @@ namespace Encuentrame.Web {
         public static string SectionSupplierData {
             get {
                 return ResourceManager.GetString("SectionSupplierData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datos de usuario.
+        /// </summary>
+        public static string SectionUserData {
+            get {
+                return ResourceManager.GetString("SectionUserData", resourceCulture);
             }
         }
         

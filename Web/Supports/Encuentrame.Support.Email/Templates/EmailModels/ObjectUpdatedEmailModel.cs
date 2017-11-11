@@ -8,7 +8,7 @@ namespace Encuentrame.Support.Email.Templates.EmailModels
 {
     public class ObjectUpdatedEmailModel
     {
-        public string UserName { get; set; }        
+        public string Username { get; set; }        
         public string ObjectTypeCreated { get; set; }
         public string Description { get; set; }
         public int Id { get; set; }

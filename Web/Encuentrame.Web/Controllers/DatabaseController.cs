@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
+using Encuentrame.Model.Addresses;
+using Encuentrame.Model.Businesses;
 using Encuentrame.Model.Contacts;
 using Encuentrame.Model.Events;
 using Encuentrame.Model.Supports.Notifications;
@@ -24,6 +26,10 @@ namespace Encuentrame.Web.Controllers
 
         [Inject]
         public IBag<User> Users { get; set; }
+
+        [Inject]
+        public IBag<Business> Businesses { get; set; }
+
 
         [Inject]
         public IBag<Event> Events { get; set; }
@@ -73,8 +79,8 @@ namespace Encuentrame.Web.Controllers
                 {
                     Username = "System",
                     Password = "123456",
-                    FirstName = "System",
-                    LastName = "System",
+                    Firstname = "System",
+                    Lastname = "System",
                     Email = "system@Encuentrame.com",
                     Role = RoleEnum.Administrator,
                 };
@@ -107,8 +113,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "user.admin",
                 Password = "123",
-                FirstName = "Admin",
-                LastName = "Admin",
+                Firstname = "Admin",
+                Lastname = "Admin",
                 Email = "Admin@Encuentrame.com",
                 Role = RoleEnum.Administrator,
             };
@@ -118,8 +124,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "javier.wamba",
                 Password = "123",
-                FirstName = "Javier",
-                LastName = "Wamba",
+                Firstname = "Javier",
+                Lastname = "Wamba",
                 Email = "javier.wamba@Encuentrame.com",
                 Role = RoleEnum.Administrator,
             };
@@ -130,8 +136,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "emiliano.soto",
                 Password = "123",
-                FirstName = "Emiliano",
-                LastName = "Soto",
+                Firstname = "Emiliano",
+                Lastname = "Soto",
                 Email = "emiliano.soto@Encuentrame.com",
                 Role = RoleEnum.User,
             };
@@ -141,8 +147,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "lionel.messi",
                 Password = "123",
-                FirstName = "lionel",
-                LastName = "messi",
+                Firstname = "lionel",
+                Lastname = "messi",
                 Email = "messi@Encuentrame.com",
                 Role = RoleEnum.User,
             };
@@ -153,8 +159,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "gonzalo.bonadeo",
                 Password = "123",
-                FirstName = "gonzalo",
-                LastName = "bonadeo",
+                Firstname = "gonzalo",
+                Lastname = "bonadeo",
                 Email = "bonadeo@Encuentrame.com",
                 Role = RoleEnum.User,
             };
@@ -175,15 +181,33 @@ namespace Encuentrame.Web.Controllers
                 User = user21
             });
 
+            var business1 = new Business()
+            {
+                Name = "Coca-cola",
+                Cuit = "20287495782",
+                Created = SystemDateTime.Now,
+                Address = new Address()
+                {
+                    City = "CABA",
+                    FloorAndDepartament = "1 'C'",
+                    Number = "243",
+                    Province = "CABA",
+                    Street = "Aguirre",
+                    Zip = "1414",
+                }
+            };
+
+            Businesses.Put(business1);
 
             var user3 = new User()
             {
                 Username = "juan.organizador",
                 Password = "123",
-                FirstName = "juan",
-                LastName = "organizador",
+                Firstname = "juan",
+                Lastname = "organizador",
                 Email = "juan.organizador@Encuentrame.com",
                 Role = RoleEnum.EventAdministrator,
+                Business = business1,
             };
 
             Users.Put(user3);
@@ -192,10 +216,11 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "fernando.organizador",
                 Password = "123",
-                FirstName = "fernando",
-                LastName = "organizador",
+                Firstname = "fernando",
+                Lastname = "organizador",
                 Email = "fernando.organizador@Encuentrame.com",
                 Role = RoleEnum.EventAdministrator,
+                Business = business1,
             };
 
             Users.Put(user4);
@@ -204,8 +229,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Username = "System",
                 Password = "123456",
-                FirstName = "System",
-                LastName = "System",
+                Firstname = "System",
+                Lastname = "System",
                 Email = "system@Encuentrame.com",
                 Role = RoleEnum.User,
             };
@@ -219,7 +244,18 @@ namespace Encuentrame.Web.Controllers
                 BeginDateTime = SystemDateTime.Now.AddHours(-3),
                 EndDateTime = SystemDateTime.Now.AddHours(3),
                 Organizer = user3,
-                Status = EventStatusEnum.InProgress
+                Status = EventStatusEnum.InProgress,
+                Address = new Address()
+                {
+                    City = "CABA",
+                    FloorAndDepartament = "1 'C'",
+                    Number = "243",
+                    Province = "CABA",
+                    Street = "Aguirre",
+                    Zip = "1414",
+                },
+                Latitude =-34,
+                Longitude = -58,
             };
 
             Events.Put(eventt1);
@@ -230,7 +266,18 @@ namespace Encuentrame.Web.Controllers
                 BeginDateTime = SystemDateTime.Now.AddHours(1),
                 EndDateTime = SystemDateTime.Now.AddHours(3),
                 Organizer = user4,
-                Status = EventStatusEnum.Pending
+                Status = EventStatusEnum.Pending,
+                Address = new Address()
+                {
+                    City = "CABA",
+                    FloorAndDepartament = "1 'C'",
+                    Number = "243",
+                    Province = "CABA",
+                    Street = "Aguirre",
+                    Zip = "1414",
+                },
+                Latitude = -34,
+                Longitude = -58,
             };
 
             Events.Put(eventt2);
@@ -379,8 +426,8 @@ END
 	                                    BEGIN
 		                                    SELECT	aa.User_id as Id, 
                                                     uu.Username as Username , 
-				                                    uu.LastName as Lastname , 
-				                                    uu.FirstName as Firstname, 
+				                                    uu.Lastname as Lastname , 
+				                                    uu.Firstname as Firstname, 
 				                                    iif(bayo.IAmOk is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
 				                                    cast(iif(count(sp.seen)>0,1,0) as bit) as WasSeen, 
 				                                    count(sp.seen) as Seen, 
@@ -393,7 +440,7 @@ END
 			                                    left join SoughtPersonAnswers spn on spn.TargetUser_id=aa.User_id and spn.Seen=0
                                                 left join Positions po on po.UserId=aa.User_id
 		                                    WHERE aa.Event_id=@eventId
-		                                    GROUP BY aa.User_id,uu.Username,uu.LastName, uu.FirstName, bayo.IAmOk;
+		                                    GROUP BY aa.User_id,uu.Username,uu.Lastname, uu.Firstname, bayo.IAmOk;
                                     END
                                     
                                                                         ";

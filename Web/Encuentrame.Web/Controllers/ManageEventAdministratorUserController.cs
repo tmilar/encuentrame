@@ -8,12 +8,13 @@ using Encuentrame.Support.Email;
 using Encuentrame.Support.Email.Templates;
 using Encuentrame.Support.Email.Templates.EmailModels;
 using Encuentrame.Web.Helpers;
+using Encuentrame.Web.Models;
 using Encuentrame.Web.Models.Accounts;
 using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(new[] { RoleEnum.Administrator })]
+    [AuthorizationPass(new[] { RoleEnum.Administrator,RoleEnum.EventAdministrator })]
     public class ManageEventAdministratorUserController : ListBaseController<User, UserListModel>
     {
         [Inject]
@@ -35,15 +36,16 @@ namespace Encuentrame.Web.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
                 Email = user.Email,
                 EmailAlternative = user.EmailAlternative,
                 InternalNumber = user.InternalNumber,
                 PhoneNumber = user.PhoneNumber,
                 MobileNumber = user.MobileNumber,
                 Image = user.Image,
-                Role = user.Role
+                Role = user.Role,
+                BusinessDisplay = user.Business.ToDisplay(),
             };
 
             return View(userModel);
@@ -70,7 +72,7 @@ namespace Encuentrame.Web.Controllers
                 if (!string.IsNullOrEmpty(userModel.Email))
                 {
                     var welcomeUserEmailModel = new WelcomeUserEmailModel();
-                    welcomeUserEmailModel.UserName = userModel.Username;
+                    welcomeUserEmailModel.Username = userModel.Username;
                     welcomeUserEmailModel.Site = "Encuentrame";
                     welcomeUserEmailModel.WelcomeInstructions = "A partir de ahora ud puede usar el sistema. Por favor ante cualquier duda o inconveniente comuniquese con el administrador.";
 
@@ -93,16 +95,28 @@ namespace Encuentrame.Web.Controllers
             var userParameters = new UserCommand.CreateOrEditParameters
             {
                 Username = userModel.Username,
-                LastName = userModel.LastName,
-                FirstName = userModel.FirstName,
+                Lastname = userModel.Lastname,
+                Firstname = userModel.Firstname,
                 Email = userModel.Email,
                 EmailAlternative = userModel.EmailAlternative,
                 InternalNumber = userModel.InternalNumber,
                 PhoneNumber = userModel.PhoneNumber,
                 MobileNumber = userModel.MobileNumber,
                 Image = userModel.Image.RemoveBase64Prefix(),
-                Role = RoleEnum.EventAdministrator
+                Role = RoleEnum.EventAdministrator,
+                
             };
+
+            var loggedUser = this.GetLoggedUser();
+            if (loggedUser.Role == RoleEnum.EventAdministrator)
+            {
+                userParameters.Business = loggedUser.Business.Id;
+            }
+            else
+            {
+                userParameters.Business = userModel.Business;
+            }
+           
 
             return userParameters;
         }
@@ -115,8 +129,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
                 Email = user.Email,
                 EmailAlternative = user.EmailAlternative,
                 InternalNumber = user.InternalNumber,
@@ -124,6 +138,7 @@ namespace Encuentrame.Web.Controllers
                 MobileNumber = user.MobileNumber,
                 Image = user.Image,
                 Role = user.Role,
+                Business = user.Business.Id
             };
 
             return View(userModel);
@@ -163,7 +178,8 @@ namespace Encuentrame.Web.Controllers
                 Email = user.Email,
                 InternalNumber = user.InternalNumber,
                 PhoneNumber = user.PhoneNumber,
-                Role = user.Role
+                Role = user.Role,
+                Business = new ItemModel() { Id = user.Business.Id,Name = user.Business.ToDisplay()}
             };
             return userListModel;
         }
@@ -172,6 +188,12 @@ namespace Encuentrame.Web.Controllers
         {
             base.ApplyDefaultFilters(seeker);
             ((IUserSeeker)seeker).ByRole(RoleEnum.EventAdministrator);
+
+            var loggedUser = this.GetLoggedUser();
+            if (loggedUser.Role == RoleEnum.EventAdministrator)
+            {
+                ((IUserSeeker) seeker).ByBusiness(loggedUser.Business.Id);
+            }
         }
     }
 }

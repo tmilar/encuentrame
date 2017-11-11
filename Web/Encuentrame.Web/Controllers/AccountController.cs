@@ -66,8 +66,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
                 Email = user.Email,
                 EmailAlternative = user.EmailAlternative,
                 InternalNumber = user.InternalNumber,
@@ -89,8 +89,8 @@ namespace Encuentrame.Web.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
                 Email = user.Email,
                 EmailAlternative = user.EmailAlternative,
                 InternalNumber = user.InternalNumber,
@@ -122,8 +122,8 @@ namespace Encuentrame.Web.Controllers
                 {
                     Id = user.Id,
                     Username = user.Username,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
+                    Firstname = user.Firstname,
+                    Lastname = user.Lastname,
                     Email = user.Email,
                     EmailAlternative = profileModel.EmailAlternative,
                     InternalNumber = user.InternalNumber,

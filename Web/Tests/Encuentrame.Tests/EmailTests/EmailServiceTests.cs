@@ -66,7 +66,7 @@ namespace Encuentrame.Tests.EmailTests
         public void SendingWelcomeUserEmail_WithTemplateName_SendsMailToPickupDirectory()
         {
             var email = new WelcomeUserEmailModel();
-            email.UserName = "Tim Tom";
+            email.Username = "Tim Tom";
             email.Site = "Encuentrame";
             email.WelcomeInstructions = "A partir de ahora ud puede usar el sistema. Por favor ante cualquier duda o inconveniente comuniquese con el administrador.";
             var emailHeader = new MailHeader();
@@ -88,7 +88,7 @@ namespace Encuentrame.Tests.EmailTests
         public void SendingWelcomeUserEmail_WithTemplateType_SendsMailToPickupDirectory()
         {
             var email = new WelcomeUserEmailModel();
-            email.UserName = "Tim Tom";
+            email.Username = "Tim Tom";
             email.Site = "Encuentrame";
             email.WelcomeInstructions = "A partir de ahora ud puede usar el sistema. Por favor ante cualquier duda o inconveniente comuniquese con el administrador.";
             var emailHeader = new MailHeader();

@@ -20,22 +20,34 @@
 @Html.SuccessSummary()
 @Html.ActionLink(Translations.Create, "Create", new { }, new { @class = "btn btn-primary" })
 <div class="table-container">
-    @(Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManageEventAdministratorUser"))
-          .InServer()
-          .AddColumn(x => x.Id)
-          .AddColumn(x => x.Username)
-          .AddColumn(x => x.FullName)
-          .AddColumn(x => x.Email)
-          .AddColumn(x => x.InternalNumber)
-          .AddColumn(x => x.PhoneNumber)
-          .AddColumn(x => x.Role, dataTemplate: "roleTemplate")          
-          .AddColumn("Actions", dataTemplate: "actionsTemplate")
-          .AddFilter(x => x.Username)
-          .AddFilter(x => x.FullName)
-          .AddFilter(x => x.Email)
-           
-           
-          .Build())
+    @{ var tableBuilder = Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManageEventAdministratorUser"))
+                            .InServer()
+                            .AddColumn(x => x.Id);
+        if (LoggedUserHelper.Get().Role == RoleEnum.Administrator)
+        {
+            tableBuilder = tableBuilder
+                .AddColumn(x => x.Business, x => x.Name);
+        }
+        tableBuilder = tableBuilder
+            .AddColumn(x => x.Username)
+            .AddColumn(x => x.FullName)
+            .AddColumn(x => x.Email)
+            .AddColumn(x => x.InternalNumber)
+            .AddColumn(x => x.PhoneNumber)
+            .AddColumn(x => x.Role, dataTemplate: "roleTemplate")
+            .AddColumn("Actions", dataTemplate: "actionsTemplate");
+
+        if (LoggedUserHelper.Get().Role == RoleEnum.Administrator)
+        {
+            tableBuilder = tableBuilder
+                .AddFilter(x => x.Business, x => x.Id, Url.Action("GetBusinesses", "ReferenceItems"));
+        }
+
+        tableBuilder = tableBuilder
+           .AddFilter(x => x.Username)
+           .AddFilter(x => x.FullName)
+           .AddFilter(x => x.Email); }
+    @(tableBuilder.Build())
 </div>
 
 <script id="roleTemplate" type="text/template">
@@ -52,7 +64,7 @@
     <span class="label label-warning">
         @TranslationsHelper.Get(RoleEnum.EventAdministrator)
     </span>
-   
+
     <% } %>
 </script>
 <script id="actionsTemplate" type="text/template">

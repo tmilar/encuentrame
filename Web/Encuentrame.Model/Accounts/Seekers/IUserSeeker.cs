@@ -5,6 +5,7 @@ namespace Encuentrame.Model.Accounts.Seekers
         IUserSeeker ByUsername(string username);
         IUserSeeker ByRole(RoleEnum role);
         IUserSeeker ByEmail(string email);
+        IUserSeeker ByBusiness(int id);
         IUserSeeker ByFullName(string fullName);
         IUserSeeker OrderByUsername(SortOrder sortOrder);
         IUserSeeker OrderByEmail(SortOrder sortOrder);

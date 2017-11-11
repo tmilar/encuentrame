@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
+using Encuentrame.Model.Businesses;
 using Encuentrame.Model.Supports.Audits;
 using Encuentrame.Support;
 
@@ -16,8 +17,9 @@ namespace Encuentrame.Web.Helpers
        
         [Inject]
         public static IBag<User> Users { get; set; }
-        
-            
+        [Inject]
+        public static IBag<Business> Businesses { get; set; }
+
 
         #endregion
 
@@ -58,6 +60,16 @@ namespace Encuentrame.Web.Helpers
             }).ToArray();
         }
 
+        public static ICollection<SelectListItem> GetBusinesses(int selectedId)
+        {
+            return Businesses.Where(x => x.DeletedKey == null ).Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.ToDisplay(),
+                Selected = selectedId == x.Id,
+            }).ToArray();
+        }
+
         #endregion
 
         #region ReferenceItems
@@ -82,7 +94,15 @@ namespace Encuentrame.Web.Helpers
                 
             }).ToArray();
         }
-        
+        public static IList<ReferenceItem> GetBusinessesList()
+        {
+            return Businesses.Where(x => x.DeletedKey == null).Select(x => new ReferenceItem
+            {
+                id = x.Id.ToString(),
+                text = x.ToDisplay(),
+
+            }).ToArray();
+        }
 
         public static IList<SelectListItem> GetUserSelectListItems()
         {

@@ -101,6 +101,9 @@
     <Compile Include="AreYouOks\Seekers\AreYouOkSeeker.cs" />
     <Compile Include="AreYouOks\Seekers\IAreYouOkSeeker.cs" />
     <Compile Include="BaseSeeker.cs" />
+    <Compile Include="Businesses\Business.cs" />
+    <Compile Include="Businesses\BusinessCommand.cs" />
+    <Compile Include="Businesses\IBusinessCommand.cs" />
     <Compile Include="Contacts\Contact.cs" />
     <Compile Include="Contacts\ContactCommand.cs" />
     <Compile Include="Contacts\ContactRequestStatus.cs" />

@@ -1542,4 +1542,34 @@
   <data name="WithoutAnswer" xml:space="preserve">
     <value>Sin respuesta</value>
   </data>
+  <data name="ManageBusinessListTitle" xml:space="preserve">
+    <value>Listado de empresas</value>
+  </data>
+  <data name="Business" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="Businesses" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="Cuit" xml:space="preserve">
+    <value>Cuit</value>
+  </data>
+  <data name="RePassword" xml:space="preserve">
+    <value>Reescriba contraseña</value>
+  </data>
+  <data name="SectionUserData" xml:space="preserve">
+    <value>Datos de usuario</value>
+  </data>
+  <data name="ManageBusinessDetailsTitle" xml:space="preserve">
+    <value>Detalle de empresa</value>
+  </data>
+  <data name="ManageBusinessCreateTitle" xml:space="preserve">
+    <value>Crear empresa</value>
+  </data>
+  <data name="ManageBusinessEditTitle" xml:space="preserve">
+    <value>Editar empresa</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Creado</value>
+  </data>
 </root>

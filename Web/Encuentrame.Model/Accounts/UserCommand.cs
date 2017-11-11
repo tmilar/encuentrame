@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Encuentrame.Model.Accounts.Permissions;
+using Encuentrame.Model.Businesses;
 using Encuentrame.Model.Devices;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 
 using Encuentrame.Model.Supports;
-using Encuentrame.Model.Supports.Audits;
 using Encuentrame.Support;
 
 namespace Encuentrame.Model.Accounts
@@ -17,20 +15,23 @@ namespace Encuentrame.Model.Accounts
     {
         [Inject]
         public IBag<User> Users { get; set; }
-        
+
+
+        [Inject]
+        public IBag<Business> Businesses { get; set; }
         public User Get(int id)
         {
             return Users[id];
         }
 
-        [Audit(BehaviorType = ActionsEnum.Create, EntityType = typeof(User))]
+        //[Audit(BehaviorType = ActionsEnum.Create, EntityType = typeof(User))]
         public void Create(CreateOrEditParameters userParameters)
         {
             var user = new User();
             user.Username = userParameters.Username;
-            user.LastName = userParameters.LastName;
+            user.Lastname = userParameters.Lastname;
             user.Password = "123";
-            user.FirstName = userParameters.FirstName;
+            user.Firstname = userParameters.Firstname;
             user.Email = userParameters.Email;
             user.EmailAlternative = userParameters.EmailAlternative;
             user.InternalNumber = userParameters.InternalNumber;
@@ -40,13 +41,18 @@ namespace Encuentrame.Model.Accounts
             {
                 user.Image = userParameters.Image;
             }
-            
+
+            if (userParameters.Role == RoleEnum.EventAdministrator)
+            {
+                user.Business = Businesses[userParameters.Business];
+            }
+
             user.Role = userParameters.Role;
 
             Users.Put(user);
 
-            AuditContextManager.SetObject(user);
-            AuditContextManager.Add(TranslationService.Translate("UserName"), user.Username);
+            //AuditContextManager.SetObject(user);
+            //AuditContextManager.Add(TranslationService.Translate("Username"), user.Username);
         }
         
         public void NewRegister(CreateOrEditParameters userParameters)
@@ -59,9 +65,9 @@ namespace Encuentrame.Model.Accounts
             var user = new User
             {
                 Username = userParameters.Username,
-                LastName = userParameters.LastName,
+                Lastname = userParameters.Lastname,
                 Password = userParameters.Password,
-                FirstName = userParameters.FirstName,
+                Firstname = userParameters.Firstname,
                 Email = userParameters.Email,
                 EmailAlternative = userParameters.EmailAlternative,
                 InternalNumber = userParameters.InternalNumber,
@@ -81,8 +87,8 @@ namespace Encuentrame.Model.Accounts
         public void EditRegister( CreateOrEditParameters userParameters)
         {
             var user = Users.Where(x=>x.Username==userParameters.Username).First();
-            user.LastName = userParameters.LastName;
-            user.FirstName = userParameters.FirstName;
+            user.Lastname = userParameters.Lastname;
+            user.Firstname = userParameters.Firstname;
             user.Email = userParameters.Email;
             user.EmailAlternative = userParameters.EmailAlternative;
             user.InternalNumber = userParameters.InternalNumber;
@@ -95,34 +101,39 @@ namespace Encuentrame.Model.Accounts
 
         }
 
-        [Audit(BehaviorType = ActionsEnum.Edit, EntityType = typeof(User), IdField = "id")]
+        //[Audit(BehaviorType = ActionsEnum.Edit, EntityType = typeof(User), IdField = "id")]
         public void Edit(int id, CreateOrEditParameters userParameters)
         {
             var user = Users[id];
-            user.LastName = userParameters.LastName;
-            user.FirstName = userParameters.FirstName;
+            user.Lastname = userParameters.Lastname;
+            user.Firstname = userParameters.Firstname;
             user.Email = userParameters.Email;
             user.EmailAlternative = userParameters.EmailAlternative;
             user.InternalNumber = userParameters.InternalNumber;
             user.MobileNumber = userParameters.MobileNumber;
             user.PhoneNumber = userParameters.PhoneNumber;
-
+            
             if (userParameters.Image.NotIsNullOrEmpty())
             {
                 user.Image = userParameters.Image;
             }
 
             user.Role = userParameters.Role;
-            AuditContextManager.SetObject(user);
+
+            if (userParameters.Role == RoleEnum.EventAdministrator)
+            {
+                user.Business = Businesses[userParameters.Business];
+            }
+            //AuditContextManager.SetObject(user);
         }
 
-        [Audit(BehaviorType = ActionsEnum.Delete, EntityType = typeof(User), IdField = "id")]
+        //[Audit(BehaviorType = ActionsEnum.Delete, EntityType = typeof(User), IdField = "id")]
         public void Delete(int id)
         {
             var user = Users[id];
 
             Users.Remove(user);
-            AuditContextManager.SetObject(user);
+            //AuditContextManager.SetObject(user);
         }
 
         public void SetDevice(DeviceParameters deviceParameters)
@@ -162,11 +173,11 @@ namespace Encuentrame.Model.Accounts
 
         public class CreateOrEditParameters
         {
-            public  string Name { get; set; }
+           
             public string Username { get; set; }
             public string Password { get; set; }
-            public string LastName { get; set; }
-            public string FirstName { get; set; }
+            public string Lastname { get; set; }
+            public string Firstname { get; set; }
             public string Email { get; set; }
             public string EmailAlternative { get; set; }
             public string InternalNumber { get; set; }
@@ -174,6 +185,7 @@ namespace Encuentrame.Model.Accounts
             public string MobileNumber { get; set; }
             public string Image { get; set; }
             public RoleEnum Role { get; set; }
+            public int Business { get; set; }
         }
 
         public class DeviceParameters 

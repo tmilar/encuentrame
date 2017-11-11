@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ListBaseController.cs" />
     <Compile Include="Controllers\Apis\AuthenticationController.cs" />
     <Compile Include="Controllers\ManageAdministratorUserController.cs" />
+    <Compile Include="Controllers\ManageBusinessController.cs" />
     <Compile Include="Controllers\ManageEventAdministratorUserController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\ManagePersonUserController.cs" />
@@ -224,6 +225,8 @@
     <Compile Include="Models\Apis\Events\EventsApiResultModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiModel.cs" />
     <Compile Include="Models\Apis\Positions\PositionApiResultModel.cs" />
+    <Compile Include="Models\Businesses\BusinessListModel.cs" />
+    <Compile Include="Models\Businesses\BusinessModel.cs" />
     <Compile Include="Models\DataTable\BooleanFilterModel.cs" />
     <Compile Include="Models\DataTable\DataTableModel.cs" />
     <Compile Include="Models\DataTable\DateRangeFilterModel.cs" />
@@ -526,6 +529,7 @@
     <Content Include="Scripts\app\arativa-bootstrap-treeview.js" />
     <Content Include="Scripts\app\commons.js" />
     <Content Include="Scripts\app\controllers\EventMonitors\eventMonitors.js" />
+    <Content Include="Scripts\app\controllers\ManageBusinesses\manageBusiness.js" />
     <Content Include="Scripts\app\controllers\ManageEvents\manageEvent.js" />
     <Content Include="Scripts\app\controllers\notificationsConfiguration.js" />
     <Content Include="Scripts\app\controllers\TestApis\testApi.js" />
@@ -843,6 +847,11 @@
     <Content Include="Views\ManageEventAdministratorUser\Index.cshtml" />
     <Content Include="Views\EventMonitor\Monitor.cshtml" />
     <Content Include="Views\Shared\_loggedUser.cshtml" />
+    <Content Include="Views\ManageBusiness\Index.cshtml" />
+    <Content Include="Views\ManageBusiness\_form.cshtml" />
+    <Content Include="Views\ManageBusiness\Create.cshtml" />
+    <Content Include="Views\ManageBusiness\Details.cshtml" />
+    <Content Include="Views\ManageBusiness\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,5 @@
-﻿@using Encuentrame.Web
+﻿@using Encuentrame.Model.Accounts
+@using Encuentrame.Web
 @using Encuentrame.Web.Helpers
 @model Encuentrame.Web.Models.Accounts.UserModel
 @Html.ErrorSummary()
@@ -9,10 +10,14 @@
         {
             <div class="row">
                 <div class="col-md-6">@Html.EditorFor(m => m.Username)</div>
+                @if (LoggedUserHelper.Get().Role == RoleEnum.Administrator)
+                {
+                    <div class="col-md-6">@Html.EditorFor(m => m.Business)</div>
+                }
             </div>
             <div class="row">
-                <div class="col-md-6">@Html.EditorFor(m => m.LastName)</div>
-                <div class="col-md-6">@Html.EditorFor(m => m.FirstName)</div>
+                <div class="col-md-6">@Html.EditorFor(m => m.Lastname)</div>
+                <div class="col-md-6">@Html.EditorFor(m => m.Firstname)</div>
             </div>
         }
         

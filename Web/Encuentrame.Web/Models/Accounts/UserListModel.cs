@@ -11,5 +11,6 @@ namespace Encuentrame.Web.Models.Accounts
         public string InternalNumber { get; set; }
         public string PhoneNumber { get; set; }
         public RoleEnum Role { get; set; }
+        public ItemModel Business { get; set; }
     }
 }

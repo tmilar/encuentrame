@@ -9,8 +9,8 @@ namespace Encuentrame.Model.Mappings.Accounts
         {
             Map(x => x.Username).Not.Nullable().Length(100).Unique();
             Map(x => x.Password).Nullable().Length(100);
-            Map(x => x.LastName).Nullable().Length(100);
-            Map(x => x.FirstName).Nullable().Length(100);
+            Map(x => x.Lastname).Nullable().Length(100);
+            Map(x => x.Firstname).Nullable().Length(100);
             Map(x => x.Email).Nullable().Nullable().Length(100);
             Map(x => x.EmailAlternative).Nullable().Length(100);
             Map(x => x.InternalNumber).Nullable().Length(10);
@@ -32,6 +32,7 @@ namespace Encuentrame.Model.Mappings.Accounts
             DiscriminatorValue(typeof(User).Name);
             HasMany(x => x.Devices).Cascade.AllDeleteOrphan().AsBag();
             HasMany(x => x.Contacts).KeyColumn("user_id").Cascade.AllDeleteOrphan();
+            References(x => x.Business).Nullable();
         }
     }
 

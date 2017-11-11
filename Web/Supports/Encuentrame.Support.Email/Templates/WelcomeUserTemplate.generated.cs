@@ -30,7 +30,7 @@ WriteLiteral("\r\n<html>\r\n<head>\r\n    <title>Bienvenido</title>\r\n</head>\r
 
             
             #line 8 "..\..\Templates\WelcomeUserTemplate.cshtml"
-              Write(Model.UserName);
+              Write(Model.Username);
 
             
             #line default

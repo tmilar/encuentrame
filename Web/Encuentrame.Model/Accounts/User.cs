@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Encuentrame.Model.Businesses;
 using Encuentrame.Model.Contacts;
 using Encuentrame.Model.Devices;
 using Encuentrame.Support;
@@ -11,12 +12,12 @@ namespace Encuentrame.Model.Accounts
         public virtual int Id { get; protected set; }
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
-        public virtual string LastName { get; set; }
-        public virtual string FirstName { get; set; }
+        public virtual string Lastname { get; set; }
+        public virtual string Firstname { get; set; }
 
         public virtual string FullName
         {
-            get { return "{0}, {1}".FormatWith(LastName, FirstName); }
+            get { return "{0}, {1}".FormatWith(Lastname, Firstname); }
         }
 
         public virtual string Email { get; set; }
@@ -39,6 +40,8 @@ namespace Encuentrame.Model.Accounts
 
     public class User:BaseUser
     {
+        public virtual Business Business { get; set; }
+
         private IList<Device> _devices;
         public virtual IList<Device> Devices
         {

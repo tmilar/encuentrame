@@ -41,8 +41,8 @@ namespace Encuentrame.Web.Controllers.Apis
             {
                 Username = userApiModel.Username,
                 Password = userApiModel.Password,
-                LastName = userApiModel.LastName,
-                FirstName = userApiModel.FirstName,
+                Lastname = userApiModel.Lastname,
+                Firstname = userApiModel.Firstname,
                 Email = userApiModel.Email,
                 EmailAlternative = userApiModel.EmailAlternative,
                 InternalNumber = userApiModel.InternalNumber,
@@ -83,8 +83,8 @@ namespace Encuentrame.Web.Controllers.Apis
             var userParameters = new UserCommand.CreateOrEditParameters
             {
                 Username = userApiModel.Username,
-                LastName = userApiModel.LastName,
-                FirstName = userApiModel.FirstName,
+                Lastname = userApiModel.Lastname,
+                Firstname = userApiModel.Firstname,
                 Email = userApiModel.Email,
                 EmailAlternative = userApiModel.EmailAlternative,
                 InternalNumber = userApiModel.InternalNumber,
@@ -121,8 +121,8 @@ namespace Encuentrame.Web.Controllers.Apis
             var userApiModel = new UserApiModel()
             {
                 Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
                 Email = user.Email,
                 EmailAlternative = user.EmailAlternative,
                 InternalNumber = user.InternalNumber,
@@ -146,8 +146,8 @@ namespace Encuentrame.Web.Controllers.Apis
                 {
                     Id = user.Id,
                     Username = user.Username,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
+                    Firstname = user.Firstname,
+                    Lastname = user.Lastname,
                     Email = user.Email,
                     EmailAlternative = user.EmailAlternative,
                     InternalNumber = user.InternalNumber,
