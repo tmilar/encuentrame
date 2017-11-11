@@ -240,6 +240,7 @@
     <Compile Include="Models\DataTable\SelectFilterModel.cs" />
     <Compile Include="Models\Devices\DeviceApiModel.cs" />
     <Compile Include="Models\EventMonitors\EventMonitorUserListModel.cs" />
+    <Compile Include="Models\EventMonitors\EventPersonMonitorModel.cs" />
     <Compile Include="Models\EventMonitors\IAmOkEnum.cs" />
     <Compile Include="Models\Events\EventListModel.cs" />
     <Compile Include="Models\Events\EventModel.cs" />
@@ -852,6 +853,7 @@
     <Content Include="Views\ManageBusiness\Create.cshtml" />
     <Content Include="Views\ManageBusiness\Details.cshtml" />
     <Content Include="Views\ManageBusiness\Edit.cshtml" />
+    <Content Include="Views\EventMonitor\PersonMonitor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

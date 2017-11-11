@@ -56,6 +56,24 @@ namespace Encuentrame.Web.Controllers
             return View(eventtModel);
         }
 
+
+        public ActionResult PersonMonitor(int eventId, int userId)
+        {
+            var eventt = EventCommand.Get(eventId);
+            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
+            {
+                return RedirectToAction("Index", "ManageEvent");
+            }
+            var eventPersonMonitorModel = new EventPersonMonitorModel()
+            {
+
+            };
+
+            return View(eventPersonMonitorModel);
+
+            
+        }
+
         [HttpPost]
         public ActionResult ButtonAction(int id, string buttonAction)
         {

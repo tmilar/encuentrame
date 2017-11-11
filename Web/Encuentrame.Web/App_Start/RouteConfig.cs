@@ -10,6 +10,13 @@ namespace Encuentrame.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
 
+
+            routes.MapRoute(
+                "EventPersonMonitor",
+                "EventMonitor/PersonMonitor/{eventId}/{userId}",
+                new { controller = "EventMonitor", action = "PersonMonitor", eventId = 0 , userId = 0 }
+            );
+
             routes.MapRoute(
                 "EventMonitorGetItems",
                 "EventMonitor/GetItems/{eventId}",

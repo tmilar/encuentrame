@@ -3283,6 +3283,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registrar nueva empresa.
+        /// </summary>
+        public static string RegisterNewBusiness {
+            get {
+                return ResourceManager.GetString("RegisterNewBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No conforme.
         /// </summary>
         public static string RejectedQuantity {

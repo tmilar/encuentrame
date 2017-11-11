@@ -104,12 +104,21 @@
             <div class="row">
                 <div class="col-md-3">
                     @Html.EditorFor(model => Model.IAmOk)
+                    <div class="pull-left">
+                        <img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
+                    </div>
                 </div>
                 <div class="col-md-3">
                     @Html.EditorFor(model => Model.IAmNotOk)
+                    <div class="pull-left">
+                        <img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
+                    </div>
                 </div>
                 <div class="col-md-3">
                     @Html.EditorFor(model => Model.WithoutAnswer)
+                    <div class="pull-left">
+                        <img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
+                    </div>
                 </div>
                 <div class="col-md-3">
                     @Html.EditorFor(model => Model.LastUpdate)
@@ -189,6 +198,7 @@
             }
 
             tableBuilder.AddColumn(x => x.LastPositionUpdate)
+                .AddColumn("Actions", dataTemplate: "actionsTemplate")
                 .AddFilter(x => x.Username)
                 .AddFilter(x => x.Lastname)
                 .AddFilter(x => x.Firstname);
@@ -221,4 +231,9 @@
       @TranslationsHelper.Get(IAmOkEnum.NotOk)
     </span>
     <% }  %>
+</script>
+
+<script id="actionsTemplate" type="text/template">
+    <a class="btn btn-info btn-xs" href="@Url.Action("PersonMonitor")/@Model.Id/<%=row.Id%>">@Translations.Detail</a>
+   
 </script>

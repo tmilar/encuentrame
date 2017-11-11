@@ -24,7 +24,10 @@
                         <div class="col-md-offset-1 col-md-10">@Html.EditorFor(m => m.Password)</div>
                     </div>
                     <div class="row">
-                        <div class=" col-md-offset-7 col-md-4">
+                        <div class=" col-md-offset-1 col-md-4">
+                            @Html.ActionLink(Translations.RegisterNewBusiness, "Login", new { }, new { @class = "btn btn-link", role = "button" })
+                        </div>
+                        <div class=" col-md-offset-2 col-md-4">
                             <button type="submit" class="btn btn-primary pull-right">@Translations.Login</button>
                         </div>
                     </div>

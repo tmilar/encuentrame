@@ -40,7 +40,7 @@ function initMap() {
     var geocoder = new google.maps.Geocoder();
 
     $('#geocoder').on('click', function () {
-        geocodeAddress(geocoder, map);
+        geocodeAddress(geocoder, map, flagUrl);
     });
 }
 
@@ -48,7 +48,7 @@ function initMap() {
 
 
 
-function geocodeAddress(geocoder, resultsMap) {
+function geocodeAddress(geocoder, resultsMap, flagUrl) {
     var $street = $('#Street');
     var $number = $('#Number');
     var $city = $('#City');
@@ -68,7 +68,8 @@ function geocodeAddress(geocoder, resultsMap) {
 
             var marker = new google.maps.Marker({
                 map: resultsMap,
-                position: results[0].geometry.location
+                position: results[0].geometry.location,
+                icon: flagUrl
             });
             markers.push(marker);
             resultsMap.setZoom(16);

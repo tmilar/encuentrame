@@ -1572,4 +1572,7 @@
   <data name="Created" xml:space="preserve">
     <value>Creado</value>
   </data>
+  <data name="RegisterNewBusiness" xml:space="preserve">
+    <value>Registrar nueva empresa</value>
+  </data>
 </root>

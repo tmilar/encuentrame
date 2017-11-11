@@ -87,9 +87,9 @@ function initMap() {
                 withoutAnswerMarkerCluster = BuildCluster(map, withoutAnswerMarkers);
 
 
-                $iAmOkFilter.attr('checked', 'checked');
-                $iAmNotOkFilter.attr('checked', 'checked');
-                $withoutAnswerFilter.attr('checked', 'checked');
+                $iAmOkFilter.prop("checked", true);;
+                $iAmNotOkFilter.prop("checked", true);;
+                $withoutAnswerFilter.prop("checked", true);;
 
             })
             .fail(function(err) {
