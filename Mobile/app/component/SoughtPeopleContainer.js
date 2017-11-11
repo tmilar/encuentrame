@@ -16,18 +16,18 @@ export default class SoughtPeopleContainer extends Component {
     soughtPeople: null
   };
 
-  REFRESH_INTERVAL = 60 * 1000;
+  REFRESH_INTERVAL = 7 * 1000; /// TODO this is very low, only for testing the isEmpty. Set back to ~ 60s after fixing.
 
   componentDidMount = async () => {
     await this.fetchSoughtPeople();
-    await this.startSoughtPeopleRefresh();
+    this.startSoughtPeopleRefresh();
   };
 
   fetchSoughtPeople = async () => {
     let soughtPeople = await SoughtPeopleService.getSoughtPeople();
     this.setState({soughtPeople});
 
-    let debuggingPeople = this.state.soughtPeople.map(p => ({
+    let debuggingPeople = soughtPeople.map(p => ({
       ...(p.User), Distance: p.Distance
     }));
     console.table(debuggingPeople)

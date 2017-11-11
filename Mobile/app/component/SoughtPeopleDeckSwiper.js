@@ -50,6 +50,12 @@ export default class SoughtPeopleDeckSwiper extends Component {
     });
   };
 
+  componentWillReceiveProps = (newProps) => {
+    console.debug("[SoughtPeopleDeckSwiper] componentWillReceiveProps: ", newProps);
+    this.checkEmpty(newProps.soughtPeople);
+    // TODO prevent update if newProps are the same people?
+  };
+
   handleIveNotSeenHimSwipe = async personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
     await this.props.onIveNotSeenHim(personCard);
@@ -58,14 +64,39 @@ export default class SoughtPeopleDeckSwiper extends Component {
     this.checkEmpty();
   };
 
-  checkEmpty = () => {
-    let empty = this._isEmpty();
-    this.setState({empty});
-  };
+  /**
+   * Check empty and update state if different as before.
+   * Either: new data present and before was empty, or there was data before and not anymore.
+   *
+   * @param soughtPeople
+   * @returns {boolean}
+   */
+  checkEmpty = (soughtPeople = this.props.soughtPeople) => {
+    let swiperEmpty = () => this._deckSwiper && this._deckSwiper._root.state.disabled;
+    let peopleData = () => soughtPeople && soughtPeople.length;
+    let isEmptyValue = swiperEmpty() || !peopleData();
+    let debugEmpty = (extraMsg) => {
+      let checkObj = {swiperEmpty: swiperEmpty(), peopleData: peopleData(), isEmptyValue};
+      console.debug(
+        `[SoughtPeopleDeckSwiper] _isEmpty check: ${JSON.stringify(checkObj)}${extraMsg}`
+      );
+    };
+    debugEmpty();
+    if (peopleData() && swiperEmpty()) {
+      // we have people, but the swiper still didn't update. force an update.
+      debugEmpty("people present, but swiper empty. Forcing update.");
+      /*  TODO this logic works fine. But the forceUpdate() doesn't trigger the re-fresh of the swiper,
+       * therefore the disabled is still false.
+       * maybe, find a different way to force the swiper update, like using a clone of the datasource
+       * or something like forcing unmount-remount....
+       */
+      this.forceUpdate();
+      debugEmpty("after forcing...");
+    }
 
-  _isEmpty = () => {
-    return (this._deckSwiper && this._deckSwiper._root.state.disabled) ||
-      (!this.props.soughtPeople || !this.props.soughtPeople.length);
+    this.setState({isEmptyValue});
+
+    return isEmptyValue;
   };
 
   _renderEmptySwiper = () => (

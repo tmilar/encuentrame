@@ -1,6 +1,7 @@
 import Service from './Service';
 import sleep from "../util/sleep";
 import AccountsService from './AccountsService';
+import {soughtPeopleFixture} from '../config/soughtPeopleFixture';
 
 class SoughtPeopleService {
 
@@ -20,7 +21,9 @@ class SoughtPeopleService {
 
 
   _getSomeUsersRandomized = async (maxCount) => {
-    let allUsers = await AccountsService.getAllUserAccounts();
+    // TODO remove soughtPeopleFixture  + sleep(50)
+    let allUsers = soughtPeopleFixture; //await AccountsService.getAllUserAccounts();
+    sleep(50);
     let allUsersRandomized = this._randomizeArray(allUsers);
     let usersCount = this._getRandomInt(0, Math.min(allUsersRandomized.length, maxCount));
     let someRandomUsers = allUsers.slice(0, usersCount);
