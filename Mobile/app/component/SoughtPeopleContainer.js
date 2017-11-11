@@ -16,14 +16,29 @@ export default class SoughtPeopleContainer extends Component {
     soughtPeople: null
   };
 
+  REFRESH_INTERVAL = 60 * 1000;
+
   componentDidMount = async () => {
-    // TODO get ACTUAL soughtPeople fixtures when backend is working.
+    await this.fetchSoughtPeople();
+    await this.startSoughtPeopleRefresh();
+  };
+
+  fetchSoughtPeople = async () => {
     let soughtPeople = await SoughtPeopleService.getSoughtPeople();
-    let debuggingPeople = soughtPeople.map(p => ({
+    this.setState({soughtPeople});
+
+    let debuggingPeople = this.state.soughtPeople.map(p => ({
       ...(p.User), Distance: p.Distance
     }));
-    console.table(debuggingPeople);
-    this.setState({soughtPeople});
+    console.table(debuggingPeople)
+  };
+
+  startSoughtPeopleRefresh = () => {
+    this.refreshInterval = setInterval(this.fetchSoughtPeople, this.REFRESH_INTERVAL)
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.refreshInterval);
   };
 
   /**
