@@ -29,8 +29,7 @@ class SoughtPeopleService {
       Distance: this._getRandomInt(0, 10000) / 100
     }));
 
-    let soughtPeople = soughtPeopleFixture; // _mapUsersToSoughtPeople(allUsers); // soughtPeopleFixture
-    await sleep(50);
+    let soughtPeople = _mapUsersToSoughtPeople(allUsers); // soughtPeopleFixture
 
     return this._randomizeLimitPeopleArray(soughtPeople, maxCount);
   };
