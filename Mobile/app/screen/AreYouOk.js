@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
 import {text} from '../style';
 import AreYouOkService from '../service/AreYouOkService';
+import {showToast} from "react-native-notifyer";
 
 export default class AreYouOk extends Component {
   state = {
@@ -21,17 +22,25 @@ export default class AreYouOk extends Component {
       '¡Ok!',
       `Avisando a tus amigos`
     );
-    await AreYouOkService.reply(true);
     this._goBack();
+    try {
+      await AreYouOkService.reply(true);
+    } catch (e) {
+      showToast("¡Ups! No se pudo enviar que estás bien... \n" + (e || e.message), {duration: 2000});
+    }
   };
 
   _handleINeedHelp = async () => {
     Alert.alert(
       '¡No te muevas!',
-      `Vamos a buscar ayuda`
+      `Vamos a buscar ayuda.`
     );
-    await AreYouOkService.reply(false);
     this._goBack();
+    try {
+      await AreYouOkService.reply(false);
+    } catch (e) {
+      showToast("¡Ups! No se pudo enviar que necesitas ayuda... \n" + (e || e.message), {duration: 2000});
+    }
   };
 
   _goBack = () => {
@@ -40,7 +49,6 @@ export default class AreYouOk extends Component {
   };
 
   render() {
-
     return (
       <View>
         <Modal
@@ -70,7 +78,6 @@ export default class AreYouOk extends Component {
             </View>
           </View>
         </Modal>
-
       </View>
     )
   }
