@@ -23,6 +23,10 @@ export default class NewContact extends Component {
     searchingContact: ""
   };
 
+  static navigationOptions = {
+    title: 'Agregar Contacto'
+  };
+
   /**
    * store accounts for username.
    * @type {Array}

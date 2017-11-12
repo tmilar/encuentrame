@@ -99,7 +99,7 @@ class LogoutActionScreen extends React.Component {
 }
 
 const AppNavigator = DrawerNavigator({
-    AppTabs: {
+    Home: {
       path: '/home',
       screen: Tabs,
       // navigationOptions: EncuentrameHeader
@@ -149,7 +149,7 @@ const BaseStack = StackNavigator({
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
   FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {}},
   SupplyInfo: {screen: SupplyInfoContainer},
-  NewContact: {screen: NewContact, navigationOptions: {}}
+  NewContact: {screen: NewContact}
 }, {
   initialRouteName: 'Root'
 });
