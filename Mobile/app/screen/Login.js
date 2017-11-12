@@ -4,8 +4,9 @@ import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
 import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
-
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import {expo} from '../../app.json';
+const {version, name} = expo;
 
 
 export default class Login extends Component {
@@ -182,6 +183,11 @@ export default class Login extends Component {
             </View>
           </View>
 
+          <View style={{height: 0, alignItems: "center"}}>
+            <Text style={{fontSize: 14, color: "gray"}}>
+              {`${name} v${version}`}
+            </Text>
+          </View>
           {/* The next view will animate to match the actual keyboards height */}
           <KeyboardSpacer/>
         </View>
