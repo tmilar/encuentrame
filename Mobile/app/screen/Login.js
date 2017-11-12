@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, Button, Alert, TextInput} from 'react-native'
+import {Text, View, StyleSheet, Button, Alert, TextInput, Keyboard} from 'react-native'
 import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
 import {showLoading, hideLoading} from 'react-native-notifyer';
@@ -53,7 +53,7 @@ export default class Login extends Component {
   }
 
   async _handleLoginButtonPress() {
-
+    Keyboard.dismiss();
     showLoading("Cargando...");
     try {
       await this._doLogin();
