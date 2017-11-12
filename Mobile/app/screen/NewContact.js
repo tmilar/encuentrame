@@ -55,7 +55,7 @@ export default class NewContact extends Component {
      this.setState({ loading: true });
      let requestContact = await ContactsService.newContactRequest(account.Id);
      this.setState({ loading: false});
-     showToast("¡Solicitud enviada a " + account.Username + " !", {duration: 5000});
+     showToast("¡Solicitud enviada a " + account.Username + "!", {duration: 5000});
     this._goBack();
   };
 
