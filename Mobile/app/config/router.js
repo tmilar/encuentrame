@@ -147,7 +147,7 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
-  FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {}},
+  FriendsAndFamily: {screen: FriendsAndFamily},
   SupplyInfo: {screen: SupplyInfoContainer},
   NewContact: {screen: NewContact}
 }, {
