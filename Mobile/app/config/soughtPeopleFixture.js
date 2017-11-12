@@ -4,7 +4,7 @@ export const soughtPeopleFixture = [
       FirstName: 'Luisito',
       LastName: 'Gomez',
       Username: 'luisitoverduras',
-      imageUri: require('../img/personImgExample.jpg'),
+      imageUri: '../img/personImgExample.jpg', //require('../img/personImgExample.jpg'),
       Id: 1
     },
     Distance: "123.22"
@@ -14,7 +14,7 @@ export const soughtPeopleFixture = [
       FirstName: 'Jose',
       LastName: 'Lopez',
       Username: 'Josesitoverduras',
-      imageUri: require('../img/personImgExample.jpg'),
+      imageUri: '../img/personImgExample.jpg', //require('../img/personImgExample.jpg'),
       Id: 2
     },
     Distance: "33.22"
@@ -24,7 +24,7 @@ export const soughtPeopleFixture = [
       FirstName: 'Mercos',
       LastName: 'The Kid',
       Username: 'elmerquitos',
-      imageUri: require('../img/personImgExample.jpg'),
+      imageUri: '../img/personImgExample.jpg', //require('../img/personImgExample.jpg'),
       Id: 3
     },
     Distance: "53.21"

@@ -13,10 +13,11 @@ export default class SoughtPeopleContainer extends Component {
   };
 
   state = {
-    soughtPeople: null
+    soughtPeople: null,
+    loadingPeople: true
   };
 
-  REFRESH_INTERVAL = 7 * 1000; /// TODO this is very low, only for testing the isEmpty. Set back to ~ 60s after fixing.
+  REFRESH_INTERVAL = 60 * 1000; // seconds to refresh soughtPeople list.
 
   componentDidMount = async () => {
     await this.fetchSoughtPeople();
@@ -30,7 +31,8 @@ export default class SoughtPeopleContainer extends Component {
     let debuggingPeople = soughtPeople.map(p => ({
       ...(p.User), Distance: p.Distance
     }));
-    console.table(debuggingPeople)
+    console.table(debuggingPeople);
+    this.setState({loadingPeople: false});
   };
 
   startSoughtPeopleRefresh = () => {
@@ -77,7 +79,7 @@ export default class SoughtPeopleContainer extends Component {
   };
 
   render() {
-    if (!this.state.soughtPeople) {
+    if (!this.state.soughtPeople || this.state.loadingPeople) {
       return <LoadingIndicator text={"Cargando..."}/>
     }
 

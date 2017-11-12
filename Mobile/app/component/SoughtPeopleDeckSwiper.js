@@ -14,7 +14,7 @@ import {
   Icon,
   Button
 } from 'native-base';
-import sleep from "../util/sleep";
+import {deepEquals} from "../util/deepEquals";
 
 
 export default class SoughtPeopleDeckSwiper extends Component {
@@ -28,7 +28,8 @@ export default class SoughtPeopleDeckSwiper extends Component {
   };
 
   state = {
-    empty: this.props.soughtPeople.length === 0
+    empty: this.props.soughtPeople.length === 0,
+    swiperRandomKey: 0
   };
 
   _deckSwiper;
@@ -43,58 +44,73 @@ export default class SoughtPeopleDeckSwiper extends Component {
         this.checkEmpty();
       },
       onClose: async () => {
-        console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. Restoring swiped person card.");
+        console.log("[SoughtPeopleDeckSwiper] SupplyInfo.onClose() called. (//TODO: should restore swiped person card, back?)");
         await this.props.onIveSeenHimCancel(personCard);
         this.checkEmpty();
       }
     });
   };
 
-  componentWillReceiveProps = (newProps) => {
-    console.debug("[SoughtPeopleDeckSwiper] componentWillReceiveProps: ", newProps);
-    this.checkEmpty(newProps.soughtPeople);
-    // TODO prevent update if newProps are the same people?
+  /**
+   * Check if new soughtPeople prop received, is different from before -> remount.
+   * Also Update this.state.empty based on soughtPeople.length
+   *
+   * @param soughtPeople
+   */
+  componentWillReceiveProps = ({soughtPeople}) => {
+    console.debug("[SoughtPeopleDeckSwiper] componentWillReceiveProps. soughtPeople: ", soughtPeople);
+
+    let swiperDisabled = () => this._deckSwiper && this._deckSwiper._root.state.disabled;
+    let peopleData = () => soughtPeople && soughtPeople.length > 0;
+    let peopleDataIsNew = () => peopleData() && !deepEquals(soughtPeople, this.props.soughtPeople);
+
+    // remount swiper, if got new and DIFFERENT data.
+    if (swiperDisabled() && peopleData()) {
+      // swiper was disabled, but got new data. Remount whole thing...
+      console.debug(`[SoughtPeopleDeckSwiper] swiper WAS disabled / but got ${soughtPeople.length} people. remounting swiper.`);
+      this.setState({swiperRandomKey: Math.random().toString()})
+    } else if (peopleDataIsNew()) {
+      // Got new and different data. Remount whole thing...
+      console.debug(`[SoughtPeopleDeckSwiper] got data and is different (dataIsNew). remounting swiper. `);
+      this.setState({swiperRandomKey: Math.random().toString()})
+    }
+
+    // Update empty.
+    this.setState({empty: !peopleData()});
   };
 
   handleIveNotSeenHimSwipe = async personCard => {
     console.debug("[SoughtPeopleDeckSwiper] Swiped left: ", personCard);
     await this.props.onIveNotSeenHim(personCard);
     // TODO send card to end of list; if second time then remove? Or simply remove?
-    await sleep(50);
     this.checkEmpty();
   };
 
   /**
-   * Check empty and update state if different as before.
-   * Either: new data present and before was empty, or there was data before and not anymore.
+   * Check empty AFTER swiping gesture, to update the view correctly.
    *
    * @param soughtPeople
    * @returns {boolean}
    */
   checkEmpty = (soughtPeople = this.props.soughtPeople) => {
-    let swiperEmpty = () => this._deckSwiper && this._deckSwiper._root.state.disabled;
-    let peopleData = () => soughtPeople && soughtPeople.length;
-    let isEmptyValue = swiperEmpty() || !peopleData();
-    let debugEmpty = (extraMsg) => {
-      let checkObj = {swiperEmpty: swiperEmpty(), peopleData: peopleData(), isEmptyValue};
-      console.debug(
-        `[SoughtPeopleDeckSwiper] _isEmpty check: ${JSON.stringify(checkObj)}${extraMsg}`
-      );
-    };
-    debugEmpty();
-    if (peopleData() && swiperEmpty()) {
-      // we have people, but the swiper still didn't update. force an update.
-      debugEmpty("people present, but swiper empty. Forcing update.");
-      /*  TODO this logic works fine. But the forceUpdate() doesn't trigger the re-fresh of the swiper,
-       * therefore the disabled is still false.
-       * maybe, find a different way to force the swiper update, like using a clone of the datasource
-       * or something like forcing unmount-remount....
-       */
-      this.forceUpdate();
-      debugEmpty("after forcing...");
-    }
+    let swiperDisabled = () => this._deckSwiper && this._deckSwiper._root.state.disabled;
+    let swiperLastCard = () => this._deckSwiper && this._deckSwiper._root.state.lastCard;
+    let peopleData = () => soughtPeople && soughtPeople.length > 0;
+    let isEmptyValue;
 
-    this.setState({isEmptyValue});
+    isEmptyValue = swiperDisabled() || (!swiperDisabled() && !peopleData()); //|| swiperLastCard();
+
+    let debugCheckObj = {
+      swiperEmpty: swiperDisabled(),
+      peopleData: peopleData(),
+      swiperLastCard: swiperLastCard(),
+      isEmptyValue
+    };
+    console.debug(
+      `[SoughtPeopleDeckSwiper] _isEmpty check: ${JSON.stringify(debugCheckObj)}`
+    );
+
+    this.setState({empty: isEmptyValue});
 
     return isEmptyValue;
   };
@@ -108,7 +124,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
   );
 
   _renderDeckSwiper = () => (
-    <View>
+    <View key={this.state.swiperRandomKey}>
       <DeckSwiper
         ref={(c) => this._deckSwiper = c}
         dataSource={this.props.soughtPeople}
@@ -146,10 +162,10 @@ export default class SoughtPeopleDeckSwiper extends Component {
     await this.handleIveNotSeenHimSwipe(personCard);
   };
 
-  handleSwipeRightButtonPress = () => {
+  handleSwipeRightButtonPress = async () => {
     this._deckSwiper._root.swipeRight();
     let personCard = this._deckSwiper._root.state.selectedItem;
-    this.handleIveSeenHimSwipe(personCard);
+    await this.handleIveSeenHimSwipe(personCard);
   };
 
   _renderSwipeButtons = () => {
