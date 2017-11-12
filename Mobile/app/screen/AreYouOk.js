@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Alert, Button, Modal, StyleSheet, Text, View} from 'react-native';
+import {Alert, Modal, StyleSheet, Text, View} from 'react-native';
+import {Button} from 'react-native-elements';
 import {text} from '../style';
 import AreYouOkService from '../service/AreYouOkService';
 import {showToast} from "react-native-notifyer";
@@ -60,21 +61,40 @@ export default class AreYouOk extends Component {
           }}
         >
           <View style={styles.message}>
-            <Text style={text.title}>¿Estás bien?</Text>
+            <Text style={[text.title, {fontSize: 28}]}>¿Estás bien?</Text>
           </View>
-          <View style={{flex: 1}}>
-            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-              <Button
-                title="¡Estoy bien!"
-                color="#64DD17"
-                onPress={this._handleImOk}
-              />
-              <Button
-                title="Necesito ayuda"
-                color='#ff5c5c'
-                onPress={this._handleINeedHelp}
-              />
-
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}>
+              <View style={{flex: 1, margin: 3}}>
+                <Button
+                  title="¡ESTOY BIEN!"
+                  backgroundColor='#64DD17'
+                  onPress={this._handleImOk}
+                  iconRight={{name: 'thumbs-up', type: 'font-awesome'}}
+                  raised={true}
+                  textStyle={{fontWeight: 'bold'}}
+                  borderRadius={5}
+                  containerViewStyle={{borderRadius: 5}}
+                  large={true}
+                />
+              </View>
+              <View style={{flex: 1, margin: 3}}>
+                <Button
+                  title="NECESITO AYUDA"
+                  backgroundColor='#ff5c5c'
+                  onPress={this._handleINeedHelp}
+                  icon={{name: 'warning'}}
+                  raised={true}
+                  textStyle={{fontWeight: 'bold', fontSize: 12}}
+                  borderRadius={5}
+                  containerViewStyle={{borderRadius: 5}}
+                  large={true}
+                />
+              </View>
             </View>
           </View>
         </Modal>
@@ -85,9 +105,8 @@ export default class AreYouOk extends Component {
 
 const styles = StyleSheet.create({
   message: {
-    flex: 5,
-    height: 3,
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   }
 });
