@@ -1,7 +1,5 @@
 import Service from './Service';
-import sleep from "../util/sleep";
 import AccountsService from './AccountsService';
-import {soughtPeopleFixture} from '../config/soughtPeopleFixture';
 
 class SoughtPeopleService {
 
@@ -22,7 +20,6 @@ class SoughtPeopleService {
 
 
   _getSomeUsersAsSoughtPeople = async (maxCount) => {
-    // TODO remove soughtPeopleFixture  + sleep(50)
     let allUsers = await AccountsService.getAllUserAccounts();
     let _mapUsersToSoughtPeople = (users) => users.map(u => ({
       User: {...u},
