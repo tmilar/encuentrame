@@ -18,7 +18,8 @@
     },
     "loading": {
       "icon": "./app/img/eme_icon.png"
-    }
+    },
+    "orientation": "portrait"
   },
   "name": "Encuentrame",
   "displayName": "Encuentrame"
