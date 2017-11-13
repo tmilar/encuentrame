@@ -18,7 +18,7 @@ getIcon = (iconData) => {
       return <FontAwesome name={iconData.iconName} size={40} style={{color: iconData.color || 'black'}}/>;
       break;
     default:
-      return <MaterialCommunityIcons name='alarm-light' style={{color: 'black'}} size={40}/>;
+      throw `Unexpected icon data tagname. ${iconData.tagName}`
   }
 };
 
@@ -28,7 +28,7 @@ const EmptyNewsListMessage = () => <View style={{flex: 1, alignItems: "center", 
   </Text>
 </View>;
 
-const NewsItem = (icon, message) =>
+const NewsItem = ({icon, message}) =>
   <View style={{
     flexDirection: 'row',
     height: 60,
@@ -42,7 +42,7 @@ const NewsItem = (icon, message) =>
         {message}
       </Text>
     </View>
-  </View>;
+  </View>
 
 const NewsList = props =>
   <View>
