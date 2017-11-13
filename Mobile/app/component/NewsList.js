@@ -4,22 +4,25 @@ import {Text, View} from "react-native";
 import {prettyDate} from "../util/prettyDate";
 import {Ionicons, EvilIcons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
 
-getIcon = (iconData) => {
-  switch (iconData.tagName) {
-    case 'EvilIcons':
-      return <EvilIcons name={iconData.iconName} style={{color: iconData.color || 'black'}} size={40}/>;
+const getIcon = (type) => {
+  switch(type) {
+    case 'Areyouok.Ask':
+      return <EvilIcons name='question' style={{ color: 'orange'}} size={40}/>;
       break;
-    case 'Ionicons':
-      return <Ionicons name={iconData.iconName} style={{color: iconData.color || 'black'}} size={40}/>;
+    case 'Areyouok.Reply':
+      return <Ionicons name='md-happy' style={{ color: 'green' }} size={40}/>;
       break;
-    case 'MaterialCommunityIcons':
-      return <MaterialCommunityIcons name={iconData.iconName} style={{color: iconData.color || 'black'}} size={40}/>;
+    case 'Contact.Request':
+      return <Ionicons name='md-contacts' style={{ color: 'green' }} size={40}/>;
       break;
-    case 'FontAwesome':
-      return <FontAwesome name={iconData.iconName} size={40} style={{color: iconData.color || 'black'}}/>;
+    case 'Contact.Confirm':
+      return <MaterialCommunityIcons name='account-check' style={{ color: 'black' }} size={40}/>;
+      break;
+    case 'Event/StartCollaborativeSearch':
+      return <FontAwesome name='warning' size={40} style={{ color: 'red' }}/>;
       break;
     default:
-      throw `Unexpected icon data tagname. ${iconData.tagName}`
+      return <MaterialCommunityIcons name='alarm-light' style={{ color: 'black' }} size={40}/>;
   }
 };
 
@@ -29,18 +32,18 @@ const EmptyNewsListMessage = () => <View style={{flex: 1, alignItems: "center", 
   </Text>
 </View>;
 
-const NewsItem = ({icon, message}) =>
+const NewsItem = ({type, message, time}) =>
   <View style={{
     flexDirection: 'row',
     height: 60,
     justifyContent: "space-around"
   }}>
     <View style={{justifyContent: "space-around", width: 40, alignItems: 'center'}}>
-      {getIcon(icon)}
+      {getIcon(type)}
     </View>
     <View style={{justifyContent: "space-around", width: 250}}>
       <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-        {message}.  {prettyDate(new Date(n.time))}
+        {message}.  {prettyDate(new Date(time))}
       </Text>
     </View>
   </View>
