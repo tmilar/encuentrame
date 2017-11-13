@@ -47,7 +47,8 @@ const Tabs = TabNavigator({
     animationEnabled: true,
     showIcon: true,
   },
-  tabBarPosition: 'bottom'
+  tabBarPosition: 'bottom',
+  swipeEnabled: false
 });
 
 const AuthStack = StackNavigator({
