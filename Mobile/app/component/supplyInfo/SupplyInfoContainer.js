@@ -11,7 +11,7 @@ export default class SupplyInfoContainer extends Component {
   };
 
   static navigationOptions = {
-    title: "Por favor, ayuda aportando datos"
+    title: "¡Ayúdanos a encontrarlo!"
   };
 
   constructor(props) {

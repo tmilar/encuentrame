@@ -12,7 +12,6 @@ import ContactRequest from "../screen/ContactRequest";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import ActivityContainer from "../screen/ActivityContainer";
-import SupplyInfo from "../screen/SupplyInfo";
 import NewContact from "../screen/NewContact";
 import UserProfile from "../screen/UserProfile";
 import RootDispatcher from "../screen/RootDispatcher";

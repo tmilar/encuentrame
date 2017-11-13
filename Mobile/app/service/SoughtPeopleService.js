@@ -1,5 +1,4 @@
 import Service from './Service';
-import sleep from "../util/sleep";
 import AccountsService from './AccountsService';
 
 class SoughtPeopleService {
@@ -13,22 +12,29 @@ class SoughtPeopleService {
     let url = "/soughtPeople";
     // let soughtPeople = await Service.sendRequest(url);
     let maxCount = 7;
-    let soughtPeople = await this._getSomeUsersRandomized(maxCount);
+    let soughtPeople = await this._getSomeUsersAsSoughtPeople(maxCount);
+    // let soughtPeopleRandomized =
     console.debug(`[SoughtPeopleService] Received ${soughtPeople.length} RANDOMIZED sought people.`);
     return soughtPeople;
   };
 
 
-  _getSomeUsersRandomized = async (maxCount) => {
+  _getSomeUsersAsSoughtPeople = async (maxCount) => {
     let allUsers = await AccountsService.getAllUserAccounts();
-    let allUsersRandomized = this._randomizeArray(allUsers);
-    let usersCount = this._getRandomInt(0, Math.min(allUsersRandomized.length, maxCount));
-    let someRandomUsers = allUsers.slice(0, usersCount);
-
-    return someRandomUsers.map(u => ({
+    let _mapUsersToSoughtPeople = (users) => users.map(u => ({
       User: {...u},
       Distance: this._getRandomInt(0, 10000) / 100
-    }))
+    }));
+
+    let soughtPeople = _mapUsersToSoughtPeople(allUsers); // soughtPeopleFixture
+
+    return this._randomizeLimitPeopleArray(soughtPeople, maxCount);
+  };
+
+  _randomizeLimitPeopleArray = (people, maxCount) => {
+    let allUsersRandomized = this._randomizeArray(people);
+    let usersCount = this._getRandomInt(0, Math.min(allUsersRandomized.length, maxCount));
+    return people.slice(0, usersCount);
   };
 
   /**
