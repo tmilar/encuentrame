@@ -4,6 +4,7 @@ import {
   FlatList, Image, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View
 } from 'react-native';
 import {text} from '../style';
+import Search from '../../lib/react-native-search-box';
 import ContactsService from '../service/ContactsService';
 import {Alert} from "react-native";
 import LoadingIndicator from "../component/LoadingIndicator";
@@ -75,7 +76,7 @@ export default class NewContact extends Component {
 
   renderRow = (account, sectionID: number, rowID: number) => {
     return (
-      <TouchableHighlight style={{flex: 1, height: 100 }} onPress={() => this._pressRow(account, sectionID, rowID)}>
+      <TouchableHighlight style={{flex: 1}} onPress={() => this._pressRow(account, sectionID, rowID)}>
         <View style={{flex: 1, width: 400, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: 'grey'}}>
           <View style={{justifyContent: 'space-around',width: 120, height: 100 }}>
             <Text>{account.Username}</Text>
@@ -96,28 +97,31 @@ export default class NewContact extends Component {
 
 
   render() {
-    if (this.state.loading )
-      return <LoadingIndicator/>;
     return (
-      <ScrollView scrollsToTop={false} style={{marginTop: 50, flex: 1 }}>
-        <View style={{paddingLeft: 10, flex: 1, justifyContent: 'space-around', borderBottomColor: '#47315a', borderBottomWidth: 1 }}>
-          <TextInput
-            value={this.state.searchingContact}
-            placeholder="Buscar por nombre"
-            ref="searchingContact"
-            selectTextOnFocus
-            onChangeText={this.searchingContactTextChanged}
-            underlineColorAndroid='transparent'
-          />
-        </View>
-        <View style={{flex: 10, height: 500, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center", marginBottom: 20}}>
-          <ListView style={{flex: 1}}
-            dataSource={this.state.filteredAccounts}
-            renderRow={this.renderRow}
-          />
-        </View>
-
-      </ScrollView>
+      <View style={{flex: 1}}>
+        <Search
+          onChangeText={this.searchingContactTextChanged}
+          ref="search_box"
+          cancelTitle={"Cancelar"}
+          placeholder={"Buscar por nombre"}
+          cancelButtonStyle={{width: 80}}
+          cancelButtonWidth={80}
+          searchIconCollapsedMargin={70}
+          placeholderCollapsedMargin={55}
+          positionRightDelete={80}
+        />
+        { this.state.loading ? <LoadingIndicator/> :
+          <ScrollView scrollsToTop={false} style={{flex: 1}}>
+            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+              <ListView style={{flex: 1}}
+                        dataSource={this.state.filteredAccounts}
+                        renderRow={this.renderRow}
+                        enableEmptySections={true}
+              />
+            </View>
+          </ScrollView>
+        }
+      </View>
     )
   }
 }
