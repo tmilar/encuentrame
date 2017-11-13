@@ -93,37 +93,38 @@ class PushNotificationsService {
    * @returns {Promise.<void>}
    */
   setupNotificationsDispatcher = async (navigation) => {
-    Notifications.addListener(async(notification) => {
+    Notifications.addListener(async (notification) => {
       if (!this._validRemoteNotification(notification)) {
         return;
       }
 
-      console.debug("[PushNotificationService] Received notification: ", notification);
-      let notificationType = notification.data.type || notification.data.Type;
+      console.debug("[PushNotificationService] Received remote notification: ", notification);
+      let {data} = notification;
+      let type = data.type || data.Type;
 
-      if (notificationType === "Areyouok.Ask") {
-        await this.handleAreyouokaskNotif(navigation, notification, notificationType);
+      if (type === "Areyouok.Ask") {
+        await this.handleAreyouokaskNotif(navigation, data, type);
       }
 
-      if (notificationType === "Areyouok.Reply") {
-        await this.handleAreyouokReplyNotif(navigation, notification, notificationType);
+      if (type === "Areyouok.Reply") {
+        await this.handleAreyouokReplyNotif(navigation, data, type);
       }
 
-      if (notificationType === "Contact.Request") {
-        await this.handleContactRequestNotif(navigation, notification, notificationType);
+      if (type === "Contact.Request") {
+        await this.handleContactRequestNotif(navigation, data, type);
       }
 
-      if (notificationType === "Contact.Confirm") {
-        await this.handleContactRequestConfirmNotif(navigation, notification, notificationType);
+      if (type === "Contact.Confirm") {
+        await this.handleContactRequestConfirmNotif(navigation, data, type);
       }
-      if (notificationType === "Event/StartCollaborativeSearch") {
-        await this.handleColaborativeSearchNotif(navigation, notification, notificationType);
+      if (type === "Event/StartCollaborativeSearch") {
+        await this.handleColaborativeSearchNotif(navigation, data, type);
       }
     });
   };
 
-  handleAreyouokaskNotif = async(navigation, notification, notificationType) => {
-    console.log(`[PushNotificationService] Notification '${notificationType}'! Navigating to 'AreYouOk' screen.`);
+  handleAreyouokaskNotif = async (navigation, data, notificationType) => {
+    console.log(`[PushNotificationService] Navigating to 'AreYouOk' screen.`);
     await NewsService.saveNews({
       type: notificationType,
       message: `Te preguntaron si estabas bien.`
@@ -131,10 +132,10 @@ class PushNotificationsService {
     navigation.navigate("AreYouOk");
   };
 
-  handleAreyouokReplyNotif = async(navigation, notification, notificationType) => {
-    let reply = notification.data.ok || notification.data.Ok;
-    let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
-    console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
+  handleAreyouokReplyNotif = async (navigation, data, notificationType) => {
+    let reply = data.ok || data.Ok;
+    let targetUserId = data.targetUserId || data.TargetUserId;
+    console.log(`[PushNotificationService] Showing Areyouok response.`);
     await NewsService.saveNews({
       type: notificationType,
       message: `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}.`
@@ -145,21 +146,23 @@ class PushNotificationsService {
     );
   };
 
-  handleContactRequestNotif = async(navigation, notification, notificationType) => {
-    let contactRequestUserId = notification.data.UserId;
-    let contactRequestUsername = notification.data.Username;
+  handleContactRequestNotif = async (navigation, data, notificationType) => {
+    let contactRequestUserId = data.UserId;
+    let contactRequestUsername = data.Username;
+
     await NewsService.saveNews({
       type: notificationType,
       message: `${contactRequestUsername} te ha enviado solicitud de amistad.`
     });
-    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    navigation.navigate("ContactRequest",{contactRequestUserId: contactRequestUserId, contactRequestUsername: contactRequestUsername});
+    navigation.navigate("ContactRequest", {
+      contactRequestUserId: contactRequestUserId,
+      contactRequestUsername: contactRequestUsername
+    });
   };
 
-  handleContactRequestConfirmNotif = async(navigation, notification, notificationType) => {
-    let contactRequestUsername = notification.data.Username;
+  handleContactRequestConfirmNotif = async (navigation, data, notificationType) => {
+    let contactRequestUsername = data.Username;
 
-    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
     await NewsService.saveNews({
       type: notificationType,
       message: `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
@@ -170,18 +173,16 @@ class PushNotificationsService {
     );
   };
 
-  handleColaborativeSearchNotif = async(navigation, notification, notificationType) => {
-    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
+  handleColaborativeSearchNotif = async (navigation, data, notificationType) => {
     await NewsService.saveNews({
       type: notificationType,
       message: `Se ha notificado de una emergencia.`
     });
-    showToast("¡Ayúdanos!.", {duration: 5000});
-    navigation.navigate("Find",{emergency: true});
+    showToast("¡Emergencia! Ayúdanos a encontrar a algunas personas.", {duration: 2500});
+    navigation.navigate("Find", {emergency: true});
   };
 
   _validRemoteNotification = (notification) => {
-
     if (!notification.remote) {
       console.debug("[PushNotificationsService] Received local notification (not remote). Ignoring. ", notification);
       return;
