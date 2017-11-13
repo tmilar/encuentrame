@@ -14,10 +14,6 @@ import {showToast} from "react-native-notifyer";
 
 export default class NewContact extends Component {
 
-  datasource = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => r1 !== r2,
-  });
-
   state = {
     loading: true,
     filteredAccounts: this.datasource.cloneWithRows([]),
@@ -27,6 +23,10 @@ export default class NewContact extends Component {
   static navigationOptions = {
     title: 'Agregar Contacto'
   };
+
+  datasource = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1 !== r2,
+  });
 
   /**
    * store accounts for username.
@@ -40,27 +40,33 @@ export default class NewContact extends Component {
 
   componentWillMount = async () => {
     this.accounts = await AccountsService.getUnknownUsersAccounts();
-    this.setState({ filteredAccounts: this.datasource.cloneWithRows(this.accounts) });
-    this.setState({ loading: false });
+    this.setState({filteredAccounts: this.datasource.cloneWithRows(this.accounts)});
+    this.setState({loading: false});
   };
 
-  _pressRow = async(account, sectionID, rowID) => {
+  _pressRow = async (account, sectionID, rowID) => {
     Alert.alert(
       'Confirma',
       '¿Agregar contacto?',
-      [
-        {text: 'Cancelar', onPress: () => {}, style: 'cancel'},
-        {text: 'Confirmar', onPress: () => this._addContactRequest(account, sectionID, rowID)},
-      ],
-      { cancelable: false }
+      [{
+        text: 'Cancelar',
+        style: 'cancel',
+        onPress: () => {
+          console.log("Add contact canceled.")
+        }
+      }, {
+        text: 'Confirmar',
+        onPress: () => this._addContactRequest(account, sectionID, rowID)
+      }],
+      {cancelable: false}
     )
   };
 
-   _addContactRequest = async (account, sectionID, rowID) =>  {
-     this.setState({ loading: true });
-     let requestContact = await ContactsService.newContactRequest(account.Id);
-     this.setState({ loading: false});
-     showToast("¡Solicitud enviada a " + account.Username + "!", {duration: 5000});
+  _addContactRequest = async (account, sectionID, rowID) => {
+    this.setState({loading: true});
+    await ContactsService.newContactRequest(account.Id);
+    this.setState({loading: false});
+    showToast("¡Solicitud enviada a " + account.Username + "!", {duration: 5000});
     this._goBack();
   };
 
@@ -71,22 +77,37 @@ export default class NewContact extends Component {
   searchingContactTextChanged = (searchingContact) => {
     this.setState({searchingContact});
     let filteredAccounts = this.accounts.filter((acct) => acct.Username.indexOf(searchingContact) >= 0);
-    this.setState({ "filteredAccounts": this.datasource.cloneWithRows(filteredAccounts) });
+    this.setState({"filteredAccounts": this.datasource.cloneWithRows(filteredAccounts)});
   };
 
   renderRow = (account, sectionID: number, rowID: number) => {
     return (
       <TouchableHighlight style={{flex: 1}} onPress={() => this._pressRow(account, sectionID, rowID)}>
-        <View style={{flex: 1, width: 400, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: 'grey'}}>
-          <View style={{justifyContent: 'space-around',width: 120, height: 100 }}>
+        <View style={{
+          flex: 1,
+          width: 400,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          borderBottomWidth: 1,
+          borderBottomColor: 'grey'
+        }}>
+          <View style={{justifyContent: 'space-around', width: 120, height: 100}}>
             <Text>{account.Username}</Text>
           </View>
-          <View style={{justifyContent: 'space-around',width: 120, height: 100  }}>
-            <Image source={{ uri: account.imageUri }} style={{ width: 75, height: 75 }} />
+          <View style={{justifyContent: 'space-around', width: 120, height: 100}}>
+            <Image source={{uri: account.imageUri}} style={{width: 75, height: 75}}/>
           </View>
-          <View style={{justifyContent: 'space-around',width: 100, height: 100}}>
-            <View style={{borderRadius: 40, justifyContent: 'space-around',width: 50, height: 50 , backgroundColor: '#3DB097', borderWidth: 1, borderColor: 'white'}}>
-              <Text style={{textAlign: 'center',color: 'white', fontSize:45}}>+</Text>
+          <View style={{justifyContent: 'space-around', width: 100, height: 100}}>
+            <View style={{
+              borderRadius: 40,
+              justifyContent: 'space-around',
+              width: 50,
+              height: 50,
+              backgroundColor: '#3DB097',
+              borderWidth: 1,
+              borderColor: 'white'
+            }}>
+              <Text style={{textAlign: 'center', color: 'white', fontSize: 45}}>+</Text>
             </View>
           </View>
 
