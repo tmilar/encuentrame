@@ -23,13 +23,6 @@ export default class NewsListContainer extends Component {
   };
 
   render() {
-    if (this.state.news.length === 0)
-      return <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-        <Text style={{textAlign: "center"}} note>
-          {"No hay novedades."}
-        </Text>
-      </View>;
-    else
       return <NewsList news={this.state.news}/>;
   }
 }

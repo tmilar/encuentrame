@@ -1,31 +1,37 @@
 import React from 'react';
 import {Card} from 'react-native-elements';
 import {Text, View} from "react-native";
-import { Ionicons, EvilIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import {Ionicons, EvilIcons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
 
 getIcon = (iconData) => {
-  switch(iconData.tagName) {
+  switch (iconData.tagName) {
     case 'EvilIcons':
-      return <EvilIcons name={iconData.iconName} style={{ color: iconData.color || 'black'}} size={40}/>;
+      return <EvilIcons name={iconData.iconName} style={{color: iconData.color || 'black'}} size={40}/>;
       break;
     case 'Ionicons':
-      return <Ionicons name={iconData.iconName} style={{ color: iconData.color || 'black' }} size={40}/>;
+      return <Ionicons name={iconData.iconName} style={{color: iconData.color || 'black'}} size={40}/>;
       break;
     case 'MaterialCommunityIcons':
-      return <MaterialCommunityIcons name={iconData.iconName} style={{ color: iconData.color || 'black' }} size={40}/>;
+      return <MaterialCommunityIcons name={iconData.iconName} style={{color: iconData.color || 'black'}} size={40}/>;
       break;
     case 'FontAwesome':
-      return <FontAwesome name={iconData.iconName} size={40} style={{ color: iconData.color || 'black' }}/>;
+      return <FontAwesome name={iconData.iconName} size={40} style={{color: iconData.color || 'black'}}/>;
       break;
     default:
-      return <MaterialCommunityIcons name='alarm-light' style={{ color: 'black' }} size={40}/>;
+      return <MaterialCommunityIcons name='alarm-light' style={{color: 'black'}} size={40}/>;
   }
 };
 
+const EmptyNewsListMessage = () => <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+  <Text style={{textAlign: "center"}} note>
+    {"No hay novedades."}
+  </Text>
+</View>;
+
 const NewsList = props =>
-  <View>
-    {props.news.map((n, i) => {
-      return (
+  <View>{
+    props.news.length === 0 ? <EmptyNewsListMessage/> :
+      props.news.map((n, i) =>
         <Card key={i} containerStyle={{padding: 5}}>
           <View style={{
             flexDirection: 'row',
