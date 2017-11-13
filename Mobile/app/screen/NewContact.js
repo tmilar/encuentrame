@@ -74,7 +74,7 @@ export default class NewContact extends Component {
     this.props.navigation.goBack(null);
   };
 
-  searchingContactTextChanged = (searchingContact) => {
+  searchingContactTextChanged = (searchingContact = "") => {
     this.setState({searchingContact});
     let filteredAccounts = this.accounts.filter((acct) => acct.Username.indexOf(searchingContact) >= 0);
     this.setState({"filteredAccounts": this.datasource.cloneWithRows(filteredAccounts)});
@@ -123,6 +123,8 @@ export default class NewContact extends Component {
       <View style={{flex: 1}}>
         <Search
           onChangeText={this.searchingContactTextChanged}
+          onCancel={this.searchingContactTextChanged}
+          onDelete={this.searchingContactTextChanged}
           ref="search_box"
           cancelTitle={"Cancelar"}
           placeholder={"Buscar por nombre"}
