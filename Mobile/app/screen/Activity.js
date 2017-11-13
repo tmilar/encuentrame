@@ -235,7 +235,7 @@ export default class Activity extends Component {
   };
 
   _getNewActivityHeader = () => {
-    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 70}}>
         <Text style={styles.activityTitle}>
           {this._getTitle()}
         </Text>
@@ -424,7 +424,7 @@ export default class Activity extends Component {
       return <LoadingIndicator/>;
     }
     return (
-      <View style={{marginTop: 22, flex: 1}}>
+      <View style={{flex: 1}}>
           <View style={{flex: 1}}>
             {this.state.activeActivity ? this._getActiveActivityHeader() : this._getNewActivityHeader()}
             <View style={{flex: 6}}>
