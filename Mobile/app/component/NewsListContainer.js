@@ -1,23 +1,35 @@
 import React, {Component} from 'react';
 import NewsList from "./NewsList";
-import {news} from "../config/newsFixture";
+import {Text, View} from "react-native";
+import NewsService from "../service/NewsService";
 
 export default class NewsListContainer extends Component {
   state = {
     news: []
   };
 
-  async componentDidMount() {
-    let news = await this.fetchNews();
+  fetchNews = async ()  => {
+    let news = await NewsService.getCurrentNews();
     this.setState({news});
-  }
+  };
 
-  fetchNews() {
-    // TODO fetch news from actual remote API
-    return news;
-  }
+  callbackNewsComponentUpdate = async () => {
+    await this.fetchNews();
+  };
+
+  componentWillMount = async () => {
+    await NewsService.initializeNews(this.callbackNewsComponentUpdate);
+    await this.fetchNews();
+  };
 
   render() {
-    return <NewsList news={this.state.news}/>;
+    if (this.state.news.length === 0)
+      return <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+        <Text style={{textAlign: "center"}} note>
+          {"No hay novedades."}
+        </Text>
+      </View>;
+    else
+      return <NewsList news={this.state.news}/>;
   }
 }

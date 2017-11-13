@@ -1,6 +1,26 @@
 import React from 'react';
-import {Card, Icon} from 'react-native-elements';
+import {Card} from 'react-native-elements';
 import {Text, View} from "react-native";
+import { Ionicons, EvilIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+
+getIcon = (iconData) => {
+  switch(iconData.tagName) {
+    case 'EvilIcons':
+      return <EvilIcons name={iconData.iconName} style={{ color: iconData.color || 'black'}} size={40}/>;
+      break;
+    case 'Ionicons':
+      return <Ionicons name={iconData.iconName} style={{ color: iconData.color || 'black' }} size={40}/>;
+      break;
+    case 'MaterialCommunityIcons':
+      return <MaterialCommunityIcons name={iconData.iconName} style={{ color: iconData.color || 'black' }} size={40}/>;
+      break;
+    case 'FontAwesome':
+      return <FontAwesome name={iconData.iconName} size={40} style={{ color: iconData.color || 'black' }}/>;
+      break;
+    default:
+      return <MaterialCommunityIcons name='alarm-light' style={{ color: 'black' }} size={40}/>;
+  }
+};
 
 const NewsList = props =>
   <View>
@@ -10,20 +30,14 @@ const NewsList = props =>
           <View style={{
             flexDirection: 'row',
             height: 60,
+            justifyContent: "space-around"
           }}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Icon name={n.icon} size={50} color='#43484d'/>
+            <View style={{justifyContent: "space-around", width: 40, alignItems: 'center'}}>
+              {getIcon(n.icon)}
             </View>
-            <View style={{flex: 3, padding: 5}}>
-              <Text style={{fontSize: 16}}>
-                { !!n.message.started_by.length &&
-                <Text style={{fontWeight: 'bold'}}>{n.message.started_by + " "}</Text>}
-                {n.message.action}
+            <View style={{justifyContent: "space-around", width: 250}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                {n.message}
               </Text>
             </View>
           </View>

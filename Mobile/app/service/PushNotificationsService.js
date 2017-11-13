@@ -6,6 +6,7 @@ import PermissionsHelper from '../util/PermissionsHelper';
 import {Alert} from "react-native";
 import {showToast} from 'react-native-notifyer';
 import SessionService from './SessionService';
+import NewsService from './NewsService';
 
 class PushNotificationsService {
 
@@ -92,7 +93,7 @@ class PushNotificationsService {
    * @returns {Promise.<void>}
    */
   setupNotificationsDispatcher = async (navigation) => {
-    Notifications.addListener((notification) => {
+    Notifications.addListener(async(notification) => {
       if (!this._validRemoteNotification(notification)) {
         return;
       }
@@ -101,63 +102,81 @@ class PushNotificationsService {
       let notificationType = notification.data.type || notification.data.Type;
 
       if (notificationType === "Areyouok.Ask") {
-        this.handleAreyouokaskNotif(navigation, notification, notificationType);
+        await this.handleAreyouokaskNotif(navigation, notification, notificationType);
       }
 
       if (notificationType === "Areyouok.Reply") {
-        this.handleAreyouokReplyNotif(navigation, notification, notificationType);
+        await this.handleAreyouokReplyNotif(navigation, notification, notificationType);
       }
 
       if (notificationType === "Contact.Request") {
-        this.handleContactRequestNotif(navigation, notification, notificationType);
+        await this.handleContactRequestNotif(navigation, notification, notificationType);
       }
 
       if (notificationType === "Contact.Confirm") {
-        this.handleContactRequestConfirmNotif(navigation, notification, notificationType);
+        await this.handleContactRequestConfirmNotif(navigation, notification, notificationType);
       }
       if (notificationType === "Event/StartCollaborativeSearch") {
-        this.handleColaborativeSearchNotif(navigation, notification, notificationType);
+        await this.handleColaborativeSearchNotif(navigation, notification, notificationType);
       }
-
     });
   };
 
-  handleAreyouokaskNotif = (navigation, notification, notificationType) => {
+  handleAreyouokaskNotif = async(navigation, notification, notificationType) => {
     console.log(`[PushNotificationService] Notification '${notificationType}'! Navigating to 'AreYouOk' screen.`);
+    await NewsService.saveNews({
+      type: notificationType,
+      message: `Te preguntaron si estabas bien.`
+    });
     navigation.navigate("AreYouOk");
   };
 
-  handleAreyouokReplyNotif = (navigation, notification, notificationType) => {
+  handleAreyouokReplyNotif = async(navigation, notification, notificationType) => {
     let reply = notification.data.ok || notification.data.Ok;
     let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
     console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
+    await NewsService.saveNews({
+      type: notificationType,
+      message: `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}.`
+    });
     Alert.alert(
       "Te respondieron: Estás Bien?",
       `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
     );
   };
 
-  handleContactRequestNotif = (navigation, notification, notificationType) => {
+  handleContactRequestNotif = async(navigation, notification, notificationType) => {
     let contactRequestUserId = notification.data.UserId;
     let contactRequestUsername = notification.data.Username;
-
+    await NewsService.saveNews({
+      type: notificationType,
+      message: `${contactRequestUsername} te ha enviado solicitud de amistad.`
+    });
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
     navigation.navigate("ContactRequest",{contactRequestUserId: contactRequestUserId, contactRequestUsername: contactRequestUsername});
   };
 
-  handleContactRequestConfirmNotif = (navigation, notification, notificationType) => {
+  handleContactRequestConfirmNotif = async(navigation, notification, notificationType) => {
     let contactRequestUsername = notification.data.Username;
 
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
+    await NewsService.saveNews({
+      type: notificationType,
+      message: `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
+    });
     Alert.alert(
       "Respondieron tu solicitud de amistad",
       `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
     );
   };
 
-  handleColaborativeSearchNotif = (navigation, notification, notificationType) => {
+  handleColaborativeSearchNotif = async(navigation, notification, notificationType) => {
     console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    showToast("¡Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
+    await NewsService.saveNews({
+      type: notificationType,
+      message: `Se ha notificado de una emergencia.`
+    });
+    showToast("¡Emergencia! Ayuda a encontrar a las personas perdidas.", {duration: 5000});
     navigation.navigate("Find",{emergency: true});
   };
 
