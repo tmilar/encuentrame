@@ -4,7 +4,7 @@
     "sdkVersion": "21.0.0",
     "icon": "./app/img/eme_icon.png",
     "slug": "encuentrame",
-    "version": "0.9.1",
+    "version": "0.10.1",
     "ios": {
       "bundleIdentifier": "com.encuentrame.encuentrame"
     },
@@ -15,7 +15,11 @@
           "apiKey": "AIzaSyAPBng6Zq78t9u8NX4ISlbki8ryA-25j3s"
         }
       }
-    }
+    },
+    "loading": {
+      "icon": "./app/img/eme_icon_big.png"
+    },
+    "orientation": "portrait"
   },
   "name": "Encuentrame",
   "displayName": "Encuentrame"

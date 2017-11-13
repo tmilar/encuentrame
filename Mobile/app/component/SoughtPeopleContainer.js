@@ -3,6 +3,7 @@ import SoughtPeopleDeckSwiper from './SoughtPeopleDeckSwiper';
 import LoadingIndicator from "./LoadingIndicator";
 import {soughtPeople} from "../config/soughtPeopleFixture";
 import SoughtPeopleService from "../service/SoughtPeopleService";
+import SessionService from "../service/SessionService";
 import {showToast} from "react-native-notifyer";
 import {Alert} from "react-native";
 
@@ -13,28 +14,39 @@ export default class SoughtPeopleContainer extends Component {
   };
 
   state = {
-    soughtPeople: null
+    soughtPeople: null,
+    loadingPeople: true
   };
 
-  REFRESH_INTERVAL = 60 * 1000;
+  REFRESH_INTERVAL = 60 * 1000; // seconds to refresh soughtPeople list.
 
   componentDidMount = async () => {
     await this.fetchSoughtPeople();
-    await this.startSoughtPeopleRefresh();
+    this.startSoughtPeopleRefresh();
   };
 
   fetchSoughtPeople = async () => {
     let soughtPeople = await SoughtPeopleService.getSoughtPeople();
     this.setState({soughtPeople});
 
-    let debuggingPeople = this.state.soughtPeople.map(p => ({
+    let debuggingPeople = soughtPeople.map(p => ({
       ...(p.User), Distance: p.Distance
     }));
-    console.table(debuggingPeople)
+    console.table(debuggingPeople);
+    this.setState({loadingPeople: false});
+
+    if (await SessionService.isDevSession()) {
+      showToast(`Encuentra soughtPeople refreshed! (now: ${soughtPeople.length} people).`,
+        {duration: 1500});
+    }
   };
 
-  startSoughtPeopleRefresh = () => {
-    this.refreshInterval = setInterval(this.fetchSoughtPeople, this.REFRESH_INTERVAL)
+  startSoughtPeopleRefresh = async () => {
+    this.refreshInterval = setInterval(this.fetchSoughtPeople, this.REFRESH_INTERVAL);
+    if (await SessionService.isDevSession()) {
+      showToast(`Encuentra soughtPeople periodic refresh, set up: each ${this.REFRESH_INTERVAL / 1000}s.`,
+        {duration: 1500});
+    }
   };
 
   componentWillUnmount = () => {
@@ -77,7 +89,7 @@ export default class SoughtPeopleContainer extends Component {
   };
 
   render() {
-    if (!this.state.soughtPeople) {
+    if (!this.state.soughtPeople || this.state.loadingPeople) {
       return <LoadingIndicator text={"Cargando..."}/>
     }
 

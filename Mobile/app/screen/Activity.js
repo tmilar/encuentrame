@@ -138,10 +138,6 @@ export default class Activity extends Component {
     this._goBack();
   };
 
-  _handleCancelActivityCreation = () => {
-    this._goBack();
-  };
-
   _goBack = () => {
     this.props.goBack(null);
   };
@@ -235,19 +231,15 @@ export default class Activity extends Component {
   };
 
   _getNewActivityHeader = () => {
-    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 70}}>
         <Text style={styles.activityTitle}>
           {this._getTitle()}
         </Text>
       </View>;
   };
 
-  _ViewActivityDetailsButtonpress = () => {
-    this.setState({showActivityDetails: !this.state.showActivityDetails});
-  };
-
   _getActiveActivityHeader = () => {
-    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 70}}>
         <View style={{justifyContent: "space-around", flexDirection: "row"}}>
           <View style={{justifyContent: "space-around"}}>
             <Text style={styles.activityTitle}>
@@ -262,53 +254,25 @@ export default class Activity extends Component {
             </TouchableHighlight>
           </View>
         </View>
-        <View style={{justifyContent: "space-around", flexDirection: "row"}}>
-          <Button
-            style={{width: 100, height: 50}}
-            title={this.state.showActivityDetails ? "Esconder detalles" : "Ver detalles de actividad"}
-            onPress={this._ViewActivityDetailsButtonpress}
-          />
-        </View>
       </View>;
   };
 
   _getNewActivityFooter = () => {
     return <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap", borderWidth: 1, borderColor: 'white'}]}>
-      <View style={{justifyContent: "space-around", flex: 1}}>
+      <View style={{justifyContent: "space-around", flex: 1, marginLeft: 5, marginRight: 5}}>
         <Button
           title="Crear Actividad"
           onPress={this._handleCreateActivityButtonPress}
-        />
-      </View>
-
-      <View style={{justifyContent: "space-around", flex: 1}}>
-        <Button
-          color="grey"
-          title="Cancelar"
-          onPress={this._handleCancelActivityCreation}
-        />
-      </View>
-    </View>;
-  };
-
-  _getActiveActivityFooter = () => {
-    return <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
-      <View style={{flex: 0.5,justifyContent: "space-around"}}>
-        <Button
-          color="grey"
-          title="Volver"
-          onPress={this._handleCancelActivityCreation}
         />
       </View>
     </View>;
   };
 
   _renderActivityContent = () => {
-    let content = this.state.activeActivity ?
-    (<ActivityDetailsContentView activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>)
-    :
+    return this.state.activeActivity ?
+      <ActivityDetailsContentView activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>
+      :
       this._renderNewActivityContent();
-    return content;
   };
 
   _renderNewActivityContent = () => {
@@ -336,7 +300,6 @@ export default class Activity extends Component {
                 )
               })}
             </Picker>
-
           </View>
           <View style={{
             flex: 0.25,
@@ -384,7 +347,6 @@ export default class Activity extends Component {
                         onClose={() => this.setState({showMapLocation: false})}/>
             }
           </View>
-
           <View
             style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
             <Text style={[text.p, styles.activityDatesLabel]}>
@@ -424,15 +386,13 @@ export default class Activity extends Component {
       return <LoadingIndicator/>;
     }
     return (
-      <View style={{marginTop: 22, flex: 1}}>
+      <View style={{flex: 1}}>
           <View style={{flex: 1}}>
             {this.state.activeActivity ? this._getActiveActivityHeader() : this._getNewActivityHeader()}
             <View style={{flex: 6}}>
-              {this.state.showActivityDetails &&
-                this._renderActivityContent()
-              }
+              {this._renderActivityContent()}
             </View>
-            {this.state.activeActivity ? this._getActiveActivityFooter() : this._getNewActivityFooter()}
+            {!this.state.activeActivity && this._getNewActivityFooter()}
           </View>
       </View>
     )
@@ -483,6 +443,6 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 3,
-    margin: 50
+    margin: 5
   }
 });

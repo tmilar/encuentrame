@@ -12,7 +12,6 @@ import ContactRequest from "../screen/ContactRequest";
 import Find from "../screen/Find";
 import FriendsAndFamily from "../screen/FriendsAndFamily";
 import ActivityContainer from "../screen/ActivityContainer";
-import SupplyInfo from "../screen/SupplyInfo";
 import NewContact from "../screen/NewContact";
 import UserProfile from "../screen/UserProfile";
 import RootDispatcher from "../screen/RootDispatcher";
@@ -47,7 +46,8 @@ const Tabs = TabNavigator({
     animationEnabled: true,
     showIcon: true,
   },
-  tabBarPosition: 'bottom'
+  tabBarPosition: 'bottom',
+  swipeEnabled: false
 });
 
 const AuthStack = StackNavigator({
@@ -99,7 +99,7 @@ class LogoutActionScreen extends React.Component {
 }
 
 const AppNavigator = DrawerNavigator({
-    AppTabs: {
+    Home: {
       path: '/home',
       screen: Tabs,
       // navigationOptions: EncuentrameHeader
@@ -147,9 +147,9 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
-  FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {}},
+  FriendsAndFamily: {screen: FriendsAndFamily},
   SupplyInfo: {screen: SupplyInfoContainer},
-  NewContact: {screen: NewContact, navigationOptions: {}}
+  NewContact: {screen: NewContact}
 }, {
   initialRouteName: 'Root'
 });
