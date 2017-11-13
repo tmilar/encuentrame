@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
   Button,
-  FlatList, Image, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View
+  FlatList, Image, ListView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, TouchableNativeFeedback, View
 } from 'react-native';
 import {text} from '../style';
 import Search from '../../lib/react-native-search-box';
@@ -16,7 +16,7 @@ export default class NewContact extends Component {
 
   state = {
     loading: true,
-    filteredAccounts: this.datasource.cloneWithRows([]),
+    filteredAccounts: [],
     searchingContact: ""
   };
 
@@ -52,7 +52,7 @@ export default class NewContact extends Component {
         text: 'Cancelar',
         style: 'cancel',
         onPress: () => {
-          console.log("Add contact canceled.")
+          console.debug("Add contact canceled.")
         }
       }, {
         text: 'Confirmar',
@@ -82,7 +82,8 @@ export default class NewContact extends Component {
 
   renderRow = (account, sectionID: number, rowID: number) => {
     return (
-      <TouchableHighlight style={{flex: 1}} onPress={() => this._pressRow(account, sectionID, rowID)}>
+      <TouchableNativeFeedback style={{flex: 1}} onPress={() => this._pressRow(account, sectionID, rowID)}
+                               background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={{
           flex: 1,
           width: 400,
@@ -112,7 +113,7 @@ export default class NewContact extends Component {
           </View>
 
         </View>
-      </TouchableHighlight>
+      </TouchableNativeFeedback>
     )
   };
 
