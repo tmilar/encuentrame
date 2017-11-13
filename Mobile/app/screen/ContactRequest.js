@@ -14,26 +14,32 @@ export default class ContactRequest extends Component {
   contactRequestUsername = this.props.navigation.state.params.contactRequestUsername;
 
   componentDidMount = () => {
-    this.setModalVisible(!this.state.modalVisible)
-  };
-
-  componentWillMount = () => {
     let accountImgUri = AccountsService.getAccountImageUriById(this.contactRequestUserId);
-    this.setState({ accountImgUri: accountImgUri});
+    this.setState({accountImgUri: accountImgUri});
+    this.setModalVisible(!this.state.modalVisible);
   };
 
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   };
 
-  _handleAcceptContactRequest = async () => {
-    await ContactsService.reply(this.contactRequestUserId, true);
+  _replyRequest = async (response) => {
     this._goBack();
+    try {
+      await ContactsService.reply(this.contactRequestUserId, response);
+    } catch (e) {
+      showToast("¡Ups! Hubo un problema al responder la solicitud de contacto. \n" + (e || e.message), {duration: 1500});
+      return;
+    }
+    showToast(`Has ${response ? "aceptado" : "rechazado"} la solicitud de ${this.contactRequestUsername}.`, {duration: 1500});
+  };
+
+  _handleAcceptContactRequest = async () => {
+    await this._replyRequest(true);
   };
 
   _handleDenyContactRequest = async () => {
-    await ContactsService.reply(this.contactRequestUserId, false);
-    this._goBack();
+    await this._replyRequest(false);
   };
 
   _goBack = () => {
@@ -56,10 +62,10 @@ export default class ContactRequest extends Component {
         >
           <View style={styles.message}>
             <View style={{flex: 1}}>
-              <Text style={text.title}>{this.contactRequestUsername} quiere agregarte</Text>
+              <Text style={text.title}>{this.contactRequestUsername} quiere agregarte.</Text>
             </View>
             <View style={{flex: 5}}>
-              <Image source={{ uri: this.state.accountImgUri }} style={{ width: 200, height: 200 }} />
+              <Image source={{uri: this.state.accountImgUri}} style={{width: 200, height: 200}}/>
             </View>
           </View>
           <View style={{flex: 1}}>
