@@ -176,7 +176,7 @@ class PushNotificationsService {
       type: notificationType,
       message: `Se ha notificado de una emergencia.`
     });
-    showToast("¡Emergencia! Ayuda a encontrar a las personas perdidas.", {duration: 5000});
+    showToast("¡Ayúdanos!.", {duration: 5000});
     navigation.navigate("Find",{emergency: true});
   };
 
