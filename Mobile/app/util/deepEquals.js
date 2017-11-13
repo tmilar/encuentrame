@@ -13,6 +13,10 @@
  * @returns {boolean}
  */
 export const deepEquals = (a, b) => {
+  if((a === null && b !== null) || (a !== null && b === null))
+    return false;
+  else if (a === null && b === null)
+    return true;
   if (a instanceof Array && b instanceof Array)
     return arraysEqual(a, b);
   if (Object.getPrototypeOf(a) === Object.prototype && Object.getPrototypeOf(b) === Object.prototype)
