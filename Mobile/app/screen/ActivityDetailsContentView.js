@@ -118,6 +118,6 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 3,
-    margin: 50
+    margin: 5
   }
 });

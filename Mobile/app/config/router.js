@@ -46,7 +46,8 @@ const Tabs = TabNavigator({
     animationEnabled: true,
     showIcon: true,
   },
-  tabBarPosition: 'bottom'
+  tabBarPosition: 'bottom',
+  swipeEnabled: false
 });
 
 const AuthStack = StackNavigator({
@@ -98,7 +99,7 @@ class LogoutActionScreen extends React.Component {
 }
 
 const AppNavigator = DrawerNavigator({
-    AppTabs: {
+    Home: {
       path: '/home',
       screen: Tabs,
       // navigationOptions: EncuentrameHeader
@@ -146,9 +147,9 @@ const BaseStack = StackNavigator({
   },
   AreYouOk: {screen: AreYouOk, navigationOptions: {header: null}},
   ContactRequest: {screen: ContactRequest, navigationOptions: {header: null}},
-  FriendsAndFamily: {screen: FriendsAndFamily, navigationOptions: {}},
+  FriendsAndFamily: {screen: FriendsAndFamily},
   SupplyInfo: {screen: SupplyInfoContainer},
-  NewContact: {screen: NewContact, navigationOptions: {}}
+  NewContact: {screen: NewContact}
 }, {
   initialRouteName: 'Root'
 });

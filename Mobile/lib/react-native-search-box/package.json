@@ -1,0 +1,96 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-native-search-box",
+        "scope": null,
+        "escapedName": "react-native-search-box",
+        "name": "react-native-search-box",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\tmilar\\UTN\\ProyectoFinal\\Encuentrame\\Encuentrame\\Mobile"
+    ]
+  ],
+  "_from": "react-native-search-box@latest",
+  "_id": "react-native-search-box@0.0.13",
+  "_inCache": true,
+  "_location": "/react-native-search-box",
+  "_nodeVersion": "8.2.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/react-native-search-box-0.0.13.tgz_1508111428401_0.5952818337827921"
+  },
+  "_npmUser": {
+    "name": "anhtuank7c",
+    "email": "anhtuank7c@hotmail.com"
+  },
+  "_npmVersion": "5.5.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-search-box",
+    "scope": null,
+    "escapedName": "react-native-search-box",
+    "name": "react-native-search-box",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-search-box/-/react-native-search-box-0.0.13.tgz",
+  "_shasum": "75b5d21ecfb5d5dc12e26fac85b1225b48070f90",
+  "_shrinkwrap": null,
+  "_spec": "react-native-search-box",
+  "_where": "C:\\tmilar\\UTN\\ProyectoFinal\\Encuentrame\\Encuentrame\\Mobile",
+  "author": {
+    "name": "Anh Tuan Nguyen",
+    "email": "anhtuank7c@hotmail.com",
+    "url": "https://github.com/anhtuank7c"
+  },
+  "bugs": {
+    "url": "https://github.com/agiletechvn/react-native-search-box/issues"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  },
+  "description": "A simple search box with animation, inspired from ios search bar. Lightweight, fast, flexible, customizable. Support both iOS/Android devices",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-qk+9Tf0qfbr6cMXVEa9igDutVHrf99CZSchzLla7qaDfhtow8wOV5GjeYgGveg41LjCHjjaXR0r7yJo/TJop8w==",
+    "shasum": "75b5d21ecfb5d5dc12e26fac85b1225b48070f90",
+    "tarball": "https://registry.npmjs.org/react-native-search-box/-/react-native-search-box-0.0.13.tgz"
+  },
+  "gitHead": "64b9b31824b7c747200b3f6c8a053a72d9348b13",
+  "homepage": "https://github.com/agiletechvn/react-native-search-box#readme",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "anhtuank7c",
+    "agiletechvn"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "anhtuank7c",
+      "email": "anhtuank7c@hotmail.com"
+    }
+  ],
+  "name": "react-native-search-box",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agiletechvn/react-native-search-box.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.13"
+}

@@ -174,11 +174,11 @@ export default class SoughtPeopleDeckSwiper extends Component {
           flexDirection: "row",
           flex: 1,
           position: "absolute",
-          bottom: 30,
+          bottom: 10,
           left: 0,
           right: 0,
           justifyContent: 'space-between',
-          padding: 15
+          padding: 10
         }}>
           <Button iconLeft onPress={this.handleSwipeLeftButtonPress}>
             <Icon name="arrow-back"/>

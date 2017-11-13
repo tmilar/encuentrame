@@ -15,7 +15,11 @@
           "apiKey": "AIzaSyAPBng6Zq78t9u8NX4ISlbki8ryA-25j3s"
         }
       }
-    }
+    },
+    "loading": {
+      "icon": "./app/img/eme_icon_big.png"
+    },
+    "orientation": "portrait"
   },
   "name": "Encuentrame",
   "displayName": "Encuentrame"
