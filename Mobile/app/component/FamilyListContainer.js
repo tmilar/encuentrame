@@ -2,25 +2,38 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native'
 import FamilyList from "./FamilyList";
 import ContactsService from '../service/ContactsService';
+import {showToast} from "react-native-notifyer";
+import LoadingIndicator from "./LoadingIndicator";
 
 export default class FamilyListContainer extends Component {
   state = {
-    contacts: []
+    contacts: [],
+    loading: true
   };
 
   componentWillMount = async () => {
-    let contacts = await this.fetchContacts();
-    this.setState({contacts});
+    await this.fetchContacts();
   };
 
   fetchContacts = async () => {
-    let contacts = await ContactsService.getAllContacts();
-    return contacts;
+    let contacts;
+    try {
+      contacts = await ContactsService.getAllContacts();
+    } catch (e) {
+      showToast("¡Ups! Hubo un problema al recuperar tu lista de contactos.");
+    }
+    this.setState({contacts, loading: false});
   };
 
   render() {
-    return <View style={{flex: 1, marginTop: 5}}>
-      <FamilyList familyMembers={this.state.contacts}/>
-    </View>
+    return this.state.loading ?
+      <View style={{top: 0, height: 500}}>
+        <LoadingIndicator/>
+      </View>
+      :
+      <View style={{flex: 1, marginTop: 5}}>
+        <FamilyList familyMembers={[...this.state.contacts, ...this.state.contacts, ...this.state.contacts]}/>
+      </View>
+
   }
 }

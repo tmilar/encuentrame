@@ -74,15 +74,13 @@ export default class FriendsAndFamily extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 8, justifyContent: "space-around"}}>
+        <View style={{flex: 1, justifyContent: "space-around"}}>
           <ScrollView style={{flex: 1}}>
             <FamilyListContainer/>
-            {
-              this.renderEstasBienSelector()
-            }
           </ScrollView>
+          {this.renderEstasBienSelector()}
         </View>
-        <View style={{flex: 1, justifyContent: "space-around"}}>
+        <View style={{margin: 5, marginBottom: 10}}>
           <Button
             style={{width: 100, height: 50}}
             title="Agregar contacto"
