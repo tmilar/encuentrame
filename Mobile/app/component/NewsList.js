@@ -28,28 +28,34 @@ const EmptyNewsListMessage = () => <View style={{flex: 1, alignItems: "center", 
   </Text>
 </View>;
 
+const NewsItem = (icon, message) =>
+  <View style={{
+    flexDirection: 'row',
+    height: 60,
+    justifyContent: "space-around"
+  }}>
+    <View style={{justifyContent: "space-around", width: 40, alignItems: 'center'}}>
+      {getIcon(icon)}
+    </View>
+    <View style={{justifyContent: "space-around", width: 250}}>
+      <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+        {message}
+      </Text>
+    </View>
+  </View>;
+
 const NewsList = props =>
-  <View>{
-    props.news.length === 0 ? <EmptyNewsListMessage/> :
-      props.news.map((n, i) =>
-        <Card key={i} containerStyle={{padding: 5}}>
-          <View style={{
-            flexDirection: 'row',
-            height: 60,
-            justifyContent: "space-around"
-          }}>
-            <View style={{justifyContent: "space-around", width: 40, alignItems: 'center'}}>
-              {getIcon(n.icon)}
-            </View>
-            <View style={{justifyContent: "space-around", width: 250}}>
-              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                {n.message}
-              </Text>
-            </View>
-          </View>
-        </Card>
-      )
-    })}
-  </View>
+  <View>
+    {
+      props.news.length === 0 ?
+        <EmptyNewsListMessage/>
+        :
+        props.news.map((n, i) =>
+          <Card key={i} containerStyle={{padding: 5}}>
+            <NewsItem {...n}/>
+          </Card>
+        )
+    }
+  </View>;
 
 export default NewsList;
