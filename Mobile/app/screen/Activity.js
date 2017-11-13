@@ -138,10 +138,6 @@ export default class Activity extends Component {
     this._goBack();
   };
 
-  _handleCancelActivityCreation = () => {
-    this._goBack();
-  };
-
   _goBack = () => {
     this.props.goBack(null);
   };
@@ -242,12 +238,8 @@ export default class Activity extends Component {
       </View>;
   };
 
-  _ViewActivityDetailsButtonpress = () => {
-    this.setState({showActivityDetails: !this.state.showActivityDetails});
-  };
-
   _getActiveActivityHeader = () => {
-    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 100}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 70}}>
         <View style={{justifyContent: "space-around", flexDirection: "row"}}>
           <View style={{justifyContent: "space-around"}}>
             <Text style={styles.activityTitle}>
@@ -261,13 +253,6 @@ export default class Activity extends Component {
               </View>
             </TouchableHighlight>
           </View>
-        </View>
-        <View style={{justifyContent: "space-around", flexDirection: "row"}}>
-          <Button
-            style={{width: 100, height: 50}}
-            title={this.state.showActivityDetails ? "Esconder detalles" : "Ver detalles de actividad"}
-            onPress={this._ViewActivityDetailsButtonpress}
-          />
         </View>
       </View>;
   };
@@ -284,11 +269,10 @@ export default class Activity extends Component {
   };
 
   _renderActivityContent = () => {
-    let content = this.state.activeActivity ?
-    (<ActivityDetailsContentView activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>)
-    :
+    return this.state.activeActivity ?
+      <ActivityDetailsContentView activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>
+      :
       this._renderNewActivityContent();
-    return content;
   };
 
   _renderNewActivityContent = () => {
@@ -316,7 +300,6 @@ export default class Activity extends Component {
                 )
               })}
             </Picker>
-
           </View>
           <View style={{
             flex: 0.25,
@@ -364,7 +347,6 @@ export default class Activity extends Component {
                         onClose={() => this.setState({showMapLocation: false})}/>
             }
           </View>
-
           <View
             style={{flex: 0.4, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
             <Text style={[text.p, styles.activityDatesLabel]}>
@@ -408,9 +390,7 @@ export default class Activity extends Component {
           <View style={{flex: 1}}>
             {this.state.activeActivity ? this._getActiveActivityHeader() : this._getNewActivityHeader()}
             <View style={{flex: 6}}>
-              {this.state.showActivityDetails &&
-                this._renderActivityContent()
-              }
+              {this._renderActivityContent()}
             </View>
             {!this.state.activeActivity && this._getNewActivityFooter()}
           </View>
