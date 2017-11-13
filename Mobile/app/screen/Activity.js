@@ -274,30 +274,10 @@ export default class Activity extends Component {
 
   _getNewActivityFooter = () => {
     return <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap", borderWidth: 1, borderColor: 'white'}]}>
-      <View style={{justifyContent: "space-around", flex: 1}}>
+      <View style={{justifyContent: "space-around", flex: 1, marginLeft: 5, marginRight: 5}}>
         <Button
           title="Crear Actividad"
           onPress={this._handleCreateActivityButtonPress}
-        />
-      </View>
-
-      <View style={{justifyContent: "space-around", flex: 1}}>
-        <Button
-          color="grey"
-          title="Cancelar"
-          onPress={this._handleCancelActivityCreation}
-        />
-      </View>
-    </View>;
-  };
-
-  _getActiveActivityFooter = () => {
-    return <View style={[styles.footer, {flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}]}>
-      <View style={{flex: 0.5,justifyContent: "space-around"}}>
-        <Button
-          color="grey"
-          title="Volver"
-          onPress={this._handleCancelActivityCreation}
         />
       </View>
     </View>;
@@ -432,7 +412,7 @@ export default class Activity extends Component {
                 this._renderActivityContent()
               }
             </View>
-            {this.state.activeActivity ? this._getActiveActivityFooter() : this._getNewActivityFooter()}
+            {!this.state.activeActivity && this._getNewActivityFooter()}
           </View>
       </View>
     )
