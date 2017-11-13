@@ -17,7 +17,7 @@
       }
     },
     "loading": {
-      "icon": "./app/img/eme_icon.png"
+      "icon": "./app/img/eme_icon_big.png"
     },
     "orientation": "portrait"
   },
