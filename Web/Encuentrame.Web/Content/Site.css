@@ -84,6 +84,10 @@ textarea {
 .margin-left-xs {
     margin-left: 5px;
 }
+
+.margin-left-xl {
+    margin-top: 20px;
+}
 /*bootstrap customize*/
 .inline-group .form-group, .inline-group .checkbox {
     display: inline-block;

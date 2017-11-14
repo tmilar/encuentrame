@@ -60,7 +60,8 @@ namespace Encuentrame.Web.Models.EventMonitors
         [Display(ResourceType = typeof(Translations), Name = "LastUpdate")]
         [UIHint("datetime")]
         public DateTime LastUpdate { get; set; }
-
-
+        [Display(ResourceType = typeof(Translations), Name = "Clustered")]
+        [UIHint("bool")]
+        public bool Clustered { get; set; }
     }
 }

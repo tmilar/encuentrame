@@ -15,7 +15,7 @@ namespace Encuentrame.Support.ExpoNotification
 
         public static void SendPushNotification(IList<BodySend> bodies)
         {
-            if (bodies == null && bodies.Count == 0)
+            if (bodies == null || bodies.Count == 0)
             {
                 return;
             }

@@ -15,16 +15,16 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/form")
+    <script src="@Html.ScriptUrl(@"~/scripts/markerclusterer.js")" type="text/javascript"></script>
+    <script src="@Html.ScriptUrl(@"~/scripts/app/map-commons.js")" type="text/javascript"></script>
+    <script src="@Html.ScriptUrl(@"~/scripts/app/controllers/eventMonitors/eventMonitors.js")" type="text/javascript"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=@ConfigurationManager.AppSettings["GoogleMapsKey"]&callback=initMap">
 
     </script>
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/form")
-    <script src="@Html.ScriptUrl(@"~/scripts/markerclusterer.js")" type="text/javascript"></script>
-    <script src="@Html.ScriptUrl(@"~/scripts/app/controllers/eventMonitors/eventMonitors.js")" type="text/javascript"></script>
 
-    
 
 }
 
@@ -52,7 +52,7 @@
             }
             else if (Model.Status == EventStatusEnum.InEmergency)
             {
-            
+
                 <span class="label label-danger  margin-right-xs">
                     @TranslationsHelper.Get(EventStatusEnum.InEmergency)
                 </span>
@@ -99,98 +99,128 @@
                     }
                 </div>
             </div>
-        @using (Html.BeginEditSection(Translations.Filter))
-        {
-            <div class="row">
-                <div class="col-md-3">
-                    @Html.EditorFor(model => Model.IAmOk)
-                    <div class="pull-left">
-                        <img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    @Html.EditorFor(model => Model.IAmNotOk)
-                    <div class="pull-left">
-                        <img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    @Html.EditorFor(model => Model.WithoutAnswer)
-                    <div class="pull-left">
-                        <img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    @Html.EditorFor(model => Model.LastUpdate)
-                </div>
-            </div>
+            @using (Html.BeginEditSection(Translations.Filter))
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-8">@Html.EditorFor(model => Model.IAmOk)</div>
 
-        }
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" /></div>
+                            <div class="col-md-2">
+                                <p class="i-am-ok-amount text-primary">
+
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-8">@Html.EditorFor(model => Model.IAmNotOk)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" /></div>
+                            <div class="col-md-2">
+                                <p class="i-am-not-ok-amount text-primary">
+
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-8">@Html.EditorFor(model => Model.WithoutAnswer)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" /></div>
+                            <div class="col-md-2">
+                                <p class="without-answer-amount text-primary">
+
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        @Html.EditorFor(model => Model.LastUpdate)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">@Html.EditorFor(model => Model.Clustered)</div>
+                </div>
+
+            }
         </div>
         <div class="col-md-6">
-            <div class="map-container" id="mapContainer" 
+            <div class="map-container" id="mapContainer"
                  data-positions-url="@Url.Action("Positions")"
                  data-images-folder="@Url.Content("~/images/maps/")"
-                 data-icon-event="@Url.Content("~/images/maps/MapMarker_Flag.png")" 
+                 data-icon-event="@Url.Content("~/images/maps/MapMarker_Flag.png")"
                  data-label-event="@Model.Name"
                  data-icon-ok-person="@Url.Content("~/images/maps/MapMarker_Green_Point.png")"
-                 data-icon-not-ok-person="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" 
-                 data-icon-without-answer-person="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" 
+                 data-icon-not-ok-person="@Url.Content("~/images/maps/MapMarker_Red_Point.png")"
+                 data-icon-without-answer-person="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")"
                  style="position: relative; width: 100%; height: 400px; overflow: hidden"></div>
         </div>
     </div>
 
 
 
-<form method="POST" action="@Url.Action("ButtonAction", new {id = Model.Id})">
-    @if (Model.Status == EventStatusEnum.Pending)
-    {
-        <button name="buttonAction" value="begin" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Begin" data-modal-title="@Translations.Begin" data-modal-message="@Translations.BeginMessage.FormatWith(Model.Name)">
-            @Translations.Begin
-        </button>
-    }
-    @if (Model.Status.In(EventStatusEnum.InProgress, EventStatusEnum.InEmergency))
-    {
-        <button name="buttonAction" value="finalize" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Finalize" data-modal-title="@Translations.Finalize" data-modal-message="@Translations.FinalizeMessage.FormatWith(Model.Name)">
-            @Translations.Finalize
-        </button>
-    }
-    @if (Model.Status == EventStatusEnum.InProgress)
-    {
-        <button name="buttonAction" value="emergency" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Emergency" data-modal-title="@Translations.Emergency" data-modal-message="@Translations.EmergencyMessage.FormatWith(Model.Name)">
-            @Translations.Emergency
-        </button>
-    }
+    <form method="POST" action="@Url.Action("ButtonAction", new {id = Model.Id})">
+        @if (Model.Status == EventStatusEnum.Pending)
+                {
+            <button name="buttonAction" value="begin" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                    data-modal-ok="@Translations.Begin" data-modal-title="@Translations.Begin" data-modal-message="@Translations.BeginMessage.FormatWith(Model.Name)">
+                @Translations.Begin
+            </button>
+        }
+        @if (Model.Status.In(EventStatusEnum.InProgress, EventStatusEnum.InEmergency))
+                {
+            <button name="buttonAction" value="finalize" type="button" class="btn btn-success  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                    data-modal-ok="@Translations.Finalize" data-modal-title="@Translations.Finalize" data-modal-message="@Translations.FinalizeMessage.FormatWith(Model.Name)">
+                @Translations.Finalize
+            </button>
+        }
+        @if (Model.Status == EventStatusEnum.InProgress)
+                {
+            <button name="buttonAction" value="emergency" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                    data-modal-ok="@Translations.Emergency" data-modal-title="@Translations.Emergency" data-modal-message="@Translations.EmergencyMessage.FormatWith(Model.Name)">
+                @Translations.Emergency
+            </button>
+        }
 
-    @if (Model.Status == EventStatusEnum.InEmergency)
-    {
-        <button name="buttonAction" value="cancelEmergency" type="button" class="btn btn-warning  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Ok" data-modal-title="@Translations.CancelEmergency" data-modal-message="@Translations.CancelEmergencyMessage.FormatWith(Model.Name)">
-            @Translations.CancelEmergency
-        </button>
-        <button name="buttonAction" value="startCollaborativeSearch" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                data-modal-ok="@Translations.Ok" data-modal-title="@Translations.StartCollaborativeSearch" data-modal-message="@Translations.StartCollaborativeSearchMessage.FormatWith(Model.Name)">
-            @Translations.StartCollaborativeSearch
-        </button>
-    }
+        @if (Model.Status == EventStatusEnum.InEmergency)
+                {
+            <button name="buttonAction" value="cancelEmergency" type="button" class="btn btn-warning  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                    data-modal-ok="@Translations.Ok" data-modal-title="@Translations.CancelEmergency" data-modal-message="@Translations.CancelEmergencyMessage.FormatWith(Model.Name)">
+                @Translations.CancelEmergency
+            </button>
+            <button name="buttonAction" value="startCollaborativeSearch" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                    data-modal-ok="@Translations.Ok" data-modal-title="@Translations.StartCollaborativeSearch" data-modal-message="@Translations.StartCollaborativeSearchMessage.FormatWith(Model.Name)">
+                @Translations.StartCollaborativeSearch
+            </button>
+        }
 
-    @Html.ActionLink(Translations.GoBack, "Index","ManageEvent", new { }, new { @class = "btn btn-link", role = "button" })
-</form>
+        @Html.ActionLink(Translations.GoBack, "Index", "ManageEvent", new { }, new { @class = "btn btn-link", role = "button" })
+    </form>
 }
-@using (Html.BeginEditSection(Translations.SectionBasicData))
-{
+@using (Html.BeginEditSection(Translations.SectionUsers))
+            {
     <div class="table-container">
-        @{ var tableBuilder = Html.BuildTable<EventMonitorUserListModel>(Url.Action("GetItems", "EventMonitor", new {eventId = Model.Id}))
-                .AddColumn(x => x.Id)
-                .AddColumn(x => x.Username)
-               .AddColumn(x => x.Lastname)
-                .AddColumn(x => x.Firstname);
+        @{ var tableBuilder = Html.BuildTable<EventMonitorUserListModel>(Url.Action("GetItems", "EventMonitor", new { eventId = Model.Id }))
+                                                                    .AddColumn(x => x.Id)
+                                                                    .AddColumn(x => x.Username)
+                                                                   .AddColumn(x => x.Lastname)
+                                                                    .AddColumn(x => x.Firstname);
             if (Model.Status == EventStatusEnum.InEmergency)
             {
-                tableBuilder= tableBuilder
+                tableBuilder = tableBuilder
                     .AddColumn(x => x.IAmOk, dataTemplate: "IAmOkTemplate")
                     .AddColumn(x => x.WasSeen, visible: false)
                     .AddColumn(x => x.Seen)
@@ -209,13 +239,13 @@
                     .AddFilter(x => x.WasSeen);
             }
 
-            tableBuilder=tableBuilder
+            tableBuilder = tableBuilder
                 .AddFilter(x => x.LastPositionUpdate);
         }
-        
+
         @(tableBuilder.Build())
     </div>
-}
+            }
 
 <script id="IAmOkTemplate" type="text/template">
     <%  if(row.IAmOk === @(IAmOkEnum.Ok.ToInt())) { %>
@@ -228,12 +258,12 @@
     </span>
     <% } else if( row.IAmOk === @(IAmOkEnum.NotOk.ToInt())) { %>
     <span class="label label-danger">
-      @TranslationsHelper.Get(IAmOkEnum.NotOk)
+        @TranslationsHelper.Get(IAmOkEnum.NotOk)
     </span>
     <% }  %>
 </script>
 
 <script id="actionsTemplate" type="text/template">
     <a class="btn btn-info btn-xs" href="@Url.Action("PersonMonitor")/@Model.Id/<%=row.Id%>">@Translations.Detail</a>
-   
+
 </script>

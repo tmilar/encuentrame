@@ -7,8 +7,6 @@ using Encuentrame.Security.Authorizations;
 using Encuentrame.Support;
 using Encuentrame.Web.Helpers;
 using Encuentrame.Web.Models.EventMonitors;
-using Encuentrame.Web.Models.Events;
-using Microsoft.SqlServer.Server;
 using NailsFramework.IoC;
 
 namespace Encuentrame.Web.Controllers
@@ -19,6 +17,9 @@ namespace Encuentrame.Web.Controllers
 
         [Inject]
         public IEventCommand EventCommand { get; set; }
+
+        [Inject]
+        public IUserCommand UserCommand { get; set; }
 
 
         private int EventId => Convert.ToInt32(this.Url.RequestContext.RouteData.Values["eventId"]);
@@ -46,6 +47,9 @@ namespace Encuentrame.Web.Controllers
                 LastUpdate = SystemDateTime.Now,
                 WithoutAnswer = true,
                 IAmNotOk = true,
+                Clustered = true,
+
+
             };
 
             if (eventt.EmergencyDateTime.HasValue)
@@ -60,13 +64,21 @@ namespace Encuentrame.Web.Controllers
         public ActionResult PersonMonitor(int eventId, int userId)
         {
             var eventt = EventCommand.Get(eventId);
-            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
+            var user = UserCommand.Get(userId);
+
+           if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
             {
-                return RedirectToAction("Index", "ManageEvent");
+                return RedirectToAction("Monitor", "EventMonitor", new{id=eventId});
             }
             var eventPersonMonitorModel = new EventPersonMonitorModel()
             {
-
+            Username = user.Username,
+            Image = user.Image,
+            EventId = eventId,
+            UserId = userId,
+            EventLatitude = eventt.Latitude,
+            EventLongitude = eventt.Longitude,
+            EventName = eventt.Name
             };
 
             return View(eventPersonMonitorModel);
@@ -168,6 +180,16 @@ namespace Encuentrame.Web.Controllers
         {
 
             var positions=EventCommand.PositionsFromEvent(eventId, datetimeTo);
+
+            return Json(JsReturnHelper.Return(positions));
+        }
+
+
+        [HttpPost]
+        public JsonResult UserPositions(int eventId, int userId)
+        {
+
+            var positions = EventCommand.PositionsUserFromEvent(eventId, userId);
 
             return Json(JsReturnHelper.Return(positions));
         }

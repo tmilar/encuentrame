@@ -628,6 +628,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agrupados.
+        /// </summary>
+        public static string Clustered {
+            get {
+                return ResourceManager.GetString("Clustered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código.
         /// </summary>
         public static string Code {
@@ -1434,6 +1443,15 @@ namespace Encuentrame.Web {
         public static string EventMonitorTitle {
             get {
                 return ResourceManager.GetString("EventMonitorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre del evento.
+        /// </summary>
+        public static string EventName {
+            get {
+                return ResourceManager.GetString("EventName", resourceCulture);
             }
         }
         
@@ -3585,6 +3603,15 @@ namespace Encuentrame.Web {
         public static string SectionUserData {
             get {
                 return ResourceManager.GetString("SectionUserData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuarios.
+        /// </summary>
+        public static string SectionUsers {
+            get {
+                return ResourceManager.GetString("SectionUsers", resourceCulture);
             }
         }
         

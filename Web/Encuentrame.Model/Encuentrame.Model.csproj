@@ -114,6 +114,7 @@
     <Compile Include="Events\DeclareEmergencyException.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventCommand.cs" />
+    <Compile Include="Events\EventPersonMonitorPositionInfo.cs" />
     <Compile Include="Events\EventStatusEnum.cs" />
     <Compile Include="Events\IEventCommand.cs" />
     <Compile Include="Events\Seekers\EventSeeker.cs" />

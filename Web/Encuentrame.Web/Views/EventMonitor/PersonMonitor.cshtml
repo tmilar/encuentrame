@@ -1,7 +1,71 @@
-﻿
+﻿@using System.Configuration
+@using Encuentrame.Model.Events
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@using Encuentrame.Web.Helpers.DataTable
+@using Encuentrame.Web.Models.EventMonitors
+@model Encuentrame.Web.Models.EventMonitors.EventPersonMonitorModel
+
 @{
-    ViewBag.Title = "PersonMonitor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.EventMonitorTitle;
 }
 
-<h2>PersonMonitor</h2>
+@section scripts
+{
+   
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/form")
+    <script src="@Html.ScriptUrl(@"~/scripts/markerclusterer.js")" type="text/javascript"></script>
+    <script src="@Html.ScriptUrl(@"~/scripts/app/map-commons.js")" type="text/javascript"></script>
+    <script src="@Html.ScriptUrl(@"~/scripts/app/controllers/eventMonitors/eventPersonMonitors.js")" type="text/javascript"></script>
 
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=@ConfigurationManager.AppSettings["GoogleMapsKey"]&callback=initMap">
+
+    </script>
+
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.HiddenFor(m => m.EventId)
+@Html.HiddenFor(m => m.UserId)
+@Html.HiddenFor(m => m.EventLatitude)
+@Html.HiddenFor(m => m.EventLongitude)
+
+
+@using (Html.BeginEditSection(Translations.SectionBasicData))
+{
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => Model.Username)
+                </div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => Model.Image)
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-md-9">
+            <div class="map-container" id="mapContainer"
+                 data-positions-url="@Url.Action("UserPositions")"
+                 data-images-folder="@Url.Content("~/images/maps/")"
+                 data-icon-event="@Url.Content("~/images/maps/MapMarker_Flag.png")"
+                 data-icon-point="@Url.Content("~/images/maps/MapMarker_Blue_Tiny_Point.png")"
+                 data-label-event="@Model.EventName"
+                 style="position: relative; width: 100%; height: 600px; overflow: hidden"></div>
+        </div>
+    </div>
+
+
+
+
+
+        @Html.ActionLink(Translations.GoBack, "Monitor", "EventMonitor", new { id=Model.EventId }, new { @class = "btn btn-link", role = "button" })
+   
+}

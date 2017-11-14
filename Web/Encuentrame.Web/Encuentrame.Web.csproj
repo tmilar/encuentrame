@@ -515,6 +515,7 @@
     <Content Include="images\maps\4.png" />
     <Content Include="images\maps\5.png" />
     <Content Include="images\maps\MapMarker_Blue_Point.png" />
+    <Content Include="images\maps\MapMarker_Blue_Tiny_Point.png" />
     <Content Include="images\maps\MapMarker_Flag.png" />
     <Content Include="images\maps\MapMarker_Green_Point.png" />
     <Content Include="images\maps\MapMarker_Red_Point.png" />
@@ -529,6 +530,7 @@
     <Content Include="Scripts\app\appInit.js" />
     <Content Include="Scripts\app\arativa-bootstrap-treeview.js" />
     <Content Include="Scripts\app\commons.js" />
+    <Content Include="Scripts\app\controllers\EventMonitors\eventPersonMonitors.js" />
     <Content Include="Scripts\app\controllers\EventMonitors\eventMonitors.js" />
     <Content Include="Scripts\app\controllers\ManageBusinesses\manageBusiness.js" />
     <Content Include="Scripts\app\controllers\ManageEvents\manageEvent.js" />
@@ -542,6 +544,7 @@
     <Content Include="Scripts\app\filedata.js" />
     <Content Include="Scripts\app\form-validation-settings.js" />
     <Content Include="Scripts\app\form.js" />
+    <Content Include="Scripts\app\map-commons.js" />
     <Content Include="Scripts\app\modals.js" />
     <Content Include="Scripts\app\datatable.js" />
     <Content Include="Scripts\app\print.js" />

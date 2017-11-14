@@ -203,8 +203,8 @@ namespace Encuentrame.Web.Controllers
                     Street = "Obelisco",
                     Zip = "1414",
                 },
-                Latitude = (decimal)-34.59974,
-                Longitude = (decimal)-58.4336,
+                Latitude = (decimal)-34.60373,
+                Longitude = (decimal)-58.38157,
             };
 
             Events.Put(eventt1);
@@ -501,7 +501,7 @@ END
                                                     uu.Username as Username , 
 				                                    uu.Lastname as Lastname , 
 				                                    uu.Firstname as Firstname, 
-				                                    iif(bayo.IAmOk is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
+				                                    iif(bayo.ReplyDatetime is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
 				                                    cast(iif(count(sp.seen)>0,1,0) as bit) as WasSeen, 
 				                                    count(sp.seen) as Seen, 
 				                                    count(spn.seen) as NotSeen,
@@ -513,7 +513,7 @@ END
 			                                    left join SoughtPersonAnswers spn on spn.TargetUser_id=aa.User_id and spn.Seen=0
                                                 left join Positions po on po.UserId=aa.User_id
 		                                    WHERE aa.Event_id=@eventId
-		                                    GROUP BY aa.User_id,uu.Username,uu.Lastname, uu.Firstname, bayo.IAmOk;
+		                                    GROUP BY aa.User_id,uu.Username,uu.Lastname, uu.Firstname, bayo.IAmOk, bayo.ReplyDatetime;
                                     END
                                     
                                                                         ";

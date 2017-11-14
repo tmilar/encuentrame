@@ -5,6 +5,7 @@ using System.Linq;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Addresses;
 using Encuentrame.Model.AreYouOks;
+using Encuentrame.Model.Positions;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 using NailsFramework.IoC;
@@ -18,6 +19,9 @@ namespace Encuentrame.Model.Events
     {
         [Inject]
         public IBag<Event> Events { get; set; }
+
+        [Inject]
+        public IBag<Position> Positions { get; set; }
 
 
         [Inject]
@@ -173,6 +177,38 @@ namespace Encuentrame.Model.Events
                 .SetResultTransformer(Transformers.AliasToBean(typeof(EventMonitorPositionInfo)));
 
             return list.List<EventMonitorPositionInfo>();
+        }
+
+        public IList<EventPersonMonitorPositionInfo> PositionsUserFromEvent(int eventId, int userId)
+        {
+            var eventt = Events[eventId];
+            var user = Users[userId];
+
+            DateTime to = SystemDateTime.Now;
+            if (eventt.Status == EventStatusEnum.InProgress || eventt.Status == EventStatusEnum.InEmergency)
+            {
+                to = SystemDateTime.Now;
+            }
+            else if (eventt.Status == EventStatusEnum.Completed)
+            {
+                to = eventt.EndDateTime;
+            }
+            else
+            {
+                return new List<EventPersonMonitorPositionInfo>();
+            }
+
+            return Positions.Where(x => x.UserId == user.Id && x.Creation >= eventt.BeginDateTime && x.Creation <= to)
+                .OrderBy(x=>x.Creation)
+                .Select(x => new EventPersonMonitorPositionInfo()
+                {
+                    Id = x.Id,
+                    Longitude = x.Longitude,
+                    Latitude = x.Latitude,
+                    Datetime = x.Creation
+                }).ToList();
+
+
         }
 
         public class CreateOrEditParameters

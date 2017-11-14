@@ -1575,4 +1575,13 @@
   <data name="RegisterNewBusiness" xml:space="preserve">
     <value>Registrar nueva empresa</value>
   </data>
+  <data name="SectionUsers" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="Clustered" xml:space="preserve">
+    <value>Agrupados</value>
+  </data>
+  <data name="EventName" xml:space="preserve">
+    <value>Nombre del evento</value>
+  </data>
 </root>
