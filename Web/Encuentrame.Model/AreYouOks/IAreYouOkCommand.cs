@@ -13,5 +13,7 @@ namespace Encuentrame.Model.AreYouOks
         void SoughtPersonSeen(AreYouOkCommand.SoughtPersonSeenParameters parameters);
         void SoughtPersonDismiss(AreYouOkCommand.SoughtPersonDismissParameters parameters);
 
+        IList<PositionWhereWasSeenInfo> PositionsWhereWasSeen(int eventId, int userId);
+        SeenInfo GetSeenInfo(int eventId, int userId);
     }
 }

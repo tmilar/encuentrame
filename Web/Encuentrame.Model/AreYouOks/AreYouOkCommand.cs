@@ -4,6 +4,7 @@ using System.Linq;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Activities;
 using Encuentrame.Model.Events;
+using Encuentrame.Model.Positions;
 using Encuentrame.Model.SoughtPersons;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
@@ -21,11 +22,18 @@ namespace Encuentrame.Model.AreYouOks
         public IBag<AreYouOkActivity> AreYouOkActivities { get; set; }
 
         [Inject]
+        public IBag<Event> Events { get; set; }
+
+        [Inject]
         public IBag<SoughtPersonAnswer> SoughtPersonAnswers { get; set; }
 
 
         [Inject]
         public IBag<AreYouOkEvent> AreYouOkEvents { get; set; }
+
+        [Inject]
+        public IBag<Position> Positions { get; set; }
+
         [Inject]
         public IBag<Activity> Activities { get; set; }
 
@@ -119,7 +127,7 @@ namespace Encuentrame.Model.AreYouOks
 
         }
 
-     
+
         public void AskFromEvent(Event eventt)
         {
 
@@ -196,10 +204,10 @@ namespace Encuentrame.Model.AreYouOks
             {
                 return new List<SoughtPersonInfo>();
             }
-             
+
             var sql = @"EXEC SoughtPeople :userId, :eventId; ";
 
-            var list=NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
                 .SetParameter("userId", userSearcher.Id)
                 .SetParameter("eventId", currentActivity.Event.Id)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(SoughtPersonInfo)));
@@ -210,14 +218,40 @@ namespace Encuentrame.Model.AreYouOks
 
         public void SoughtPersonSeen(SoughtPersonSeenParameters parameters)
         {
-            var soughtPersonAswer=new SoughtPersonAnswer()
+            decimal? latitude = null;
+            decimal? longitude = null;
+            var sourceUser = Users[parameters.SourceUserId];
+            var targetUser = Users[parameters.TargetUserId];
+
+            if (parameters.When.HasValue)
+            {
+                Positions.Where(c => c.UserId == parameters.TargetUserId && c.Creation <= parameters.When)
+                    .OrderByDescending(x => x.Creation).Take(1).ForEach(i =>
+                    {
+                        latitude = i.Latitude;
+                        longitude = i.Longitude;
+                    });
+            }
+            else
+            {
+                parameters.When = SystemDateTime.Now;
+                Positions.Where(c => c.UserId == parameters.SourceUserId && c.Creation <= parameters.When)
+                    .OrderByDescending(x => x.Creation).Take(1).ForEach(i =>
+                    {
+                        latitude = i.Latitude;
+                        longitude = i.Longitude;
+                    });
+            }
+
+            var soughtPersonAswer = new SoughtPersonAnswer()
             {
                 When = parameters.When,
-                Seen=true,
-              
+                Seen = true,
+                Latitude = latitude,
+                Longitude = longitude,
                 IsOk = parameters.IsOk,
-                SourceUser =Users[parameters.SourceUserId],
-                TargetUser = Users[parameters.TargetUserId],
+                SourceUser = sourceUser,
+                TargetUser = targetUser,
             };
 
             SoughtPersonAnswers.Put(soughtPersonAswer);
@@ -229,7 +263,7 @@ namespace Encuentrame.Model.AreYouOks
             var soughtPersonAswer = new SoughtPersonAnswer()
             {
                 When = parameters.When,
-                Seen=false,
+                Seen = false,
                 SourceUser = Users[parameters.SourceUserId],
                 TargetUser = Users[parameters.TargetUserId],
             };
@@ -237,15 +271,97 @@ namespace Encuentrame.Model.AreYouOks
             SoughtPersonAnswers.Put(soughtPersonAswer);
         }
 
+        public IList<PositionWhereWasSeenInfo> PositionsWhereWasSeen(int eventId, int userId)
+        {
+            var eventt = Events[eventId];
+            var user = Users[userId];
+
+            DateTime to = SystemDateTime.Now;
+            if (eventt.Status == EventStatusEnum.InProgress || eventt.Status == EventStatusEnum.InEmergency)
+            {
+                to = SystemDateTime.Now;
+            }
+            else if (eventt.Status == EventStatusEnum.Completed)
+            {
+                to = eventt.EndDateTime;
+            }
+            else
+            {
+                return new List<PositionWhereWasSeenInfo>();
+            }
+
+            return SoughtPersonAnswers.Where(x => x.TargetUser == user && x.Seen == true && x.When >= eventt.BeginDateTime && x.When <= to)
+                .OrderBy(x => x.When)
+                .Select(x => new PositionWhereWasSeenInfo()
+                {
+                    Id = x.Id,
+                    Longitude = x.Longitude,
+                    Latitude = x.Latitude,
+                    When = x.When,
+                    Status = x.IsOk.HasValue ? (x.IsOk.Value ? 20 : 10) : 0
+                }).ToList();
+
+        }
+
+        public SeenInfo GetSeenInfo(int eventId, int userId)
+        {
+            var eventt = Events[eventId];
+            var user = Users[userId];
+
+            DateTime to = SystemDateTime.Now;
+            if (eventt.Status == EventStatusEnum.InProgress || eventt.Status == EventStatusEnum.InEmergency)
+            {
+                to = SystemDateTime.Now;
+            }
+            else if (eventt.Status == EventStatusEnum.Completed)
+            {
+                to = eventt.EndDateTime;
+            }
+            else
+            {
+                return new SeenInfo();
+            }
+
+            var sql = @"SELECT
+                          COUNT(Seen) AS Seen,
+                          SUM(CASE
+                            WHEN IsOk IS NULL THEN 1
+                            ELSE 0
+                          END) AS SeenWithoutAnswer,
+                          SUM(CASE
+                            WHEN IsOk = 0 THEN 1
+                            ELSE 0
+                          END) AS SeenNotOk,
+                          SUM(CASE
+                            WHEN IsOk = 1 THEN 1
+                            ELSE 0
+                          END) AS SeenOk
+                        FROM SoughtPersonAnswers
+                        WHERE Seen = 1
+                        AND TargetUser_id = :userId
+                        AND seenwhen >= :from AND seenwhen<= :to
+                        GROUP BY Seen";
+
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("userId", user.Id)
+                .SetParameter("from", eventt.BeginDateTime)
+                .SetParameter("to", to)
+                .SetResultTransformer(Transformers.AliasToBean(typeof(SeenInfo)));
+
+            return list.UniqueResult<SeenInfo>();
+
+
+        }
+
 
         public class SoughtPersonSeenParameters
         {
             public DateTime? When { get; set; }
-           
-            public  int SourceUserId { get; set; }
-            public  int TargetUserId { get; set; }
-            public  bool? IsOk { get; set; }
-            
+
+            public int SourceUserId { get; set; }
+            public int TargetUserId { get; set; }
+            public bool? IsOk { get; set; }
+
         }
 
         public class SoughtPersonDismissParameters

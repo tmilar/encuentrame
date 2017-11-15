@@ -97,9 +97,11 @@
     <Compile Include="AreYouOks\AreYouOkCommand.cs" />
     <Compile Include="AreYouOks\BaseAreYouOk.cs" />
     <Compile Include="AreYouOks\AreYouOkEvent.cs" />
+    <Compile Include="AreYouOks\PositionWhereWasSeenInfo.cs" />
     <Compile Include="AreYouOks\IAreYouOkCommand.cs" />
     <Compile Include="AreYouOks\Seekers\AreYouOkSeeker.cs" />
     <Compile Include="AreYouOks\Seekers\IAreYouOkSeeker.cs" />
+    <Compile Include="AreYouOks\SeenInfo.cs" />
     <Compile Include="BaseSeeker.cs" />
     <Compile Include="Businesses\Business.cs" />
     <Compile Include="Businesses\BusinessCommand.cs" />

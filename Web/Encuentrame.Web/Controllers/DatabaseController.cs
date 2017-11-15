@@ -281,7 +281,7 @@ namespace Encuentrame.Web.Controllers
                 User = user21
             });
 
-           
+
             CreateStoredProcedures();
 
             CreateUsers();
@@ -289,9 +289,9 @@ namespace Encuentrame.Web.Controllers
 
             CurrentUnitOfWork.Checkpoint();
 
-            foreach (var user in Users.Where(x=>x.Role==RoleEnum.User))
+            foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
             {
-                var activityIn= new Activity()
+                var activityIn = new Activity()
                 {
                     BeginDateTime = SystemDateTime.Now.AddDays(-1),
                     EndDateTime = SystemDateTime.Now,
@@ -322,7 +322,7 @@ namespace Encuentrame.Web.Controllers
             var dictionary = new Dictionary<int, dynamic>();
             foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
             {
-                var position=new Position()
+                var position = new Position()
                 {
                     Latitude = eventt1.Latitude,
                     Longitude = eventt1.Longitude,
@@ -335,12 +335,12 @@ namespace Encuentrame.Web.Controllers
                 dictionary[user.Id] = new { Latitude = eventt1.Latitude, Longitude = eventt1.Longitude };
             }
 
-            var rnd=new Random(DateTime.Now.Millisecond);
+            var rnd = new Random(DateTime.Now.Millisecond);
             for (int ii = 0; ii < 180; ii++)
             {
                 foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
                 {
-                   
+
                     var position = new Position()
                     {
                         Latitude = dictionary[user.Id].Latitude + (decimal)rnd.Next(-3, 3) / 10000,
@@ -351,9 +351,9 @@ namespace Encuentrame.Web.Controllers
                     };
 
                     Positions.Put(position);
-                    
-                        dictionary[user.Id] = new { Latitude = position.Latitude, Longitude = position.Longitude };
-                    
+
+                    dictionary[user.Id] = new { Latitude = position.Latitude, Longitude = position.Longitude };
+
                 }
             }
 
@@ -498,22 +498,21 @@ END
 	                                    AS
 	                                    BEGIN
 		                                    SELECT	aa.User_id as Id, 
-                                                    uu.Username as Username , 
-				                                    uu.Lastname as Lastname , 
-				                                    uu.Firstname as Firstname, 
-				                                    iif(bayo.ReplyDatetime is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
-				                                    cast(iif(count(sp.seen)>0,1,0) as bit) as WasSeen, 
-				                                    count(sp.seen) as Seen, 
-				                                    count(spn.seen) as NotSeen,
-                                                    MAX(po.Creation) as LastPositionUpdate
-		                                    FROM Activities aa 
-			                                    inner join Users uu on uu.Id=aa.User_id  
-			                                    left join BaseAreYouOks bayo on bayo.Target_id=aa.User_id
-			                                    left join SoughtPersonAnswers sp on sp.TargetUser_id=aa.User_id and sp.Seen=1
-			                                    left join SoughtPersonAnswers spn on spn.TargetUser_id=aa.User_id and spn.Seen=0
-                                                left join Positions po on po.UserId=aa.User_id
-		                                    WHERE aa.Event_id=@eventId
-		                                    GROUP BY aa.User_id,uu.Username,uu.Lastname, uu.Firstname, bayo.IAmOk, bayo.ReplyDatetime;
+                                            uu.Username as Username , 
+		                                    uu.Lastname as Lastname , 
+		                                    uu.Firstname as Firstname, 
+		                                    iif(bayo.ReplyDatetime is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
+		                                    cast(iif(count(sp.seen)>0,1,0) as bit) as WasSeen, 
+		                                    sum(CASE WHEN sp.seen = 1 THEN 1 ELSE 0 END) as Seen, 
+		                                    sum(CASE WHEN sp.seen = 0 THEN 1 ELSE 0 END) as NotSeen, 
+                                            po.Creation as LastPositionUpdate
+                                    FROM Activities aa 
+	                                    inner join Users uu on uu.Id=aa.User_id  
+	                                    left join BaseAreYouOks bayo on bayo.Target_id=aa.User_id
+	                                    left join SoughtPersonAnswers sp on sp.TargetUser_id=aa.User_id 	
+                                        left join (SELECT  Positions.UserId, MAX(Positions.Creation) AS creation FROM Positions GROUP BY Positions.UserId ) po on po.UserId=aa.User_id
+                                    WHERE aa.Event_id=@eventId
+                                    GROUP BY aa.User_id,uu.Username,uu.Lastname, uu.Firstname, bayo.IAmOk, bayo.ReplyDatetime, po.Creation;
                                     END
                                     
                                                                         ";

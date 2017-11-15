@@ -9,7 +9,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Translations.EventMonitorTitle;
+    ViewBag.Title = Translations.EventPersonMonitorTitle;
 }
 
 @section scripts
@@ -41,10 +41,57 @@
     <div class="row">
         <div class="col-md-3">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     @Html.DisplayFor(model => Model.Username)
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(x=>Model.Status)</label>
+                        <p class="form-control-static ">
+                            @if (Model.Status == IAmOkEnum.Ok)
+                            {
+                                <span class="label label-success">
+                                    @TranslationsHelper.Get(IAmOkEnum.Ok)
+                                </span>
+                            }
+                            else if (Model.Status == IAmOkEnum.WithoutAnswer)
+                            {
+                                <span class="label label-info">
+                                    @TranslationsHelper.Get(IAmOkEnum.WithoutAnswer)
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">
+                                    @TranslationsHelper.Get(IAmOkEnum.NotOk)
+                                </span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div><div class="row">
+                <div class="col-md-6">
+                    <label class="control-label">@Html.DisplayNameFor(x=>Model.Seen)</label>
+                   
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr >
+                            <td class="active text-center" colspan="3">
+                                <strong>@Model.Seen</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="success text-center" title="@Html.DisplayNameFor(x=>Model.SeenOk)">@Model.SeenOk</td>
+                            <td class="danger text-center" title="@Html.DisplayNameFor(x=>Model.SeenNotOk)">@Model.SeenNotOk</td>
+                            <td class="info text-center" title="@Html.DisplayNameFor(x=>Model.SeenWithoutAnswer)">@Model.SeenWithoutAnswer</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                   
+                </div>
+            </div><div class="row">
+                <div class="col-md-12">
                     @Html.DisplayFor(model => Model.Image)
                 </div>
             </div>
@@ -57,8 +104,10 @@
                  data-images-folder="@Url.Content("~/images/maps/")"
                  data-icon-event="@Url.Content("~/images/maps/MapMarker_Flag.png")"
                  data-icon-point="@Url.Content("~/images/maps/MapMarker_Blue_Tiny_Point.png")"
+                 data-icon-eye="@Url.Content("~/images/maps/MapMarker_Eye.png")"
                  data-label-event="@Model.EventName"
-                 style="position: relative; width: 100%; height: 600px; overflow: hidden"></div>
+                 data-i-am-ok-enum='@(Html.ToJsonTranslatedString<IAmOkEnum>())'
+                 style="position: relative; width: 100%; height: 700px; overflow: hidden"></div>
         </div>
     </div>
 

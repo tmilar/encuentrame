@@ -1584,4 +1584,16 @@
   <data name="EventName" xml:space="preserve">
     <value>Nombre del evento</value>
   </data>
+  <data name="EventPersonMonitorTitle" xml:space="preserve">
+    <value>Monitor de persona en un evento</value>
+  </data>
+  <data name="SeenNotOk" xml:space="preserve">
+    <value>Lo vieron mal</value>
+  </data>
+  <data name="SeenOk" xml:space="preserve">
+    <value>Lo vieron bien</value>
+  </data>
+  <data name="SeenWithoutAnswer" xml:space="preserve">
+    <value>No se</value>
+  </data>
 </root>

@@ -1456,6 +1456,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Monitor de persona en un evento.
+        /// </summary>
+        public static string EventPersonMonitorTitle {
+            get {
+                return ResourceManager.GetString("EventPersonMonitorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eventos.
         /// </summary>
         public static string Events {
@@ -3675,6 +3684,33 @@ namespace Encuentrame.Web {
         public static string Seen {
             get {
                 return ResourceManager.GetString("Seen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lo vieron mal.
+        /// </summary>
+        public static string SeenNotOk {
+            get {
+                return ResourceManager.GetString("SeenNotOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lo vieron bien.
+        /// </summary>
+        public static string SeenOk {
+            get {
+                return ResourceManager.GetString("SeenOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se.
+        /// </summary>
+        public static string SeenWithoutAnswer {
+            get {
+                return ResourceManager.GetString("SeenWithoutAnswer", resourceCulture);
             }
         }
         

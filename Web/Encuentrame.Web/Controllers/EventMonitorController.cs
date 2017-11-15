@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Encuentrame.Model.Accounts;
+using Encuentrame.Model.AreYouOks;
 using Encuentrame.Model.Events;
 using Encuentrame.Security.Authorizations;
 using Encuentrame.Support;
 using Encuentrame.Web.Helpers;
 using Encuentrame.Web.Models.EventMonitors;
 using NailsFramework.IoC;
+using NailsFramework.Persistence;
 
 namespace Encuentrame.Web.Controllers
 {
-    [AuthorizationPass(new[] {RoleEnum.Administrator, RoleEnum.EventAdministrator,})]
+    [AuthorizationPass(new[] { RoleEnum.Administrator, RoleEnum.EventAdministrator, })]
     public class EventMonitorController : ListBaseController<EventMonitorUserInfo, EventMonitorUserListModel>
     {
 
@@ -21,6 +24,13 @@ namespace Encuentrame.Web.Controllers
         [Inject]
         public IUserCommand UserCommand { get; set; }
 
+
+        [Inject]
+        public IAreYouOkCommand AreYouOkCommand { get; set; }
+
+
+        [Inject]
+        public IBag<AreYouOkEvent> AreYouOkEvents { get; set; }
 
         private int EventId => Convert.ToInt32(this.Url.RequestContext.RouteData.Values["eventId"]);
 
@@ -66,24 +76,46 @@ namespace Encuentrame.Web.Controllers
             var eventt = EventCommand.Get(eventId);
             var user = UserCommand.Get(userId);
 
-           if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
+            var seenInfo = AreYouOkCommand.GetSeenInfo(eventId, userId);
+
+            if (seenInfo == null)
             {
-                return RedirectToAction("Monitor", "EventMonitor", new{id=eventId});
+                seenInfo=new SeenInfo();
             }
+
+            if (LoggedUserIs(RoleEnum.EventAdministrator) && eventt.Organizer.Id != GetLoggedUser().Id)
+            {
+                return RedirectToAction("Monitor", "EventMonitor", new { id = eventId });
+            }
+
+            var status = IAmOkEnum.WithoutAnswer;
+
+            var statusRow = AreYouOkEvents.Where(x => x.Target == user && x.Event == eventt).FirstOrDefault();
+
+            if (statusRow?.ReplyDatetime != null)
+            {
+                status = statusRow.IAmOk ? IAmOkEnum.Ok : IAmOkEnum.NotOk;
+            }
+
             var eventPersonMonitorModel = new EventPersonMonitorModel()
             {
-            Username = user.Username,
-            Image = user.Image,
-            EventId = eventId,
-            UserId = userId,
-            EventLatitude = eventt.Latitude,
-            EventLongitude = eventt.Longitude,
-            EventName = eventt.Name
+                Username = user.Username,
+                Image = user.Image,
+                EventId = eventId,
+                UserId = userId,
+                EventLatitude = eventt.Latitude,
+                EventLongitude = eventt.Longitude,
+                EventName = eventt.Name,
+                Status = status,
+                Seen = seenInfo.Seen,
+                SeenOk = seenInfo.SeenOk,
+                SeenNotOk = seenInfo.SeenNotOk,
+                SeenWithoutAnswer = seenInfo.SeenWithoutAnswer
             };
 
             return View(eventPersonMonitorModel);
 
-            
+
         }
 
         [HttpPost]
@@ -119,7 +151,7 @@ namespace Encuentrame.Web.Controllers
         {
             EventCommand.StartCollaborativeSearch(id);
 
-            return RedirectToAction("Monitor", new {id});
+            return RedirectToAction("Monitor", new { id });
         }
 
 
@@ -128,28 +160,28 @@ namespace Encuentrame.Web.Controllers
         {
             EventCommand.BeginEvent(id);
 
-            return RedirectToAction("Monitor", new {id});
+            return RedirectToAction("Monitor", new { id });
         }
 
         protected ActionResult Finalize(int id)
         {
             EventCommand.FinalizeEvent(id);
 
-            return RedirectToAction("Monitor", new {id});
+            return RedirectToAction("Monitor", new { id });
         }
 
         protected ActionResult Emergency(int id)
         {
             EventCommand.DeclareEmergency(id);
 
-            return RedirectToAction("Monitor", new {id});
+            return RedirectToAction("Monitor", new { id });
         }
 
         protected ActionResult CancelEmergency(int id)
         {
             EventCommand.CancelEmergency(id);
 
-            return RedirectToAction("Monitor", new {id});
+            return RedirectToAction("Monitor", new { id });
         }
 
         protected override EventMonitorUserListModel GetViewModelFrom(EventMonitorUserInfo item)
@@ -157,13 +189,13 @@ namespace Encuentrame.Web.Controllers
             return new EventMonitorUserListModel()
             {
                 Id = item.Id,
-                Username=item.Username,
+                Username = item.Username,
                 Firstname = item.Firstname,
                 Lastname = item.Lastname,
                 LastPositionUpdate = item.LastPositionUpdate,
                 Seen = item.Seen,
                 NotSeen = item.NotSeen,
-                IAmOk = (IAmOkEnum) item.IAmOk,
+                IAmOk = (IAmOkEnum)item.IAmOk,
                 WasSeen = item.WasSeen
             };
         }
@@ -178,8 +210,7 @@ namespace Encuentrame.Web.Controllers
         [HttpPost]
         public JsonResult Positions(int eventId, DateTime? datetimeTo)
         {
-
-            var positions=EventCommand.PositionsFromEvent(eventId, datetimeTo);
+            var positions = EventCommand.PositionsFromEvent(eventId, datetimeTo);
 
             return Json(JsReturnHelper.Return(positions));
         }
@@ -188,10 +219,10 @@ namespace Encuentrame.Web.Controllers
         [HttpPost]
         public JsonResult UserPositions(int eventId, int userId)
         {
-
             var positions = EventCommand.PositionsUserFromEvent(eventId, userId);
+            var seenPositions = AreYouOkCommand.PositionsWhereWasSeen(eventId, userId);
 
-            return Json(JsReturnHelper.Return(positions));
+            return Json(JsReturnHelper.Return(new { Positions = positions, SeenPositions = seenPositions }));
         }
     }
 }

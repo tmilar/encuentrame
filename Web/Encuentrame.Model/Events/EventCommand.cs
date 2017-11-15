@@ -6,6 +6,7 @@ using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Addresses;
 using Encuentrame.Model.AreYouOks;
 using Encuentrame.Model.Positions;
+using Encuentrame.Model.SoughtPersons;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 using NailsFramework.IoC;
@@ -22,6 +23,11 @@ namespace Encuentrame.Model.Events
 
         [Inject]
         public IBag<Position> Positions { get; set; }
+
+
+        [Inject]
+        public IBag<SoughtPersonAnswer> SoughtPersonAnswers { get; set; }
+
 
 
         [Inject]

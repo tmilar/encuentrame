@@ -14,6 +14,9 @@ function initMap() {
     var positionsUrl = $('#mapContainer').data("positions-url");
     var pointImageUrl = $mapContainer.data("icon-point");
 
+    var eyeImageUrl = $mapContainer.data("icon-eye");
+    var iAmOkEnumTranslations = $mapContainer.data('i-am-ok-enum');
+
     var $latitude = $('#EventLatitude');
     var $longitude = $('#EventLongitude');
 
@@ -63,7 +66,8 @@ function initMap() {
             .done(function (data) {
 
                 var waypoints = [];
-                $.each(data.Info,
+                var seenWaypoints = [];
+                $.each(data.Info.Positions,
                     function (idx, elem) {
                         var positionLocal = { lat: elem.Latitude, lng: elem.Longitude };
 
@@ -72,6 +76,14 @@ function initMap() {
                         BuildMarket(map, positionLocal, pointImageUrl, moment(elem.Datetime).format("dddd, Do [de] MMMM [de] YYYY, h:mm:ss a") + ' | ' +  moment(elem.Datetime).fromNow(), pathMarkers);
                     });
 
+                $.each(data.Info.SeenPositions,
+                    function (idx, elem) {
+                        var positionLocal = { lat: elem.Latitude, lng: elem.Longitude };
+
+                        seenWaypoints.push(positionLocal);
+
+                        BuildMarket(map, positionLocal, eyeImageUrl, moment(elem.When).format("dddd, Do [de] MMMM [de] YYYY, h:mm:ss a") + ' | ' + moment(elem.When).fromNow() + ' | ' + iAmOkEnumTranslations[elem.Status] , pathMarkers);
+                    });
 
                
                 var path = new google.maps.Polyline({

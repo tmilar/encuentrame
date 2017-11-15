@@ -31,5 +31,21 @@ namespace Encuentrame.Web.Models.EventMonitors
         public virtual string Image { get; set; }
 
 
+        [Editable(false)]
+        [Display(ResourceType = typeof(Translations), Name = "Status")]
+        public IAmOkEnum Status{ get; set; }
+
+        [Display(ResourceType = typeof(Translations), Name = "Seen")]
+        public int Seen { get; set; }
+
+        [Display(ResourceType = typeof(Translations), Name = "SeenOk")]
+        public int SeenOk { get; set; }
+
+
+        [Display(ResourceType = typeof(Translations), Name = "SeenNotOk")]
+        public int SeenNotOk { get; set; }
+
+        [Display(ResourceType = typeof(Translations), Name = "SeenWithoutAnswer")]
+        public int SeenWithoutAnswer { get; set; }
     }
 }

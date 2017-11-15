@@ -29,5 +29,15 @@ namespace Encuentrame.Web.Helpers
             
             return htmlHelper.Raw(enumToStringBuilder.ToString());
         }
+
+        public static IHtmlString ToJsonTranslatedString<TEnum>(this HtmlHelper htmlHelper)
+        {
+            var enumValue = Enum.GetValues(typeof(TEnum)).Cast<Enum>();
+            var entries = enumValue.Select(value =>
+                $"\"{value.ToInt()}\": \"{ TranslationsHelper.Get(value)}\"");
+            return htmlHelper.Raw("{" + string.Join(",", entries) + "}");
+        }
+
+      
     }
 }

@@ -514,6 +514,7 @@
     <Content Include="images\maps\3.png" />
     <Content Include="images\maps\4.png" />
     <Content Include="images\maps\5.png" />
+    <Content Include="images\maps\MapMarker_Eye.png" />
     <Content Include="images\maps\MapMarker_Blue_Point.png" />
     <Content Include="images\maps\MapMarker_Blue_Tiny_Point.png" />
     <Content Include="images\maps\MapMarker_Flag.png" />
