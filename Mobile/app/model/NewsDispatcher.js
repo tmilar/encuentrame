@@ -3,6 +3,7 @@ import NewsService from '../service/NewsService';
 import {showToast} from "react-native-notifyer";
 import {Alert} from "react-native";
 import {Ionicons, EvilIcons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
+import {prettyDate} from "../util/prettyDate";
 
 // {onReceive {type, data, navigate}, displayComponent {text, iconComponent}}
 
@@ -97,11 +98,10 @@ class NewsDispatcher {
     NewsTypes[type].dispatch(this.navigation, data);
   };
 
-  getDisplayData = ({type, data}) => {
-    let text = this._getTextMessage(type, data);
+  getDisplayData = ({type, message, time}) => {
     let Icon = NewsTypes[type].display.icon;
-
-    return {text, Icon}
+    let date = prettyDate(new Date(time));
+    return {message, Icon, date}
   };
 }
 
