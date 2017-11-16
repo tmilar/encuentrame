@@ -104,87 +104,9 @@ class PushNotificationsService {
       let {data} = notification;
       let type = data.type || data.Type;
 
-      await newsDispatcher.handleNotification({type, data});
-
-      // if (type === "Areyouok.Ask") {
-      //   await this.handleAreyouokaskNotif(navigation, data, type);
-      // }
-      //
-      // if (type === "Areyouok.Reply") {
-      //   await this.handleAreyouokReplyNotif(navigation, data, type);
-      // }
-      //
-      // if (type === "Contact.Request") {
-      //   await this.handleContactRequestNotif(navigation, data, type);
-      // }
-      //
-      // if (type === "Contact.Confirm") {
-      //   await this.handleContactRequestConfirmNotif(navigation, data, type);
-      // }
-      // if (type === "Event/StartCollaborativeSearch") {
-      //   await this.handleColaborativeSearchNotif(navigation, data, type);
-      // }
+      await NewsDispatcher.handleNotification({type, data});
     });
   };
-
-  // handleAreyouokaskNotif = async (navigation, data, notificationType) => {
-  //   console.log(`[PushNotificationService] Navigating to 'AreYouOk' screen.`);
-  //   await NewsService.saveNews({
-  //     type: notificationType,
-  //     message: `Te preguntaron si estabas bien.`
-  //   });
-  //   navigation.navigate("AreYouOk");
-  // };
-  //
-  // handleAreyouokReplyNotif = async (navigation, data, notificationType) => {
-  //   let reply = data.ok || data.Ok;
-  //   let targetUserId = data.targetUserId || data.TargetUserId;
-  //   console.log(`[PushNotificationService] Showing Areyouok response.`);
-  //   await NewsService.saveNews({
-  //     type: notificationType,
-  //     message: `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}.`
-  //   });
-  //   Alert.alert(
-  //     "Te respondieron: Estás Bien?",
-  //     `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
-  //   );
-  // };
-  //
-  // handleContactRequestNotif = async (navigation, data, notificationType) => {
-  //   let contactRequestUserId = data.UserId;
-  //   let contactRequestUsername = data.Username;
-  //
-  //   await NewsService.saveNews({
-  //     type: notificationType,
-  //     message: `${contactRequestUsername} te ha enviado solicitud de amistad.`
-  //   });
-  //   navigation.navigate("ContactRequest", {
-  //     contactRequestUserId: contactRequestUserId,
-  //     contactRequestUsername: contactRequestUsername
-  //   });
-  // };
-  //
-  // handleContactRequestConfirmNotif = async (navigation, data, notificationType) => {
-  //   let contactRequestUsername = data.Username;
-  //
-  //   await NewsService.saveNews({
-  //     type: notificationType,
-  //     message: `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
-  //   });
-  //   Alert.alert(
-  //     "Respondieron tu solicitud de amistad",
-  //     `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
-  //   );
-  // };
-  //
-  // handleColaborativeSearchNotif = async (navigation, data, notificationType) => {
-  //   await NewsService.saveNews({
-  //     type: notificationType,
-  //     message: `Se ha notificado de una emergencia.`
-  //   });
-  //   showToast("¡Emergencia! Ayúdanos a encontrar a algunas personas.", {duration: 2500});
-  //   navigation.navigate("Find", {emergency: true});
-  // };
 
   _validRemoteNotification = (notification) => {
     let {remote, data} = notification;
