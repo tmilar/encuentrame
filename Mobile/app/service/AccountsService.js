@@ -30,7 +30,22 @@ class AccountsService {
   getAccountImageUriById(id) {
     let userImgUrl = 'account/getImage/' + id + "?rand=" + Math.random().toString();
     return apiUrl + userImgUrl;
+  }
 
+  async getLoggedUserAccount() {
+    let myAccountUrl = 'account/get';
+    let myAccount = await Service.sendRequest(myAccountUrl, {
+      method: 'GET'
+    });
+    return myAccount;
+  }
+
+  async updateAccount(modifiedProfile) {
+    let myAccountUpdateUrl = 'account/update';
+    await Service.sendRequest(myAccountUpdateUrl, {
+      method: 'POST',
+      body: JSON.stringify(modifiedProfile)
+    });
   }
 }
 
