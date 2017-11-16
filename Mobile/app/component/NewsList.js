@@ -16,7 +16,7 @@ const NewsItem = ({message, Icon, date}) =>
     justifyContent: "space-around"
   }}>
     <View style={{justifyContent: "space-around", width: 40, alignItems: 'center'}}>
-      {Icon()}
+      {Icon}
     </View>
     <View style={{justifyContent: "space-around", width: 250}}>
       <Text style={{fontSize: 16, fontWeight: 'bold'}}>

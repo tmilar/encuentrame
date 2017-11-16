@@ -30,8 +30,8 @@ const NewsTypes = {
       );
     },
     display: {
-      text: ({Ok, TargetUserId}) => `{usuario ${TargetUserId}} indico que ${Ok ? " está bien. " : " necesita ayuda."}`,
-      icon: () => <Ionicons name={'md-happy'} style={{color: 'green'}} size={40}/>
+      text: ({Ok, TargetUserId}) => `usuario ${TargetUserId} indico que ${Ok ? " está bien. " : " necesita ayuda."}`,
+      icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}} size={40}/>
     },
   },
   "Contact.Request": {
@@ -47,6 +47,7 @@ const NewsTypes = {
       text: ({Username}) => `${Username} te ha enviado una solicitud de contacto.`,
       icon: () => <Ionicons name={'md-contacts'} style={{color: 'black'}} size={40}/>
     },
+    handle: null //TODO navigate to the contact screen to
   },
   "Contact.Confirm": {
     dispatch: (navigation, {Username}) => {
@@ -85,12 +86,13 @@ class NewsDispatcher {
 
   _getTextMessage = (type, data) => {
     let {text} = NewsTypes[type].display;
+
     return typeof text === 'string' ? text : text(data)
   };
 
   _saveNews = async (type, data) => {
     const message = this._getTextMessage(type, data);
-    await NewsService.saveNews({type, message})
+    await NewsService.saveNews({type, message, data})
   };
 
   handleNotification = async ({type, data}) => {
@@ -98,8 +100,8 @@ class NewsDispatcher {
     NewsTypes[type].dispatch(this.navigation, data);
   };
 
-  getDisplayData = ({type, message, time}) => {
-    let Icon = NewsTypes[type].display.icon;
+  getDisplayData = ({type, message, time, data}) => {
+    let Icon = NewsTypes[type].display.icon(data);
     let date = prettyDate(new Date(time));
     return {message, Icon, date}
   };

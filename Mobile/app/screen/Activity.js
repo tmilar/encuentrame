@@ -152,7 +152,7 @@ export default class Activity extends Component {
   };
 
   _getSelectedEvent = () => {
-    return this.state.events.find((evt) => {return evt.Id == this.state.selectedEventId;});
+    return this.state.events.find((evt) => {return evt.Id === this.state.selectedEventId;});
   };
 
   componentWillMount = async () => {

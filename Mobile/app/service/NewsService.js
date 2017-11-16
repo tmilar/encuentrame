@@ -44,13 +44,14 @@ class NewsService {
    * @param message
    * @returns {Promise.<void>}
    */
-  saveNews = async ({type, message}) => {
+  saveNews = async ({type, message, data}) => {
     let date = new Date();
     let timestamp = date.getTime();
     let newsItem = {
       type,
       message,
       time: date,
+      data: data,
       expires: new Date(timestamp + this.NEWS_TTL).getTime()
     };
 
