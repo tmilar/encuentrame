@@ -6,7 +6,7 @@ class NewsService {
   async initializeNews(callbackNewsComponentUpdate) {
     this.callbackNewsComponentUpdate = callbackNewsComponentUpdate;
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
-    if (!currentNewsJson){
+    if (!currentNewsJson) {
       let currentNews = [];
       await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
     }
@@ -14,23 +14,24 @@ class NewsService {
 
   async _cleanOldNews() {
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
-    if (currentNewsJson){
+    if (currentNewsJson) {
       let currentNews = JSON.parse(currentNewsJson);
       let finalNews = currentNews.filter((news) => new Date() < new Date(news.expires));
       await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
     }
-   }
+  }
 
-  async saveNews(news) {
+  async saveNews({type, message}) {
     let date = new Date();
     let timestamp = date.getTime();
-    news = {
-      ...(news),
+    let newsItem = {
+      type,
+      message,
       time: date,
       expires: new Date(timestamp + this.NEWS_TTL).getTime()
     };
     let currentNews = await this.getCurrentNews();
-    currentNews.push(news);
+    currentNews.push(newsItem);
     await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
     await this.callbackNewsComponentUpdate();
   }
