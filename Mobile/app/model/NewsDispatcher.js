@@ -76,8 +76,9 @@ const NewsTypes = {
   }
 };
 
-export class NewsDispatcher {
-  constructor({navigation}) {
+class NewsDispatcher {
+
+  setup({navigation}) {
     this.navigation = navigation;
   }
 
@@ -103,3 +104,6 @@ export class NewsDispatcher {
     return {text, Icon}
   };
 }
+
+const newsDispatcher = new NewsDispatcher();
+export default newsDispatcher;

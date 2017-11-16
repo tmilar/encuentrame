@@ -7,7 +7,7 @@ import PermissionsHelper from '../util/PermissionsHelper';
 import {showToast} from 'react-native-notifyer';
 import SessionService from './SessionService';
 // import NewsService from './NewsService';
-import {NewsDispatcher} from "../model/NewsDispatcher";
+import NewsDispatcher from "../model/NewsDispatcher";
 
 class PushNotificationsService {
 
@@ -94,7 +94,7 @@ class PushNotificationsService {
    * @returns {Promise.<void>}
    */
   setupNotificationsDispatcher = async (navigation) => {
-    const newsDispatcher = new NewsDispatcher(navigation);
+    NewsDispatcher.setup({navigation});
     Notifications.addListener(async (notification) => {
       if (!this._validRemoteNotification(notification)) {
         return;
