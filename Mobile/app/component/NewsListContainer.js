@@ -7,21 +7,20 @@ export default class NewsListContainer extends Component {
     news: []
   };
 
-  fetchNews = async ()  => {
+  fetchNews = async () => {
     let news = await NewsService.getCurrentNews();
-    this.setState({news});
+    this._handleNewsUpdate(news);
   };
 
-  callbackNewsComponentUpdate = async () => {
-    await this.fetchNews();
+  componentDidMount = async () => {
+    await NewsService.initializeNews(this._handleNewsUpdate);
   };
 
-  componentWillMount = async () => {
-    await NewsService.initializeNews(this.callbackNewsComponentUpdate);
-    await this.fetchNews();
+  _handleNewsUpdate = (news) => {
+    this.setState({news})
   };
 
   render() {
-      return <NewsList news={this.state.news}/>;
+    return <NewsList news={this.state.news}/>;
   }
 }
