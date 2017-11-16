@@ -21,55 +21,12 @@ class NewsService {
     }
    }
 
-  getIcon(type) {
-    switch(type) {
-      case 'Areyouok.Ask':
-        return {
-          tagName: 'EvilIcons',
-          iconName: 'question',
-          color: 'orange'
-        };
-        break;
-      case 'Areyouok.Reply':
-        return {
-          tagName: 'Ionicons',
-          iconName: 'md-happy',
-          color: 'green'
-        };
-        break;
-      case 'Contact.Request':
-        return {
-          tagName: 'Ionicons',
-          iconName: 'md-contacts'
-        };
-        break;
-      case 'Contact.Confirm':
-        return {
-          tagName: 'MaterialCommunityIcons',
-          iconName: 'account-check'
-        };
-        break;
-      case 'Event/StartCollaborativeSearch':
-        return {
-          tagName: 'FontAwesome',
-          iconName: 'warning',
-          color: 'red'
-        };
-        break;
-      default:
-        return {
-          tagName: 'Ionicons',
-          iconName: 'md-notifications'
-        };
-    }
-  }
-
   async saveNews(news) {
-    let timestamp = new Date().getTime();
+    let date = new Date();
+    let timestamp = date.getTime();
     news = {
       ...(news),
-      icon: this.getIcon(news.type),
-      time: timestamp,
+      time: date,
       expires: new Date(timestamp + this.NEWS_TTL).getTime()
     };
     let currentNews = await this.getCurrentNews();

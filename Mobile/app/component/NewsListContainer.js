@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import NewsList from "./NewsList";
-import {Text, View} from "react-native";
 import NewsService from "../service/NewsService";
 
 export default class NewsListContainer extends Component {

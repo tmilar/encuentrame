@@ -32,7 +32,7 @@ export default class FamilyListContainer extends Component {
       </View>
       :
       <View style={{flex: 1, marginTop: 5}}>
-        <FamilyList familyMembers={[...this.state.contacts, ...this.state.contacts, ...this.state.contacts]}/>
+        <FamilyList familyMembers={[...this.state.contacts]}/>
       </View>
 
   }
