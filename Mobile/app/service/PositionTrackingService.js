@@ -4,6 +4,7 @@ import GeolocationService from "./GeolocationService";
 import SessionService from "./SessionService";
 import {hide, showToast} from 'react-native-notifyer';
 import {AsyncStorage} from 'react-native';
+import formatDateForBackend from "../util/formatDateForBackend";
 
 class PositionTrackingService {
 
@@ -186,9 +187,12 @@ class PositionTrackingService {
 
     let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
 
+    let locationDate = formatDateForBackend(new Date());
+
     let currentPositionBody = {
       "Latitude": deviceLocation.latitude,
-      "Longitude": deviceLocation.longitude
+      "Longitude": deviceLocation.longitude,
+      "Creation": locationDate,
     };
 
     console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
