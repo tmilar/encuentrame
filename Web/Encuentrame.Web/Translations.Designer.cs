@@ -295,6 +295,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Todos los eventos vs. con emergencia.
+        /// </summary>
+        public static string AllEventsVsInEmergencyEvents {
+            get {
+                return ResourceManager.GetString("AllEventsVsInEmergencyEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enviar a Todos.
         /// </summary>
         public static string AllowEveryone {
@@ -1474,6 +1483,24 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eventos por estado.
+        /// </summary>
+        public static string EventsByStatus {
+            get {
+                return ResourceManager.GetString("EventsByStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eventos en emergencia.
+        /// </summary>
+        public static string EventsInEmergency {
+            get {
+                return ResourceManager.GetString("EventsInEmergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelado.
         /// </summary>
         public static string EventStatusEnumCancel {
@@ -1875,6 +1902,24 @@ namespace Encuentrame.Web {
         public static string Image {
             get {
                 return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En emergencia.
+        /// </summary>
+        public static string InEmergency {
+            get {
+                return ResourceManager.GetString("InEmergency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En progreso.
+        /// </summary>
+        public static string InProgress {
+            get {
+                return ResourceManager.GetString("InProgress", resourceCulture);
             }
         }
         
@@ -3049,6 +3094,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pendiente.
+        /// </summary>
+        public static string Pending {
+            get {
+                return ResourceManager.GetString("Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pend/Desp/Pedido.
         /// </summary>
         public static string PendingDispachedOrderDisplay {
@@ -3072,6 +3126,33 @@ namespace Encuentrame.Web {
         public static string PendingToDeliver {
             get {
                 return ResourceManager.GetString("PendingToDeliver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personas en eventos.
+        /// </summary>
+        public static string PeopleInEvents {
+            get {
+                return ResourceManager.GetString("PeopleInEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gente a la que estoy siguiendo.
+        /// </summary>
+        public static string PeopleThatIAmTracking {
+            get {
+                return ResourceManager.GetString("PeopleThatIAmTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personas que no responden.
+        /// </summary>
+        public static string PeopleWithoutAnswer {
+            get {
+                return ResourceManager.GetString("PeopleWithoutAnswer", resourceCulture);
             }
         }
         
@@ -4404,6 +4485,15 @@ namespace Encuentrame.Web {
         public static string UserUsernameUniqueException {
             get {
                 return ResourceManager.GetString("UserUsernameUniqueException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ver detalles.
+        /// </summary>
+        public static string ViewDetails {
+            get {
+                return ResourceManager.GetString("ViewDetails", resourceCulture);
             }
         }
         

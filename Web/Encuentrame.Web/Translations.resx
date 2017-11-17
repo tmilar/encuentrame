@@ -1596,4 +1596,34 @@
   <data name="SeenWithoutAnswer" xml:space="preserve">
     <value>No se</value>
   </data>
+  <data name="PeopleThatIAmTracking" xml:space="preserve">
+    <value>Gente a la que estoy siguiendo</value>
+  </data>
+  <data name="PeopleInEvents" xml:space="preserve">
+    <value>Personas en eventos</value>
+  </data>
+  <data name="EventsInEmergency" xml:space="preserve">
+    <value>Eventos en emergencia</value>
+  </data>
+  <data name="PeopleWithoutAnswer" xml:space="preserve">
+    <value>Personas que no responden</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver detalles</value>
+  </data>
+  <data name="InEmergency" xml:space="preserve">
+    <value>En emergencia</value>
+  </data>
+  <data name="EventsByStatus" xml:space="preserve">
+    <value>Eventos por estado</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>En progreso</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="AllEventsVsInEmergencyEvents" xml:space="preserve">
+    <value>Todos los eventos vs. con emergencia</value>
+  </data>
 </root>

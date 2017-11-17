@@ -1,5 +1,6 @@
 ﻿@using Encuentrame.Web
 @using Encuentrame.Support
+@model Encuentrame.Web.Models.Homes.HomeModel
 @{
     ViewBag.Title = Translations.HomeTitle; ;
 }
@@ -17,17 +18,17 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <span class="glyphicon glyphicon-tasks big-icon" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-pushpin big-icon" aria-hidden="true"></span>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">58%</div>
-                        <div>Ordenes finalizadas hoy</div>
+                        <div class="huge">@Model.PeopleThatIAmTracking</div>
+                        <div>@Translations.PeopleThatIAmTracking</div>
                     </div>
                 </div>
             </div>
-            <a href="@Url.Action("Index", "Home")">
+            <a href="@Url.Action("Index", "ManageEvent")">
                 <div class="panel-footer">
-                    <span class="pull-left">Ver detalles</span>
+                    <span class="pull-left">@Translations.ViewDetails</span>
                     <span class="pull-right glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                     <div class="clearfix"></div>
                 </div>
@@ -39,53 +40,19 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <span class="glyphicon glyphicon-calendar big-icon" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-stats big-icon" aria-hidden="true"></span>
                     </div>
                     <div class="col-xs-9 text-right">
 
-                        <div class="big">
-                            From: <strong>@SystemDateTime.Now.ToShortDateString()</strong>
-                        </div>
-                        <div class="big">
-                            To: <strong>@SystemDateTime.Now.ToShortDateString()</strong>
-                        </div>
-                        <div>Current performance cycle</div>
+                        <div class="huge">@Model.PeopleInEvents</div>
+                        <div>@Translations.PeopleInEvents</div>
 
                     </div>
                 </div>
             </div>
-            <a href="@Url.Action("Index", "Home")">
+            <a href="@Url.Action("Index", "ManageEvent")">
                 <div class="panel-footer">
-                    <span class="pull-left">Ver detalles</span>
-                    <span class="pull-right glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <span class="glyphicon glyphicon-calendar big-icon" aria-hidden="true"></span>
-                    </div>
-                    <div class="col-xs-9 text-right">
-
-                        <div class="big">
-                            From: <strong>@SystemDateTime.Now.ToShortDateString()</strong>
-                        </div>
-                        <div class="big">
-                            To: <strong>@SystemDateTime.Now.ToShortDateString()</strong>
-                        </div>
-                        <div>Current performance cycle</div>
-
-                    </div>
-                </div>
-            </div>
-            <a href="@Url.Action("Index", "Home")">
-                <div class="panel-footer">
-                    <span class="pull-left">Ver detalles</span>
+                    <span class="pull-left">@Translations.ViewDetails</span>
                     <span class="pull-right glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                     <div class="clearfix"></div>
                 </div>
@@ -97,24 +64,44 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <span class="glyphicon glyphicon-calendar big-icon" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-bullhorn big-icon" aria-hidden="true"></span>
                     </div>
                     <div class="col-xs-9 text-right">
 
-                        <div class="big">
-                            From: <strong>@SystemDateTime.Now.ToShortDateString()</strong>
-                        </div>
-                        <div class="big">
-                            To: <strong>@SystemDateTime.Now.ToShortDateString()</strong>
-                        </div>
-                        <div>Current performance cycle</div>
+                        <div class="huge">@Model.EventsInEmergency</div>
+                        <div>@Translations.EventsInEmergency</div>
 
                     </div>
                 </div>
             </div>
-            <a href="@Url.Action("Index", "Home")">
+            <a href="@Url.Action("Index", "ManageEvent")">
                 <div class="panel-footer">
-                    <span class="pull-left">Ver detalles</span>
+                    <span class="pull-left">@Translations.ViewDetails</span>
+                    <span class="pull-right glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span class="glyphicon glyphicon-question-sign big-icon" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-xs-9 text-right">
+
+
+                        <div class="huge">@Model.PeopleWithoutAnswer</div>
+                        <div>@Translations.PeopleWithoutAnswer</div>
+
+                    </div>
+                </div>
+            </div>
+            <a href="@Url.Action("Index", "ManageEvent")">
+                <div class="panel-footer">
+                    <span class="pull-left">@Translations.ViewDetails</span>
                     <span class="pull-right glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                     <div class="clearfix"></div>
                 </div>
@@ -127,21 +114,21 @@
     <div class="col-lg-6 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Linea title</h3>
+                <h3 class="panel-title">@Translations.AllEventsVsInEmergencyEvents</h3>
             </div>
             <div class="panel-body">
-                <canvas id="lineChart" class="chart"></canvas>
+                <canvas id="eventsAlongTheTimeChart" data-url="@Url.Action("EventsAlongTheTime")"  class="chart"></canvas>
             </div>
         </div>
     </div>
     <div class="col-lg-6 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Pie title</h3>
+                <h3 class="panel-title">@Translations.EventsByStatus</h3>
             </div>
             <div class="panel-body">
-                <canvas id="pieChart" class="chart"></canvas>
-                <div id="pieLegend" class="pie-chart-legend"></div>
+                <canvas id="eventsByStatus" data-url="@Url.Action("EventsByStatus")" class="chart"></canvas>
+                <div id="eventsByStatusLegend" class="pie-chart-legend"></div>
             </div>
         </div>
     </div>

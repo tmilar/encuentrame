@@ -208,6 +208,7 @@
     <Compile Include="Helpers\DataTable\ViewModels\DataTableViewModel.cs" />
     <Compile Include="Helpers\LoggedUserHelper.cs" />
     <Compile Include="Models\Accounts\LoggedUserHeaderModel.cs" />
+    <Compile Include="Models\Apis\Accounts\UserGetUpdateApiModel.cs" />
     <Compile Include="Models\Apis\Accounts\UserListApiModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivitiesApiResultModel.cs" />
     <Compile Include="Models\Apis\Activities\ActivityApiModel.cs" />
@@ -245,6 +246,8 @@
     <Compile Include="Models\Events\EventListModel.cs" />
     <Compile Include="Models\Events\EventModel.cs" />
     <Compile Include="Models\EventMonitors\EventMonitorModel.cs" />
+    <Compile Include="Models\Homes\HomeModel.cs" />
+    <Compile Include="Models\Homes\PieModel.cs" />
     <Compile Include="Models\Positions\PositionListModel.cs" />
     <Compile Include="Models\Apis\SoughtPersons\SoughtPersonApiResultModel.cs" />
     <Compile Include="Models\Apis\SoughtPersons\SoughtPersonSeenApiModel.cs" />

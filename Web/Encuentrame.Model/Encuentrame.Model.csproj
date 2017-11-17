@@ -110,6 +110,10 @@
     <Compile Include="Contacts\ContactCommand.cs" />
     <Compile Include="Contacts\ContactRequestStatus.cs" />
     <Compile Include="Contacts\IContactCommand.cs" />
+    <Compile Include="Dashboards\DashboardCommand.cs" />
+    <Compile Include="Dashboards\EventsAlongTheTimeQuantityInfo.cs" />
+    <Compile Include="Dashboards\EventStatusQuantityInfo.cs" />
+    <Compile Include="Dashboards\IDashboardCommand.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="Events\EventMonitorPositionInfo.cs" />
     <Compile Include="Events\EventMonitorUserInfo.cs" />

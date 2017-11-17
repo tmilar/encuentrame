@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Accounts;
@@ -23,8 +20,8 @@ namespace Encuentrame.Web.Controllers.Apis
         [Inject]
         public IUserCommand UserCommand { get; set; }
 
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.HttpPost]
+        [AllowAnonymous]
+        [HttpPost]
         public IHttpActionResult Create(UserApiModel userApiModel)
         {
 
@@ -67,8 +64,8 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
-        [System.Web.Http.HttpPost]
-        public IHttpActionResult Update(UserApiModel userApiModel)
+        [HttpPost]
+        public IHttpActionResult Update(UserGetUpdateApiModel userApiModel)
         {
 
             if (userApiModel == null)
@@ -89,7 +86,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 EmailAlternative = userApiModel.EmailAlternative,
                 InternalNumber = userApiModel.InternalNumber,
                 PhoneNumber = userApiModel.PhoneNumber,
-                MobileNumber = userApiModel.MobileNumber,
+                MobileNumber = userApiModel.MobileNumber
             };
 
             UserCommand.EditRegister(userParameters);
@@ -99,13 +96,13 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public IHttpActionResult Devices(DeviceApiModel deviceApiModel)
         {
             var deviceParameters = new UserCommand.DeviceParameters
             {
-                UserId = this.GetIdUserLogged(),
-                Token = deviceApiModel.Token,
+                UserId = GetIdUserLogged(),
+                Token = deviceApiModel.Token
             };
 
             UserCommand.SetDevice(deviceParameters);
@@ -113,12 +110,12 @@ namespace Encuentrame.Web.Controllers.Apis
             return Ok();
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public IHttpActionResult Get()
         {
             var user = UserCommand.Get(GetIdUserLogged());
 
-            var userApiModel = new UserApiModel()
+            var userApiModel = new UserGetUpdateApiModel
             {
                 Username = user.Username,
                 Firstname = user.Firstname,
@@ -127,7 +124,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 EmailAlternative = user.EmailAlternative,
                 InternalNumber = user.InternalNumber,
                 PhoneNumber = user.PhoneNumber,
-                MobileNumber = user.MobileNumber,
+                MobileNumber = user.MobileNumber
 
             };
 
@@ -135,14 +132,14 @@ namespace Encuentrame.Web.Controllers.Apis
         }
 
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public IHttpActionResult GetAll()
         {
             var users = UserCommand.ListUsers();
             var list = new List<UserApiResultModel>();
             foreach (var user in users)
             {
-                var userApiModel = new UserApiResultModel()
+                var userApiModel = new UserApiResultModel
                 {
                     Id = user.Id,
                     Username = user.Username,
@@ -152,7 +149,7 @@ namespace Encuentrame.Web.Controllers.Apis
                     EmailAlternative = user.EmailAlternative,
                     InternalNumber = user.InternalNumber,
                     PhoneNumber = user.PhoneNumber,
-                    MobileNumber = user.MobileNumber,
+                    MobileNumber = user.MobileNumber
                 };
 
                 list.Add(userApiModel);
@@ -163,8 +160,8 @@ namespace Encuentrame.Web.Controllers.Apis
             return Ok(list);
         }
 
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.AllowAnonymous]
+        [HttpGet]
+        [AllowAnonymous]
         public HttpResponseMessage GetImage(int id)
         {
             try
@@ -190,10 +187,10 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public IHttpActionResult UploadImage()
         {
-            var user = UserCommand.Get(this.GetIdUserLogged());
+            var user = UserCommand.Get(GetIdUserLogged());
 
             foreach (string file in HttpContext.Current.Request.Files)
             {

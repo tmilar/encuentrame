@@ -127,6 +127,15 @@ namespace Encuentrame.Model.AreYouOks
 
         }
 
+        public void CancelAskFromEvent(Event eventt)
+        {
+            var areYouOks= AreYouOkEvents.Where(x => x.Event == eventt);
+
+            foreach (var areYouOk in areYouOks)
+            {
+                AreYouOkEvents.Remove(areYouOk);
+            }
+        }
 
         public void AskFromEvent(Event eventt)
         {
@@ -384,6 +393,6 @@ namespace Encuentrame.Model.AreYouOks
         }
 
 
-
+       
     }
 }

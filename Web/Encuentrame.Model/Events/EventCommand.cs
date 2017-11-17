@@ -123,6 +123,7 @@ namespace Encuentrame.Model.Events
             {
                 eventt.Status = EventStatusEnum.InProgress;
                 eventt.EmergencyDateTime = null;
+                AreYouOkCommand.CancelAskFromEvent(eventt);
             }
             else
             {
