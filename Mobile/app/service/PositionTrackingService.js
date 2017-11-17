@@ -7,7 +7,7 @@ import {AsyncStorage} from 'react-native';
 
 class PositionTrackingService {
 
-  static POSITION_SET_INTERVAL = 5 * 60 * 1000; // 5 MINUTES
+  static POSITION_SET_INTERVAL = 1 * 60 * 1000; // 1 MINUTE
   static POSITION_SET_INTERVAL_DELTA = 60 * 1000; // +/- 1 MINUTE (60 seconds)
 
   static INITIAL_TRACKING_ENABLED = true;
