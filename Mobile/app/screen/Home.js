@@ -42,11 +42,6 @@ export default class Home extends Component {
     this.setState({trackingEnabled});
   };
 
-  onPressTitle() {
-    const {navigate} = this.props.navigation;
-    navigate('AreYouOk');
-  }
-
   onPressTrackToggle = async () => {
     let prevTrackingEnabled = this.state.trackingEnabled;
     let alertMsg;
@@ -71,7 +66,7 @@ export default class Home extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
-          <Text style={text.p} onPress={this.onPressTitle}>
+          <Text style={text.p}>
             Home
           </Text>
           <NewsListContainer/>
