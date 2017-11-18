@@ -65,19 +65,20 @@ class NewsService {
    * Store new newsItem .
    *
    * @param type
-   * @param message
+   * @param data
    * @returns {Promise.<void>}
    */
   saveNews = async ({type, data}) => {
     let date = new Date();
-    let timestamp = date.getTime();
+    let expires = new Date(date.getTime() + this.NEWS_TTL).getTime();
     let id = type + date;
+
     let newsItem = {
       type,
       time: date,
-      data: data,
-      id: id,
-      expires: new Date(timestamp + this.NEWS_TTL).getTime()
+      data,
+      id,
+      expires
     };
 
     let currentNews = await this.getCurrentNews();

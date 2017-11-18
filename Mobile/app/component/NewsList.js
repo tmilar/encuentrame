@@ -22,30 +22,28 @@ export default class NewsList extends Component {
     NewsDispatcher.handleNewsAction(news);
   };
 
-  renderNewsListItem = (news) => {
-    let {message, Icon, date} = NewsDispatcher.getNewsData(news);
-    let myView = <TouchableNativeFeedback style={{flex: 1}} onPress={() => this._handleNewsPress(news)}
-                               background={TouchableNativeFeedback.SelectableBackground()}>
-        <Card containerStyle={{padding: 5}}>
-          <View style={{
-            flex: 1,
-            flexDirection: 'row',
-            height: 60,
-            justifyContent: "space-around"
-          }}>
-            <View style={{justifyContent: "space-around", width: 60, alignItems: 'center'}}>
-              {Icon}
-            </View>
-            <View style={{justifyContent: "space-around", width: 300}}>
-              <Text style={{fontSize: 14, fontWeight: 'bold'}}>
-                {`${message}.  ${date}`}
-              </Text>
-            </View>
+  renderNewsListItem = (newsItem) => {
+    let {message, Icon, date} = NewsDispatcher.getNewsData(newsItem);
+    return <TouchableNativeFeedback style={{flex: 1}} onPress={() => this._handleNewsPress(newsItem)}
+                                    background={TouchableNativeFeedback.SelectableBackground()}>
+      <Card containerStyle={{padding: 5}}>
+        <View style={{
+          flex: 1,
+          flexDirection: 'row',
+          height: 60,
+          justifyContent: "space-around"
+        }}>
+          <View style={{justifyContent: "space-around", width: 60, alignItems: 'center'}}>
+            {Icon}
           </View>
-        </Card>
-      </TouchableNativeFeedback>;
-
-    return myView;
+          <View style={{justifyContent: "space-around", width: 300}}>
+            <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+              {`${message}.  ${date}`}
+            </Text>
+          </View>
+        </View>
+      </Card>
+    </TouchableNativeFeedback>;
   };
 
   render() {

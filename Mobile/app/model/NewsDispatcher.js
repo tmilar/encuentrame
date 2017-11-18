@@ -5,8 +5,6 @@ import {Alert} from "react-native";
 import {Ionicons, EvilIcons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons';
 import {prettyDate} from "../util/prettyDate";
 
-// {onReceive {type, data, navigate}, displayComponent {text, iconComponent}}
-
 const NewsTypes = {
   "Areyouok.Ask": {
     dispatch: (navigation, newsData, newsId) => {
@@ -17,9 +15,9 @@ const NewsTypes = {
       text: (data, response) =>{
         let responded = "";
         if (response !== undefined){
-          responded = ` Respondiste que ${response.replied ? 'sí' : 'no'}`
+          responded = `Respondiste que ${response.replied ? 'sí' : 'no'}.`
         }
-        return `Te preguntaron si estabas bien.${responded}`;
+        return `Te preguntaron si estabas bien. ${responded}`;
       },
       icon: () => <EvilIcons name={'question'} style={{color: 'orange'}} size={40}/>
     },
@@ -37,7 +35,7 @@ const NewsTypes = {
       );
     },
     display: {
-      text: ({Ok, TargetUserId}) => `usuario ${TargetUserId} indico que ${Ok ? " está bien. " : " necesita ayuda."}`,
+      text: ({Ok, TargetUserId}) => `Usuario ${TargetUserId} indicó que ${Ok ? "está bien" : "necesita ayuda"}.`,
       icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}} size={40}/>
     },
     hasAction : false
@@ -56,7 +54,7 @@ const NewsTypes = {
       text: (data, yourResponse) =>{
         let response = `${data.Username} te ha enviado una solicitud de contacto.`;
         if (yourResponse !== undefined){
-          response = `${yourResponse.replied ? 'Aceptaste' : 'Rechazaste'} la solicitud de contacto de ${data.Username}`
+          response = `${yourResponse.replied ? 'Aceptaste' : 'Rechazaste'} la solicitud de contacto de ${data.Username}.`
         }
         return response;
       },
@@ -83,7 +81,7 @@ const NewsTypes = {
       navigation.navigate("Find", {emergency: true});
     },
     display: {
-      text: `Se ha notificado de una emergencia.`,
+      text: `Se ha notificado de un incidente en el evento.`,
       icon: () => <FontAwesome name={'warning'} style={{color: 'red'}} size={40}/>
     },
     hasAction : true
@@ -115,7 +113,7 @@ class NewsDispatcher {
     NewsTypes[type].dispatch(this.navigation, newsData.data, newsData.id);
   };
 
-  handleNewsAction = ({type, time, data, id, resolution}) => {
+  handleNewsAction = ({type, data, id, resolution}) => {
     if (resolution || !NewsTypes[type].hasAction)
       return;
     NewsTypes[type].dispatch(this.navigation, data, id);
