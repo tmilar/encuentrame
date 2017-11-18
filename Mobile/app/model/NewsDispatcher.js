@@ -12,16 +12,16 @@ const NewsTypes = {
       navigation.navigate("AreYouOk", {newsId});
     },
     display: {
-      text: (data, response) =>{
+      text: (data, response) => {
         let responded = "";
-        if (response !== undefined){
+        if (response !== undefined) {
           responded = `Respondiste que ${response.replied ? 'sí' : 'no'}.`
         }
         return `Te preguntaron si estabas bien. ${responded}`;
       },
       icon: () => <EvilIcons name={'question'} style={{color: 'orange'}} size={40}/>
     },
-    hasAction : true
+    hasAction: true
   },
   "Areyouok.Reply": {
     dispatch: (navigation, {Ok, TargetUserId}) => {
@@ -36,9 +36,10 @@ const NewsTypes = {
     },
     display: {
       text: ({Ok, TargetUserId}) => `Usuario ${TargetUserId} indicó que ${Ok ? "está bien" : "necesita ayuda"}.`,
-      icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}} size={40}/>
+      icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}}
+                                              size={40}/>
     },
-    hasAction : false
+    hasAction: false
   },
   "Contact.Request": {
     dispatch: (navigation, newsData, newsId) => {
@@ -51,16 +52,16 @@ const NewsTypes = {
       navigation.navigate("ContactRequest", params);
     },
     display: {
-      text: (data, yourResponse) =>{
+      text: (data, yourResponse) => {
         let response = `${data.Username} te ha enviado una solicitud de contacto.`;
-        if (yourResponse !== undefined){
+        if (yourResponse !== undefined) {
           response = `${yourResponse.replied ? 'Aceptaste' : 'Rechazaste'} la solicitud de contacto de ${data.Username}.`
         }
         return response;
       },
       icon: () => <Ionicons name={'md-contacts'} style={{color: 'black'}} size={40}/>
     },
-    hasAction : true
+    hasAction: true
   },
   "Contact.Confirm": {
     dispatch: (navigation, {Username}) => {
@@ -73,7 +74,7 @@ const NewsTypes = {
       text: ({Username}) => `${Username} ha aceptado tu solicitud de contacto.`,
       icon: () => <MaterialCommunityIcons name={'account-check'} style={{color: 'black'}} size={40}/>
     },
-    hasAction : false
+    hasAction: false
   },
   "Event/StartCollaborativeSearch": {
     dispatch: (navigation) => {
@@ -84,7 +85,7 @@ const NewsTypes = {
       text: `Se ha notificado de un incidente en el evento.`,
       icon: () => <FontAwesome name={'warning'} style={{color: 'red'}} size={40}/>
     },
-    hasAction : true
+    hasAction: true
   },
   "default": {
     display: {
@@ -127,7 +128,7 @@ class NewsDispatcher {
     let date = prettyDate(new Date(time));
     return {message, Icon, date, id}
   };
-  resolveNews = async(newsId, resolution) => {
+  resolveNews = async (newsId, resolution) => {
     return await NewsService.updateNews(newsId, resolution);
   };
 }

@@ -47,20 +47,20 @@ export default class NewsList extends Component {
   };
 
   render() {
-    if (this.props.news.length === 0){
+    if (this.props.news.length === 0) {
       return this.renderEmptyNewsListMessage();
     }
     this.news = this.datasource.cloneWithRows(this.props.news);
     return <View style={{flex: 1}}>
-            <ScrollView scrollsToTop={false} style={{flex: 1}}>
-              <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
-                <ListView style={{flex: 1}}
-                          dataSource={this.news}
-                          renderRow={this.renderNewsListItem}
-                          enableEmptySections={true}
-                />
-              </View>
-            </ScrollView>
-          </View>;
+      <ScrollView scrollsToTop={false} style={{flex: 1}}>
+        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+          <ListView style={{flex: 1}}
+                    dataSource={this.news}
+                    renderRow={this.renderNewsListItem}
+                    enableEmptySections={true}
+          />
+        </View>
+      </ScrollView>
+    </View>;
   }
 }
