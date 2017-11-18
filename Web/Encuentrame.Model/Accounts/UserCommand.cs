@@ -16,6 +16,10 @@ namespace Encuentrame.Model.Accounts
         [Inject]
         public IBag<User> Users { get; set; }
 
+        [Inject]
+        public IBag<Device> Devices { get; set; }
+
+
 
         [Inject]
         public IBag<Business> Businesses { get; set; }
@@ -54,7 +58,7 @@ namespace Encuentrame.Model.Accounts
             //AuditContextManager.SetObject(user);
             //AuditContextManager.Add(TranslationService.Translate("Username"), user.Username);
         }
-        
+
         public void NewRegister(CreateOrEditParameters userParameters)
         {
             if (Users.Where(x => x.Username == userParameters.Username).Any())
@@ -84,9 +88,9 @@ namespace Encuentrame.Model.Accounts
             Users.Put(user);
         }
 
-        public void EditRegister( CreateOrEditParameters userParameters)
+        public void EditRegister(CreateOrEditParameters userParameters)
         {
-            var user = Users.Where(x=>x.Username==userParameters.Username).First();
+            var user = Users.Where(x => x.Username == userParameters.Username).First();
             user.Lastname = userParameters.Lastname;
             user.Firstname = userParameters.Firstname;
             user.Email = userParameters.Email;
@@ -112,7 +116,7 @@ namespace Encuentrame.Model.Accounts
             user.InternalNumber = userParameters.InternalNumber;
             user.MobileNumber = userParameters.MobileNumber;
             user.PhoneNumber = userParameters.PhoneNumber;
-            
+
             if (userParameters.Image.NotIsNullOrEmpty())
             {
                 user.Image = userParameters.Image;
@@ -140,18 +144,20 @@ namespace Encuentrame.Model.Accounts
         {
             var user = Users[deviceParameters.UserId];
 
-            if (!user.Devices.Where(x => x.Token == deviceParameters.Token).Any())
+
+            user.Devices.Clear();
+            
+
+            var device = new Device()
             {
-                var device = new Device()
-                {
-                    Token = deviceParameters.Token,
-                    User = user
-                };
+                Token = deviceParameters.Token,
+                User = user
+            };
 
-                user.Devices.Add(device);
-            }
+            user.Devices.Add(device);
 
-         
+
+
         }
 
         public IList<User> GetUsersByIds(IEnumerable<int> ids)
@@ -166,14 +172,14 @@ namespace Encuentrame.Model.Accounts
 
         public IList<User> ListUsers()
         {
-            return Users.Where(x => x.DeletedKey == null && x.Role==RoleEnum.User).ToList();
+            return Users.Where(x => x.DeletedKey == null && x.Role == RoleEnum.User).ToList();
         }
 
 
 
         public class CreateOrEditParameters
         {
-           
+
             public string Username { get; set; }
             public string Password { get; set; }
             public string Lastname { get; set; }
@@ -188,7 +194,7 @@ namespace Encuentrame.Model.Accounts
             public int Business { get; set; }
         }
 
-        public class DeviceParameters 
+        public class DeviceParameters
         {
             public int UserId { get; set; }
             public string Token { get; set; }

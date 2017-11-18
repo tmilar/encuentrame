@@ -30,6 +30,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 Heading = positionApiModel.Heading,
                 Speed = positionApiModel.Speed,
                 UserId = this.GetIdUserLogged(),
+                Creation = positionApiModel.Creation
             });
 
             return Ok(new PositionApiResultModel()

@@ -17,6 +17,8 @@ namespace Encuentrame.Web.Models.Apis.Positions
         /// </summary>
         public decimal Heading { get; set; }
         public decimal Speed { get; set; }
-        
+
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "RequiredError")]
+        public DateTime Creation{ get; set; }
     }
 }

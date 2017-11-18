@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Supports;
@@ -34,7 +35,7 @@ namespace Encuentrame.Model.Positions
                 Speed = positionParameters.Speed,
 
 
-                Creation = SystemDateTime.Now,
+                Creation = positionParameters.Creation
             };
 
 
@@ -76,7 +77,7 @@ namespace Encuentrame.Model.Positions
             /// </summary>
             public decimal Heading { get; set; }
             public decimal Speed { get; set; }
-
+            public DateTime Creation { get; set; }
         }
     }
 }
