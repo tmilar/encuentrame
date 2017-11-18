@@ -50,8 +50,9 @@ export default class UserProfile extends Component {
       console.error("Error al actualizar el perfil de usuario: ", e);
       Alert.alert("Error", "¡Ups! Ocurrió un error al actualizar el perfil de usuario. \n" + (e.message || e));
       return;
+    } finally {
+      this.setState({loading: false});
     }
-    this.setState({loading: false});
     showToast("¡Datos actualizados exitosamente!", {duration: 2000});
     this._goBack();
   };
