@@ -42,6 +42,10 @@ export default class Home extends Component {
     this.setState({trackingEnabled});
   };
 
+  onPressTitle() {
+
+  }
+
   onPressTrackToggle = async () => {
     let prevTrackingEnabled = this.state.trackingEnabled;
     let alertMsg;

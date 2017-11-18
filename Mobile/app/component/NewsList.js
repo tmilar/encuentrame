@@ -1,35 +1,66 @@
-import React from 'react';
-import {Card, Icon} from 'react-native-elements';
-import {Text, View} from "react-native";
+import React, {Component} from 'react';
+import {Card} from 'react-native-elements';
+import {ListView, ScrollView, Text, TouchableHighlight, TouchableNativeFeedback, View} from "react-native";
+import NewsDispatcher from '../model/NewsDispatcher';
 
-const NewsList = props =>
-  <View>
-    {props.news.map((n, i) => {
-      return (
-        <Card key={i} containerStyle={{padding: 5}}>
-          <View style={{
-            flexDirection: 'row',
-            height: 60,
-          }}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Icon name={n.icon} size={50} color='#43484d'/>
-            </View>
-            <View style={{flex: 3, padding: 5}}>
-              <Text style={{fontSize: 16}}>
-                { !!n.message.started_by.length &&
-                <Text style={{fontWeight: 'bold'}}>{n.message.started_by + " "}</Text>}
-                {n.message.action}
-              </Text>
-            </View>
+export default class NewsList extends Component {
+
+  datasource = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1 !== r2,
+  });
+
+
+  renderEmptyNewsListMessage = () => {
+    return <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+      <Text style={{textAlign: "center"}} note>
+        {"No hay novedades."}
+      </Text>
+    </View>;
+  };
+
+  _handleNewsPress = (news) => {
+    NewsDispatcher.handleNewsAction(news);
+  };
+
+  renderNewsListItem = (newsItem) => {
+    let {message, Icon, date} = NewsDispatcher.getNewsData(newsItem);
+    return <TouchableNativeFeedback style={{flex: 1}} onPress={() => this._handleNewsPress(newsItem)}
+                                    background={TouchableNativeFeedback.SelectableBackground()}>
+      <Card containerStyle={{padding: 5}}>
+        <View style={{
+          flex: 1,
+          flexDirection: 'row',
+          height: 60,
+          justifyContent: "space-around"
+        }}>
+          <View style={{justifyContent: "space-around", width: 60, alignItems: 'center'}}>
+            {Icon}
           </View>
-        </Card>
-      )
-    })}
-  </View>
+          <View style={{justifyContent: "space-around", width: 300}}>
+            <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+              {`${message}.  ${date}`}
+            </Text>
+          </View>
+        </View>
+      </Card>
+    </TouchableNativeFeedback>;
+  };
 
-export default NewsList;
+  render() {
+    if (this.props.news.length === 0) {
+      return this.renderEmptyNewsListMessage();
+    }
+    this.news = this.datasource.cloneWithRows(this.props.news);
+    return <View style={{flex: 1}}>
+      <ScrollView scrollsToTop={false} style={{flex: 1}}>
+        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: "center"}}>
+          <ListView style={{flex: 1}}
+                    dataSource={this.news}
+                    renderRow={this.renderNewsListItem}
+                    enableEmptySections={true}
+          />
+        </View>
+      </ScrollView>
+    </View>;
+  }
+}
