@@ -19,12 +19,16 @@ export default class AreYouOk extends Component {
     this.setState({modalVisible: visible});
   };
 
+  _resolveNews = async (replied) => {
+    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: replied});
+  };
+
   _handleImOk = async () => {
     Alert.alert(
       '¡Ok!',
       `Avisando a tus amigos`
     );
-    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: true});
+    await this._resolveNews(true);
     this._goBack();
     try {
       await AreYouOkService.reply(true);
@@ -38,7 +42,7 @@ export default class AreYouOk extends Component {
       '¡No te muevas!',
       `Vamos a buscar ayuda.`
     );
-    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: false});
+    await this._resolveNews(false);
     this._goBack();
     try {
       await AreYouOkService.reply(false);
