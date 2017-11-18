@@ -36,12 +36,16 @@ export default class ContactRequest extends Component {
   };
 
   _handleAcceptContactRequest = async () => {
-    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: true});
+    await this._resolveNews(true);
     await this._replyRequest(true);
   };
 
+  _resolveNews = async (replied) => {
+    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: replied});
+  };
+
   _handleDenyContactRequest = async () => {
-    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: false});
+    await this._resolveNews(false);
     await this._replyRequest(false);
   };
 
