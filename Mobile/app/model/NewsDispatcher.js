@@ -9,14 +9,21 @@ import {prettyDate} from "../util/prettyDate";
 
 const NewsTypes = {
   "Areyouok.Ask": {
-    dispatch: (navigation) => {
+    dispatch: (navigation, newsData, newsId) => {
       console.log(`[PushNotificationService] Navigating to 'AreYouOk' screen.`);
-      navigation.navigate("AreYouOk");
+      navigation.navigate("AreYouOk", {newsId});
     },
     display: {
-      text: `Te preguntaron si estabas bien.`,
+      text: (data, response) =>{
+        let responded = "";
+        if (response !== undefined){
+          responded = ` Respondiste que ${response.replied ? 'sí' : 'no'}`
+        }
+        return `Te preguntaron si estabas bien.${responded}`;
+      },
       icon: () => <EvilIcons name={'question'} style={{color: 'orange'}} size={40}/>
     },
+    hasAction : true
   },
   "Areyouok.Reply": {
     dispatch: (navigation, {Ok, TargetUserId}) => {
@@ -33,21 +40,29 @@ const NewsTypes = {
       text: ({Ok, TargetUserId}) => `usuario ${TargetUserId} indico que ${Ok ? " está bien. " : " necesita ayuda."}`,
       icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}} size={40}/>
     },
+    hasAction : false
   },
   "Contact.Request": {
-    dispatch: (navigation, {UserId, Username}) => {
-      let contactRequestParams = {
-        contactRequestUserId: UserId,
-        contactRequestUsername: Username
+    dispatch: (navigation, newsData, newsId) => {
+      let params = {
+        contactRequestUserId: newsData.UserId,
+        contactRequestUsername: newsData.Username,
+        newsId: newsId
       };
-      console.log(`[PushNotificationService] Navigating to 'ContactRequest' screen.`, contactRequestParams);
-      navigation.navigate("ContactRequest", contactRequestParams);
+      console.log(`[PushNotificationService] Navigating to 'ContactRequest' screen.`, params);
+      navigation.navigate("ContactRequest", params);
     },
     display: {
-      text: ({Username}) => `${Username} te ha enviado una solicitud de contacto.`,
+      text: (data, yourResponse) =>{
+        let response = `${data.Username} te ha enviado una solicitud de contacto.`;
+        if (yourResponse !== undefined){
+          response = `${yourResponse.replied ? 'Aceptaste' : 'Rechazaste'} la solicitud de contacto de ${data.Username}`
+        }
+        return response;
+      },
       icon: () => <Ionicons name={'md-contacts'} style={{color: 'black'}} size={40}/>
     },
-    handle: null //TODO navigate to the contact screen to
+    hasAction : true
   },
   "Contact.Confirm": {
     dispatch: (navigation, {Username}) => {
@@ -59,7 +74,8 @@ const NewsTypes = {
     display: {
       text: ({Username}) => `${Username} ha aceptado tu solicitud de contacto.`,
       icon: () => <MaterialCommunityIcons name={'account-check'} style={{color: 'black'}} size={40}/>
-    }
+    },
+    hasAction : false
   },
   "Event/StartCollaborativeSearch": {
     dispatch: (navigation) => {
@@ -69,7 +85,8 @@ const NewsTypes = {
     display: {
       text: `Se ha notificado de una emergencia.`,
       icon: () => <FontAwesome name={'warning'} style={{color: 'red'}} size={40}/>
-    }
+    },
+    hasAction : true
   },
   "default": {
     display: {
@@ -84,26 +101,36 @@ class NewsDispatcher {
     this.navigation = navigation;
   }
 
-  _getTextMessage = (type, data) => {
+  _getTextMessage = (type, data, resolution) => {
     let {text} = NewsTypes[type].display;
-
-    return typeof text === 'string' ? text : text(data)
+    return typeof text === 'string' ? text : text(data, resolution)
   };
 
   _saveNews = async (type, data) => {
-    const message = this._getTextMessage(type, data);
-    await NewsService.saveNews({type, message, data})
+    return await NewsService.saveNews({type, data})
   };
 
   handleNotification = async ({type, data}) => {
-    await this._saveNews(type, data);
-    NewsTypes[type].dispatch(this.navigation, data);
+    let newsData = await this._saveNews(type, data);
+    NewsTypes[type].dispatch(this.navigation, newsData.data, newsData.id);
   };
 
-  getDisplayData = ({type, message, time, data}) => {
-    let Icon = NewsTypes[type].display.icon(data);
+  handleNewsAction = ({type, time, data, id, resolution}) => {
+    if (resolution || !NewsTypes[type].hasAction)
+      return;
+    NewsTypes[type].dispatch(this.navigation, data, id);
+  };
+
+  getNewsData = ({type, time, data, id, resolution}) => {
+    const message = this._getTextMessage(type, data, resolution);
+
+
+    let Icon = NewsTypes[type].display.icon(data, resolution);
     let date = prettyDate(new Date(time));
-    return {message, Icon, date}
+    return {message, Icon, date, id}
+  };
+  resolveNews = async(newsId, resolution) => {
+    return await NewsService.updateNews(newsId, resolution);
   };
 }
 

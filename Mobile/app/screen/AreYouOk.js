@@ -4,6 +4,7 @@ import {Button} from 'react-native-elements';
 import {text} from '../style';
 import AreYouOkService from '../service/AreYouOkService';
 import {showToast} from "react-native-notifyer";
+import NewsDispatcher from '../model/NewsDispatcher';
 
 export default class AreYouOk extends Component {
   state = {
@@ -23,6 +24,7 @@ export default class AreYouOk extends Component {
       '¡Ok!',
       `Avisando a tus amigos`
     );
+    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: true});
     this._goBack();
     try {
       await AreYouOkService.reply(true);
@@ -36,6 +38,7 @@ export default class AreYouOk extends Component {
       '¡No te muevas!',
       `Vamos a buscar ayuda.`
     );
+    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: false});
     this._goBack();
     try {
       await AreYouOkService.reply(false);

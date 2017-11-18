@@ -2,7 +2,7 @@ import {AsyncStorage} from 'react-native';
 
 class NewsService {
   STORAGE_NEWS_KEY = 'STORAGE_NEWS_KEY';
-  NEWS_TTL = 2 * 60 * 60 * 1000; //half hour
+  NEWS_TTL = 2 * 60 * 60 * 1000;
 
   /**
    * Setup method.
@@ -14,7 +14,6 @@ class NewsService {
    */
   initializeNews = async (onUpdate) => {
     this.onUpdate = onUpdate;
-
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
     if (!currentNewsJson) {
       let currentNews = [];
@@ -37,6 +36,31 @@ class NewsService {
     }
   };
 
+  _dismissNewsById = async (newsId) => {
+    let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
+    if (currentNewsJson) {
+      let currentNews = JSON.parse(currentNewsJson);
+      let finalNews = currentNews.filter((news) => news.id !== newsId);
+      await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
+    }
+  };
+
+  /**
+   * Update news to set response/resolution
+   */
+  updateNews = async (newsId, resolution) => {
+    let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
+    if (currentNewsJson) {
+      let currentNews = JSON.parse(currentNewsJson);
+      let newsIndex = currentNews.findIndex((news) => news.id === newsId);
+      let newsEditing = currentNews[newsIndex];
+      newsEditing.resolution = resolution;
+      currentNews[newsIndex] = newsEditing;
+      await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
+      await this.onUpdate(currentNews);
+    }
+  };
+
   /**
    * Store new newsItem .
    *
@@ -44,14 +68,15 @@ class NewsService {
    * @param message
    * @returns {Promise.<void>}
    */
-  saveNews = async ({type, message, data}) => {
+  saveNews = async ({type, data}) => {
     let date = new Date();
     let timestamp = date.getTime();
+    let id = type + date;
     let newsItem = {
       type,
-      message,
       time: date,
       data: data,
+      id: id,
       expires: new Date(timestamp + this.NEWS_TTL).getTime()
     };
 
@@ -60,12 +85,12 @@ class NewsService {
     await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
 
     await this.onUpdate(currentNews);
+    return newsItem;
   };
 
   /**
    * Clean old news + read and return stored newsItems list.
    *
-   * // TODO don't clean the news here... this method should only parse and return the news.
    * @returns {Promise.<void>}
    */
   getCurrentNews = async () => {
