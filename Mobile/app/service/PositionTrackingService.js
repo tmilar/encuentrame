@@ -181,6 +181,24 @@ class PositionTrackingService {
   };
 
   _postDevicePosition = async () => {
+    let currentPosition = await this._getCurrentDevicePosition();
+
+    console.log("[PositionTrackingService] Posting position: ", currentPosition);
+
+    if (await SessionService.isDevSession()) {
+      showToast("Posting position: " + JSON.stringify(currentPosition));
+    }
+
+    try {
+      await this._postPosition(currentPosition.body);
+    } catch (e) {
+      console.log("[PositionTrackingService] Error when posting position to server. Will retry next time. ", currentPosition);
+      this.pendingPositions = [...(this.pendingPositions || []), currentPosition];
+      throw e;
+    }
+  };
+
+  _getCurrentDevicePosition = async () => {
     this.gpsPositionIndex = (this.gpsPositionIndex || 0) + 1;
 
     if (await SessionService.isDevSession()) {
@@ -202,25 +220,13 @@ class PositionTrackingService {
       index: this.gpsPositionIndex
     };
 
-    console.log("[PositionTrackingService] Posting position: ", currentPosition);
-
-    if (await SessionService.isDevSession()) {
-      showToast("Posting position: " + JSON.stringify(currentPosition));
-    }
-
-    try {
-      await this._postPosition(currentPosition.body);
-    } catch (e) {
-      console.log("[PositionTrackingService] Error when posting position to server. Will retry next time. ", currentPosition);
-      this.pendingPositions = [...(this.pendingPositions || []), currentPosition];
-      throw e;
-    }
+    return currentPosition;
   };
 
-  _postPosition = async (currentPositionBody) => {
+  _postPosition = async (devicePositionBody) => {
     return await Service.sendRequest("Position/set", {
       method: "POST",
-      body: JSON.stringify(currentPositionBody)
+      body: JSON.stringify(devicePositionBody)
     });
   };
 
