@@ -28,11 +28,6 @@ export default class SoughtPeopleContainer extends Component {
   fetchSoughtPeople = async () => {
     let soughtPeople = await SoughtPeopleService.getSoughtPeople();
     this.setState({soughtPeople});
-
-    let debuggingPeople = soughtPeople.map(p => ({
-      ...(p.User), Distance: p.Distance
-    }));
-    console.table(debuggingPeople);
     this.setState({loadingPeople: false});
 
     if (await SessionService.isDevSession()) {

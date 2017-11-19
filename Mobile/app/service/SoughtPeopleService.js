@@ -5,16 +5,21 @@ class SoughtPeopleService {
 
   /**
    * Get sought people list relevant for me.
-   * //TODO returning RANDOM user accounts, replace with actual soughtPeople endpoint when working.
+   *
    * @returns {Promise.<*>}
    */
   getSoughtPeople = async () => {
     let url = "/soughtPeople";
-    // let soughtPeople = await Service.sendRequest(url);
-    let maxCount = 7;
-    let soughtPeople = await this._getSomeUsersAsSoughtPeople(maxCount);
-    // let soughtPeopleRandomized =
-    console.debug(`[SoughtPeopleService] Received ${soughtPeople.length} RANDOMIZED sought people.`);
+    let soughtPeople = await Service.sendRequest(url);
+    // let maxCount = 7;
+    // let soughtPeople = await this._getSomeUsersAsSoughtPeople(maxCount);
+
+    // let debuggingPeople = soughtPeople.map(p => ({
+    //   ...(p.User), Distance: p.Distance
+    // }));
+    console.debug(`[SoughtPeopleService] Received ${soughtPeople.length} sought people.`);
+    console.table(soughtPeople);
+
     return soughtPeople;
   };
 
