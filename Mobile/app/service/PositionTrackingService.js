@@ -180,7 +180,7 @@ class PositionTrackingService {
     Notifications.cancelAllScheduledNotificationsAsync();
   };
 
-  _postDevicePosition = async () => {
+  _postCurrentDevicePosition = async () => {
     let currentPosition = await this._getCurrentDevicePosition();
 
     console.log("[PositionTrackingService] Posting position: ", currentPosition);
@@ -192,9 +192,42 @@ class PositionTrackingService {
     try {
       await this._postPosition(currentPosition.body);
     } catch (e) {
-      console.log("[PositionTrackingService] Error when posting position to server. Will retry next time. ", currentPosition);
+      console.log(`[PositionTrackingService] Error when posting #${currentPosition.index} position to server. Will retry next time. `, currentPosition.body);
       this.pendingPositions = [...(this.pendingPositions || []), currentPosition];
       throw e;
+    }
+  };
+
+  _postPendingDevicePositions = async () => {
+    if (!(this.pendingPositions && this.pendingPositions.length)) {
+      return;
+    }
+
+    let logMsg = `[PositionTrackingService] Posting ${this.pendingPositions.length} pending positions. `;
+    console.log(logMsg, this.pendingPositions);
+
+    if (await SessionService.isDevSession()) {
+      showToast(logMsg);
+    }
+
+    let errors = [];
+    let newPendingPositions = [];
+
+    this.pendingPositions.forEach(async pos => {
+      try {
+        await this._postPosition(pos.body);
+      } catch (e) {
+        errors.push({error: e, position: pos});
+        newPendingPositions.push(pos);
+      }
+    });
+
+    this.pendingPositions = newPendingPositions;
+
+    if(errors.length) {
+      let errMsg = `Hubo un problema al informar ${errors.length} de las #${this.pendingPositions.length} posiciones pendientes...`;
+      console.log(`[PositionTrackingService] ${errMsg}. Errors info: `, errors);
+      throw errMsg;
     }
   };
 
@@ -243,7 +276,14 @@ class PositionTrackingService {
       notification);
 
     try {
-      await this._postDevicePosition();
+      await this._postPendingDevicePositions();
+    } catch (e) {
+      console.log("Problem when sending pending positions to server. ", e);
+      showToast("Problema en la comunicación con el servidor: " + (e.message || e));
+    }
+
+    try {
+      await this._postCurrentDevicePosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
       showToast("Problema en la comunicación con el servidor: " + (e.message || e));
