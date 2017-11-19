@@ -4,6 +4,7 @@ import {Button} from 'react-native-elements';
 import {text} from '../style';
 import AreYouOkService from '../service/AreYouOkService';
 import {showToast} from "react-native-notifyer";
+import NewsDispatcher from '../model/NewsDispatcher';
 
 export default class AreYouOk extends Component {
   state = {
@@ -18,11 +19,16 @@ export default class AreYouOk extends Component {
     this.setState({modalVisible: visible});
   };
 
+  _resolveNews = async (replied) => {
+    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: replied});
+  };
+
   _handleImOk = async () => {
     Alert.alert(
       '¡Ok!',
       `Avisando a tus amigos`
     );
+    await this._resolveNews(true);
     this._goBack();
     try {
       await AreYouOkService.reply(true);
@@ -36,6 +42,7 @@ export default class AreYouOk extends Component {
       '¡No te muevas!',
       `Vamos a buscar ayuda.`
     );
+    await this._resolveNews(false);
     this._goBack();
     try {
       await AreYouOkService.reply(false);

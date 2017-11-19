@@ -1,21 +1,19 @@
 import React, {Component} from 'react';
 import NewsList from "./NewsList";
-import {news} from "../config/newsFixture";
+import NewsService from "../service/NewsService";
 
 export default class NewsListContainer extends Component {
   state = {
     news: []
   };
 
-  async componentDidMount() {
-    let news = await this.fetchNews();
-    this.setState({news});
-  }
+  componentDidMount = async () => {
+    await NewsService.initializeNews(this._handleNewsUpdate);
+  };
 
-  fetchNews() {
-    // TODO fetch news from actual remote API
-    return news;
-  }
+  _handleNewsUpdate = (news) => {
+    this.setState({news})
+  };
 
   render() {
     return <NewsList news={this.state.news}/>;

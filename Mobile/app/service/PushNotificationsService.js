@@ -3,9 +3,11 @@ import Service from './Service';
 import {AsyncStorage} from 'react-native';
 import PermissionsHelper from '../util/PermissionsHelper';
 
-import {Alert} from "react-native";
+// import {Alert} from "react-native";
 import {showToast} from 'react-native-notifyer';
 import SessionService from './SessionService';
+// import NewsService from './NewsService';
+import NewsDispatcher from "../model/NewsDispatcher";
 
 class PushNotificationsService {
 
@@ -92,83 +94,27 @@ class PushNotificationsService {
    * @returns {Promise.<void>}
    */
   setupNotificationsDispatcher = async (navigation) => {
-    Notifications.addListener((notification) => {
+    NewsDispatcher.setup({navigation});
+    Notifications.addListener(async (notification) => {
       if (!this._validRemoteNotification(notification)) {
         return;
       }
 
-      console.debug("[PushNotificationService] Received notification: ", notification);
-      let notificationType = notification.data.type || notification.data.Type;
+      console.debug("[PushNotificationService] Received remote notification: ", notification);
+      let {data} = notification;
+      let type = data.type || data.Type;
 
-      if (notificationType === "Areyouok.Ask") {
-        this.handleAreyouokaskNotif(navigation, notification, notificationType);
-      }
-
-      if (notificationType === "Areyouok.Reply") {
-        this.handleAreyouokReplyNotif(navigation, notification, notificationType);
-      }
-
-      if (notificationType === "Contact.Request") {
-        this.handleContactRequestNotif(navigation, notification, notificationType);
-      }
-
-      if (notificationType === "Contact.Confirm") {
-        this.handleContactRequestConfirmNotif(navigation, notification, notificationType);
-      }
-      if (notificationType === "Event/StartCollaborativeSearch") {
-        this.handleColaborativeSearchNotif(navigation, notification, notificationType);
-      }
-
+      await NewsDispatcher.handleNotification({type, data});
     });
   };
 
-  handleAreyouokaskNotif = (navigation, notification, notificationType) => {
-    console.log(`[PushNotificationService] Notification '${notificationType}'! Navigating to 'AreYouOk' screen.`);
-    navigation.navigate("AreYouOk");
-  };
-
-  handleAreyouokReplyNotif = (navigation, notification, notificationType) => {
-    let reply = notification.data.ok || notification.data.Ok;
-    let targetUserId = notification.data.targetUserId || notification.data.TargetUserId;
-    console.log(`[PushNotificationService] Notification '${notificationType}'! Showing response.`);
-    Alert.alert(
-      "Te respondieron: Estás Bien?",
-      `{usuario ${targetUserId}} indico que ${reply ? " está bien. " : " necesita ayuda."}`
-    );
-  };
-
-  handleContactRequestNotif = (navigation, notification, notificationType) => {
-    let contactRequestUserId = notification.data.UserId;
-    let contactRequestUsername = notification.data.Username;
-
-    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    navigation.navigate("ContactRequest",{contactRequestUserId: contactRequestUserId, contactRequestUsername: contactRequestUsername});
-  };
-
-  handleContactRequestConfirmNotif = (navigation, notification, notificationType) => {
-    let contactRequestUsername = notification.data.Username;
-
-    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    Alert.alert(
-      "Respondieron tu solicitud de amistad",
-      `${contactRequestUsername} ha aceptado tu solicitud de contacto.`
-    );
-  };
-
-  handleColaborativeSearchNotif = (navigation, notification, notificationType) => {
-    console.log(`[PushNotificationService] Notification '${notificationType}'!`);
-    showToast("¡Emergencia! Ayuda a encontrar a estas personas.", {duration: 5000});
-    navigation.navigate("Find",{emergency: true});
-  };
-
   _validRemoteNotification = (notification) => {
+    let {remote, data} = notification;
 
-    if (!notification.remote) {
+    if (!remote) {
       console.debug("[PushNotificationsService] Received local notification (not remote). Ignoring. ", notification);
       return;
     }
-
-    let data = notification.data;
 
     if (!data) {
       console.debug("[PushNotificationsService] Trying to parse notification body (data) which was null. ", notification);
@@ -182,7 +128,6 @@ class PushNotificationsService {
 
     return true;
   };
-
 }
 
 const pushNotificationsService = new PushNotificationsService();

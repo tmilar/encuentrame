@@ -43,8 +43,7 @@ export default class Home extends Component {
   };
 
   onPressTitle() {
-    const {navigate} = this.props.navigation;
-    navigate('AreYouOk');
+
   }
 
   onPressTrackToggle = async () => {
@@ -71,7 +70,7 @@ export default class Home extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1.8}}>
-          <Text style={text.p} onPress={this.onPressTitle}>
+          <Text style={text.p}>
             Home
           </Text>
           <NewsListContainer/>
