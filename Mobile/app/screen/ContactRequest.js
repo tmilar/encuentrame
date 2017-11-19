@@ -29,7 +29,7 @@ export default class ContactRequest extends Component {
     try {
       await ContactsService.reply(this.contactRequestUserId, response);
     } catch (e) {
-      showToast("¡Ups! Hubo un problema al responder la solicitud de contacto. \n" + (e || e.message), {duration: 1500});
+      showToast("¡Ups! Hubo un problema al responder la solicitud de contacto. \n" + (e.message || e), {duration: 1500});
       return;
     }
     showToast(`Has ${response ? "aceptado" : "rechazado"} la solicitud de ${this.contactRequestUsername}.`, {duration: 1500});

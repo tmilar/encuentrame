@@ -33,7 +33,7 @@ export default class AreYouOk extends Component {
     try {
       await AreYouOkService.reply(true);
     } catch (e) {
-      showToast("¡Ups! No se pudo enviar que estás bien... \n" + (e || e.message), {duration: 2000});
+      showToast("¡Ups! No se pudo enviar que estás bien... \n" + (e.message || e), {duration: 2000});
     }
   };
 
@@ -47,7 +47,7 @@ export default class AreYouOk extends Component {
     try {
       await AreYouOkService.reply(false);
     } catch (e) {
-      showToast("¡Ups! No se pudo enviar que necesitas ayuda... \n" + (e || e.message), {duration: 2000});
+      showToast("¡Ups! No se pudo enviar que necesitas ayuda... \n" + (e.message || e), {duration: 2000});
     }
   };
 
