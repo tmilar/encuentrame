@@ -169,7 +169,7 @@ class PositionTrackingService {
     const schedulingOptions = {
       time: beginDate,
       repeat: 'minute',
-      // intervalMs: 5*60*1000 //TODO requires Expo upgrade v21
+      // intervalMs: 15000 // 15 seconds. //TODO requires Expo upgrade to v22 or 23...
     };
 
     console.log("[PositionTrackingService] Tracking started via local periodic background notifications. ", beginDate);
@@ -195,7 +195,10 @@ class PositionTrackingService {
       "Creation": locationDate,
     };
 
-    console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
+    this.localNotificationIndex = (this.localNotificationIndex || 0) + 1;
+
+    console.log("[PositionTrackingService] Posting position: ", this.localNotificationIndex, currentPositionBody);
+
     if (await SessionService.isDevSession()) {
       showToast("Posting position: " + JSON.stringify(currentPositionBody));
     }
@@ -208,44 +211,21 @@ class PositionTrackingService {
 
   _handleLocalPositionNotification = async (notification) => {
 
-    let now = new Date();
-    let started = new Date(notification.data.created);
-
-    let elapsedTime = now.getTime() - started.getTime();
-
-    let totalIntervalTime = elapsedTime / PositionTrackingService.POSITION_SET_INTERVAL;
-
-    let relativeIntervalTime = totalIntervalTime - Math.floor(totalIntervalTime);
-    let relativeErrorDelta = PositionTrackingService.POSITION_SET_INTERVAL_DELTA / PositionTrackingService.POSITION_SET_INTERVAL;
-
-    let shouldPostPosition = relativeIntervalTime < relativeErrorDelta;
-
-    let remainingPositionTimeMs = Math.round((1 - relativeIntervalTime) * PositionTrackingService.POSITION_SET_INTERVAL);
-
-    let debugData = {
-      cycle: Math.floor(totalIntervalTime),
-      totalIntervalTime: totalIntervalTime,
-      relativeIntervalDelta: relativeIntervalTime,
-      remainingForNextMs: remainingPositionTimeMs
-    };
-
-    console.log(now,
-      'Notification received. ',
-      shouldPostPosition ?
-        `Posting device position to server. ` :
-        `Not posting position to server yet. (will do in about: ${remainingPositionTimeMs} ms.). `,
-      debugData,
-      notification);
-
-    if (!shouldPostPosition) {
+    if (notification.type !== "position") {
       return;
     }
+
+    let now = new Date();
+
+    console.log(now,
+      'Local "position" notification received. Posting position to server.',
+      notification);
 
     try {
       await this._postCurrentPosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
-      showToast("Problema en la comunicación con el servidor: " + e.message || e);
+      showToast("Problema en la comunicación con el servidor: " + (e.message || e));
     }
   };
 
