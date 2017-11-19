@@ -180,9 +180,11 @@ class PositionTrackingService {
     Notifications.cancelAllScheduledNotificationsAsync();
   };
 
-  _postCurrentPosition = async () => {
+  _postDevicePosition = async () => {
+    this.gpsPositionIndex = (this.gpsPositionIndex || 0) + 1;
+
     if (await SessionService.isDevSession()) {
-      showToast("Requesting device position...");
+      showToast(`Requesting device position #${this.gpsPositionIndex}...`);
     }
 
     let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
@@ -195,14 +197,27 @@ class PositionTrackingService {
       "Creation": locationDate,
     };
 
-    this.localNotificationIndex = (this.localNotificationIndex || 0) + 1;
+    let currentPosition = {
+      body: currentPositionBody,
+      index: this.gpsPositionIndex
+    };
 
-    console.log("[PositionTrackingService] Posting position: ", this.localNotificationIndex, currentPositionBody);
+    console.log("[PositionTrackingService] Posting position: ", currentPosition);
 
     if (await SessionService.isDevSession()) {
-      showToast("Posting position: " + JSON.stringify(currentPositionBody));
+      showToast("Posting position: " + JSON.stringify(currentPosition));
     }
 
+    try {
+      await this._postPosition(currentPosition.body);
+    } catch (e) {
+      console.log("[PositionTrackingService] Error when posting position to server. Will retry next time. ", currentPosition);
+      this.pendingPositions = [...(this.pendingPositions || []), currentPosition];
+      throw e;
+    }
+  };
+
+  _postPosition = async (currentPositionBody) => {
     return await Service.sendRequest("Position/set", {
       method: "POST",
       body: JSON.stringify(currentPositionBody)
@@ -222,7 +237,7 @@ class PositionTrackingService {
       notification);
 
     try {
-      await this._postCurrentPosition();
+      await this._postDevicePosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
       showToast("Problema en la comunicación con el servidor: " + (e.message || e));
