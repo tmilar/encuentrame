@@ -136,7 +136,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
               <Left>
                 <Thumbnail source={{uri: item.User.imageUri}}/>
                 <Body>
-                <Text>{`${item.User.FirstName || "[FirstName]"} ${item.User.LastName || "[LastName]"}`}</Text>
+                <Text>{`${item.User.Firstname || "[Firstname]"} ${item.User.Lastname || "[Lastname]"}`}</Text>
                 <Text note>{`@${item.User.Username}`}</Text>
                 </Body>
               </Left>
