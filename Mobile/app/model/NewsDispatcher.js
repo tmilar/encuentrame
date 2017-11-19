@@ -78,7 +78,7 @@ const NewsTypes = {
   },
   "Event/StartCollaborativeSearch": {
     dispatch: (navigation) => {
-      showToast("¡Emergencia! Ayúdanos a encontrar a algunas personas.", {duration: 2500});
+      showToast("¡Emergencia! Por favor, ayúdanos a encontrar a estas personas.", {duration: 2500});
       navigation.navigate("Find", {emergency: true});
     },
     display: {
