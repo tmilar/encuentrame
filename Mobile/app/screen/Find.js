@@ -12,9 +12,15 @@ export default class Find extends Component {
     super(props);
   }
 
+  componentWillReceiveProps = async ({navigation}) => {
+    let {params} = navigation.state;
+    this.emergency = (params && params.emergency) || false;
+    console.log(`[Find Screen] componentWillReceiveProps -> ${this.emergency ? "Emergency!" : "No emergency."}`);
+  };
+
   render() {
     return (
-      <SoughtPeopleContainer navigation={this.props.navigation}/>
+      <SoughtPeopleContainer navigation={this.props.navigation} emergency={this.emergency}/>
     )
   }
 }

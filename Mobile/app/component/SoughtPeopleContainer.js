@@ -53,6 +53,14 @@ export default class SoughtPeopleContainer extends Component {
     clearInterval(this.refreshInterval);
   };
 
+  componentWillReceiveProps = async ({emergency}) => {
+    console.log(`[SoughtPeopleContainer] ${emergency ? "Emergency!" : "No emergency."}`);
+
+    if(emergency) {
+      await this.fetchSoughtPeople();
+    }
+  };
+
   /**
    * Send sought person suppliedInfo to server.
    * @returns {Promise.<void>}
