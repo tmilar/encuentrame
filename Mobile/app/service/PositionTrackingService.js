@@ -224,7 +224,7 @@ class PositionTrackingService {
 
     this.pendingPositions = newPendingPositions;
 
-    if(errors.length) {
+    if (errors.length) {
       let errMsg = `Hubo un problema al informar ${errors.length} de las #${this.pendingPositions.length} posiciones pendientes...`;
       console.log(`[PositionTrackingService] ${errMsg}. Errors info: `, errors);
       throw errMsg;
@@ -264,10 +264,6 @@ class PositionTrackingService {
   };
 
   _handleLocalPositionNotification = async (notification) => {
-
-    if (notification.type !== "position") {
-      return;
-    }
 
     let now = new Date();
 
