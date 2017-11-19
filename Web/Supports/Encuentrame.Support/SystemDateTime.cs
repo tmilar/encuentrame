@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 
 namespace Encuentrame.Support
 {
@@ -71,12 +72,15 @@ namespace Encuentrame.Support
     {
         public DateTime Today
         {
-            get { return DateTime.Today; }
+            get
+            {
+                return DateTime.UtcNow.ToTimeZoneTime();
+            }
         }
 
         public DateTime Now
         {
-            get { return DateTime.Now; }
+            get { return DateTime.UtcNow.ToTimeZoneTime(); }
         }
     }
 }

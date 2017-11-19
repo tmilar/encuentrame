@@ -1503,9 +1503,9 @@ namespace Encuentrame.Web {
         /// <summary>
         ///   Looks up a localized string similar to Cancelado.
         /// </summary>
-        public static string EventStatusEnumCancel {
+        public static string EventStatusEnumCanceled {
             get {
-                return ResourceManager.GetString("EventStatusEnumCancel", resourceCulture);
+                return ResourceManager.GetString("EventStatusEnumCanceled", resourceCulture);
             }
         }
         

@@ -162,9 +162,10 @@ namespace Encuentrame.Model.Events
         {
             var eventt = Events[eventId];
             
-            var sql = @"EXEC EventMonitorUsers :eventId; ";
+            var sql = @"EXEC EventMonitorUsers :eventId, :from; ";
 
             var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("from", eventt.BeginDateTime )
                 .SetParameter("eventId", eventt.Id)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(EventMonitorUserInfo)));
 

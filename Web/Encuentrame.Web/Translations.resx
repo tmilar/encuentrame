@@ -1470,7 +1470,7 @@
   <data name="FinalizeMessage" xml:space="preserve">
     <value>¿Esta seguro que desea finalizar el evento {0}?</value>
   </data>
-  <data name="EventStatusEnumCancel" xml:space="preserve">
+  <data name="EventStatusEnumCanceled" xml:space="preserve">
     <value>Cancelado</value>
   </data>
   <data name="EventStatusEnumCompleted" xml:space="preserve">

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using NailsFramework.IoC;
+using NailsFramework.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -12,6 +13,8 @@ namespace Encuentrame.Support.ExpoNotification
         [Inject("ExpoNotificationUrl")]
         public static string ExpoNotificationUrl { get; protected set; }
 
+        [Inject]
+        public static ILog Log { get; set; }
 
         public static void SendPushNotification(IList<BodySend> bodies)
         {
@@ -46,10 +49,13 @@ namespace Encuentrame.Support.ExpoNotification
                     response = client.UploadString(ExpoNotificationUrl, JsonConvert.SerializeObject(list));
                 }
                 dynamic json = JObject.Parse(response);
+                Log.Info($"SendPushNotification: URL: {ExpoNotificationUrl} ## Param: {JsonConvert.SerializeObject(list)}" );
             }
-            catch 
+            catch(Exception e)
             {
-                
+                Log.Error($"SendPushNotification: {e.Message}",e);
+
+
             }
              
         }

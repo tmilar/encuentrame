@@ -2,5 +2,5 @@
 @model DateTime?
 <div class="form-group">
     <label class="control-label">@Html.DisplayNameFor(model => model)</label>
-    <p class="form-control-static">@(!Model.HasValue?"":Model.Value.ToString("g",DateTimeFormatInfo.InvariantInfo))</p>
+    <p class="form-control-static">@(!Model.HasValue?"":Model.Value.ToString("dd/MM/yyyy HH:mm",DateTimeFormatInfo.CurrentInfo))</p>
 </div>

@@ -98,6 +98,8 @@ namespace Encuentrame.Web.Controllers
 
             UpdateNotifications();
 
+            CreateLogTable();
+
             CreateStoredProcedures();
 
 
@@ -231,6 +233,41 @@ namespace Encuentrame.Web.Controllers
 
             Events.Put(eventt2);
 
+            var dayRandom=new Random(SystemDateTime.Now.Millisecond);
+            for (int ss = 0; ss < 50; ss++)
+            {
+                var bgdt = SystemDateTime.Now.AddDays(-1 * dayRandom.Next(0, 360));
+                var ev = new Event()
+                {
+                    Name = $"Evento de prueba {ss}",
+                    BeginDateTime = bgdt,
+                    EndDateTime =  bgdt.AddHours(3),
+                    Organizer = user4,
+                    Status = bgdt < SystemDateTime.Now ? EventStatusEnum.Completed:EventStatusEnum.InProgress,
+                    Address = new Address()
+                    {
+                        City = "CABA",
+                        FloorAndDepartament = "",
+                        Number = "953",
+                        Province = "CABA",
+                        Street = "Medrano",
+                        Zip = "1414",
+                    },
+                    Latitude = (decimal)-34.59858,
+                    Longitude = (decimal)-58.41989,
+                };
+
+                if (dayRandom.Next(0, 360)<36 )
+                {
+                    ev.EmergencyDateTime = bgdt.AddHours(1);
+                    if (ev.Status == EventStatusEnum.InProgress)
+                    {
+                        ev.Status = EventStatusEnum.InEmergency;
+                    }
+                }
+               
+                Events.Put(ev);
+            }
 
             var user2 = new User()
             {
@@ -283,7 +320,7 @@ namespace Encuentrame.Web.Controllers
 
 
             CreateStoredProcedures();
-
+            CreateLogTable();
             CreateUsers();
 
 
@@ -410,6 +447,39 @@ namespace Encuentrame.Web.Controllers
         }
 
 
+        public void CreateLogTable()
+        {
+            var drop = @"IF Object_id('[Log]', 'U') IS NOT NULL
+                                        DROP TABLE [Log];";
+
+            var create = @"CREATE TABLE [Log] (
+                [Id] [int] IDENTITY (1, 1) NOT NULL,
+                [Date] [datetime] NOT NULL,
+                [Thread] [varchar] (255) NOT NULL,
+                [Level] [varchar] (50) NOT NULL,
+                [Logger] [varchar] (255) NOT NULL,
+                [Message] [varchar] (4000) NOT NULL,
+                [Exception] [varchar] (2000) NULL
+            )";
+
+            var dropCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
+
+            dropCommand.CommandText = drop;
+
+            NHibernateContext.CurrentSession.Transaction.Enlist(dropCommand);
+
+            dropCommand.ExecuteNonQuery();
+
+            var createCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
+
+            createCommand.CommandText = create;
+
+            NHibernateContext.CurrentSession.Transaction.Enlist(createCommand);
+
+            createCommand.ExecuteNonQuery();
+
+        }
+
 
         private void CreateStoredEventMonitorPositions()
         {
@@ -494,25 +564,48 @@ END
 
             var add = @"
                                     CREATE PROCEDURE EventMonitorUsers 
-	                                    @eventId int
+	                                    @eventId int, @from datetime 
 	                                    AS
 	                                    BEGIN
 		                                    SELECT	aa.User_id as Id, 
-                                            uu.Username as Username , 
-		                                    uu.Lastname as Lastname , 
-		                                    uu.Firstname as Firstname, 
-		                                    iif(bayo.ReplyDatetime is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
-		                                    cast(iif(count(sp.seen)>0,1,0) as bit) as WasSeen, 
-		                                    sum(CASE WHEN sp.seen = 1 THEN 1 ELSE 0 END) as Seen, 
-		                                    sum(CASE WHEN sp.seen = 0 THEN 1 ELSE 0 END) as NotSeen, 
-                                            po.Creation as LastPositionUpdate
-                                    FROM Activities aa 
-	                                    inner join Users uu on uu.Id=aa.User_id  
-	                                    left join BaseAreYouOks bayo on bayo.Target_id=aa.User_id
-	                                    left join SoughtPersonAnswers sp on sp.TargetUser_id=aa.User_id 	
-                                        left join (SELECT  Positions.UserId, MAX(Positions.Creation) AS creation FROM Positions GROUP BY Positions.UserId ) po on po.UserId=aa.User_id
-                                    WHERE aa.Event_id=@eventId
-                                    GROUP BY aa.User_id,uu.Username,uu.Lastname, uu.Firstname, bayo.IAmOk, bayo.ReplyDatetime, po.Creation;
+                                                uu.Username as Username , 
+		                                        uu.Lastname as Lastname , 
+		                                        uu.Firstname as Firstname, 
+		                                        iif(bayo.ReplyDatetime is null,0,  iif(bayo.IAmOk=0 , 10 , 20)  ) as IAmOk, 
+		                                        sp.WasSeen, 
+		                                        sp.Seen, 
+		                                        sp.NotSeen, 
+                                                po.Creation as LastPositionUpdate
+                                        FROM Activities aa 
+	                                        inner join Users uu on uu.Id=aa.User_id  
+	                                        left join 
+
+	                                        (SELECT iamok,			  
+			                                          target_id,
+			                                          replydatetime
+	                                           FROM
+		                                         (SELECT iamok,
+				                                         target_id,
+				                                         replydatetime,
+				                                         Row_number() OVER (PARTITION BY target_id
+									                                        ORDER BY replydatetime DESC) rank
+		                                          FROM baseareyouoks
+		                                          WHERE Event_id=@eventId) ba
+	                                           WHERE ba.rank = 1) bayo ON bayo.target_id = aa.user_id
+
+	                                        left join
+	                                        (
+	                                         select 
+		                                         TargetUser_id,
+		                                         cast(iif(count(seen)>0,1,0) as bit) as WasSeen, 
+		                                        sum(CASE WHEN seen = 1 THEN 1 ELSE 0 END) as Seen, 
+		                                        sum(CASE WHEN seen = 0 THEN 1 ELSE 0 END) as NotSeen
+		                                        FROM
+		                                        SoughtPersonAnswers  where seenwhen>=@from GROUP BY TargetUser_id
+                                            ) sp ON sp.TargetUser_id=aa.User_id
+	
+	                                        left join (SELECT  Positions.UserId, MAX(Positions.Creation) AS creation FROM Positions GROUP BY Positions.UserId ) po on po.UserId=aa.User_id
+                                        WHERE aa.Event_id=@eventId;
                                     END
                                     
                                                                         ";
@@ -590,107 +683,56 @@ END
         protected void CreateUsers()
         {
             var sqls = @"
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('agraddon0', 'Ami', 'Graddon', 'agraddon0@patch.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('rhasser1', 'Rex', 'Hasser', 'rhasser1@tiny.cc', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ccasajuana2', 'Chrisy', 'Casajuana', 'ccasajuana2@nbcnews.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dmontford3', 'Damien', 'Montford', 'dmontford3@examiner.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('zcrump4', 'Zuzana', 'Crump', 'zcrump4@freewebs.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('oosgar5', 'Onida', 'Osgar', 'oosgar5@indiegogo.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sferia6', 'Silvain', 'Feria', 'sferia6@theatlantic.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('vmotherwell7', 'Vernen', 'Motherwell', 'vmotherwell7@wired.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('vmalshinger8', 'Vonny', 'Malshinger', 'vmalshinger8@utexas.edu', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('fanelay9', 'Fidelio', 'Anelay', 'fanelay9@exblog.jp', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('vthoumasa', 'Veriee', 'Thoumas', 'vthoumasa@flickr.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lrudgleyb', 'Laurena', 'Rudgley', 'lrudgleyb@aboutads.info', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('isallec', 'Itch', 'Salle', 'isallec@unc.edu', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wwalklingd', 'Waiter', 'Walkling', 'wwalklingd@fema.gov', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cbroomhalle', 'Cobby', 'Broomhall', 'cbroomhalle@cbc.ca', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('hplottf', 'Hephzibah', 'Plott', 'hplottf@technorati.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tantoniewiczg', 'Tiffi', 'Antoniewicz', 'tantoniewiczg@google.nl', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nbrealeyh', 'Noemi', 'Brealey', 'nbrealeyh@hubpages.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('adepietrii', 'Ashia', 'De Pietri', 'adepietrii@360.cn', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dblannj', 'Deidre', 'Blann', 'dblannj@ycombinator.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('jkumark', 'Jodie', 'Kumar', 'jkumark@cafepress.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('hupcraftl', 'Hyacinthia', 'Upcraft', 'hupcraftl@google.es', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nmcauslandm', 'Normy', 'McAusland', 'nmcauslandm@vistaprint.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('gemminesn', 'Gabriello', 'Emmines', 'gemminesn@nymag.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('kmariao', 'Karon', 'Maria', 'kmariao@sitemeter.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('rbauchopp', 'Ruthie', 'Bauchop', 'rbauchopp@com.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('bwainq', 'Brooke', 'Wain', 'bwainq@irs.gov', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('mwoolamr', 'Marlon', 'Woolam', 'mwoolamr@cbsnews.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('amuzzinis', 'Ardra', 'Muzzini', 'amuzzinis@mozilla.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('opristnort', 'Olympe', 'Pristnor', 'opristnort@naver.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('mswantonu', 'Marcellina', 'Swanton', 'mswantonu@tripadvisor.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dmapplebeckv', 'Dominga', 'Mapplebeck', 'dmapplebeckv@mapy.cz', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('mworboyw', 'Maribeth', 'Worboy', 'mworboyw@t.co', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dmuddimanx', 'Darsey', 'Muddiman', 'dmuddimanx@simplemachines.org', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dphytheany', 'Dede', 'Phythean', 'dphytheany@wikipedia.org', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('patlingz', 'Pooh', 'Atling', 'patlingz@disqus.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('jglinde10', 'Jane', 'Glinde', 'jglinde10@dropbox.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('zchace11', 'Zarla', 'Chace', 'zchace11@usa.gov', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lfesby12', 'Liliane', 'Fesby', 'lfesby12@1und1.de', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ereely13', 'Elga', 'Reely', 'ereely13@unicef.org', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ncorroyer14', 'Noam', 'Corroyer', 'ncorroyer14@wix.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('pshoppee15', 'Phaidra', 'Shoppee', 'pshoppee15@washington.edu', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('kletham16', 'Keslie', 'Letham', 'kletham16@mac.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sshemming17', 'Stefa', 'Shemming', 'sshemming17@umn.edu', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('hhows18', 'Hester', 'Hows', 'hhows18@wp.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('jelies19', 'Jed', 'Elies', 'jelies19@zdnet.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('aaldgate1a', 'Andromache', 'Aldgate', 'aaldgate1a@furl.net', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('hfennick1b', 'Hyatt', 'Fennick', 'hfennick1b@ezinearticles.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('hteasey1c', 'Ham', 'Teasey', 'hteasey1c@quantcast.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tbalk1d', 'Tom', 'Balk', 'tbalk1d@ibm.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tflory1e', 'Trula', 'Flory', 'tflory1e@godaddy.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wbrownlie1f', 'Willie', 'Brownlie', 'wbrownlie1f@tripadvisor.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('djeandillou1g', 'Donna', 'Jeandillou', 'djeandillou1g@marriott.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dbullen1h', 'Dorisa', 'Bullen', 'dbullen1h@purevolume.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nlongthorne1i', 'Nicko', 'Longthorne', 'nlongthorne1i@cyberchimps.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lbergin1j', 'Lisetta', 'Bergin', 'lbergin1j@huffingtonpost.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cbrandone1k', 'Cort', 'Brandone', 'cbrandone1k@cargocollective.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ssuff1l', 'Sophia', 'Suff', 'ssuff1l@whitehouse.gov', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('bstempe1m', 'Burnaby', 'Stempe', 'bstempe1m@photobucket.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('owrighton1n', 'Oliviero', 'Wrighton', 'owrighton1n@vkontakte.ru', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cmiddup1o', 'Cale', 'Middup', 'cmiddup1o@jugem.jp', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nbenjamin1p', 'Nariko', 'Benjamin', 'nbenjamin1p@fema.gov', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tubsdell1q', 'Tobias', 'Ubsdell', 'tubsdell1q@mashable.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('htavner1r', 'Harwell', 'Tavner', 'htavner1r@opera.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('rstate1s', 'Rosita', 'State', 'rstate1s@vinaora.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('acheesman1t', 'Adler', 'Cheesman', 'acheesman1t@mail.ru', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dlebel1u', 'Deerdre', 'Lebel', 'dlebel1u@symantec.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('abairstow1v', 'Astrid', 'Bairstow', 'abairstow1v@netvibes.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ebraidford1w', 'Elysha', 'Braidford', 'ebraidford1w@nyu.edu', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('amoutrayread1x', 'Anabella', 'Moutray Read', 'amoutrayread1x@independent.co.uk', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nhardypiggin1y', 'Niki', 'Hardy-Piggin', 'nhardypiggin1y@barnesandnoble.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('skyndred1z', 'Sauveur', 'Kyndred', 'skyndred1z@webeden.co.uk', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tmedmore20', 'Tanhya', 'Medmore', 'tmedmore20@unicef.org', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('bcouvert21', 'Brigit', 'Couvert', 'bcouvert21@google.ru', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cborgesio22', 'Catrina', 'Borgesio', 'cborgesio22@xrea.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('smassinger23', 'Stafford', 'Massinger', 'smassinger23@about.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('jkeiley24', 'Jeni', 'Keiley', 'jkeiley24@is.gd', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ldoumerc25', 'Lorens', 'Doumerc', 'ldoumerc25@reddit.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ggitthouse26', 'Garrett', 'Gitthouse', 'ggitthouse26@sogou.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('rwinchester27', 'Rollo', 'Winchester', 'rwinchester27@yellowpages.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('spolino28', 'Shena', 'Polino', 'spolino28@redcross.org', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wcallis29', 'Wadsworth', 'Callis', 'wcallis29@google.com.hk', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ebremner2a', 'Estevan', 'Bremner', 'ebremner2a@dailymail.co.uk', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lwitherington2b', 'Lavina', 'Witherington', 'lwitherington2b@4shared.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dharpin2c', 'Delmer', 'Harpin', 'dharpin2c@phoca.cz', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('crosenthaler2d', 'Corey', 'Rosenthaler', 'crosenthaler2d@blogs.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cmctague2e', 'Cherie', 'McTague', 'cmctague2e@de.vu', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('gspurgin2f', 'Gannie', 'Spurgin', 'gspurgin2f@howstuffworks.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('llaw2g', 'Locke', 'Law', 'llaw2g@hud.gov', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sdacombe2h', 'Sandro', 'Dacombe', 'sdacombe2h@google.co.jp', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sgilburt2i', 'Sinclair', 'Gilburt', 'sgilburt2i@mlb.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('mtrathen2j', 'Morse', 'Trathen', 'mtrathen2j@wunderground.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('asimoncello2k', 'Aloysia', 'Simoncello', 'asimoncello2k@miibeian.gov.cn', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wmurkin2l', 'Whitney', 'Murkin', 'wmurkin2l@webmd.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('calenikov2m', 'Cos', 'Alenikov', 'calenikov2m@msn.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lainslee2n', 'Liane', 'Ainslee', 'lainslee2n@chron.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nbaselli2o', 'Norris', 'Baselli', 'nbaselli2o@booking.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tbeech2p', 'Tani', 'Beech', 'tbeech2p@nydailynews.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dgavey2q', 'Dacy', 'Gavey', 'dgavey2q@nbcnews.com', 'User', 'User');
-insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('pwarrier2r', 'Phillipe', 'Warrier', 'pwarrier2r@alibaba.com', 'User', 'User');
-";
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wbrownlie1f', 'Willie', 'Brownlie', 'wbrownlie1f@tripadvisor.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('djeandillou1g', 'Donna', 'Jeandillou', 'djeandillou1g@marriott.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dbullen1h', 'Dorisa', 'Bullen', 'dbullen1h@purevolume.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nlongthorne1i', 'Nicko', 'Longthorne', 'nlongthorne1i@cyberchimps.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lbergin1j', 'Lisetta', 'Bergin', 'lbergin1j@huffingtonpost.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cbrandone1k', 'Cort', 'Brandone', 'cbrandone1k@cargocollective.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ssuff1l', 'Sophia', 'Suff', 'ssuff1l@whitehouse.gov', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('bstempe1m', 'Burnaby', 'Stempe', 'bstempe1m@photobucket.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('owrighton1n', 'Oliviero', 'Wrighton', 'owrighton1n@vkontakte.ru', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cmiddup1o', 'Cale', 'Middup', 'cmiddup1o@jugem.jp', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nbenjamin1p', 'Nariko', 'Benjamin', 'nbenjamin1p@fema.gov', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tubsdell1q', 'Tobias', 'Ubsdell', 'tubsdell1q@mashable.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('htavner1r', 'Harwell', 'Tavner', 'htavner1r@opera.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('rstate1s', 'Rosita', 'State', 'rstate1s@vinaora.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('acheesman1t', 'Adler', 'Cheesman', 'acheesman1t@mail.ru', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dlebel1u', 'Deerdre', 'Lebel', 'dlebel1u@symantec.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('abairstow1v', 'Astrid', 'Bairstow', 'abairstow1v@netvibes.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ebraidford1w', 'Elysha', 'Braidford', 'ebraidford1w@nyu.edu', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('amoutrayread1x', 'Anabella', 'Moutray Read', 'amoutrayread1x@independent.co.uk', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nhardypiggin1y', 'Niki', 'Hardy-Piggin', 'nhardypiggin1y@barnesandnoble.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('skyndred1z', 'Sauveur', 'Kyndred', 'skyndred1z@webeden.co.uk', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tmedmore20', 'Tanhya', 'Medmore', 'tmedmore20@unicef.org', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('bcouvert21', 'Brigit', 'Couvert', 'bcouvert21@google.ru', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cborgesio22', 'Catrina', 'Borgesio', 'cborgesio22@xrea.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('smassinger23', 'Stafford', 'Massinger', 'smassinger23@about.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('jkeiley24', 'Jeni', 'Keiley', 'jkeiley24@is.gd', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ldoumerc25', 'Lorens', 'Doumerc', 'ldoumerc25@reddit.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ggitthouse26', 'Garrett', 'Gitthouse', 'ggitthouse26@sogou.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('rwinchester27', 'Rollo', 'Winchester', 'rwinchester27@yellowpages.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('spolino28', 'Shena', 'Polino', 'spolino28@redcross.org', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wcallis29', 'Wadsworth', 'Callis', 'wcallis29@google.com.hk', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ebremner2a', 'Estevan', 'Bremner', 'ebremner2a@dailymail.co.uk', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lwitherington2b', 'Lavina', 'Witherington', 'lwitherington2b@4shared.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dharpin2c', 'Delmer', 'Harpin', 'dharpin2c@phoca.cz', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('crosenthaler2d', 'Corey', 'Rosenthaler', 'crosenthaler2d@blogs.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cmctague2e', 'Cherie', 'McTague', 'cmctague2e@de.vu', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('gspurgin2f', 'Gannie', 'Spurgin', 'gspurgin2f@howstuffworks.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('llaw2g', 'Locke', 'Law', 'llaw2g@hud.gov', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sdacombe2h', 'Sandro', 'Dacombe', 'sdacombe2h@google.co.jp', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sgilburt2i', 'Sinclair', 'Gilburt', 'sgilburt2i@mlb.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('mtrathen2j', 'Morse', 'Trathen', 'mtrathen2j@wunderground.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('asimoncello2k', 'Aloysia', 'Simoncello', 'asimoncello2k@miibeian.gov.cn', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wmurkin2l', 'Whitney', 'Murkin', 'wmurkin2l@webmd.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('calenikov2m', 'Cos', 'Alenikov', 'calenikov2m@msn.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lainslee2n', 'Liane', 'Ainslee', 'lainslee2n@chron.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nbaselli2o', 'Norris', 'Baselli', 'nbaselli2o@booking.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tbeech2p', 'Tani', 'Beech', 'tbeech2p@nydailynews.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dgavey2q', 'Dacy', 'Gavey', 'dgavey2q@nbcnews.com', 'User', 'User');
+                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('pwarrier2r', 'Phillipe', 'Warrier', 'pwarrier2r@alibaba.com', 'User', 'User');
+                        ";
 
             var command = NHibernateContext.CurrentSession.Connection.CreateCommand();
 
