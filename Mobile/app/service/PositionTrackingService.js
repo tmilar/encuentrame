@@ -4,6 +4,7 @@ import GeolocationService from "./GeolocationService";
 import SessionService from "./SessionService";
 import {hide, showToast} from 'react-native-notifyer';
 import {AsyncStorage} from 'react-native';
+import formatDateForBackend from "../util/formatDateForBackend";
 
 class PositionTrackingService {
 
@@ -168,7 +169,7 @@ class PositionTrackingService {
     const schedulingOptions = {
       time: beginDate,
       repeat: 'minute',
-      // intervalMs: 5*60*1000 //TODO requires Expo upgrade v21
+      // intervalMs: 15000 // 15 seconds. //TODO requires Expo upgrade to v22 or 23...
     };
 
     console.log("[PositionTrackingService] Tracking started via local periodic background notifications. ", beginDate);
@@ -179,69 +180,109 @@ class PositionTrackingService {
     Notifications.cancelAllScheduledNotificationsAsync();
   };
 
-  _postCurrentPosition = async () => {
+  _postCurrentDevicePosition = async () => {
+    let currentPosition = await this._getCurrentDevicePosition();
+
+    console.log("[PositionTrackingService] Posting position: ", currentPosition);
+
     if (await SessionService.isDevSession()) {
-      showToast("Requesting device position...");
+      showToast("Posting position: " + JSON.stringify(currentPosition));
+    }
+
+    try {
+      await this._postPosition(currentPosition.body);
+    } catch (e) {
+      console.log(`[PositionTrackingService] Error when posting #${currentPosition.index} position to server. Will retry next time. `, currentPosition.body);
+      this.pendingPositions = [...(this.pendingPositions || []), currentPosition];
+      throw e;
+    }
+  };
+
+  _postPendingDevicePositions = async () => {
+    if (!(this.pendingPositions && this.pendingPositions.length)) {
+      return;
+    }
+
+    let logMsg = `[PositionTrackingService] Posting ${this.pendingPositions.length} pending positions. `;
+    console.log(logMsg, this.pendingPositions);
+
+    if (await SessionService.isDevSession()) {
+      showToast(logMsg);
+    }
+
+    let errors = [];
+    let newPendingPositions = [];
+
+    this.pendingPositions.forEach(async pos => {
+      try {
+        await this._postPosition(pos.body);
+      } catch (e) {
+        errors.push({error: e, position: pos});
+        newPendingPositions.push(pos);
+      }
+    });
+
+    this.pendingPositions = newPendingPositions;
+
+    if (errors.length) {
+      let errMsg = `Hubo un problema al informar ${errors.length} de las #${this.pendingPositions.length} posiciones pendientes...`;
+      console.log(`[PositionTrackingService] ${errMsg}. Errors info: `, errors);
+      throw errMsg;
+    }
+  };
+
+  _getCurrentDevicePosition = async () => {
+    this.gpsPositionIndex = (this.gpsPositionIndex || 0) + 1;
+
+    if (await SessionService.isDevSession()) {
+      showToast(`Requesting device position #${this.gpsPositionIndex}...`);
     }
 
     let deviceLocation = await GeolocationService.getDeviceLocation({enableHighAccuracy: true});
 
+    let locationDate = formatDateForBackend(new Date());
+
     let currentPositionBody = {
       "Latitude": deviceLocation.latitude,
-      "Longitude": deviceLocation.longitude
+      "Longitude": deviceLocation.longitude,
+      "Creation": locationDate,
     };
 
-    console.log("[PositionTrackingService] Posting position: ", currentPositionBody);
-    if (await SessionService.isDevSession()) {
-      showToast("Posting position: " + JSON.stringify(currentPositionBody));
-    }
+    let currentPosition = {
+      body: currentPositionBody,
+      index: this.gpsPositionIndex
+    };
 
+    return currentPosition;
+  };
+
+  _postPosition = async (devicePositionBody) => {
     return await Service.sendRequest("Position/set", {
       method: "POST",
-      body: JSON.stringify(currentPositionBody)
+      body: JSON.stringify(devicePositionBody)
     });
   };
 
   _handleLocalPositionNotification = async (notification) => {
 
     let now = new Date();
-    let started = new Date(notification.data.created);
-
-    let elapsedTime = now.getTime() - started.getTime();
-
-    let totalIntervalTime = elapsedTime / PositionTrackingService.POSITION_SET_INTERVAL;
-
-    let relativeIntervalTime = totalIntervalTime - Math.floor(totalIntervalTime);
-    let relativeErrorDelta = PositionTrackingService.POSITION_SET_INTERVAL_DELTA / PositionTrackingService.POSITION_SET_INTERVAL;
-
-    let shouldPostPosition = relativeIntervalTime < relativeErrorDelta;
-
-    let remainingPositionTimeMs = Math.round((1 - relativeIntervalTime) * PositionTrackingService.POSITION_SET_INTERVAL);
-
-    let debugData = {
-      cycle: Math.floor(totalIntervalTime),
-      totalIntervalTime: totalIntervalTime,
-      relativeIntervalDelta: relativeIntervalTime,
-      remainingForNextMs: remainingPositionTimeMs
-    };
 
     console.log(now,
-      'Notification received. ',
-      shouldPostPosition ?
-        `Posting device position to server. ` :
-        `Not posting position to server yet. (will do in about: ${remainingPositionTimeMs} ms.). `,
-      debugData,
+      'Local "position" notification received. Posting position to server.',
       notification);
 
-    if (!shouldPostPosition) {
-      return;
+    try {
+      await this._postPendingDevicePositions();
+    } catch (e) {
+      console.log("Problem when sending pending positions to server. ", e);
+      showToast("Problema en la comunicación con el servidor: " + (e.message || e));
     }
 
     try {
-      await this._postCurrentPosition();
+      await this._postCurrentDevicePosition();
     } catch (e) {
       console.log("Problem when sending position to server. ", e);
-      showToast("Problema en la comunicación con el servidor: " + e.message || e);
+      showToast("Problema en la comunicación con el servidor: " + (e.message || e));
     }
   };
 
