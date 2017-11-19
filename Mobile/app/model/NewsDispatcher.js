@@ -15,7 +15,7 @@ const NewsTypes = {
       text: (data, response) => {
         let responded = "";
         if (response !== undefined) {
-          responded = `Respondiste que ${response.replied ? 'sí' : 'no'}.`
+          responded = `Respondiste que ${response.replied ? 'sí' : 'no'}`
         }
         return `Te preguntaron si estabas bien. ${responded}`;
       },
@@ -35,7 +35,7 @@ const NewsTypes = {
       );
     },
     display: {
-      text: ({Ok, TargetUserId}) => `Usuario ${TargetUserId} indicó que ${Ok ? "está bien" : "necesita ayuda"}.`,
+      text: ({Ok, TargetUserId}) => `Usuario ${TargetUserId} indicó que ${Ok ? "está bien" : "necesita ayuda"}`,
       icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}}
                                               size={40}/>
     },
@@ -53,7 +53,7 @@ const NewsTypes = {
     },
     display: {
       text: (data, yourResponse) => {
-        let response = `${data.Username} te ha enviado una solicitud de contacto.`;
+        let response = `${data.Username} te ha enviado una solicitud de contacto`;
         if (yourResponse !== undefined) {
           response = `${yourResponse.replied ? 'Aceptaste' : 'Rechazaste'} la solicitud de contacto de ${data.Username}.`
         }
@@ -71,7 +71,7 @@ const NewsTypes = {
       );
     },
     display: {
-      text: ({Username}) => `${Username} ha aceptado tu solicitud de contacto.`,
+      text: ({Username}) => `${Username} ha aceptado tu solicitud de contacto`,
       icon: () => <MaterialCommunityIcons name={'account-check'} style={{color: 'black'}} size={40}/>
     },
     hasAction: false
@@ -82,7 +82,7 @@ const NewsTypes = {
       navigation.navigate("Find", {emergency: true});
     },
     display: {
-      text: `Se ha notificado de un incidente en el evento.`,
+      text: `Se ha notificado de un incidente en el evento`,
       icon: () => <FontAwesome name={'warning'} style={{color: 'red'}} size={40}/>
     },
     hasAction: true
