@@ -4,7 +4,7 @@
     "sdkVersion": "21.0.0",
     "icon": "./app/img/eme_icon.png",
     "slug": "encuentrame",
-    "version": "0.11.1",
+    "version": "0.11.2",
     "ios": {
       "bundleIdentifier": "com.encuentrame.encuentrame"
     },
