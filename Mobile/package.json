@@ -32,6 +32,7 @@
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-notifyer": "^0.9.3",
+    "react-native-swipeout": "^2.3.1",
     "react-navigation": "^1.0.0-beta.15"
   }
 }

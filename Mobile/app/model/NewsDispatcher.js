@@ -110,12 +110,14 @@ class NewsDispatcher {
   };
 
   handleNotification = async ({type, data}) => {
+    if (type === "position")
+      return;
     let newsData = await this._saveNews(type, data);
     NewsTypes[type].dispatch(this.navigation, newsData.data, newsData.id);
   };
 
   handleNewsAction = ({type, data, id, resolution}) => {
-    if (resolution || !NewsTypes[type].hasAction)
+    if (resolution || !NewsTypes[type].hasAction || type === "position")
       return;
     NewsTypes[type].dispatch(this.navigation, data, id);
   };
@@ -128,6 +130,10 @@ class NewsDispatcher {
   };
   resolveNews = async (newsId, resolution) => {
     return await NewsService.updateNews(newsId, resolution);
+  };
+
+  removeNews = async ({type, data, id}) => {
+    return await NewsService.dismissNewsById(id);
   };
 }
 
