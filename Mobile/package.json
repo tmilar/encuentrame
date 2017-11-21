@@ -1,6 +1,6 @@
 {
   "name": "encuentrame-mobile",
-  "version": "0.11.2",
+  "version": "0.12.0",
   "private": true,
   "devDependencies": {
     "react-native-scripts": "1.5.0",
