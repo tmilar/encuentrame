@@ -116,8 +116,12 @@ class NewsDispatcher {
     NewsTypes[type].dispatch(this.navigation, newsData.data, newsData.id);
   };
 
+  hasAction = ({type, data, id, resolution}) => {
+    return !(resolution || !NewsTypes[type].hasAction || type === "position");
+  };
+
   handleNewsAction = ({type, data, id, resolution}) => {
-    if (resolution || !NewsTypes[type].hasAction || type === "position")
+    if (!this.hasAction({type, data, id, resolution}))
       return;
     NewsTypes[type].dispatch(this.navigation, data, id);
   };

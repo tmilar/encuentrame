@@ -60,12 +60,13 @@ export default class NewsList extends Component {
 
   renderNewsListItem = (newsItem) => {
     let {message, Icon, date} = NewsDispatcher.getNewsData(newsItem);
+    let hasAction = NewsDispatcher.hasAction(newsItem);
     let DeleteButton = <View style={{flex: 1, justifyContent: "space-around", alignItems: "center"}}>
       <Text style={{justifyContent: "space-around", alignItems: "center", fontSize: 12, fontWeight: 'bold', color: "white"}}>
         Borrar
       </Text>
     </View>;
-    let swipeBtns = [{
+    let deleteBtn = hasAction ? []  : [{
       text: 'Eliminar',
       width: 60,
       styleButton: {width: 60, height: 50},
@@ -74,8 +75,14 @@ export default class NewsList extends Component {
       underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
       onPress: async () => { await this._handleDeleteNews(newsItem) }
     }];
-    return <View style={{flex: 1, height: 80}}>
-              <Swipeout right={swipeBtns} backgroundColor= 'transparent'>
+    let ActionButton = hasAction ? <TouchableNativeFeedback style={{justifyContent: "space-around", alignItems: 'center'}} onPress={() => this._handleNewsPress(newsItem)}
+                                                background={TouchableNativeFeedback.SelectableBackground()}>
+      <View style={{justifyContent: "space-around", alignItems: 'center',width: 60, height: 80}}>
+        <Ionicons name={'ios-arrow-forward'} style={{color: 'black'}} size={30}/>
+      </View>
+    </TouchableNativeFeedback> : <View style={{width: 60}}></View>;
+    return <View style={{flex: 1, height: 80, backgroundColor: 'white', marginBottom: 10}}>
+              <Swipeout right={deleteBtn} backgroundColor= 'transparent'>
                   <View style={{
                     flexDirection: 'row',
                     height: 80,
@@ -89,16 +96,10 @@ export default class NewsList extends Component {
                         {`${message}.  ${date}`}
                       </Text>
                     </View>
-                    <TouchableNativeFeedback style={{justifyContent: "space-around", alignItems: 'center'}} onPress={() => this._handleNewsPress(newsItem)}
-                                             background={TouchableNativeFeedback.SelectableBackground()}>
-                      <View style={{justifyContent: "space-around", alignItems: 'center',width: 60, height: 80}}>
-                        <Ionicons name={'ios-arrow-forward'} style={{color: 'black'}} size={30}/>
-                      </View>
-                    </TouchableNativeFeedback>
+                    {ActionButton}
                   </View>
               </Swipeout>
             </View>;
-
   };
 
   render() {
