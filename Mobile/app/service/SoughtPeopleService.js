@@ -9,8 +9,10 @@ class SoughtPeopleService {
    * @returns {Promise.<*>}
    */
   getSoughtPeople = async () => {
-    let url = "/soughtPeople";
-    let soughtPeople = await Service.sendRequest(url);
+    let url = "soughtPeople";
+    let soughtPeople = await Service.sendRequest(url,{
+      method: 'GET'
+    });
     // let maxCount = 7;
     // let soughtPeople = await this._getSomeUsersAsSoughtPeople(maxCount);
 
@@ -73,7 +75,7 @@ class SoughtPeopleService {
    * @returns {Promise.<void>}
    */
   soughtPersonSupplyInfo = async (soughtPersonId, suppliedInfo) => {
-    let url = `/soughtPerson/seen/${soughtPersonId}`;
+    let url = `soughtPerson/seen/${soughtPersonId}`;
 
     return await Service.sendRequest(url, {
       method: 'POST',
@@ -91,7 +93,7 @@ class SoughtPeopleService {
    * @returns {Promise.<void>}
    */
   soughtPersonDismiss = async (soughtPersonId) => {
-    let url = `/soughtPerson/dismiss/${soughtPersonId}`;
+    let url = `soughtPerson/dismiss/${soughtPersonId}`;
 
     return await Service.sendRequest(url, {
       method: 'POST'

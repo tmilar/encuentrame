@@ -33,11 +33,11 @@ export default class NewsList extends Component {
           height: 60,
           justifyContent: "space-around"
         }}>
-          <View style={{justifyContent: "space-around", width: 60, alignItems: 'center'}}>
+          <View style={{justifyContent: "space-around", width: 40, alignItems: 'center'}}>
             {Icon}
           </View>
-          <View style={{justifyContent: "space-around", width: 300}}>
-            <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+          <View style={{justifyContent: "space-around", width: 300, marginLeft: 20}}>
+            <Text style={{fontSize: 12, fontWeight: 'bold'}}>
               {`${message}.  ${date}`}
             </Text>
           </View>
