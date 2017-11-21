@@ -13,6 +13,7 @@ import LoadingIndicator from "../component/LoadingIndicator";
 import {Icon} from 'react-native-elements';
 import ActivityDetailsContentView from './ActivityDetailsContentView';
 import formatDateForBackend from "../util/formatDateForBackend";
+import {prettyDate} from "../util/prettyDate";
 
 export default class Activity extends Component {
 
@@ -45,6 +46,8 @@ export default class Activity extends Component {
   ];
 
   _showStartDateTimePicker = () => {
+    if (this._eventsAvailable())
+      return;
     this.setState({isStartDateTimePickerVisible: true});
   };
 
@@ -53,6 +56,8 @@ export default class Activity extends Component {
   };
 
   _showEndDateTimePicker = () => {
+    if (this._eventsAvailable())
+      return;
     this.setState({isEndDateTimePickerVisible: true});
   };
 
@@ -155,6 +160,10 @@ export default class Activity extends Component {
     return this.state.events.find((evt) => {return evt.Id === this.state.selectedEventId;});
   };
 
+  _eventsAvailable = () => {
+    return this.state.events.length > 0
+  };
+
   componentWillMount = async () => {
     this.state.loading = true;
     try {
@@ -164,6 +173,8 @@ export default class Activity extends Component {
       if (activeActivity){
         this.activeActivity = activeActivity;
         this._loadActiveActivity(activeActivity);
+      } else if (this._eventsAvailable()){
+        this.setEvent(events[0].Id);
       }
     } catch (e) {
       console.log("Error retrieving events from server: ", e);
@@ -186,13 +197,17 @@ export default class Activity extends Component {
     })
   };
 
-  _handleEventSelected = (itemValue, itemIndex) => {
-    this.setState({selectedEventId: itemValue});
-    let selectedEvent = this.state.events.find((evt) => {return evt.Id == itemValue;});
+  setEvent= (eventId) => {
+    this.setState({selectedEventId: eventId});
+    let selectedEvent = this.state.events.find((evt) => {return evt.Id == eventId;});
     this.setState({activityName: selectedEvent.Name});
     this.saveActivityLocation({latitude: selectedEvent.Latitude, longitude: selectedEvent.Longitude});
     this.setState({startDate: selectedEvent.BeginDateTime});
     this.setState({endDate: selectedEvent.EndDateTime});
+  };
+
+  _handleEventSelected = (itemValue) => {
+    this.setEvent(itemValue);
   };
 
   _getTitle = () => {
@@ -205,6 +220,7 @@ export default class Activity extends Component {
 
   _deleteActivity = async() => {
     try {
+      this.setState({loading: true});
       await ActivityService.deleteActivity(this.activeActivity.Id);
       showToast("Actividad eliminada.", {duration: 5000});
       this.props.activityDeleted();
@@ -318,6 +334,7 @@ export default class Activity extends Component {
               placeholder="Nombre de la actividad"
               ref="activityName"
               style={styles.activityName}
+              editable={!this._eventsAvailable()}
               selectTextOnFocus
               onChangeText={this._handleActivitynameTextChange}
               underlineColorAndroid='transparent'
@@ -343,7 +360,7 @@ export default class Activity extends Component {
             </View>
             {
               this.state.showMapLocation &&
-              <ModalMap saveActivityLocation={this.saveActivityLocation} currentLocation={this.state.activityLocation} enableEditing={true}
+              <ModalMap saveActivityLocation={this.saveActivityLocation} currentLocation={this.state.activityLocation} enableEditing={!this._eventsAvailable()}
                         onClose={() => this.setState({showMapLocation: false})}/>
             }
           </View>
@@ -355,7 +372,7 @@ export default class Activity extends Component {
             <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
               <View style={{flex: 1}}>
                 <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showStartDateTimePicker}>
-                  <Text>{this.state.startDate || "Fecha inicio"}</Text>
+                  <Text>{this.state.startDate ? prettyDate(new Date(this.state.startDate)) : "Fecha inicio"}</Text>
                 </TouchableOpacity>
                 <DateTimePicker
                   mode="datetime"
@@ -367,7 +384,7 @@ export default class Activity extends Component {
               </View>
               <View style={{flex: 1}}>
                 <TouchableOpacity style={{flex: 1, alignSelf: "center"}} onPress={this._showEndDateTimePicker}>
-                  <Text>{this.state.endDate || "Fecha fin"}</Text>
+                  <Text>{this.state.endDate ? prettyDate(new Date(this.state.endDate)) : "Fecha fin"}</Text>
                 </TouchableOpacity>
                 <DateTimePicker
                   mode="datetime"

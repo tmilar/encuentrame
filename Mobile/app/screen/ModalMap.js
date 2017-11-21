@@ -57,8 +57,18 @@ export default class ModalMap extends Component {
     this.setState({loading: false});
   };
 
+  zoomToMarker = (location) => {
+    let zoom = GeolocationService.getLocationSurroundings(location);
+    let context = this;
+    setTimeout(function(){
+      context.refs.map.fitToCoordinates(zoom.surroundings, zoom.zoomProps.edgePadding, zoom.zoomProps.animated);
+    }, 2000);
+  };
+
+
   componentDidMount = () => {
-    this.setState({modalVisible: true})
+    this.setState({modalVisible: true});
+    this.zoomToMarker(this.state.activityLocation);
   };
 
   _renderActionButtons = () => {
@@ -110,10 +120,12 @@ export default class ModalMap extends Component {
               Escoge la ubicación
             </Text>
             {/* TODO: add some instructions text explaining how this MapView & MapMarker works... */}
-            <MapView style={styles.map}
+            <MapView ref="map"
+                     style={styles.map}
                      customMapStyle={mapStyles}
                      initialRegion={this.state.initialMapRegionCoordinates}>
                              <MapView.Marker draggable={draggable}
+                                             identifier="Ubicacion"
                               coordinate={this.state.activityLocation}
                               title={"Ubicacion"}
                               onValueChange={this._handleEventSelected}

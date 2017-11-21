@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import GeolocationService from '../service/GeolocationService';
 import {MapView} from "expo";
 import mapStyles from '../config/map';
-
+import {prettyDate} from "../util/prettyDate";
 import LoadingIndicator from "../component/LoadingIndicator";
 
 export default class ActivityDetailsContentView extends Component {
@@ -18,6 +18,18 @@ export default class ActivityDetailsContentView extends Component {
     this.activeEvent = this.props.activeEvent;
     this.setState({loading: false});
   };
+  zoomToMarker = (location) => {
+    let zoom = GeolocationService.getLocationSurroundings(location);
+    let context = this;
+    setTimeout(function(){
+      context.refs.map.fitToCoordinates(zoom.surroundings, zoom.zoomProps.edgePadding, zoom.zoomProps.animated);
+    }, 2000);
+  };
+
+  componentDidMount = () => {
+    this.zoomToMarker(this.location);
+  };
+
   render() {
     if (this.state.loading) {
       return <LoadingIndicator/>;
@@ -34,19 +46,9 @@ export default class ActivityDetailsContentView extends Component {
         </Text>
 
       </View>
-      <View style={{
-        flex: 0.15,
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: "center"
-      }}>
-        <Text style={{flex: 1, justifyContent: 'space-around',textAlign: 'center'}}>
-          Nombre de la actividad: {this.activeActivity.Name}
-        </Text>
-      </View>
       <View style={{flex: 0.15, justifyContent: "space-around", borderBottomColor: '#47315a', borderBottomWidth: 1}}>
         <Text style={{flex: 1, justifyContent: 'space-around',textAlign: 'center'}}>
-          {this.activeActivity.BeginDateTime} - {this.activeActivity.EndDateTime}
+          {prettyDate(new Date(this.activeActivity.BeginDateTime)) } - {prettyDate(new Date(this.activeActivity.EndDateTime)) }
         </Text>
       </View>
       <View style={{
@@ -56,7 +58,7 @@ export default class ActivityDetailsContentView extends Component {
         borderBottomWidth: 1
       }}>
         <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around", flexWrap: "wrap"}}>
-          <MapView style={styles.map}
+          <MapView ref="map" style={styles.map}
                    customMapStyle={mapStyles}
                    initialRegion={this.bsasCoordinates}>
             <MapView.Marker draggable={false}
