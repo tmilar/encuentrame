@@ -286,7 +286,7 @@ export default class Activity extends Component {
 
   _renderActivityContent = () => {
     return this.state.activeActivity ?
-      <ActivityDetailsContentView navigation={this.props.navigation} activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>
+      <ActivityDetailsContentView activeActivity={this.activeActivity} activeEvent={this._getSelectedEvent()}/>
       :
       this._renderNewActivityContent();
   };
