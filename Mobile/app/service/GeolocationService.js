@@ -89,6 +89,33 @@ class GeolocationService {
   };
 
 
+  getLocationSurroundings = (location) => {
+      return {
+        surroundings: [{
+          latitude: location.latitude + 0.0075,
+          longitude: location.longitude + 0.0075
+        },
+          {
+            latitude: location.latitude + 0.0075,
+            longitude: location.longitude - 0.0075
+
+          },
+          {
+            latitude: location.latitude - 0.0075,
+            longitude: location.longitude + 0.0075
+
+          },
+          {
+            latitude: location.latitude - 0.0075,
+            longitude: location.longitude - 0.0075
+
+          }
+        ],
+        zoomProps: { edgePadding: { top: 100, right: 100, bottom: 100, left: 100}, animated: true}
+      };
+  };
+
+
 }
 
 let geolocationService = new GeolocationService();

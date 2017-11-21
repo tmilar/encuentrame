@@ -28,7 +28,7 @@ export default class ActivityContainer extends Component {
 
   render() {
     return <View style={{flex: 1}}>
-            <Activity key={this.state.key} goBack={this._goBack} activityCreated={this.activityCreated} activityDeleted={this.activityDeleted}/>
+            <Activity key={this.state.key} navigation={this.props.navigation} goBack={this._goBack} activityCreated={this.activityCreated} activityDeleted={this.activityDeleted}/>
           </View>
    ;
   }
