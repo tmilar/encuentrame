@@ -36,12 +36,13 @@ class NewsService {
     }
   };
 
-  _dismissNewsById = async (newsId) => {
+  dismissNewsById = async (newsId) => {
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
     if (currentNewsJson) {
       let currentNews = JSON.parse(currentNewsJson);
       let finalNews = currentNews.filter((news) => news.id !== newsId);
       await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
+      await this.onUpdate(finalNews);
     }
   };
 
