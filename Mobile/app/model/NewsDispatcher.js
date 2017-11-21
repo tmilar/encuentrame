@@ -19,7 +19,7 @@ const NewsTypes = {
         }
         return `Te preguntaron si estabas bien. ${responded}`;
       },
-      icon: () => <EvilIcons name={'question'} style={{color: 'orange'}} size={40}/>
+      icon: () => <EvilIcons name={'question'} style={{color: 'orange'}} size={30}/>
     },
     hasAction: true
   },
@@ -37,7 +37,7 @@ const NewsTypes = {
     display: {
       text: ({Ok, TargetUserId}) => `Usuario ${TargetUserId} indicó que ${Ok ? "está bien" : "necesita ayuda"}`,
       icon: ({Ok, TargetUserId}) => <Ionicons name={ Ok ? 'md-happy' : 'ios-sad'} style={{color: Ok ? 'green' : 'red'}}
-                                              size={40}/>
+                                              size={30}/>
     },
     hasAction: false
   },
@@ -59,7 +59,7 @@ const NewsTypes = {
         }
         return response;
       },
-      icon: () => <Ionicons name={'md-contacts'} style={{color: 'black'}} size={40}/>
+      icon: () => <Ionicons name={'md-contacts'} style={{color: 'black'}} size={30}/>
     },
     hasAction: true
   },
@@ -72,7 +72,7 @@ const NewsTypes = {
     },
     display: {
       text: ({Username}) => `${Username} ha aceptado tu solicitud de contacto`,
-      icon: () => <MaterialCommunityIcons name={'account-check'} style={{color: 'black'}} size={40}/>
+      icon: () => <MaterialCommunityIcons name={'account-check'} style={{color: 'black'}} size={30}/>
     },
     hasAction: false
   },
@@ -83,13 +83,13 @@ const NewsTypes = {
     },
     display: {
       text: `Se ha notificado de un incidente en el evento`,
-      icon: () => <FontAwesome name={'warning'} style={{color: 'red'}} size={40}/>
+      icon: () => <FontAwesome name={'warning'} style={{color: 'red'}} size={30}/>
     },
     hasAction: true
   },
   "default": {
     display: {
-      icon: () => <Ionicons name={'md-notifications'} style={{color: 'black'}} size={40}/>
+      icon: () => <Ionicons name={'md-notifications'} style={{color: 'black'}} size={30}/>
     }
   }
 };
@@ -122,8 +122,6 @@ class NewsDispatcher {
 
   getNewsData = ({type, time, data, id, resolution}) => {
     const message = this._getTextMessage(type, data, resolution);
-
-
     let Icon = NewsTypes[type].display.icon(data, resolution);
     let date = prettyDate(new Date(time));
     return {message, Icon, date, id}

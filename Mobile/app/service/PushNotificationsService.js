@@ -126,6 +126,11 @@ class PushNotificationsService {
       return false;
     }
 
+    if (data.Type && data.Type === "position"){
+      console.debug("[PushNotificationsService] Notification of type position is not a valid notification. Ignoring");
+      return false;
+    }
+
     return true;
   };
 }

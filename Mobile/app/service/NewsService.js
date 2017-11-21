@@ -84,7 +84,6 @@ class NewsService {
     let currentNews = await this.getCurrentNews();
     currentNews.push(newsItem);
     await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
-
     await this.onUpdate(currentNews);
     return newsItem;
   };
