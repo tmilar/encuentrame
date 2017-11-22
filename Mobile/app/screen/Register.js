@@ -101,9 +101,9 @@ export default class Register extends Component {
                 value={this.state.username}
                 placeholder="Usuario"
                 ref="usuario"
-                style={[styles.textInput, styles.registerTextInput, {width: 250, color: 'white' }]}
+                style={[styles.textInput, styles.registerTextInput, {width: 250, color: 'black' }]}
                 selectTextOnFocus
-                placeholderTextColor="white"
+                placeholderTextColor="black"
                 autoCapitalize='none'
                 returnKeyType='next'
                 onChangeText={this._handleUsernameTextChange}
@@ -114,10 +114,10 @@ export default class Register extends Component {
                 value={this.state.email}
                 placeholder="E-mail"
                 ref="email"
-                style={[styles.textInput, styles.registerTextInput, {width: 250,color: 'white' }]}
+                style={[styles.textInput, styles.registerTextInput, {width: 250,color: 'black' }]}
                 keyboardType="email-address"
                 selectTextOnFocus
-                placeholderTextColor="white"
+                placeholderTextColor="black"
                 autoCapitalize='none'
                 returnKeyType='next'
                 onChangeText={this._handleEmailTextChange}
@@ -128,9 +128,9 @@ export default class Register extends Component {
                 value={this.state.password}
                 placeholder="Contraseña"
                 ref="password"
-                style={[styles.textInput, styles.registerTextInput, {width: 250,color: 'white' }]}
+                style={[styles.textInput, styles.registerTextInput, {width: 250,color: 'black' }]}
                 autoCapitalize='none'
-                placeholderTextColor="white"
+                placeholderTextColor="black"
                 autoCorrect={false}
                 secureTextEntry
                 returnKeyType="go"
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   registerTextInput: {
     padding: 8,
-    backgroundColor: '#8393ad',
+    backgroundColor: 'white',
     borderRadius: 10,
     margin: 5
   }

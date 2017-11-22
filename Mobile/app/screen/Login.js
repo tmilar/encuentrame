@@ -152,9 +152,9 @@ export default class Login extends Component {
               value={this.state.username}
               placeholder="Usuario"
               ref="usuario"
-              style={[styles.textInput, {color: 'white' }]}
+              style={[styles.textInput, {color: 'black' }]}
               selectTextOnFocus
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               autoCapitalize='none'
               returnKeyType='next'
               onSubmitEditing={() => this.refs.password.focus()}
@@ -164,10 +164,10 @@ export default class Login extends Component {
               value={this.state.password}
               placeholder="Contraseña"
               ref="password"
-              style={[styles.textInput, {color: 'white' }]}
+              style={[styles.textInput, {color: 'black' }]}
               autoCapitalize='none'
               autoCorrect={false}
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               secureTextEntry
               returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 44,
     padding: 8,
-    backgroundColor: '#8393ad',
+    backgroundColor: 'white',
     borderRadius: 10,
     margin: 5
   },
