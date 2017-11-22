@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, Button, Alert, TextInput, Keyboard} from 'react-native'
+import {Text, View, StyleSheet, Button, Alert, TextInput, Keyboard, Image} from 'react-native'
 import UserService from '../service/UserService';
 import SessionService from '../service/SessionService';
 import {showLoading, hideLoading} from 'react-native-notifyer';
@@ -17,7 +17,8 @@ export default class Login extends Component {
 
   state = {
     username: '',
-    password: ''
+    password: '',
+    viewActions: true
   };
 
   constructor(props) {
@@ -29,6 +30,7 @@ export default class Login extends Component {
     this._handlePasswordTextChange = this._handlePasswordTextChange.bind(this);
     this._handleLoginButtonPress = this._handleLoginButtonPress.bind(this);
     this._handleRegisterTextPress = this._handleRegisterTextPress.bind(this);
+    this._handleKeyBoardToggle = this._handleKeyBoardToggle.bind(this);
   }
 
   _clearForm() {
@@ -130,15 +132,19 @@ export default class Login extends Component {
     navigate('PostLogin');
   }
 
+  _handleKeyBoardToggle(visible) {
+    this.setState({viewActions: !visible});
+  }
+
   render() {
     return (
-      <View style={[containers.container, styles.scroll]}>
-        <View style={[{flex: 1}]}>
+      <View style={[containers.container, styles.scroll, {backgroundColor: '#3CB393'}]}>
+        <View style={[{flex: 1,justifyContent: 'space-around'}]}>
 
           <View style={styles.header}>
-            <Text style={text.title}>
-              Encuentrame
-            </Text>
+            <Image
+              style={{width: 400, height: 200}}
+              source={require('../img/eme_final.png')} />
           </View>
 
           <View style={styles.loginForm}>
@@ -146,8 +152,9 @@ export default class Login extends Component {
               value={this.state.username}
               placeholder="Usuario"
               ref="usuario"
-              style={styles.textInput}
+              style={[styles.textInput, {color: 'white' }]}
               selectTextOnFocus
+              placeholderTextColor="white"
               autoCapitalize='none'
               returnKeyType='next'
               onSubmitEditing={() => this.refs.password.focus()}
@@ -157,9 +164,10 @@ export default class Login extends Component {
               value={this.state.password}
               placeholder="Contraseña"
               ref="password"
-              style={styles.textInput}
+              style={[styles.textInput, {color: 'white' }]}
               autoCapitalize='none'
               autoCorrect={false}
+              placeholderTextColor="white"
               secureTextEntry
               returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}
@@ -167,10 +175,11 @@ export default class Login extends Component {
             />
           </View>
 
-          <View style={{flex: 1}}>
+          {this.state.viewActions && <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
             <View style={styles.actionButtons}>
               <Button
                 title="Login"
+                color="#063450"
                 style={styles.Login}
                 onPress={this._handleLoginButtonPress}
               />
@@ -181,7 +190,7 @@ export default class Login extends Component {
                 No estoy registrado
               </Text>
             </View>
-          </View>
+          </View>}
 
           <View style={{height: 0, alignItems: "center"}}>
             <Text style={{fontSize: 14, color: "gray"}}>
@@ -189,7 +198,9 @@ export default class Login extends Component {
             </Text>
           </View>
           {/* The next view will animate to match the actual keyboards height */}
-          <KeyboardSpacer/>
+          <KeyboardSpacer
+            onToggle={this._handleKeyBoardToggle}
+          />
         </View>
       </View>
     )
@@ -198,22 +209,28 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
+    marginBottom: 10
   },
   loginForm: {
     flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   actionButtons: {
-    bottom: 0
+    bottom: 0,
+    width: 250
   },
   textInput: {
     width: 200,
     height: 44,
-    padding: 8
+    padding: 8,
+    backgroundColor: '#8393ad',
+    borderRadius: 10,
+    margin: 5
   },
   Login: {
-    // marginTop: 5, //200
-    // marginBottom: 10
+    backgroundColor: '#063450',
+    width: 250
   },
   scroll: {
     padding: 30,
@@ -221,6 +238,8 @@ const styles = StyleSheet.create({
   notRegistered: {
     textAlign: 'center',
     marginTop: 15,
-    fontSize: 16
+    fontSize: 16,
+    color: '#063450',
+    textDecorationLine: 'underline'
   }
 });
