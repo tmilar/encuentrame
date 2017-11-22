@@ -45,10 +45,10 @@ const Tabs = TabNavigator({
     activeTintColor: 'white',
     animationEnabled: true,
     showIcon: true,
-    inactiveBackgroundColor: '#5DBCD2',
+    inactiveBackgroundColor: '#3CB393',
     inactiveTintColor: '#063450',
     style: {
-      backgroundColor: '#5DBCD2'
+      backgroundColor: '#3CB393'
     }
   },
   tabBarPosition: 'bottom',
