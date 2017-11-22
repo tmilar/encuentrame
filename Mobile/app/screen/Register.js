@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView} from 'react-native';
+import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollView, Image} from 'react-native';
 import UserService from '../service/UserService';
 import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
@@ -87,64 +87,68 @@ export default class Register extends Component {
 
   render() {
     return (
-      <View style={containers.container}>
-        <ScrollView keyboardShouldPersistTaps="always"
-                    scrollEnabled={false}
-                    showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.header}>
-            <Text style={text.title}>
-              Encuentrame
-            </Text>
+      <View style={[containers.container, {flex: 1, backgroundColor: '#3CB393'}]}>
+          <View style={[{flex: 1}]} >
+
+            <View style={[styles.header, {flex: 3}]} >
+              <Image
+                style={{width: 400, height: 200}}
+                source={require('../img/eme_final.png')} />
+            </View>
+
+            <View style={[styles.content, {flex: 4, justifyContent: 'center', alignItems: 'center'}]} >
+              <TextInput
+                value={this.state.username}
+                placeholder="Usuario"
+                ref="usuario"
+                style={[styles.textInput, styles.registerTextInput, {width: 250, color: 'white' }]}
+                selectTextOnFocus
+                placeholderTextColor="white"
+                autoCapitalize='none'
+                returnKeyType='next'
+                onChangeText={this._handleUsernameTextChange}
+                onSubmitEditing={() => this.refs.email.focus()}
+              />
+
+              <TextInput
+                value={this.state.email}
+                placeholder="E-mail"
+                ref="email"
+                style={[styles.textInput, styles.registerTextInput, {width: 250,color: 'white' }]}
+                keyboardType="email-address"
+                selectTextOnFocus
+                placeholderTextColor="white"
+                autoCapitalize='none'
+                returnKeyType='next'
+                onChangeText={this._handleEmailTextChange}
+                onSubmitEditing={() => this.refs.password.focus()}
+              />
+
+              <TextInput
+                value={this.state.password}
+                placeholder="Contraseña"
+                ref="password"
+                style={[styles.textInput, styles.registerTextInput, {width: 250,color: 'white' }]}
+                autoCapitalize='none'
+                placeholderTextColor="white"
+                autoCorrect={false}
+                secureTextEntry
+                returnKeyType="go"
+                onChangeText={this._handlePasswordTextChange}
+                onSubmitEditing={this._handleLoginButtonPress}
+              />
+            </View>
+
+            <View style={{flex: 2, justifyContent: 'space-around', alignItems: 'center'}}>
+              <Button
+                title="Registro"
+                color="#063450"
+                style={{backgroundColor: '#063450',width: 250}}
+                onPress={this._handleRegisterButtonPress}
+              />
+            </View>
+
           </View>
-
-          <View style={styles.content}>
-            <TextInput
-              value={this.state.username}
-              placeholder="Usuario"
-              ref="usuario"
-              style={styles.input}
-              selectTextOnFocus
-              autoCapitalize='none'
-              returnKeyType='next'
-              onChangeText={this._handleUsernameTextChange}
-              onSubmitEditing={() => this.refs.email.focus()}
-            />
-
-            <TextInput
-              value={this.state.email}
-              placeholder="E-mail"
-              ref="email"
-              style={styles.input}
-              keyboardType="email-address"
-              selectTextOnFocus
-              autoCapitalize='none'
-              returnKeyType='next'
-              onChangeText={this._handleEmailTextChange}
-              onSubmitEditing={() => this.refs.password.focus()}
-            />
-
-            <TextInput
-              value={this.state.password}
-              placeholder="Contraseña"
-              ref="password"
-              style={styles.input}
-              autoCapitalize='none'
-              autoCorrect={false}
-              secureTextEntry
-              returnKeyType="go"
-              onChangeText={this._handlePasswordTextChange}
-              onSubmitEditing={this._handleLoginButtonPress}
-            />
-          </View>
-
-          <View style={styles.footer}>
-            <Button
-              title="Registro"
-              onPress={this._handleRegisterButtonPress}
-            />
-          </View>
-        </ScrollView>
       </View>
     )
 
@@ -156,5 +160,11 @@ const styles = StyleSheet.create({
     width: 200,
     height: 44,
     padding: 8
+  },
+  registerTextInput: {
+    padding: 8,
+    backgroundColor: '#8393ad',
+    borderRadius: 10,
+    margin: 5
   }
 });

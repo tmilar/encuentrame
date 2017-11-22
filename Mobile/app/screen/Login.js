@@ -223,7 +223,10 @@ const styles = StyleSheet.create({
   textInput: {
     width: 200,
     height: 44,
-    padding: 8
+    padding: 8,
+    backgroundColor: '#8393ad',
+    borderRadius: 10,
+    margin: 5
   },
   Login: {
     backgroundColor: '#063450',
@@ -236,6 +239,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 15,
     fontSize: 16,
-    color: '#063450'
+    color: '#063450',
+    textDecorationLine: 'underline'
   }
 });
