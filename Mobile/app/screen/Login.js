@@ -18,7 +18,7 @@ export default class Login extends Component {
   state = {
     username: '',
     password: '',
-    viewActions: true
+    showFooter: true
   };
 
   constructor(props) {
@@ -133,7 +133,7 @@ export default class Login extends Component {
   }
 
   _handleKeyBoardToggle(visible) {
-    this.setState({viewActions: !visible});
+    this.setState({showFooter: !visible});
   }
 
   render() {
@@ -175,7 +175,7 @@ export default class Login extends Component {
             />
           </View>
 
-          {this.state.viewActions && <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+          {this.state.showFooter && <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
             <View style={styles.actionButtons}>
               <Button
                 title="Login"
@@ -192,11 +192,12 @@ export default class Login extends Component {
             </View>
           </View>}
 
-          <View style={{height: 0, alignItems: "center"}}>
+          {this.state.showFooter && <View style={{height: 0, alignItems: "center"}}>
             <Text style={{fontSize: 14, color: "gray"}}>
               {`${name} v${version}`}
             </Text>
           </View>
+          }
           {/* The next view will animate to match the actual keyboards height */}
           <KeyboardSpacer
             onToggle={this._handleKeyBoardToggle}
