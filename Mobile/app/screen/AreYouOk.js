@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Modal, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, Modal, StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {text} from '../style';
 import AreYouOkService from '../service/AreYouOkService';
@@ -58,7 +58,7 @@ export default class AreYouOk extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#3CB393'}}>
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -67,40 +67,48 @@ export default class AreYouOk extends Component {
             Alert.alert("¿Estás Bien?", "¡Por favor, responde! Alguien está preocupado por vos.");
           }}
         >
-          <View style={styles.message}>
-            <Text style={[text.title, {fontSize: 28}]}>¿Estás bien?</Text>
-          </View>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            }}>
-              <View style={{flex: 1, margin: 3}}>
-                <Button
-                  title="¡ESTOY BIEN!"
-                  backgroundColor='#64DD17'
-                  onPress={this._handleImOk}
-                  iconRight={{name: 'thumbs-up', type: 'font-awesome'}}
-                  raised={true}
-                  textStyle={{fontWeight: 'bold'}}
-                  borderRadius={5}
-                  containerViewStyle={{borderRadius: 5}}
-                  large={true}
-                />
+          <View style={{flex: 1, backgroundColor: '#3CB393'}}>
+            <View style={[styles.message, {flex: 1.4, justifyContent: 'space-around', paddingTop: 30}]}>
+              <Text style={[text.title, {fontSize: 60, color: 'white'}]}>¿Estás bien?</Text>
+            </View>
+            <View style={{flex: 1, justifyContent: 'center'}}>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                flex: 1
+              }}>
+                <View style={{flex: 1, margin: 3}}>
+                  <Button
+                    title="¡ESTOY BIEN!"
+                    backgroundColor='#64DD17'
+                    onPress={this._handleImOk}
+                    iconRight={{name: 'thumbs-up', type: 'font-awesome'}}
+                    raised={true}
+                    textStyle={{fontWeight: 'bold'}}
+                    borderRadius={5}
+                    containerViewStyle={{borderRadius: 5}}
+                    large={true}
+                  />
+                </View>
+                <View style={{flex: 1, margin: 3}}>
+                  <Button
+                    title="NECESITO AYUDA"
+                    backgroundColor='#ff5c5c'
+                    onPress={this._handleINeedHelp}
+                    icon={{name: 'warning'}}
+                    raised={true}
+                    textStyle={{fontWeight: 'bold', fontSize: 12}}
+                    borderRadius={5}
+                    containerViewStyle={{borderRadius: 5}}
+                    large={true}
+                  />
+                </View>
               </View>
-              <View style={{flex: 1, margin: 3}}>
-                <Button
-                  title="NECESITO AYUDA"
-                  backgroundColor='#ff5c5c'
-                  onPress={this._handleINeedHelp}
-                  icon={{name: 'warning'}}
-                  raised={true}
-                  textStyle={{fontWeight: 'bold', fontSize: 12}}
-                  borderRadius={5}
-                  containerViewStyle={{borderRadius: 5}}
-                  large={true}
-                />
+              <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+                <Image
+                  style={{width: 200, height: 100}}
+                  source={require('../img/eme_final.png')} />
               </View>
             </View>
           </View>

@@ -42,9 +42,14 @@ const Tabs = TabNavigator({
   },
 }, {
   tabBarOptions: {
-    activeTintColor: '#2962FF',
+    activeTintColor: 'white',
     animationEnabled: true,
     showIcon: true,
+    inactiveBackgroundColor: '#5DBCD2',
+    inactiveTintColor: '#063450',
+    style: {
+      backgroundColor: '#5DBCD2'
+    }
   },
   tabBarPosition: 'bottom',
   swipeEnabled: false
