@@ -10,9 +10,14 @@ class SoughtPeopleService {
    */
   getSoughtPeople = async () => {
     let url = "soughtPeople";
-    let soughtPeople = await Service.sendRequest(url,{
+    let soughtPeople = await Service.sendRequest(url, {
       method: 'GET'
     });
+
+    soughtPeople.forEach(({User}) => {
+      Object.assign(User, {imageUri: AccountsService.getAccountImageUriById(User.Id)})
+    });
+
     // let maxCount = 7;
     // let soughtPeople = await this._getSomeUsersAsSoughtPeople(maxCount);
 

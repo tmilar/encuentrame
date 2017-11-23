@@ -3,6 +3,7 @@ import ReactNative, {Text, View, StyleSheet, Button, Alert, TextInput, ScrollVie
 import UserService from '../service/UserService';
 import {showLoading, hideLoading} from 'react-native-notifyer';
 import {containers, text} from '../style';
+import KeyboardSpacer from "react-native-keyboard-spacer";
 
 export default class Register extends Component {
 
@@ -85,6 +86,10 @@ export default class Register extends Component {
     this.props.navigation.goBack();
   }
 
+  _handleKeyBoardToggle = (visible) => {
+    this.setState({keyboardVisible: visible})
+  };
+
   render() {
     return (
       <View style={[containers.container, {flex: 1, backgroundColor: '#3CB393'}]}>
@@ -141,16 +146,22 @@ export default class Register extends Component {
               />
             </View>
 
+            {this.state.keyboardVisible ||
             <View style={{flex: 2, justifyContent: 'space-around', alignItems: 'center'}}>
               <Button
                 title="Registro"
                 color="#063450"
-                style={{backgroundColor: '#063450',width: 250}}
+                style={{backgroundColor: '#063450', width: 250}}
                 onPress={this._handleRegisterButtonPress}
               />
             </View>
-
+            }
           </View>
+        {/* The next view will animate to match the actual keyboards height */}
+        <KeyboardSpacer
+          onToggle={this._handleKeyBoardToggle}
+        />
+
       </View>
     )
 
