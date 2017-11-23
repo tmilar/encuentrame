@@ -155,6 +155,7 @@ export default class Login extends Component {
               style={[styles.textInput, {color: 'black' }]}
               selectTextOnFocus
               placeholderTextColor="black"
+              underlineColorAndroid="transparent"
               autoCapitalize='none'
               returnKeyType='next'
               onSubmitEditing={() => this.refs.password.focus()}
@@ -168,6 +169,7 @@ export default class Login extends Component {
               autoCapitalize='none'
               autoCorrect={false}
               placeholderTextColor="black"
+              underlineColorAndroid="transparent"
               secureTextEntry
               returnKeyType="go"
               onChangeText={this._handlePasswordTextChange}

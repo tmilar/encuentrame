@@ -106,6 +106,7 @@ export default class Register extends Component {
                 placeholderTextColor="black"
                 autoCapitalize='none'
                 returnKeyType='next'
+                underlineColorAndroid="transparent"
                 onChangeText={this._handleUsernameTextChange}
                 onSubmitEditing={() => this.refs.email.focus()}
               />
@@ -120,6 +121,7 @@ export default class Register extends Component {
                 placeholderTextColor="black"
                 autoCapitalize='none'
                 returnKeyType='next'
+                underlineColorAndroid="transparent"
                 onChangeText={this._handleEmailTextChange}
                 onSubmitEditing={() => this.refs.password.focus()}
               />
