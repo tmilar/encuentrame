@@ -146,7 +146,7 @@ export default class SoughtPeopleDeckSwiper extends Component {
             </CardItem>
             <CardItem>
               <Icon name="heart" style={{color: '#ED4A6A'}}/>
-              <Text>{`Se lo vio a ${item.Distance} mts tuyos.`}</Text>
+              <Text>{`Se lo vio ${item.Distance > 0 ? `a ${item.Distance} mts tuyos` : `cerca tuyo`}.`}</Text>
             </CardItem>
           </Card>
         }
