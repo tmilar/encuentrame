@@ -86,6 +86,10 @@ export default class Register extends Component {
     this.props.navigation.goBack();
   }
 
+  _handleKeyBoardToggle = (visible) => {
+    this.setState({keyboardVisible: visible})
+  };
+
   render() {
     return (
       <View style={[containers.container, {flex: 1, backgroundColor: '#3CB393'}]}>
@@ -142,6 +146,7 @@ export default class Register extends Component {
               />
             </View>
 
+            {this.state.keyboardVisible ||
             <View style={{flex: 2, justifyContent: 'space-around', alignItems: 'center'}}>
               <Button
                 title="Registro"
@@ -150,7 +155,7 @@ export default class Register extends Component {
                 onPress={this._handleRegisterButtonPress}
               />
             </View>
-
+            }
           </View>
         {/* The next view will animate to match the actual keyboards height */}
         <KeyboardSpacer
