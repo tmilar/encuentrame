@@ -247,7 +247,7 @@ export default class Activity extends Component {
   };
 
   _getNewActivityHeader = () => {
-    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 70}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#3db395ff", height: 70}}>
         <Text style={styles.activityTitle}>
           {this._getTitle()}
         </Text>
@@ -255,7 +255,7 @@ export default class Activity extends Component {
   };
 
   _getActiveActivityHeader = () => {
-    return <View style={{justifyContent: "space-around", backgroundColor: "#2962FF", height: 70}}>
+    return <View style={{justifyContent: "space-around", backgroundColor: "#3db395ff", height: 70}}>
         <View style={{justifyContent: "space-around", flexDirection: "row"}}>
           <View style={{justifyContent: "space-around"}}>
             <Text style={styles.activityTitle}>
