@@ -93,15 +93,16 @@ export default class Register extends Component {
   render() {
     return (
       <View style={[containers.container, {flex: 1, backgroundColor: '#3CB393'}]}>
-          <View style={[{flex: 1}]} >
+          <View style={{flex: 1,justifyContent: 'space-around'}} >
 
-            <View style={[styles.header, {flex: 3}]} >
+            <View style={styles.header} >
               <Image
-                style={{width: 400, height: 200}}
-                source={require('../img/eme_final.png')} />
+                resizeMode="contain"
+                style={{height: "100%"}}
+                source={require('../img/eme_final2.png')} />
             </View>
 
-            <View style={[styles.content, {flex: 4, justifyContent: 'center', alignItems: 'center'}]} >
+            <View style={styles.content} >
               <TextInput
                 value={this.state.username}
                 placeholder="Usuario"
@@ -169,6 +170,14 @@ export default class Register extends Component {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flex: 3
+  },
+  content: {
+    flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   input: {
     width: 200,
     height: 44,
