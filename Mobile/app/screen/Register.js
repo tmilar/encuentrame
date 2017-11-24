@@ -149,12 +149,14 @@ export default class Register extends Component {
 
             {this.state.keyboardVisible ||
             <View style={{flex: 2, justifyContent: 'space-around', alignItems: 'center'}}>
-              <Button
-                title="Registro"
-                color="#063450"
-                style={{backgroundColor: '#063450', width: 250}}
-                onPress={this._handleRegisterButtonPress}
-              />
+              <View style={styles.actionButtons}>
+                <Button
+                  title="Registro"
+                  color="#063450"
+                  style={styles.Register}
+                  onPress={this._handleRegisterButtonPress}
+                />
+              </View>
             </View>
             }
           </View>
@@ -188,5 +190,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     margin: 5
+  },
+  actionButtons: {
+    bottom: 0,
+    width: 250
+  },
+  Register: {
+    backgroundColor: '#063450',
+    width: 250
   }
 });
