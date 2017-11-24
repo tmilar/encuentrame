@@ -142,6 +142,7 @@ export default class Register extends Component {
                 autoCorrect={false}
                 secureTextEntry
                 returnKeyType="go"
+                underlineColorAndroid="transparent"
                 onChangeText={this._handlePasswordTextChange}
                 onSubmitEditing={this._handleLoginButtonPress}
               />
