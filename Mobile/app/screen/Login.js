@@ -143,8 +143,9 @@ export default class Login extends Component {
 
           <View style={styles.header}>
             <Image
-              style={{width: 400, height: 200}}
-              source={require('../img/eme_final.png')} />
+              resizeMode="contain"
+              style={{height: "100%"}}
+              source={require('../img/eme_final2.png')} />
           </View>
 
           <View style={styles.loginForm}>
@@ -212,7 +213,7 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    marginBottom: 10
+    flex: 1.5
   },
   loginForm: {
     flex: 2,

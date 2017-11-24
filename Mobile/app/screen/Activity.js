@@ -279,6 +279,7 @@ export default class Activity extends Component {
         <Button
           title="Crear Actividad"
           onPress={this._handleCreateActivityButtonPress}
+          color="#063450"
         />
       </View>
     </View>;
@@ -350,6 +351,7 @@ export default class Activity extends Component {
               <View style={{justifyContent: "space-around", width: 150}}>
                 <Button
                   style={{width: 100, height: 50}}
+                  color="#063450"
                   title="Ubicacion:"
                   onPress={this._handleActivityLocationButtonpress}
                 />
@@ -437,7 +439,7 @@ const styles = StyleSheet.create({
     height: 70
   },
   activityTitle: {
-    backgroundColor: "#2962FF",
+    backgroundColor: "#3db395ff",
     color: "white",
     textAlign: 'center',
     alignSelf: "center",

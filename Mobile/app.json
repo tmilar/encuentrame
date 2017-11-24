@@ -17,7 +17,9 @@
       }
     },
     "loading": {
-      "icon": "./app/img/eme_icon_big.png"
+      "icon": "./app/img/eme_final2.png",
+      "backgroundImage": "./app/img/eme_background.png",
+      "backgroundColor": "#3CB393"
     },
     "orientation": "portrait"
   },
