@@ -180,11 +180,11 @@ export default class SoughtPeopleDeckSwiper extends Component {
           justifyContent: 'space-between',
           padding: 10
         }}>
-          <Button iconLeft onPress={this.handleSwipeLeftButtonPress}>
+          <Button iconLeft style={{backgroundColor: '#063450'}} onPress={this.handleSwipeLeftButtonPress}>
             <Icon name="arrow-back"/>
             <Text>No lo he visto :(</Text>
           </Button>
-          <Button iconRight onPress={this.handleSwipeRightButtonPress}>
+          <Button iconRight style={{backgroundColor: '#063450'}} onPress={this.handleSwipeRightButtonPress}>
             <Text>¡Lo he visto!</Text>
             <Icon name="arrow-forward"/>
           </Button>

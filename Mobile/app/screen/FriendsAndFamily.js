@@ -85,6 +85,7 @@ export default class FriendsAndFamily extends Component {
             style={{width: 100, height: 50}}
             title="Agregar contacto"
             onPress={this._handleNuevoContactoButtonpress}
+            color="#063450"
           />
         </View>
       </View>
