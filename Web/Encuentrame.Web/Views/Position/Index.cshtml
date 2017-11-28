@@ -20,6 +20,7 @@
 
 <div class="table-container">
     @( Html.BuildTable<PositionListModel>(Url.Action("GetItems", "Position"))
+        .InServer()
            .AddColumn(x => x.Id)
            .AddColumn(x => x.Creation)
            .AddColumn(x => x.Latitude)

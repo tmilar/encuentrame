@@ -5,6 +5,7 @@ using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Supports;
 using Encuentrame.Support;
 using NailsFramework.IoC;
+using NailsFramework.Logging;
 using NailsFramework.Persistence;
 
 namespace Encuentrame.Model.Positions
@@ -33,11 +34,9 @@ namespace Encuentrame.Model.Positions
                 Accuracy = positionParameters.Accuracy,
                 Heading = positionParameters.Heading,
                 Speed = positionParameters.Speed,
-
-
-                Creation = positionParameters.Creation
+                Creation = positionParameters.Creation.ToTimeZoneTime()
             };
-
+            Log.Info($"Position creation: {position.Creation}");
 
             Positions.Put(position);
 

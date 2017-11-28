@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Web.Http;
 using Encuentrame.Model.Events;
+using Encuentrame.Support;
 using Encuentrame.Web.Models.Apis.Commons;
 using Encuentrame.Web.Models.Apis.Events;
 using NailsFramework.IoC;
@@ -20,8 +21,8 @@ namespace Encuentrame.Web.Controllers.Apis
             {
                 Id = x.Id,
                 Name = x.Name,
-                BeginDateTime = x.BeginDateTime,
-                EndDateTime = x.EndDateTime,
+                BeginDateTime = x.BeginDateTime.ToTimeZoneTime(),
+                EndDateTime = x.EndDateTime.ToTimeZoneTime(),
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Address = new AddressModel()

@@ -522,6 +522,7 @@
     <Content Include="images\maps\MapMarker_Blue_Tiny_Point.png" />
     <Content Include="images\maps\MapMarker_Flag.png" />
     <Content Include="images\maps\MapMarker_Green_Point.png" />
+    <Content Include="images\maps\MapMarker_Grey_Point.png" />
     <Content Include="images\maps\MapMarker_Red_Point.png" />
     <Content Include="images\menu.png" />
     <Content Include="images\details_close.png" />

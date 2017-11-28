@@ -106,17 +106,17 @@ namespace Encuentrame.Web.Controllers
             return View("IndexMessage", null, "La base de datos se modificó con exito");
         }
 
+
+
         [HttpPost]
         // GET: Database
-        public ActionResult Create(string password)
+        public ActionResult CreateDataMock(string password)
         {
             if (password != "destruir")
             {
                 AddModelError("Contraseña incorrecta");
                 return View("Index");
             }
-
-            DatabaseCreator.Create();
 
             //Users
             var userAdmin = new User()
@@ -233,7 +233,7 @@ namespace Encuentrame.Web.Controllers
 
             Events.Put(eventt2);
 
-            var dayRandom=new Random(SystemDateTime.Now.Millisecond);
+            var dayRandom = new Random(SystemDateTime.Now.Millisecond);
             for (int ss = 0; ss < 50; ss++)
             {
                 var bgdt = SystemDateTime.Now.AddDays(-1 * dayRandom.Next(0, 360));
@@ -241,9 +241,9 @@ namespace Encuentrame.Web.Controllers
                 {
                     Name = $"Evento de prueba {ss}",
                     BeginDateTime = bgdt,
-                    EndDateTime =  bgdt.AddHours(3),
+                    EndDateTime = bgdt.AddHours(3),
                     Organizer = user4,
-                    Status = bgdt < SystemDateTime.Now ? EventStatusEnum.Completed:EventStatusEnum.InProgress,
+                    Status = bgdt < SystemDateTime.Now ? EventStatusEnum.Completed : EventStatusEnum.InProgress,
                     Address = new Address()
                     {
                         City = "CABA",
@@ -257,7 +257,7 @@ namespace Encuentrame.Web.Controllers
                     Longitude = (decimal)-58.41989,
                 };
 
-                if (dayRandom.Next(0, 360)<36 )
+                if (dayRandom.Next(0, 360) < 36)
                 {
                     ev.EmergencyDateTime = bgdt.AddHours(1);
                     if (ev.Status == EventStatusEnum.InProgress)
@@ -265,7 +265,7 @@ namespace Encuentrame.Web.Controllers
                         ev.Status = EventStatusEnum.InEmergency;
                     }
                 }
-               
+
                 Events.Put(ev);
             }
 
@@ -319,14 +319,14 @@ namespace Encuentrame.Web.Controllers
             });
 
 
-            CreateStoredProcedures();
-            CreateLogTable();
+           
             CreateUsers();
 
 
             CurrentUnitOfWork.Checkpoint();
 
-            foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
+            var listOfUsers = Users.Where(x => x.Role == RoleEnum.User).ToList();
+            foreach (var user in listOfUsers)
             {
                 var activityIn = new Activity()
                 {
@@ -341,7 +341,7 @@ namespace Encuentrame.Web.Controllers
                 Activities.Put(activityIn);
             }
 
-            foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
+            foreach (var user in listOfUsers)
             {
                 var activityIn = new Activity()
                 {
@@ -357,7 +357,7 @@ namespace Encuentrame.Web.Controllers
             }
 
             var dictionary = new Dictionary<int, dynamic>();
-            foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
+            foreach (var user in listOfUsers)
             {
                 var position = new Position()
                 {
@@ -373,9 +373,9 @@ namespace Encuentrame.Web.Controllers
             }
 
             var rnd = new Random(DateTime.Now.Millisecond);
-            for (int ii = 0; ii < 180; ii++)
+            for (int ii = 0; ii < 180; ii = ii + 3)
             {
-                foreach (var user in Users.Where(x => x.Role == RoleEnum.User))
+                foreach (var user in listOfUsers)
                 {
 
                     var position = new Position()
@@ -393,6 +393,25 @@ namespace Encuentrame.Web.Controllers
 
                 }
             }
+            return View("IndexMessage", null, "Los datos de prueba se creo con exito");
+        }
+
+
+        [HttpPost]
+        // GET: Database
+        public ActionResult Create(string password)
+        {
+            if (password != "destruir")
+            {
+                AddModelError("Contraseña incorrecta");
+                return View("Index");
+            }
+
+            DatabaseCreator.Create();
+
+            CreateStoredProcedures();
+            CreateLogTable();
+
 
             return View("IndexMessage", null, "La base de datos se creo con exito");
         }
@@ -632,6 +651,8 @@ END
 
         private void CreateStoredSoughtPeople()
         {
+
+            //TODO: agregar fecha, tener en cuenta si alguien ya contesto
             var drop = @"
                                     IF OBJECT_ID('SoughtPeople', 'P') IS NOT NULL
                                     DROP PROC SoughtPeople
@@ -639,22 +660,21 @@ END
 
             var add = @"
                                     CREATE PROCEDURE SoughtPeople 
-	                                    @userId int , @eventId int
+	                                    @userId int , @eventId int, @from datetime
                                     AS
                                     BEGIN
-	                                    DECLARE @source geography 
-                                    set @source = (select top 1 geography::Point(Latitude, Longitude , 4326) from Positions where UserId=@userId order by Creation desc);
+	                                DECLARE @source geography 
+                                    set @source = (SELECT top 1 geography::Point(Latitude, Longitude , 4326) FROM Positions where UserId=@userId AND Creation>=@from ORDER BY Creation DESC);
 
-                                    SELECT top 20 aa.Target_id AS [UserId], min( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ) as Distance
+                                    SELECT top 3 aa.Target_id AS [UserId], MIN( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ) AS Distance
                                         FROM BaseAreYouOks aa 
-                                        inner join positions pp 
-                                        on aa.Target_id=pp.UserId  
-                                        where aa.Event_id=@eventId and aa.ReplyDatetime is null and aa.Target_id<>@userId
-                                        group by Target_id
-                                        order by min( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ); 
-                                    END
-                                    
-                                                                        ";
+                                        INNER JOIN positions pp ON aa.Target_id=pp.UserId  	
+                                        WHERE  NOT aa.Target_id in (select TargetUser_id from soughtPersonAnswers WHERE soughtPersonAnswers.SourceUser_id=@userId AND soughtPersonAnswers.seenWhen>=@from ) 
+			                                    AND aa.Event_id=@eventId AND aa.ReplyDatetime IS NULL AND aa.Target_id<>@userId
+                                                AND  @source.STDistance(geography::Point(Latitude, Longitude , 4326)) <=100
+                                        GROUP BY Target_id
+                                        ORDER BY MIN( @source.STDistance(geography::Point(Latitude, Longitude , 4326)) ); 
+                                    END";
 
             var dropCommand = NHibernateContext.CurrentSession.Connection.CreateCommand();
 

@@ -214,9 +214,10 @@ namespace Encuentrame.Model.AreYouOks
                 return new List<SoughtPersonInfo>();
             }
 
-            var sql = @"EXEC SoughtPeople :userId, :eventId; ";
+            var sql = @"EXEC SoughtPeople :userId, :eventId, :from; ";
 
             var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("from", currentActivity.Event.BeginDateTime)
                 .SetParameter("userId", userSearcher.Id)
                 .SetParameter("eventId", currentActivity.Event.Id)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(SoughtPersonInfo)));
@@ -254,7 +255,7 @@ namespace Encuentrame.Model.AreYouOks
 
             var soughtPersonAswer = new SoughtPersonAnswer()
             {
-                When = parameters.When,
+                When = parameters.When.HasValue?parameters.When.Value.ToTimeZoneTime():default(DateTime?) ,
                 Seen = true,
                 Latitude = latitude,
                 Longitude = longitude,

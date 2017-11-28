@@ -754,6 +754,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Monitorear.
+        /// </summary>
+        public static string ControlMonitor {
+            get {
+                return ResourceManager.GetString("ControlMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crear.
         /// </summary>
         public static string Create {
@@ -768,6 +777,15 @@ namespace Encuentrame.Web {
         public static string Created {
             get {
                 return ResourceManager.GetString("Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crear datos de prueba.
+        /// </summary>
+        public static string CreateDataMock {
+            get {
+                return ResourceManager.GetString("CreateDataMock", resourceCulture);
             }
         }
         
@@ -1429,7 +1447,7 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Administrador de evento.
+        ///   Looks up a localized string similar to Organizador.
         /// </summary>
         public static string EventAdministratorUser {
             get {

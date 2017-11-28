@@ -54,10 +54,11 @@ namespace Encuentrame.Web.Controllers
                 Status = eventt.Status,
 
                 IAmOk = true,
-                LastUpdate = SystemDateTime.Now,
+                LastUpdate = eventt.EndDateTime,
                 WithoutAnswer = true,
                 IAmNotOk = true,
                 Clustered = true,
+                
 
 
             };

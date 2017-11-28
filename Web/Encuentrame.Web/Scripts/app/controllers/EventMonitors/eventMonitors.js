@@ -33,6 +33,7 @@ function initMap() {
     var flagUrl = $mapContainer.data("icon-event");
     var flagLabel = $mapContainer.data("label-event");
 
+    var defaultUrl = $mapContainer.data("icon-default-person");
     var okUrl = $mapContainer.data("icon-ok-person");
     var notOkUrl = $mapContainer.data("icon-not-ok-person");
     var withoutAnswerUrl = $mapContainer.data("icon-without-answer-person");
@@ -87,6 +88,10 @@ function initMap() {
                             markImageUrl = notOkUrl;
                             markers = notOkMarkers;
                         }
+                        if ($iAmOkFilter.length === 0) {
+                            markImageUrl = defaultUrl;
+                        }
+
 
                         BuildMarket(map, positionLocal, markImageUrl, markLabel, markers);
                     });
@@ -126,32 +131,71 @@ function initMap() {
 
         });
 
+    var iAmOkFn = function (chk) {
+        if (chk) {
+            showMarkers(map, okMarkers);
+            if ($clusteredFilter.is(":checked")) {
+                okMarkerCluster = BuildCluster(map, okMarkers, imagesFolder);
+            }
+
+        } else {
+            clearMarkers(okMarkers);
+            clearCluster(okMarkerCluster);
+        }
+    }
+    var iAmNotOkFn=function(chk) {
+        if (chk) {
+            showMarkers(map, notOkMarkers);
+            if ($clusteredFilter.is(":checked")) {
+                notOkMarkerCluster = BuildCluster(map, notOkMarkers, imagesFolder);
+            }
+        } else {
+            clearMarkers(notOkMarkers);
+            clearCluster(notOkMarkerCluster);
+        }
+    }
+
+    var withoutAnswerFn = function (chk) {
+        if (chk) {
+            showMarkers(map, withoutAnswerMarkers);
+            if ($clusteredFilter.is(":checked")) {
+                withoutAnswerMarkerCluster = BuildCluster(map, withoutAnswerMarkers, imagesFolder);
+            }
+        } else {
+            clearMarkers(withoutAnswerMarkers);
+            clearCluster(withoutAnswerMarkerCluster);
+        }
+    }
+
     $clusteredFilter.on("change",
         function () {
             var $this = $(this);
            
-                removeAllClusterers();
+            removeAllClusterers();
 
-
-            $iAmOkFilter.trigger('change');
-            $iAmNotOkFilter.trigger('change');
-            $withoutAnswerFilter.trigger('change');
+            if ($iAmOkFilter.length > 0) {
+                $iAmOkFilter.trigger('change');
+            } else {
+                iAmOkFn(true);
+            }
+            if ($iAmNotOkFilter.length > 0) {
+                $iAmNotOkFilter.trigger('change');
+            } else {
+                iAmNotOkFn(true);
+            }
+            if ($withoutAnswerFilter.length > 0) {
+                $withoutAnswerFilter.trigger('change');
+            } else {
+                withoutAnswerFn(true);
+            }
+        
+           
         });
 
     $iAmOkFilter.on("change",
         function () {
             var $this = $(this);
-            if ($this.is(":checked")) {
-                showMarkers(map, okMarkers);
-                if($clusteredFilter.is(":checked"))
-                {
-                    okMarkerCluster = BuildCluster(map, okMarkers, imagesFolder);
-                }
-
-            } else {
-                clearMarkers(okMarkers);
-                clearCluster(okMarkerCluster);
-            }
+            iAmOkFn($this.is(":checked"));
         });
 
 
@@ -159,29 +203,13 @@ function initMap() {
     $iAmNotOkFilter.on("change",
         function () {
             var $this = $(this);
-            if ($this.is(":checked")) {
-                showMarkers(map, notOkMarkers);
-                if ($clusteredFilter.is(":checked")) {
-                    notOkMarkerCluster = BuildCluster(map, notOkMarkers, imagesFolder);
-                }
-            } else {
-                clearMarkers(notOkMarkers);
-                clearCluster(notOkMarkerCluster);
-            }
+            iAmNotOkFn($this.is(":checked"));
         });
 
     $withoutAnswerFilter.on("change",
         function () {
             var $this = $(this);
-            if ($this.is(":checked")) {
-                showMarkers(map, withoutAnswerMarkers);
-                if ($clusteredFilter.is(":checked")) {
-                    withoutAnswerMarkerCluster = BuildCluster(map, withoutAnswerMarkers, imagesFolder);
-                }
-            } else {
-                clearMarkers(withoutAnswerMarkers);
-                clearCluster(withoutAnswerMarkerCluster);
-            }
+            withoutAnswerFn($this.is(":checked"));
         });
 
 
@@ -212,5 +240,10 @@ function removeAllmarkers() {
     withoutAnswerMarkers = [];
 }
 
-
-
+$(document).ready(function () {
+    var $lastUpdateFilter = $('#LastUpdate');
+    var $eventStartDate = $('#BeginDateTime');
+    var $eventEndDate = $('#EndDateTime');
+    $lastUpdateFilter.data("DateTimePicker").options( { minDate: moment($eventStartDate.val()), maxDate: moment($eventEndDate.val())});
+    
+});

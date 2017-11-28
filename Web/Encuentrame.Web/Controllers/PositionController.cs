@@ -33,10 +33,7 @@ namespace Encuentrame.Web.Controllers
                 Creation = item.Creation,
             };
         }
-        protected override IList<Position> GetItemList()
-        {
-            return PositionCommand.List();
-        }
+      
 
     }
 }

@@ -79,9 +79,12 @@
             <div class="row">
                 <div class="col-md-4">
                     @Html.DisplayFor(model => Model.BeginDateTime)
+                    <input type="hidden" name="BeginDateTime" id="BeginDateTime" value="@Model.BeginDateTime.ToString("s")"/>
+                   
                 </div>
                 <div class="col-md-4">
                     @Html.DisplayFor(model => Model.EndDateTime)
+                    <input type="hidden" name="EndDateTime" id="EndDateTime" value="@Model.EndDateTime.ToString("s")" />
                 </div>
 
                 <div class="col-md-4">
@@ -102,51 +105,57 @@
             @using (Html.BeginEditSection(Translations.Filter))
             {
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-md-8">@Html.EditorFor(model => Model.IAmOk)</div>
+                    @if (Model.Status == EventStatusEnum.InEmergency || Model.Status == EventStatusEnum.Completed)
+                    {
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-8">@Html.EditorFor(model => Model.IAmOk)</div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" /></div>
-                            <div class="col-md-2">
-                                <p class="i-am-ok-amount text-primary">
-
-                                </p>
                             </div>
+                            <div class="row">
+                                <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="i-am-ok-amount text-primary">
 
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-md-8">@Html.EditorFor(model => Model.IAmNotOk)</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" /></div>
-                            <div class="col-md-2">
-                                <p class="i-am-not-ok-amount text-primary">
+                                    </p>
+                                </div>
 
-                                </p>
                             </div>
                         </div>
-
-
-                    </div>
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-md-8">@Html.EditorFor(model => Model.WithoutAnswer)</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" /></div>
-                            <div class="col-md-2">
-                                <p class="without-answer-amount text-primary">
-
-                                </p>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-8">@Html.EditorFor(model => Model.IAmNotOk)</div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="i-am-not-ok-amount text-primary">
+
+                                    </p>
+                                </div>
+                            </div>
+
+
                         </div>
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-8">@Html.EditorFor(model => Model.WithoutAnswer)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="without-answer-amount text-primary">
+
+                                    </p>
+                                </div>
+                            </div>
 
 
-                    </div>
+                        </div>
+                    }
                     <div class="col-md-3">
                         @Html.EditorFor(model => Model.LastUpdate)
                     </div>
@@ -163,6 +172,7 @@
                  data-images-folder="@Url.Content("~/images/maps/")"
                  data-icon-event="@Url.Content("~/images/maps/MapMarker_Flag.png")"
                  data-label-event="@Model.Name"
+                 data-icon-default-person="@Url.Content("~/images/maps/MapMarker_Grey_Point.png")"
                  data-icon-ok-person="@Url.Content("~/images/maps/MapMarker_Green_Point.png")"
                  data-icon-not-ok-person="@Url.Content("~/images/maps/MapMarker_Red_Point.png")"
                  data-icon-without-answer-person="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")"
@@ -264,6 +274,6 @@
 </script>
 
 <script id="actionsTemplate" type="text/template">
-    <a class="btn btn-info btn-xs" href="@Url.Action("PersonMonitor")/@Model.Id/<%=row.Id%>">@Translations.Detail</a>
+    <a class="btn btn-info btn-xs" href="@Url.Action("PersonMonitor")/@Model.Id/<%=row.Id%>">@Translations.ControlMonitor</a>
 
 </script>

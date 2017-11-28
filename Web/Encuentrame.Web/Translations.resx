@@ -1393,7 +1393,7 @@
     <value>Usuario administrador</value>
   </data>
   <data name="EventAdministratorUser" xml:space="preserve">
-    <value>Administrador de evento</value>
+    <value>Organizador</value>
   </data>
   <data name="ManageAdministratorUserCreateTitle" xml:space="preserve">
     <value>Crear usuario administrador</value>
@@ -1625,5 +1625,11 @@
   </data>
   <data name="AllEventsVsInEmergencyEvents" xml:space="preserve">
     <value>Todos los eventos vs. con emergencia</value>
+  </data>
+  <data name="CreateDataMock" xml:space="preserve">
+    <value>Crear datos de prueba</value>
+  </data>
+  <data name="ControlMonitor" xml:space="preserve">
+    <value>Monitorear</value>
   </data>
 </root>

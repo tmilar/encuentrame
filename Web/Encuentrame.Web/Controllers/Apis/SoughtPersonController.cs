@@ -77,7 +77,7 @@ namespace Encuentrame.Web.Controllers.Apis
                 IsOk = model.IsOk,
                 SourceUserId = this.GetIdUserLogged(),
                 TargetUserId = id,
-                When = model.When
+                When = model.When,
             };
 
             AreYouOkCommand.SoughtPersonSeen(parameter);

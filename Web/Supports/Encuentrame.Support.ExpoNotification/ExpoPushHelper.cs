@@ -20,6 +20,7 @@ namespace Encuentrame.Support.ExpoNotification
         {
             try
             {
+                var token = Guid.NewGuid().ToString();
 
                 if (bodies == null || bodies.Count == 0)
                 {
@@ -33,7 +34,7 @@ namespace Encuentrame.Support.ExpoNotification
                     {
                         to = body.Token,
                         title = body.Title,
-                        body = body.Body,
+                        body = $"{body.Body} ({token})",
                         sound = "default",
                         data = body.Data
                     };
@@ -49,7 +50,7 @@ namespace Encuentrame.Support.ExpoNotification
                     response = client.UploadString(ExpoNotificationUrl, JsonConvert.SerializeObject(list));
                 }
                 dynamic json = JObject.Parse(response);
-                Log.Info($"SendPushNotification: URL: {ExpoNotificationUrl} ## Param: {JsonConvert.SerializeObject(list)}" );
+                Log.Info($"SendPushNotification: URL: {ExpoNotificationUrl} ## Param: {JsonConvert.SerializeObject(list)} ## Token: {token}" );
             }
             catch(Exception e)
             {

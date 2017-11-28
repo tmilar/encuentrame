@@ -7,6 +7,7 @@ using NailsFramework.UnitOfWork;
 using Encuentrame.Model.Supports.Audits;
 using Encuentrame.Model.Supports.Interfaces;
 using Encuentrame.Support;
+using NailsFramework.Logging;
 
 namespace Encuentrame.Model.Supports
 {
@@ -21,6 +22,8 @@ namespace Encuentrame.Model.Supports
         [Inject]
         public IAuditContextManager AuditContextManager { get; set; }
 
+        [Inject]
+        public ILog Log { get; set; }
 
         protected void RefreshObject(object obj)
         {
