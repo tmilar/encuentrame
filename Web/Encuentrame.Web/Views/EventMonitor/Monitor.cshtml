@@ -15,6 +15,7 @@
 
 @section scripts
 {
+    <script src="@Scripts.Url(@"~/scripts/Chart.min.js")" type="text/javascript"></script>
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/form")
     <script src="@Html.ScriptUrl(@"~/scripts/markerclusterer.js")" type="text/javascript"></script>
@@ -32,8 +33,55 @@
 @Html.HiddenFor(m => m.Id)
 @Html.HiddenFor(m => m.Latitude)
 @Html.HiddenFor(m => m.Longitude)
+@if (Model.Status == EventStatusEnum.Completed)
+{
+    using (Html.BeginEditSection(Translations.SectionSummary))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <h3>
+                    @Html.DisplayNameFor(model => Model.AmountPeople) : @Model.AmountPeople
+                </h3>
+            </div>
 
-
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Translations.EventPersonStatusChart</h3>
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="eventPersonStatus" data-url="@Url.Action("GetEventPersonStatus",new{ eventId = Model.Id})" class="chart"></canvas>
+                        <div id="eventPersonStatusLegend" class="pie-chart-legend"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Translations.EventSeenNotSeenChart</h3>
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="eventSeenNotSeen" data-url="@Url.Action("GetEventSeenNotSeen", new { eventId = Model.Id })" class="chart"></canvas>
+                        <div id="eventSeenNotSeenLegend" class="pie-chart-legend"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Translations.EventOkNotOkChart</h3>
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="eventOkNotOk" data-url="@Url.Action("GetEventOkNotOk",new{ eventId = Model.Id})" class="chart"></canvas>
+                        <div id="eventOkNotOkLegend" class="pie-chart-legend"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
 @using (Html.BeginEditSection(Translations.SectionBasicData))
 {
     <div class="row">
@@ -79,8 +127,8 @@
             <div class="row">
                 <div class="col-md-4">
                     @Html.DisplayFor(model => Model.BeginDateTime)
-                    <input type="hidden" name="BeginDateTime" id="BeginDateTime" value="@Model.BeginDateTime.ToString("s")"/>
-                   
+                    <input type="hidden" name="BeginDateTime" id="BeginDateTime" value="@Model.BeginDateTime.ToString("s")" />
+
                 </div>
                 <div class="col-md-4">
                     @Html.DisplayFor(model => Model.EndDateTime)
@@ -101,6 +149,21 @@
                         @Html.DisplayFor(model => Model.EmergencyDateTime)
                     }
                 </div>
+
+                <div class="col-md-4">
+                    @if (Model.Status == EventStatusEnum.InEmergency && Model.IsCollaborativeSearchStart)
+                    {
+                        @Html.DisplayFor(model => Model.CollaborativeSearchDateTime)
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        @Html.DisplayNameFor(model => Model.AmountPeople) : @Model.AmountPeople
+                    </h3>
+                </div>
+
             </div>
             @using (Html.BeginEditSection(Translations.Filter))
             {
@@ -113,7 +176,8 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")"/>
+                                <div class="col-md-2">
+                                    <img src="@Url.Content("~/images/maps/MapMarker_Green_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
                                 </div>
                                 <div class="col-md-2">
                                     <p class="i-am-ok-amount text-primary">
@@ -128,7 +192,8 @@
                                 <div class="col-md-8">@Html.EditorFor(model => Model.IAmNotOk)</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")"/>
+                                <div class="col-md-2">
+                                    <img src="@Url.Content("~/images/maps/MapMarker_Red_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
                                 </div>
                                 <div class="col-md-2">
                                     <p class="i-am-not-ok-amount text-primary">
@@ -144,7 +209,8 @@
                                 <div class="col-md-8">@Html.EditorFor(model => Model.WithoutAnswer)</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"><img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")"/>
+                                <div class="col-md-2">
+                                    <img src="@Url.Content("~/images/maps/MapMarker_Blue_Point.png")" width="21px" height="21px" alt="@TranslationsHelper.Get("IAmOk")" />
                                 </div>
                                 <div class="col-md-2">
                                     <p class="without-answer-amount text-primary">
@@ -167,7 +233,7 @@
             }
         </div>
         <div class="col-md-6">
-            <div class="map-container" id="mapContainer"
+            <div class="map-container @(Model.IsCollaborativeSearchStart && Model.Status== EventStatusEnum.InEmergency?"collaborative-search-active":"")" id="mapContainer"
                  data-positions-url="@Url.Action("Positions")"
                  data-images-folder="@Url.Content("~/images/maps/")"
                  data-icon-event="@Url.Content("~/images/maps/MapMarker_Flag.png")"
@@ -211,10 +277,13 @@
                     data-modal-ok="@Translations.Ok" data-modal-title="@Translations.CancelEmergency" data-modal-message="@Translations.CancelEmergencyMessage.FormatWith(Model.Name)">
                 @Translations.CancelEmergency
             </button>
-            <button name="buttonAction" value="startCollaborativeSearch" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
-                    data-modal-ok="@Translations.Ok" data-modal-title="@Translations.StartCollaborativeSearch" data-modal-message="@Translations.StartCollaborativeSearchMessage.FormatWith(Model.Name)">
-                @Translations.StartCollaborativeSearch
-            </button>
+            if (!Model.IsCollaborativeSearchStart)
+            {
+                <button name="buttonAction" value="startCollaborativeSearch" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                        data-modal-ok="@Translations.Ok" data-modal-title="@Translations.StartCollaborativeSearch" data-modal-message="@Translations.StartCollaborativeSearchMessage.FormatWith(Model.Name)">
+                    @Translations.StartCollaborativeSearch
+                </button>
+            }
         }
 
         @Html.ActionLink(Translations.GoBack, "Index", "ManageEvent", new { }, new { @class = "btn btn-link", role = "button" })
@@ -224,10 +293,10 @@
             {
     <div class="table-container">
         @{ var tableBuilder = Html.BuildTable<EventMonitorUserListModel>(Url.Action("GetItems", "EventMonitor", new { eventId = Model.Id }))
-                                                                    .AddColumn(x => x.Id)
-                                                                    .AddColumn(x => x.Username)
-                                                                   .AddColumn(x => x.Lastname)
-                                                                    .AddColumn(x => x.Firstname);
+                                                                              .AddColumn(x => x.Id)
+                                                                              .AddColumn(x => x.Username)
+                                                                             .AddColumn(x => x.Lastname)
+                                                                              .AddColumn(x => x.Firstname);
             if (Model.Status == EventStatusEnum.InEmergency)
             {
                 tableBuilder = tableBuilder

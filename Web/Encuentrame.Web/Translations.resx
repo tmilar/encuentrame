@@ -1632,4 +1632,22 @@
   <data name="ControlMonitor" xml:space="preserve">
     <value>Monitorear</value>
   </data>
+  <data name="AmountPeople" xml:space="preserve">
+    <value>Cantidad de personas</value>
+  </data>
+  <data name="CollaborativeSearchDateTime" xml:space="preserve">
+    <value>Comienzo búsqueda colaborativa</value>
+  </data>
+  <data name="SectionSummary" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="EventOkNotOkChart" xml:space="preserve">
+    <value>Por vistos bien o mal</value>
+  </data>
+  <data name="EventPersonStatusChart" xml:space="preserve">
+    <value>Por estado</value>
+  </data>
+  <data name="EventSeenNotSeenChart" xml:space="preserve">
+    <value>Por vistos y no vistos</value>
+  </data>
 </root>

@@ -652,3 +652,7 @@ hr {
     .login-session-container .image-control label {
         display: none;
     }
+
+.map-container.collaborative-search-active {
+    border: #d9534f 4px solid
+}

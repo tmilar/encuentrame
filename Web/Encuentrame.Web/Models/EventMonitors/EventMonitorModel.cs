@@ -63,5 +63,12 @@ namespace Encuentrame.Web.Models.EventMonitors
         [Display(ResourceType = typeof(Translations), Name = "Clustered")]
         [UIHint("bool")]
         public bool Clustered { get; set; }
+        [Display(ResourceType = typeof(Translations), Name = "AmountPeople")]
+        [UIHint("integer")]
+        public int AmountPeople { get; set; }
+        [Display(ResourceType = typeof(Translations), Name = "CollaborativeSearchDateTime")]
+        public DateTime CollaborativeSearchDateTime { get; set; }
+
+        public bool IsCollaborativeSearchStart { get; set; }
     }
 }

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Encuentrame.Model.Accounts;
+using Encuentrame.Model.Activities;
 using Encuentrame.Model.AreYouOks;
+using Encuentrame.Model.Dashboards;
 using Encuentrame.Model.Events;
 using Encuentrame.Security.Authorizations;
 using Encuentrame.Support;
 using Encuentrame.Web.Helpers;
 using Encuentrame.Web.Models.EventMonitors;
+using Encuentrame.Web.Models.Homes;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 
@@ -32,6 +35,9 @@ namespace Encuentrame.Web.Controllers
         [Inject]
         public IBag<AreYouOkEvent> AreYouOkEvents { get; set; }
 
+        [Inject]
+        public IBag<Activity> Activities { get; set; }
+
         private int EventId => Convert.ToInt32(this.Url.RequestContext.RouteData.Values["eventId"]);
 
         public ActionResult Monitor(int id)
@@ -52,7 +58,8 @@ namespace Encuentrame.Web.Controllers
                 Address = eventt.Address.ToDisplay(),
                 OrganizerDisplay = eventt.Organizer.ToDisplay(),
                 Status = eventt.Status,
-
+                AmountPeople= Activities.Where(e=>e.Event==eventt).Count(),
+                IsCollaborativeSearchStart= eventt.CollaborativeSearchDateTime.HasValue,
                 IAmOk = true,
                 LastUpdate = eventt.EndDateTime,
                 WithoutAnswer = true,
@@ -66,6 +73,10 @@ namespace Encuentrame.Web.Controllers
             if (eventt.EmergencyDateTime.HasValue)
             {
                 eventtModel.EmergencyDateTime = eventt.EmergencyDateTime.Value;
+            }
+            if (eventt.CollaborativeSearchDateTime.HasValue)
+            {
+                eventtModel.CollaborativeSearchDateTime = eventt.CollaborativeSearchDateTime.Value;
             }
 
             return View(eventtModel);
@@ -117,6 +128,102 @@ namespace Encuentrame.Web.Controllers
             return View(eventPersonMonitorModel);
 
 
+        }
+
+        [HttpPost]
+        public JsonResult GetEventOkNotOk(int eventId)
+        {
+            var eventPersonStatus = EventCommand.GetEventOkNotOk(eventId);
+
+            var pieModels = new List<PieModel>();
+
+            pieModels.Add(new PieModel()
+            {
+                Value = eventPersonStatus.SeenOk,
+                Label = Translations.SeenOk,
+                Color = "#F7464A",
+                Highlight = "#FF5A5E",
+            });
+
+            pieModels.Add(new PieModel()
+            {
+                Value = eventPersonStatus.SeenNotOk,
+                Label = Translations.SeenNotOk,
+                Color = "#1989c0",
+                Highlight = "#007cba",
+            });
+            pieModels.Add(new PieModel()
+            {
+                Value = eventPersonStatus.WithoutAnswer,
+                Label = Translations.WithoutAnswer,
+                Color = "#FDB45C",
+                Highlight = "#FFC870",
+            });
+            return Json(JsReturnHelper.Return(pieModels));
+        }
+
+        [HttpPost]
+        public JsonResult GetEventSeenNotSeen(int eventId)
+        {
+            var eventSeenNotSeen = EventCommand.GetEventSeenNotSeen(eventId);
+
+            var pieModels = new List<PieModel>();
+
+            pieModels.Add(new PieModel()
+            {
+                Value = eventSeenNotSeen.Seen,
+                Label = Translations.Seen,
+                Color = "#F7464A",
+                Highlight = "#FF5A5E",
+            });
+
+            pieModels.Add(new PieModel()
+            {
+                Value = eventSeenNotSeen.NotSeen,
+                Label = Translations.NotSeen,
+                Color = "#1989c0",
+                Highlight = "#007cba",
+            });
+            pieModels.Add(new PieModel()
+            {
+                Value = eventSeenNotSeen.WithoutAnswer,
+                Label = Translations.WithoutAnswer,
+                Color = "#FDB45C",
+                Highlight = "#FFC870",
+            });
+            return Json(JsReturnHelper.Return(pieModels));
+        }
+
+        [HttpPost]
+        public JsonResult GetEventPersonStatus(int eventId)
+        {
+            var eventPersonStatus = EventCommand.GetEventPersonStatus(eventId);
+
+            var pieModels = new List<PieModel>();
+
+            pieModels.Add(new PieModel()
+            {
+                Value = eventPersonStatus.Ok,
+                Label = Translations.IAmOk,
+                Color = "#F7464A",
+                Highlight = "#FF5A5E",
+            });
+
+            pieModels.Add(new PieModel()
+            {
+                Value = eventPersonStatus.NotOk,
+                Label = Translations.IAmNotOk,
+                Color = "#1989c0",
+                Highlight = "#007cba",
+            });
+            pieModels.Add(new PieModel()
+            {
+                Value = eventPersonStatus.WithoutAnswer,
+                Label = Translations.WithoutAnswer,
+                Color = "#FDB45C",
+                Highlight = "#FFC870",
+            });
+            return Json(JsReturnHelper.Return(pieModels));
         }
 
         [HttpPost]

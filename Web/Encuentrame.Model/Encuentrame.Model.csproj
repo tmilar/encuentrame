@@ -121,6 +121,9 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventCommand.cs" />
     <Compile Include="Events\EventPersonMonitorPositionInfo.cs" />
+    <Compile Include="Events\EventPersonStatusInfo.cs" />
+    <Compile Include="Events\EventSeenNotSeenInfo.cs" />
+    <Compile Include="Events\EventSeenOkNotOkInfo.cs" />
     <Compile Include="Events\EventStatusEnum.cs" />
     <Compile Include="Events\IEventCommand.cs" />
     <Compile Include="Events\Seekers\EventSeeker.cs" />

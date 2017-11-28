@@ -37,6 +37,8 @@ namespace Encuentrame.Model.Events
             get { return _users ?? (_users = new List<User>()); }
             set { _users = value; }
         }
+
+        public virtual DateTime? CollaborativeSearchDateTime { get; set; }
     }
 }
 

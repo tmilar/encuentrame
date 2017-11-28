@@ -245,5 +245,207 @@ $(document).ready(function () {
     var $eventStartDate = $('#BeginDateTime');
     var $eventEndDate = $('#EndDateTime');
     $lastUpdateFilter.data("DateTimePicker").options( { minDate: moment($eventStartDate.val()), maxDate: moment($eventEndDate.val())});
-    
+
+
+    var $eventPersonStatusChart = $("#eventPersonStatus");
+    if ($eventPersonStatusChart.length > 0) {
+        var eventPersonStatusCanvas = $eventPersonStatusChart[0].getContext("2d");
+        var eventPersonStatusUrl = $eventPersonStatusChart.data('url');
+
+        $.ajax(
+                {
+                    url: eventPersonStatusUrl,
+                    data: {},
+                    async: true,
+                    cache: false,
+                    method: 'POST'
+                })
+            .done(function(data) {
+                var pieData = [];
+
+                $.each(data.Info,
+                    function(idx, elem) {
+                        var item = {
+                            value: elem.Value,
+                            color: elem.Color,
+                            highlight: elem.Highlight,
+                            label: elem.Label
+                        };
+                        pieData.push(item);
+                    });
+
+
+                var pieOptions = {
+                    //Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke: true,
+
+                    //String - The colour of each segment stroke
+                    segmentStrokeColor: "#fff",
+
+                    //Number - The width of each segment stroke
+                    segmentStrokeWidth: 2,
+
+                    //Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout: 0, // This is 0 for Pie charts
+
+                    //Number - PlannedQuantity of animation steps
+                    animationSteps: 100,
+
+                    //String - Animation easing effect
+                    animationEasing: "easeOutBounce",
+
+                    //Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate: true,
+
+                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale: false,
+
+                    //String - A legend template
+                    legendTemplate:
+                        "<ul class=\"<%=name.toLowerCase()%>-legend\" style=\"list-style-type: none;\"><% for (var i=0; i<segments.length; i++){%><li><div class=\"pull-left\"><span style=\"background-color:<%=segments[i].fillColor%>; width:15px; height:15px; display: block; margin-right:5px;\"></span></div><div class=\"pull-left\"><%if(segments[i].label){%><%=segments[i].label%><%}%></div><div class=\"clearfix\"></div></li><%}%></ul>"
+
+                };
+
+                var eventPersonStatusChart = new Chart(eventPersonStatusCanvas).Pie(pieData, pieOptions);
+                $("#eventPersonStatusLegend").append(eventPersonStatusChart.generateLegend());
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+    }
+
+    var $eventSeenNotSeenChart = $("#eventSeenNotSeen");
+    if ($eventSeenNotSeenChart.length > 0) {
+        var eventSeenNotSeenCanvas = $eventSeenNotSeenChart[0].getContext("2d");
+        var eventSeenNotSeenUrl = $eventSeenNotSeenChart.data('url');
+
+        $.ajax(
+                {
+                    url: eventSeenNotSeenUrl,
+                    data: {},
+                    async: true,
+                    cache: false,
+                    method: 'POST'
+                })
+            .done(function(data) {
+                var pieData = [];
+
+                $.each(data.Info,
+                    function(idx, elem) {
+                        var item = {
+                            value: elem.Value,
+                            color: elem.Color,
+                            highlight: elem.Highlight,
+                            label: elem.Label
+                        };
+                        pieData.push(item);
+                    });
+
+
+                var pieOptions = {
+                    //Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke: true,
+
+                    //String - The colour of each segment stroke
+                    segmentStrokeColor: "#fff",
+
+                    //Number - The width of each segment stroke
+                    segmentStrokeWidth: 2,
+
+                    //Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout: 0, // This is 0 for Pie charts
+
+                    //Number - PlannedQuantity of animation steps
+                    animationSteps: 100,
+
+                    //String - Animation easing effect
+                    animationEasing: "easeOutBounce",
+
+                    //Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate: true,
+
+                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale: false,
+
+                    //String - A legend template
+                    legendTemplate:
+                        "<ul class=\"<%=name.toLowerCase()%>-legend\" style=\"list-style-type: none;\"><% for (var i=0; i<segments.length; i++){%><li><div class=\"pull-left\"><span style=\"background-color:<%=segments[i].fillColor%>; width:15px; height:15px; display: block; margin-right:5px;\"></span></div><div class=\"pull-left\"><%if(segments[i].label){%><%=segments[i].label%><%}%></div><div class=\"clearfix\"></div></li><%}%></ul>"
+
+                };
+
+                var eventSeenNotSeenChart = new Chart(eventSeenNotSeenCanvas).Pie(pieData, pieOptions);
+                $("#eventSeenNotSeenLegend").append(eventSeenNotSeenChart.generateLegend());
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+    }
+
+
+    var $eventOkNotOkChart = $("#eventOkNotOk");
+    if ($eventOkNotOkChart.length > 0) {
+        var eventOkNotOkCanvas = $eventOkNotOkChart[0].getContext("2d");
+        var eventOkNotOkUrl = $eventOkNotOkChart.data('url');
+
+        $.ajax(
+                {
+                    url: eventOkNotOkUrl,
+                    data: {},
+                    async: true,
+                    cache: false,
+                    method: 'POST'
+                })
+            .done(function(data) {
+                var pieData = [];
+
+                $.each(data.Info,
+                    function(idx, elem) {
+                        var item = {
+                            value: elem.Value,
+                            color: elem.Color,
+                            highlight: elem.Highlight,
+                            label: elem.Label
+                        };
+                        pieData.push(item);
+                    });
+
+
+                var pieOptions = {
+                    //Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke: true,
+
+                    //String - The colour of each segment stroke
+                    segmentStrokeColor: "#fff",
+
+                    //Number - The width of each segment stroke
+                    segmentStrokeWidth: 2,
+
+                    //Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout: 0, // This is 0 for Pie charts
+
+                    //Number - PlannedQuantity of animation steps
+                    animationSteps: 100,
+
+                    //String - Animation easing effect
+                    animationEasing: "easeOutBounce",
+
+                    //Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate: true,
+
+                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale: false,
+
+                    //String - A legend template
+                    legendTemplate:
+                        "<ul class=\"<%=name.toLowerCase()%>-legend\" style=\"list-style-type: none;\"><% for (var i=0; i<segments.length; i++){%><li><div class=\"pull-left\"><span style=\"background-color:<%=segments[i].fillColor%>; width:15px; height:15px; display: block; margin-right:5px;\"></span></div><div class=\"pull-left\"><%if(segments[i].label){%><%=segments[i].label%><%}%></div><div class=\"clearfix\"></div></li><%}%></ul>"
+
+                };
+
+                var eventOkNotOkChart = new Chart(eventOkNotOkCanvas).Pie(pieData, pieOptions);
+                $("#eventOkNotOkLegend").append(eventOkNotOkChart.generateLegend());
+            })
+            .fail(function(err) {
+                console.log(err);
+            });
+    }
 });

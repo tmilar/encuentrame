@@ -331,6 +331,15 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cantidad de personas.
+        /// </summary>
+        public static string AmountPeople {
+            get {
+                return ResourceManager.GetString("AmountPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encuentrame.
         /// </summary>
         public static string ApplicationName {
@@ -660,6 +669,15 @@ namespace Encuentrame.Web {
         public static string CodeAlternative {
             get {
                 return ResourceManager.GetString("CodeAlternative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comienzo búsqueda colaborativa.
+        /// </summary>
+        public static string CollaborativeSearchDateTime {
+            get {
+                return ResourceManager.GetString("CollaborativeSearchDateTime", resourceCulture);
             }
         }
         
@@ -1483,11 +1501,29 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por vistos bien o mal.
+        /// </summary>
+        public static string EventOkNotOkChart {
+            get {
+                return ResourceManager.GetString("EventOkNotOkChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Monitor de persona en un evento.
         /// </summary>
         public static string EventPersonMonitorTitle {
             get {
                 return ResourceManager.GetString("EventPersonMonitorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por estado.
+        /// </summary>
+        public static string EventPersonStatusChart {
+            get {
+                return ResourceManager.GetString("EventPersonStatusChart", resourceCulture);
             }
         }
         
@@ -1506,6 +1542,15 @@ namespace Encuentrame.Web {
         public static string EventsByStatus {
             get {
                 return ResourceManager.GetString("EventsByStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por vistos y no vistos.
+        /// </summary>
+        public static string EventSeenNotSeenChart {
+            get {
+                return ResourceManager.GetString("EventSeenNotSeenChart", resourceCulture);
             }
         }
         
@@ -3693,6 +3738,15 @@ namespace Encuentrame.Web {
         public static string SectionStorageTypeData {
             get {
                 return ResourceManager.GetString("SectionStorageTypeData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resumen.
+        /// </summary>
+        public static string SectionSummary {
+            get {
+                return ResourceManager.GetString("SectionSummary", resourceCulture);
             }
         }
         

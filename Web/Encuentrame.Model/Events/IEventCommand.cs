@@ -21,5 +21,8 @@ namespace Encuentrame.Model.Events
         IList<EventMonitorPositionInfo> PositionsFromEvent(int eventId, DateTime? datetimeTo);
 
         IList<EventPersonMonitorPositionInfo> PositionsUserFromEvent(int eventId, int userId);
+        EventPersonStatusInfo GetEventPersonStatus(int eventId);
+        EventSeenNotSeenInfo GetEventSeenNotSeen(int eventId);
+        EventSeenOkNotOkInfo GetEventOkNotOk(int eventId);
     }
 }

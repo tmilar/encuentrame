@@ -15,6 +15,7 @@ namespace Encuentrame.Model.Mappings.Events
             Map(x => x.BeginDateTime);
             Map(x => x.EndDateTime);
             Map(x => x.EmergencyDateTime).Nullable();
+            Map(x => x.CollaborativeSearchDateTime).Nullable();
             Map(x => x.Status).Not.Nullable();
             Component(x => x.Address, m =>
             {

@@ -69,7 +69,7 @@ namespace Encuentrame.Model.Events
             Events.Put(eventt);
         }
 
-     
+
         private void UpdateWith(Event eventt, CreateOrEditParameters eventParameters)
         {
             eventt.Name = eventParameters.Name;
@@ -77,7 +77,7 @@ namespace Encuentrame.Model.Events
             eventt.Longitude = eventParameters.Longitude;
             eventt.BeginDateTime = eventParameters.BeginDateTime;
             eventt.EndDateTime = eventParameters.EndDateTime;
-            eventt.Address=new Address()
+            eventt.Address = new Address()
             {
                 City = eventParameters.City,
                 FloorAndDepartament = eventParameters.FloorAndDepartament,
@@ -92,11 +92,11 @@ namespace Encuentrame.Model.Events
             {
                 EditListFromIds(eventParameters.UsersIds, eventt.Users, i => Users[i]);
             }
-            
+
         }
         public void Delete(int id)
         {
-            var eventt=Events[id];
+            var eventt = Events[id];
             eventt.DeletedKey = SystemDateTime.Now;
         }
 
@@ -119,7 +119,7 @@ namespace Encuentrame.Model.Events
         public void CancelEmergency(int id)
         {
             var eventt = Events[id];
-            if (eventt.Status.In( EventStatusEnum.InEmergency))
+            if (eventt.Status.In(EventStatusEnum.InEmergency))
             {
                 eventt.Status = EventStatusEnum.InProgress;
                 eventt.EmergencyDateTime = null;
@@ -134,7 +134,7 @@ namespace Encuentrame.Model.Events
         public void BeginEvent(int id)
         {
             var eventt = Events[id];
-            eventt.Status=EventStatusEnum.InProgress;
+            eventt.Status = EventStatusEnum.InProgress;
             eventt.BeginDateTime = SystemDateTime.Now;
             //TODO: hacer las notifications
         }
@@ -152,6 +152,7 @@ namespace Encuentrame.Model.Events
             var eventt = Events[id];
             if (eventt.Status == EventStatusEnum.InEmergency)
             {
+                eventt.CollaborativeSearchDateTime = SystemDateTime.Now;
                 AreYouOkCommand.StartCollaborativeSearch(eventt);
             }
 
@@ -161,11 +162,11 @@ namespace Encuentrame.Model.Events
         public IList<EventMonitorUserInfo> EventMonitorUsers(int eventId)
         {
             var eventt = Events[eventId];
-            
+
             var sql = @"EXEC EventMonitorUsers :eventId, :from; ";
 
             var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
-                .SetParameter("from", eventt.BeginDateTime )
+                .SetParameter("from", eventt.BeginDateTime)
                 .SetParameter("eventId", eventt.Id)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(EventMonitorUserInfo)));
 
@@ -207,7 +208,7 @@ namespace Encuentrame.Model.Events
             }
 
             return Positions.Where(x => x.UserId == user.Id && x.Creation >= eventt.BeginDateTime && x.Creation <= to)
-                .OrderBy(x=>x.Creation)
+                .OrderBy(x => x.Creation)
                 .Select(x => new EventPersonMonitorPositionInfo()
                 {
                     Id = x.Id,
@@ -219,9 +220,68 @@ namespace Encuentrame.Model.Events
 
         }
 
+        public EventPersonStatusInfo GetEventPersonStatus(int eventId)
+        {
+            var eventt = Events[eventId];
+
+            var sql = @"select	SUM(iif(baa.ReplyDatetime is null,0,  iif(baa.IAmOk=0 , 0 , 1) ) ) AS Ok,
+		                        SUM(iif(baa.ReplyDatetime is null,0,  iif(baa.IAmOk=0 , 1 , 0) ) ) AS NotOk,
+		                        SUM(iif(baa.ReplyDatetime is null,1, 0 ) ) AS WithoutAnswer
+                        from activities act
+	                        left join BaseAreYouOks baa on act.User_id=baa.Target_id
+	                        where act.Event_id=:eventId
+	                        group by act.Event_id";
+
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("eventId", eventt.Id)
+                .SetResultTransformer(Transformers.AliasToBean(typeof(EventPersonStatusInfo)));
+
+            return list.UniqueResult<EventPersonStatusInfo>();
+        }
+
+        public EventSeenNotSeenInfo GetEventSeenNotSeen(int eventId)
+        {
+            var eventt = Events[eventId];
+
+            var sql = @"select	SUM(iif(spa.seen is null,0,  iif(spa.seen=0 , 0 , 1) ) ) AS Seen,
+		                    SUM(iif(spa.seen is null,0,  iif(spa.seen=0 , 1 , 0) ) ) AS NotSeen,
+		                    SUM(iif(spa.seen is null,1, 0 ) ) AS WithoutAnswer
+                      from activities act
+                      inner join events ev on ev.Id=act.Event_id
+	                    left join SoughtPersonAnswers spa on act.User_id=spa.SourceUser_id AND  spa.seenwhen>=ev.BeginDateTime AND spa.seenwhen<=ev.EndDateTime
+	                    where act.Event_id=:eventId 
+	                    group by act.Event_id";
+
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("eventId", eventt.Id)
+                .SetResultTransformer(Transformers.AliasToBean(typeof(EventSeenNotSeenInfo)));
+
+            return list.UniqueResult<EventSeenNotSeenInfo>();
+        }
+
+        public EventSeenOkNotOkInfo GetEventOkNotOk(int eventId)
+        {
+            var eventt = Events[eventId];
+
+            var sql = @"select	SUM(iif(spa.IsOk is null,0,  iif(spa.IsOk=0 , 0 , 1) ) ) AS SeenOk,
+		                        SUM(iif(spa.IsOk is null,0,  iif(spa.IsOk=0 , 1 , 0) ) ) AS SeenNotOk,
+		                        SUM(iif(spa.IsOk is null,1, 0 ) ) AS WithoutAnswer
+                          from activities act
+                          inner join events ev on ev.Id=act.Event_id
+	                        left join SoughtPersonAnswers spa on act.User_id=spa.SourceUser_id AND spa.seen=1 AND  spa.seenwhen>=ev.BeginDateTime AND spa.seenwhen<=ev.EndDateTime
+	                        where act.Event_id=:eventId 
+	                        group by act.Event_id;";
+
+            var list = NHibernateContext.CurrentSession.CreateSQLQuery(sql)
+                .SetParameter("eventId", eventt.Id)
+                .SetResultTransformer(Transformers.AliasToBean(typeof(EventSeenOkNotOkInfo)));
+
+            return list.UniqueResult<EventSeenOkNotOkInfo>();
+        }
+
         public class CreateOrEditParameters
         {
-           
+
 
             public string Name { get; set; }
             public string City { get; set; }
