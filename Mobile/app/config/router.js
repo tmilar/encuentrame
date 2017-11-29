@@ -17,6 +17,8 @@ import UserProfile from "../screen/UserProfile";
 import RootDispatcher from "../screen/RootDispatcher";
 import SupplyInfoContainer from "../component/supplyInfo/SupplyInfoContainer";
 
+import UserService from '../service/UserService';
+import {hideLoading, showLoading, showToast} from "react-native-notifyer";
 
 const Tabs = TabNavigator({
   Home: {
@@ -87,7 +89,20 @@ const EncuentrameHeaderOptions = ({navigation}) => ({
  * Then Login screen will take care of resetting session.
  */
 class LogoutActionScreen extends React.Component {
-  componentDidMount() {
+  componentDidMount = async () => {
+    // POST logout request. Don't await, since the reply doesn't matter.
+    showLoading("Cerrando sesión");
+    try {
+      await UserService.postLogoutRequest();
+      console.log("Logout OK!");
+      hideLoading();
+    } catch (e) {
+      hideLoading();
+      console.error("Error al enviar los datos", e);
+      showToast("Error al cerrar sesión", {duration: 2000});
+    }
+
+
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -96,7 +111,8 @@ class LogoutActionScreen extends React.Component {
     });
     console.debug("[LogoutActionScreen] Dispatching Reset Action, navigate to 'PreLogin'. ", resetAction);
     this.props.navigation.dispatch(resetAction);
-  }
+
+  };
 
   render() {
     return <View/>
