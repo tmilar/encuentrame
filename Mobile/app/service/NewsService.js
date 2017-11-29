@@ -29,37 +29,45 @@ class NewsService {
    */
   _cleanOldNews = async () => {
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
-    if (currentNewsJson) {
-      let currentNews = JSON.parse(currentNewsJson);
-      let finalNews = currentNews.filter((news) => new Date() < new Date(news.expires));
-      await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
+    if (!currentNewsJson) {
+      throw "Error, las novedades no estan cargadas!";
     }
+
+    let currentNews = JSON.parse(currentNewsJson);
+    let finalNews = currentNews.filter((news) => new Date() < new Date(news.expires));
+    await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
   };
 
   dismissNewsById = async (newsId) => {
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
-    if (currentNewsJson) {
-      let currentNews = JSON.parse(currentNewsJson);
-      let finalNews = currentNews.filter((news) => news.id !== newsId);
-      await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
-      await this.onUpdate(finalNews);
+    if (!currentNewsJson) {
+      throw "Error, las novedades no estan cargadas!";
     }
+
+    let currentNews = JSON.parse(currentNewsJson);
+    let finalNews = currentNews.filter((news) => news.id !== newsId);
+
+    await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(finalNews));
+    await this.onUpdate(finalNews);
   };
 
   /**
    * Update news to set response/resolution
    */
-  updateNews = async (newsId, resolution) => {
+  updateNewsResolution = async (newsId, resolution) => {
     let currentNewsJson = await AsyncStorage.getItem(this.STORAGE_NEWS_KEY);
-    if (currentNewsJson) {
-      let currentNews = JSON.parse(currentNewsJson);
-      let newsIndex = currentNews.findIndex((news) => news.id === newsId);
-      let newsEditing = currentNews[newsIndex];
-      newsEditing.resolution = resolution;
-      currentNews[newsIndex] = newsEditing;
-      await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
-      await this.onUpdate(currentNews);
+    if (!currentNewsJson) {
+      throw "Error, las novedades no estan cargadas!";
     }
+
+    let currentNews = JSON.parse(currentNewsJson);
+    let newsIndex = currentNews.findIndex((news) => news.id === newsId);
+
+    // Add resolution value to the newsItem
+    currentNews[newsIndex].resolution = resolution;
+
+    await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
+    await this.onUpdate(currentNews);
   };
 
   /**
@@ -84,6 +92,7 @@ class NewsService {
 
     let currentNews = await this.getCurrentNews();
     currentNews.push(newsItem);
+
     await AsyncStorage.setItem(this.STORAGE_NEWS_KEY, JSON.stringify(currentNews));
     await this.onUpdate(currentNews);
     return newsItem;

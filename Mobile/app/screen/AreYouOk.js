@@ -21,7 +21,8 @@ export default class AreYouOk extends Component {
   };
 
   _resolveNews = async (replied) => {
-    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: replied});
+    let originNewsId = this.props.navigation.state.params.newsId;
+    await NewsDispatcher.resolveNews(originNewsId, {replied});
   };
 
   _handleImOk = async () => {
