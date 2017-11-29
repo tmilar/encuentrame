@@ -2,6 +2,7 @@ import {Permissions, Notifications} from 'expo';
 import Service from './Service';
 import {AsyncStorage} from 'react-native';
 import PermissionsHelper from '../util/PermissionsHelper';
+import {Alert} from "react-native";
 
 // import {Alert} from "react-native";
 import {showToast} from 'react-native-notifyer';
@@ -96,15 +97,18 @@ class PushNotificationsService {
   setupNotificationsDispatcher = async (navigation) => {
     NewsDispatcher.setup({navigation});
     Notifications.addListener(async (notification) => {
-      if (!this._validRemoteNotification(notification)) {
-        return;
+      try {
+        if (!this._validRemoteNotification(notification)) {
+          return;
+        }
+        console.debug("[PushNotificationService] Received remote notification: ", notification);
+        let {data} = notification;
+        let type = data.type || data.Type;
+        await NewsDispatcher.handleNotification({type, data});
+      } catch (e) {
+        console.error("Error al manejar push notification: ", e);
+        Alert.alert("Error", "¡Ups! Hubo un error al manejar una push del server. \n" + (e.message || e));
       }
-
-      console.debug("[PushNotificationService] Received remote notification: ", notification);
-      let {data} = notification;
-      let type = data.type || data.Type;
-
-      await NewsDispatcher.handleNotification({type, data});
     });
   };
 
