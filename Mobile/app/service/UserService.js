@@ -60,6 +60,14 @@ class UserService {
     });
   }
 
+  postLogoutRequest = async () => {
+    let logoutUrl = 'authentication/logout';
+
+    return await Service.sendRequest(logoutUrl, {
+      method: 'POST'
+    });
+  };
+
   /**
    * Only DEV env: if credentials belong to 'test' user,
    * mock server login response to allow
@@ -102,14 +110,14 @@ class UserService {
     }
 
     if (!userData.email || userData.email === '' || !this.isValidEmail(userData.email)) {
-      formErrMsg +=  `\nPor favor, ingrese una dirección de Email válida.`;
+      formErrMsg += `\nPor favor, ingrese una dirección de Email válida.`;
     }
 
     if (!userData.password || userData.password === '') {
-      formErrMsg +=  `\nPor favor, ingrese una Contraseña válida.`;
+      formErrMsg += `\nPor favor, ingrese una Contraseña válida.`;
     }
 
-    if(formErrMsg) {
+    if (formErrMsg) {
       throw formErrMsg;
     }
 
@@ -154,7 +162,7 @@ class UserService {
 
   async uploadUserProfileImage(formData) {
     let uploadUserImageUrl = 'account/uploadImage';
-    let uploadUserImageResponse =  await Service.sendMultipartFormDataRequest(uploadUserImageUrl, {
+    let uploadUserImageResponse = await Service.sendMultipartFormDataRequest(uploadUserImageUrl, {
       method: 'POST',
       body: formData
     });
