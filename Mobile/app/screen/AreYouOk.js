@@ -8,7 +8,8 @@ import NewsDispatcher from '../model/NewsDispatcher';
 
 export default class AreYouOk extends Component {
   state = {
-    modalVisible: false
+    modalVisible: false,
+    submitted: false
   };
 
   componentDidMount = () => {
@@ -20,10 +21,12 @@ export default class AreYouOk extends Component {
   };
 
   _resolveNews = async (replied) => {
-    await NewsDispatcher.resolveNews(this.props.navigation.state.params.newsId, {replied: replied});
+    let originNewsId = this.props.navigation.state.params.newsId;
+    await NewsDispatcher.resolveNews(originNewsId, {replied});
   };
 
   _handleImOk = async () => {
+    this.setState({submitted: true});
     Alert.alert(
       '¡Ok!',
       `Avisando a tus amigos`
@@ -38,6 +41,7 @@ export default class AreYouOk extends Component {
   };
 
   _handleINeedHelp = async () => {
+    this.setState({submitted: true});
     Alert.alert(
       '¡No te muevas!',
       `Vamos a buscar ayuda.`
@@ -90,6 +94,7 @@ export default class AreYouOk extends Component {
                     borderRadius={5}
                     containerViewStyle={{borderRadius: 5}}
                     large={true}
+                    disabled={this.state.submitted}
                   />
                 </View>
                 <View style={{flex: 1, margin: 3}}>
@@ -103,6 +108,7 @@ export default class AreYouOk extends Component {
                     borderRadius={5}
                     containerViewStyle={{borderRadius: 5}}
                     large={true}
+                    disabled={this.state.submitted}
                   />
                 </View>
               </View>
@@ -110,7 +116,7 @@ export default class AreYouOk extends Component {
                 <Image
                   resizeMode="contain"
                   style={{height: "100%"}}
-                  source={require('../img/eme_final2.png')} />
+                  source={require('../img/eme_final2.png')}/>
               </View>
             </View>
           </View>

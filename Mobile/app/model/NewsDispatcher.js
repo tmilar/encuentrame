@@ -15,9 +15,9 @@ const NewsTypes = {
       text: (data, response) => {
         let responded = "";
         if (response !== undefined) {
-          responded = `Respondiste que ${response.replied ? 'sí' : 'no'}`
+          responded = `. Respondiste que ${response.replied ? 'sí' : 'no'}`
         }
-        return `Te preguntaron si estabas bien. ${responded}`;
+        return `Te preguntaron si estabas bien${responded}`;
       },
       icon: () => <EvilIcons name={'question'} style={{color: 'orange'}} size={30}/>
     },
@@ -116,12 +116,12 @@ class NewsDispatcher {
     NewsTypes[type].dispatch(this.navigation, newsData.data, newsData.id);
   };
 
-  hasAction = ({type, data, id, resolution}) => {
+  hasAction = ({type, resolution}) => {
     return !(resolution || !NewsTypes[type].hasAction || type === "position");
   };
 
   handleNewsAction = ({type, data, id, resolution}) => {
-    if (!this.hasAction({type, data, id, resolution}))
+    if (!this.hasAction({type, resolution}))
       return;
     NewsTypes[type].dispatch(this.navigation, data, id);
   };
@@ -130,13 +130,15 @@ class NewsDispatcher {
     const message = this._getTextMessage(type, data, resolution);
     let Icon = NewsTypes[type].display.icon(data, resolution);
     let date = prettyDate(new Date(time));
+
     return {message, Icon, date, id}
   };
+
   resolveNews = async (newsId, resolution) => {
-    return await NewsService.updateNews(newsId, resolution);
+    return await NewsService.updateNewsResolution(newsId, resolution);
   };
 
-  removeNews = async ({type, data, id}) => {
+  removeNews = async ({id}) => {
     return await NewsService.dismissNewsById(id);
   };
 }
