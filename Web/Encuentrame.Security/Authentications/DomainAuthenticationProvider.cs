@@ -38,8 +38,17 @@ namespace Encuentrame.Security.Authentications
             };
             TokenApiSessions.Put(tokenApiSession);
             return tokenApiSession;
+            
+        }
+
+        public override void DeleteApiTokenUser(string username)
+        {
+            var user = Users.FirstOrDefault(x => x.Username == username);
+            TokenApiSessions.Where(x => x.UserId == user.Id).ToList().ForEach(v=>TokenApiSessions.Remove(v));
+
 
         }
+
         public override void RegenerateApiTokenUser(TokenApiSession tokenApiSession)
         {
 

@@ -8,10 +8,12 @@ using NailsFramework.Persistence;
 using Encuentrame.Model.Accounts;
 using Encuentrame.Model.Activities;
 using Encuentrame.Model.Addresses;
+using Encuentrame.Model.AreYouOks;
 using Encuentrame.Model.Businesses;
 using Encuentrame.Model.Contacts;
 using Encuentrame.Model.Events;
 using Encuentrame.Model.Positions;
+using Encuentrame.Model.SoughtPersons;
 using Encuentrame.Model.Supports.Notifications;
 using Encuentrame.Support;
 using Encuentrame.Support.Mappings;
@@ -22,6 +24,18 @@ namespace Encuentrame.Web.Controllers
     [AllowAnonymous]
     public class DatabaseController : BaseController
     {
+        [Inject]
+        public IBag<SoughtPersonAnswer> SoughtPersonAnswers { get; set; }
+
+        [Inject]
+        public IBag<AreYouOkEvent> AreYouOkEvents { get; set; }
+
+        [Inject]
+        public IEventCommand EventCommand { get; set; }
+
+        [Inject]
+        public IAreYouOkCommand AreYouOkCommand { get; set; }
+
 
         [Inject]
         public INHibernateContext NHibernateContext { get; set; }
@@ -130,23 +144,13 @@ namespace Encuentrame.Web.Controllers
             };
 
             Users.Put(userAdmin);
-            var user1 = new User()
-            {
-                Username = "javier.wamba",
-                Password = "123",
-                Firstname = "Javier",
-                Lastname = "Wamba",
-                Email = "javier.wamba@Encuentrame.com",
-                Role = RoleEnum.Administrator,
-            };
-
-            Users.Put(user1);
+          
 
 
 
             var business1 = new Business()
             {
-                Name = "Coca-cola",
+                Name = "Pepsi Music",
                 Cuit = "20287495782",
                 Created = SystemDateTime.Now,
                 Address = new Address()
@@ -268,57 +272,7 @@ namespace Encuentrame.Web.Controllers
 
                 Events.Put(ev);
             }
-
-            var user2 = new User()
-            {
-                Username = "emiliano.soto",
-                Password = "123",
-                Firstname = "Emiliano",
-                Lastname = "Soto",
-                Email = "emiliano.soto@Encuentrame.com",
-                Role = RoleEnum.User,
-            };
-            Users.Put(user2);
-
-            var user21 = new User()
-            {
-                Username = "lionel.messi",
-                Password = "123",
-                Firstname = "lionel",
-                Lastname = "messi",
-                Email = "messi@Encuentrame.com",
-                Role = RoleEnum.User,
-            };
-
-            Users.Put(user21);
-
-            var user22 = new User()
-            {
-                Username = "gonzalo.bonadeo",
-                Password = "123",
-                Firstname = "gonzalo",
-                Lastname = "bonadeo",
-                Email = "bonadeo@Encuentrame.com",
-                Role = RoleEnum.User,
-            };
-
-            Users.Put(user22);
-
-            user2.Contacts.Add(new Contact()
-            {
-                Created = SystemDateTime.Now,
-                AcceptedDatetime = SystemDateTime.Now.AddHours(5),
-                Status = ContactRequestStatus.Accepted,
-                User = user22
-            });
-            user2.Contacts.Add(new Contact()
-            {
-                Created = SystemDateTime.Now,
-                Status = ContactRequestStatus.Pending,
-                User = user21
-            });
-
-
+            
            
             CreateUsers();
 
@@ -393,6 +347,84 @@ namespace Encuentrame.Web.Controllers
 
                 }
             }
+
+
+            CurrentUnitOfWork.Checkpoint();
+
+           
+            EventCommand.DeclareEmergency(eventt1.Id);
+
+
+            CurrentUnitOfWork.Checkpoint();
+
+            EventCommand.StartCollaborativeSearch(eventt1.Id);
+
+            CurrentUnitOfWork.Checkpoint();
+
+            foreach (var user in listOfUsers)
+            {
+                var nmb = rnd.Next(0, 10);
+                if (nmb.NotIn(new[] {0, 5, 8}))
+                {
+                    if (nmb % 2 == 0)
+                    {
+                        AreYouOkCommand.Reply(new AreYouOkCommand.ReplyParameters()
+                        {
+                            UserId = user.Id,
+                            IAmOk = true,
+                        });
+                    }
+                    else if (nmb % 2 != 0)
+                    {
+                        AreYouOkCommand.Reply(new AreYouOkCommand.ReplyParameters()
+                        {
+                            UserId = user.Id,
+                            IAmOk = false,
+                        });
+                    }
+                }
+            }
+            CurrentUnitOfWork.Checkpoint();
+
+            var soughtPeople=AreYouOkEvents.Where(x => x.Event == eventt1 && x.ReplyDatetime == null).ToList();
+            var index = soughtPeople.Count;
+            foreach (var areYouOkEvent in AreYouOkEvents.Where(x=>x.Event==eventt1 && x.IAmOk && x.ReplyDatetime!=null))
+            {
+                var nmb = rnd.Next(0, 10);
+                if (nmb.NotIn(new[] { 0, 5, 8 }))
+                {
+                    if (nmb % 2 == 0)
+                    {
+                        var soughtPersonAswer = new SoughtPersonAnswer()
+                        {
+                            When = SystemDateTime.Now,
+                            Seen = true,
+                            IsOk = nmb.NotIn(new[] { 2 }),
+                            SourceUser = areYouOkEvent.Target,
+                            TargetUser = soughtPeople[rnd.Next(1,index)-1].Target,
+                        };
+
+                        SoughtPersonAnswers.Put(soughtPersonAswer);
+                    }
+                    else if (nmb % 2 != 0)
+                    {
+                        var soughtPersonAswer = new SoughtPersonAnswer()
+                        {
+                            When = SystemDateTime.Now,
+                            Seen = false,
+                            SourceUser = areYouOkEvent.Target,
+                            TargetUser = soughtPeople[rnd.Next(1, index) - 1].Target,
+                        };
+
+                        SoughtPersonAnswers.Put(soughtPersonAswer);
+                    }
+                }
+            }
+
+           
+
+
+
             return View("IndexMessage", null, "Los datos de prueba se creo con exito");
         }
 
@@ -736,22 +768,7 @@ END
                         insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wcallis29', 'Wadsworth', 'Callis', 'wcallis29@google.com.hk', 'User', 'User');
                         insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('ebremner2a', 'Estevan', 'Bremner', 'ebremner2a@dailymail.co.uk', 'User', 'User');
                         insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lwitherington2b', 'Lavina', 'Witherington', 'lwitherington2b@4shared.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dharpin2c', 'Delmer', 'Harpin', 'dharpin2c@phoca.cz', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('crosenthaler2d', 'Corey', 'Rosenthaler', 'crosenthaler2d@blogs.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('cmctague2e', 'Cherie', 'McTague', 'cmctague2e@de.vu', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('gspurgin2f', 'Gannie', 'Spurgin', 'gspurgin2f@howstuffworks.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('llaw2g', 'Locke', 'Law', 'llaw2g@hud.gov', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sdacombe2h', 'Sandro', 'Dacombe', 'sdacombe2h@google.co.jp', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('sgilburt2i', 'Sinclair', 'Gilburt', 'sgilburt2i@mlb.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('mtrathen2j', 'Morse', 'Trathen', 'mtrathen2j@wunderground.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('asimoncello2k', 'Aloysia', 'Simoncello', 'asimoncello2k@miibeian.gov.cn', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('wmurkin2l', 'Whitney', 'Murkin', 'wmurkin2l@webmd.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('calenikov2m', 'Cos', 'Alenikov', 'calenikov2m@msn.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('lainslee2n', 'Liane', 'Ainslee', 'lainslee2n@chron.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('nbaselli2o', 'Norris', 'Baselli', 'nbaselli2o@booking.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('tbeech2p', 'Tani', 'Beech', 'tbeech2p@nydailynews.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('dgavey2q', 'Dacy', 'Gavey', 'dgavey2q@nbcnews.com', 'User', 'User');
-                        insert into Users (Username, firstname, lastname, email, Role, Usertype) values ('pwarrier2r', 'Phillipe', 'Warrier', 'pwarrier2r@alibaba.com', 'User', 'User');
+                        
                         ";
 
             var command = NHibernateContext.CurrentSession.Connection.CreateCommand();

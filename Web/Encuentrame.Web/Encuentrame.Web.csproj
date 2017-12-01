@@ -587,6 +587,7 @@
     <Content Include="Content\bootstrap-tokenfield\bootstrap-tokenfield.less" />
     <Content Include="Content\bootstrap-tokenfield\tokenfield-typeahead.less" />
     <None Include="Properties\PublishProfiles\EncuentrameWeb - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\TestingServer.pubxml" />
     <Content Include="Scripts\DataTables-1.10.12\extensions\AutoFill\js\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables-1.10.12\extensions\AutoFill\js\autoFill.bootstrap.min.js" />

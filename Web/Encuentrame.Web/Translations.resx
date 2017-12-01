@@ -1650,4 +1650,10 @@
   <data name="EventSeenNotSeenChart" xml:space="preserve">
     <value>Por vistos y no vistos</value>
   </data>
+  <data name="Reopen" xml:space="preserve">
+    <value>Reabrir</value>
+  </data>
+  <data name="ReopenMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea reabrir el evento {0} finalizado?</value>
+  </data>
 </root>

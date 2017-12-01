@@ -139,25 +139,31 @@ namespace Encuentrame.Web.Controllers
 
             pieModels.Add(new PieModel()
             {
+
                 Value = eventPersonStatus.SeenOk,
                 Label = Translations.SeenOk,
-                Color = "#F7464A",
-                Highlight = "#FF5A5E",
+                Color = "#5cb85c",
+                Highlight = "#4cae4c",
             });
+
+           
 
             pieModels.Add(new PieModel()
             {
                 Value = eventPersonStatus.SeenNotOk,
                 Label = Translations.SeenNotOk,
-                Color = "#1989c0",
-                Highlight = "#007cba",
+                Color = "#F7464A",
+                Highlight = "#FF5A5E",
+               
             });
+
             pieModels.Add(new PieModel()
             {
                 Value = eventPersonStatus.WithoutAnswer,
                 Label = Translations.WithoutAnswer,
-                Color = "#FDB45C",
-                Highlight = "#FFC870",
+                Color = "#1989c0",
+                Highlight = "#007cba",
+
             });
             return Json(JsReturnHelper.Return(pieModels));
         }
@@ -173,23 +179,25 @@ namespace Encuentrame.Web.Controllers
             {
                 Value = eventSeenNotSeen.Seen,
                 Label = Translations.Seen,
-                Color = "#F7464A",
-                Highlight = "#FF5A5E",
+                Color = "#5cb85c",
+                Highlight = "#4cae4c",
+                
             });
 
             pieModels.Add(new PieModel()
             {
                 Value = eventSeenNotSeen.NotSeen,
                 Label = Translations.NotSeen,
-                Color = "#1989c0",
-                Highlight = "#007cba",
+                Color = "#F7464A",
+                Highlight = "#FF5A5E",
+                
             });
             pieModels.Add(new PieModel()
             {
                 Value = eventSeenNotSeen.WithoutAnswer,
                 Label = Translations.WithoutAnswer,
-                Color = "#FDB45C",
-                Highlight = "#FFC870",
+                Color = "#1989c0",
+                Highlight = "#007cba",
             });
             return Json(JsReturnHelper.Return(pieModels));
         }
@@ -205,23 +213,25 @@ namespace Encuentrame.Web.Controllers
             {
                 Value = eventPersonStatus.Ok,
                 Label = Translations.IAmOk,
-                Color = "#F7464A",
-                Highlight = "#FF5A5E",
+                Color = "#5cb85c",
+                Highlight = "#4cae4c",
+                
             });
 
             pieModels.Add(new PieModel()
             {
                 Value = eventPersonStatus.NotOk,
                 Label = Translations.IAmNotOk,
-                Color = "#1989c0",
-                Highlight = "#007cba",
+                Color = "#F7464A",
+                Highlight = "#FF5A5E",
+                
             });
             pieModels.Add(new PieModel()
             {
                 Value = eventPersonStatus.WithoutAnswer,
                 Label = Translations.WithoutAnswer,
-                Color = "#FDB45C",
-                Highlight = "#FFC870",
+                Color = "#1989c0",
+                Highlight = "#007cba",
             });
             return Json(JsReturnHelper.Return(pieModels));
         }
@@ -242,6 +252,8 @@ namespace Encuentrame.Web.Controllers
                     return Begin(id);
                 case "finalize":
                     return Finalize(id);
+                case "cancelFinalize":
+                    return CancelFinalize(id);
                 case "emergency":
                     return Emergency(id);
                 case "cancelEmergency":
@@ -274,6 +286,13 @@ namespace Encuentrame.Web.Controllers
         protected ActionResult Finalize(int id)
         {
             EventCommand.FinalizeEvent(id);
+
+            return RedirectToAction("Monitor", new { id });
+        }
+
+        protected ActionResult CancelFinalize(int id)
+        {
+            EventCommand.CancelFinalizeEvent(id);
 
             return RedirectToAction("Monitor", new { id });
         }

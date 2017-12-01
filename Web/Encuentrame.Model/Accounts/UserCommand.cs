@@ -155,9 +155,6 @@ namespace Encuentrame.Model.Accounts
             };
 
             user.Devices.Add(device);
-
-
-
         }
 
         public IList<User> GetUsersByIds(IEnumerable<int> ids)

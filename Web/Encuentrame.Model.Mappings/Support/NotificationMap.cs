@@ -1,9 +1,9 @@
-﻿using Encuentrame.Model.Supports.Notifications;
+﻿using System.Linq;
+using Encuentrame.Model.Supports.Notifications;
 using Encuentrame.Support;
 using Encuentrame.Support.Mappings;
-using System.Linq;
 
-namespace RAEI.ProgramacionDeProduccion.Model.Mappings.Support
+namespace Encuentrame.Model.Mappings.Support
 {
     public class NotificationMap : MappingOf<Notification>
     {

@@ -8,6 +8,7 @@ namespace Encuentrame.Model.Supports.Interfaces
         bool ChangePassword(string oldPassword, string newPassword);
         TokenApiSession GenerateApiTokenUser(string username);
         void RegenerateApiTokenUser(TokenApiSession token);
+        void DeleteApiTokenUser(string username);
         bool ResetPassword(string username);
         BaseUser GetLoggedUser();
     }

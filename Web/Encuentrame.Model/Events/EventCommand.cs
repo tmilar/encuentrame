@@ -139,11 +139,27 @@ namespace Encuentrame.Model.Events
             //TODO: hacer las notifications
         }
 
+        public void CancelFinalizeEvent(int id)
+        {
+            var eventt = Events[id];
+            if (eventt.EmergencyDateTime != null)
+            {
+                eventt.Status = EventStatusEnum.InEmergency;
+            }
+            else
+            {
+                eventt.Status = EventStatusEnum.InProgress;
+            }
+            
+            eventt.EndDateTime = eventt.EndDateTime.AddHours(4);
+            //TODO: hacer las notifications
+        }
+
         public void FinalizeEvent(int id)
         {
             var eventt = Events[id];
             eventt.Status = EventStatusEnum.Completed;
-            eventt.EndDateTime = SystemDateTime.Now;
+            eventt.EndDateTime = SystemDateTime.Now.AddHours(1);
             //TODO: hacer las notifications
         }
 

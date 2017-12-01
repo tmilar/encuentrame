@@ -16,6 +16,7 @@ namespace Encuentrame.Model.Events
 
         void BeginEvent(int id);
         void FinalizeEvent(int id);
+        void CancelFinalizeEvent(int id);
         void StartCollaborativeSearch(int id);
         IList<EventMonitorUserInfo> EventMonitorUsers(int eventId);
         IList<EventMonitorPositionInfo> PositionsFromEvent(int eventId, DateTime? datetimeTo);

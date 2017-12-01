@@ -58,6 +58,7 @@ namespace Encuentrame.Model.AreYouOks
 
         public void Reply(ReplyParameters parameters)
         {
+            var now = SystemDateTime.Now;
             var replyUser = Users[parameters.UserId];
 
             var areYouOkActivities = AreYouOkActivities.Where(x => x.ReplyDatetime == null && x.Target == replyUser);
@@ -74,6 +75,7 @@ namespace Encuentrame.Model.AreYouOks
                     Title = "Encuentrame",
                     Data = new
                     {
+                        Created=now,
                         Id = areYouOkActivity.Id,
                         TargetUserId = areYouOkActivity.Target.Id,
                         Ok = parameters.IAmOk,
@@ -100,6 +102,7 @@ namespace Encuentrame.Model.AreYouOks
         }
         public void Ask(AskParameters parameters)
         {
+            var now = SystemDateTime.Now;
             var areYouOk = new AreYouOkActivity();
             areYouOk.Sender = Users[parameters.SenderId];
             areYouOk.Target = Users[parameters.TargetId];
@@ -116,6 +119,7 @@ namespace Encuentrame.Model.AreYouOks
                 Title = "Encuentrame",
                 Data = new
                 {
+                    Created=now,
                     Id = areYouOk.Id,
                     SenderUserId = areYouOk.Target.Id,
                     AskDatetime = areYouOk.Created,
@@ -139,6 +143,7 @@ namespace Encuentrame.Model.AreYouOks
 
         public void AskFromEvent(Event eventt)
         {
+            var now = SystemDateTime.Now;
 
             var activities = Activities.Where(x => x.Event == eventt);
 
@@ -165,6 +170,7 @@ namespace Encuentrame.Model.AreYouOks
                     Title = "Encuentrame",
                     Data = new
                     {
+                        Created=now,
                         Id = areYouOkEvent.Id,
                         SenderUserId = areYouOkEvent.Target.Id,
                         AskDatetime = areYouOkEvent.Created,
@@ -180,6 +186,7 @@ namespace Encuentrame.Model.AreYouOks
         }
         public void StartCollaborativeSearch(Event eventt)
         {
+            var now = SystemDateTime.Now;
             var searchers = AreYouOkEvents.Where(x => x.Event == eventt && x.ReplyDatetime != null).ToList();
 
             foreach (var areYouOkEvent in searchers)
@@ -191,11 +198,14 @@ namespace Encuentrame.Model.AreYouOks
                     Title = "Encuentrame",
                     Data = new
                     {
+                        Created=now,
                         EventId = eventt.Id,
                         EmergencyDateTime = eventt.EmergencyDateTime.Value,
                         Type = "Event.StartCollaborativeSearch",
                     }
                 }).ToList();
+
+                
 
                 ExpoPushHelper.SendPushNotification(list);
             }
@@ -221,6 +231,9 @@ namespace Encuentrame.Model.AreYouOks
                 .SetParameter("userId", userSearcher.Id)
                 .SetParameter("eventId", currentActivity.Event.Id)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(SoughtPersonInfo)));
+
+            Log.Info($"from: {currentActivity.Event.BeginDateTime} userId: {userSearcher.Id} eventId: {currentActivity.Event.Id} ");
+
 
             return list.List<SoughtPersonInfo>();
 

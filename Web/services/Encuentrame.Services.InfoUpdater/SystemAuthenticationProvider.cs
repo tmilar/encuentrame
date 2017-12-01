@@ -26,6 +26,11 @@ namespace Encuentrame.Services.InfoUpdater
             throw new System.NotImplementedException();
         }
 
+        public override void DeleteApiTokenUser(string username)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override bool ChangePassword(string oldPassword, string newPassword)
         {
             return true;

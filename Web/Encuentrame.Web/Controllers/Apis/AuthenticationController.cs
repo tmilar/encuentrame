@@ -12,8 +12,10 @@ namespace Encuentrame.Web.Controllers.Apis
         [Inject]
         public IAuthenticationProvider AuthenticationProvider { get; set; }
 
-        
-      
+        [Inject]
+        public IUserCommand UserCommand { get; set; }
+
+
         [AllowAnonymous]
         [HttpPost]
         public IHttpActionResult Login(LoginApiModel loginApiModel)
@@ -44,8 +46,17 @@ namespace Encuentrame.Web.Controllers.Apis
 
         }
 
-       
+        [HttpPost]
+        public IHttpActionResult Logout()
+        {
+            var userId = GetIdUserLogged();
+            var user=UserCommand.Get(userId);
+            user.Devices.Clear();
 
+            AuthenticationProvider.DeleteApiTokenUser(user.Username);
+
+            return Ok(); 
+        }
 
     }
 }

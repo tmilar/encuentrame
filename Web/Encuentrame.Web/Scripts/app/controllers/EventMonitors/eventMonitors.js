@@ -10,6 +10,7 @@ var withoutAnswerMarkerCluster = {};
 var imagesFolder = "";
 function initMap() {
 
+  
     var $iAmOkFilter = $('#IAmOk');
     var $iAmNotOkFilter = $('#IAmNotOk');
     var $withoutAnswerFilter = $('#WithoutAnswer');
@@ -241,12 +242,42 @@ function removeAllmarkers() {
 }
 
 $(document).ready(function () {
+
+    var $btnPrevious = $("a.button-previous");
+    var $btnNext = $("a.button-next");
+
+
     var $lastUpdateFilter = $('#LastUpdate');
     var $eventStartDate = $('#BeginDateTime');
     var $eventEndDate = $('#EndDateTime');
     $lastUpdateFilter.data("DateTimePicker").options( { minDate: moment($eventStartDate.val()), maxDate: moment($eventEndDate.val())});
 
+    $btnPrevious.on("click",
+        function() {
+            var $this = $(this);
+            var current = $lastUpdateFilter.data("DateTimePicker").date();
+            
+            var newDate = moment(current).subtract(10, 'm');
+            if (newDate >= moment($eventStartDate.val())) {
+                $lastUpdateFilter.data("DateTimePicker").date(newDate);
+            } else {
+                $lastUpdateFilter.data("DateTimePicker").date(moment($eventStartDate.val()).add(1, 'm')); 
+            }
 
+        });
+    $btnNext.on("click",
+        function () {
+            var $this = $(this);
+            var current = $lastUpdateFilter.data("DateTimePicker").date();
+
+            var newDate = moment(current).add(10, 'm');
+            if (newDate <= moment($eventEndDate.val())) {
+                $lastUpdateFilter.data("DateTimePicker").date(newDate);
+            } else {
+                $lastUpdateFilter.data("DateTimePicker").date(moment($eventEndDate.val()));
+            }
+
+        });
     var $eventPersonStatusChart = $("#eventPersonStatus");
     if ($eventPersonStatusChart.length > 0) {
         var eventPersonStatusCanvas = $eventPersonStatusChart[0].getContext("2d");

@@ -63,6 +63,10 @@
       <Project>{DC6891D7-D143-454D-8CF1-44CD27766AFE}</Project>
       <Name>Nails</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Encuentrame.Support\Encuentrame.Support.csproj">
+      <Project>{04D25BEE-1935-45AB-BDBE-80A831CCEE29}</Project>
+      <Name>Encuentrame.Support</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

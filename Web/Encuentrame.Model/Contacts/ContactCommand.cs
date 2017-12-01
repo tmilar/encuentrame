@@ -8,6 +8,7 @@ using Encuentrame.Support.ExpoNotification;
 using NailsFramework.IoC;
 using NailsFramework.Persistence;
 using NailsFramework.UnitOfWork;
+using NHibernate.Cache;
 
 namespace Encuentrame.Model.Contacts
 {
@@ -27,6 +28,7 @@ namespace Encuentrame.Model.Contacts
 
         public void RequestContact(RequestParameters parameters)
         {
+            var now = SystemDateTime.Now;
             var user = Users[parameters.UserId];
             var contactUser = Users[parameters.RequestUserId];
 
@@ -47,11 +49,13 @@ namespace Encuentrame.Model.Contacts
 
             var list = contactUser.Devices.Select(x => new BodySend()
             {
+                
                 Token = x.Token,
                 Body = $"{user.FullName} quiere agregarte como contacto",
                 Title = "Encuentrame",
                 Data = new
                 {
+                    Created=now,
                     UserId = user.Id,
                     Username= user.Username,
                     Type = "Contact.Request"
@@ -88,6 +92,7 @@ namespace Encuentrame.Model.Contacts
 
         public void AcceptContact(AcceptParameters parameters)
         {
+            var now = SystemDateTime.Now;
             var user = Users[parameters.UserId];
 
             var accepterUser = Users[parameters.AcceptUserId];
@@ -110,6 +115,7 @@ namespace Encuentrame.Model.Contacts
                 Title = "Encuentrame",
                 Data = new
                 {
+                    Created=now,
                     UserId = user.Id,
                     Username = user.Username,
                     Type = "Contact.Confirm"

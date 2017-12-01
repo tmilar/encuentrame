@@ -10,7 +10,7 @@ namespace Encuentrame.Security.Authentications
 
         public abstract TokenApiSession GenerateApiTokenUser(string  username);
         public abstract void RegenerateApiTokenUser(TokenApiSession token);
-        
+        public abstract void DeleteApiTokenUser(string username);
 
         public abstract bool ChangePassword(string oldPassword, string newPassword);
 

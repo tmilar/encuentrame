@@ -656,3 +656,12 @@ hr {
 .map-container.collaborative-search-active {
     border: #d9534f 4px solid
 }
+
+nav ul.pagination.last-update-pagination  {
+    width: 100%;
+    margin: 0px;
+}
+
+    nav ul.pagination.last-update-pagination a {
+        cursor: pointer;
+    }

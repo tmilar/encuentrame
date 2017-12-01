@@ -3472,6 +3472,24 @@ namespace Encuentrame.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reabrir.
+        /// </summary>
+        public static string Reopen {
+            get {
+                return ResourceManager.GetString("Reopen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Esta seguro que desea reabrir el evento {0} finalizado?.
+        /// </summary>
+        public static string ReopenMessage {
+            get {
+                return ResourceManager.GetString("ReopenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reescriba contraseña.
         /// </summary>
         public static string RePassword {

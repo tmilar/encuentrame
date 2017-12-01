@@ -1629,5 +1629,6 @@ var configureDataTableControls = function ($dom) {
     var $document = $(document);
     $document.ready(function () {
         configureDataTableControls($document);
+        
     });
 })();
