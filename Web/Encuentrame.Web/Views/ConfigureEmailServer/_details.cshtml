@@ -1,0 +1,19 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Models.ConfigureEmailServer.EmailServerConfigurationModel
+
+@using (Html.BeginDisplaySection(Translations.SectionBasicData))
+{
+    <div class="row">
+        <div class="col-md-6">@Html.DisplayFor(m => m.From)</div>
+        <div class="col-md-6">@Html.DisplayFor(m => m.Host)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">@Html.DisplayFor(m => m.Port)</div>
+        <div class="col-md-6">@Html.DisplayFor(m => m.EnableSsl)</div>
+    </div>
+}
+
+
+@Html.ActionLink(Translations.Edit, "Edit", new { @class = "btn btn-primary", role = "button" })

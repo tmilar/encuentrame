@@ -1,0 +1,17 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Support
+@model string
+@{
+    string image = Url.Content("~/images/no-image.png");
+    if (!Model.IsNullOrEmpty())
+    {
+        image = "data:image/png;base64," + Model;
+    }
+}
+<div class="form-group image-control">
+    <label class="control-label">@Html.DisplayNameFor(model => model)</label>
+    <p class="form-control-static">
+        <img src="@image" alt="@Translations.NoImage"  class="img-rounded">
+    </p>
+</div>
+

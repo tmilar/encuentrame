@@ -1,0 +1,23 @@
+﻿@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Helpers.DataTable.Filters.Interfaces.IBooleanFilter
+    
+@{
+    string defaultValue = string.Empty;
+
+    if (Model.CanAddDefaultValue)
+    {
+        defaultValue = string.Format("data-default-value={0}", Model.DefaultValueToString);
+    }
+}
+<div class="col-md-@Model.Width table-filter-container boolean-filter @Model.CssClass" data-for-child-table="@Model.ForChildTable.ToString().ToLower()">
+  <div class="form-group">
+      <label>@(!string.IsNullOrEmpty(Model.TranslationKey) ? TranslationsHelper.Get(Model.TranslationKey) : TranslationsHelper.Get(Model.Name))
+      </label>
+      <div class="controls" @defaultValue>
+          <input type="checkbox" data-index="@Model.Index" data-name="@Model.ColumnName" data-value="true">@TranslationsHelper.Get("Yes")</>
+          <input type="checkbox" data-index="@Model.Index"  data-name="@Model.ColumnName" data-value="false">@TranslationsHelper.Get("No")</>
+      </div>  
+  </div>    
+</div>
+
+

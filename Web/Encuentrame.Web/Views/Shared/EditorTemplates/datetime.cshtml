@@ -1,0 +1,17 @@
+﻿@using Encuentrame.Web.Helpers
+@model DateTime?
+@{
+    var currentIsMaxDateTime = false;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.CurrentIsMaxDateTime))
+    {
+        currentIsMaxDateTime = (bool) ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.CurrentIsMaxDateTime];
+    }
+}
+
+
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    @Html.TextBoxFor(model => model, new { @Value = !Model.HasValue ? "" : Model.Value.ToString("dd/MM/yyyy HH:mm"), data_date_format = "DD/MM/YYYY HH:mm", @class = "form-control datetime-control", data_current_is_max_datetime = currentIsMaxDateTime?"true":"false"})
+    @Html.ValidationMessageFor(model => model)
+</div>

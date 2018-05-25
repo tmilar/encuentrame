@@ -1,0 +1,52 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using WebGrease.Css.ImageAssemblyAnalysis
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @Translations.ApplicationName</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+           
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new {area = ""})">
+                    <img src="@Url.Content("~/images/logo.jpg")" 
+                alt="@Translations.ApplicationName">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+
+
+            </div>
+        </div>
+    </div>
+<div class="container-fluid body-content public @Html.ControllerName() @Html.ActionName() ">
+    
+    @RenderBody()
+
+    <footer>
+        <hr />
+        <p>&copy; @DateTime.Now.Year - Encuentrame @Translations.ApplicationName  - TestF1</p>
+    </footer>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/underscore")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/moment")
+    <script src="@Scripts.Url(@"~/scripts/app/appInit.js")" type="text/javascript"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

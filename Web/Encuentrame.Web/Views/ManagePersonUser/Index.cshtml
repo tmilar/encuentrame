@@ -1,0 +1,61 @@
+﻿@using Encuentrame.Model.Accounts
+@using Encuentrame.Support
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Web.Helpers.DataTable
+@using Encuentrame.Web.Models.Accounts
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManagePersonUserListTitle;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/form")
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.SuccessSummary()
+
+<div class="table-container">
+    @(Html.BuildTable<UserListModel>(Url.Action("GetItems", "ManagePersonUser"))
+          .InServer()
+          .AddColumn(x => x.Id)
+          .AddColumn(x => x.Username)
+          .AddColumn(x => x.FullName)
+          .AddColumn(x => x.Email)
+          .AddColumn(x => x.InternalNumber)
+          .AddColumn(x => x.PhoneNumber)
+          .AddColumn(x => x.Role, dataTemplate: "roleTemplate")          
+          .AddColumn("Actions", dataTemplate: "actionsTemplate")
+          .AddFilter(x => x.Username)
+          .AddFilter(x => x.FullName)
+          .AddFilter(x => x.Email)
+           
+           
+          .Build())
+</div>
+
+<script id="roleTemplate" type="text/template">
+    <%
+    if(row.Role === @(RoleEnum.Administrator.ToInt())) { %>
+    <span class="label label-success">
+        @TranslationsHelper.Get(RoleEnum.Administrator)
+    </span>
+    <% } else if(row.Role === @RoleEnum.User.ToInt()){ %>
+    <span class="label label-info">
+        @TranslationsHelper.Get(RoleEnum.User)
+    </span>
+    <% } else if(row.Role === @RoleEnum.EventAdministrator.ToInt()){%>
+    <span class="label label-warning">
+        @TranslationsHelper.Get(RoleEnum.EventAdministrator)
+    </span>
+   
+    <% } %>
+</script>
+<script id="actionsTemplate" type="text/template">
+    <a class="btn btn-info btn-xs" href="@Url.Action("Details")/<%=row.Id%>">Detalle</a>
+    
+</script>

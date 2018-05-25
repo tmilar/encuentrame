@@ -1,0 +1,25 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.ConfigureEmailServer.EmailServerConfigurationModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ConfigureEmailServerTitle;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/form")
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+
+<form method="POST" action="@Url.Action("Save")">    
+    <div class="row">
+        <div class="col-md-6 ">
+            @Html.Partial("_form", Model)
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary">@Translations.Save</button>
+
+</form>

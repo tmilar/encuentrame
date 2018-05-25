@@ -1,0 +1,141 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Tests.TestModel
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>title</h2>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/form")
+
+}
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.ErrorSummary()
+<form method="POST" action="@Url.Action("Create")">
+    <div class="row">
+        <div class="col-lg-6">@Html.EditorFor(m => m.Roles)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">@Html.EditorFor(m => m.TestEnums)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.Cuit)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.Client)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.Part)</div>
+    </div>
+    <label>New Reference</label>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-lg-3">@Html.ListBoxFor(m => m.SelectedTestItems, new MultiSelectList(Model.FullList, "Id", "Text"), new {multiple = "multiple"})</div>
+        </div>
+    </div>
+    @*<div class="row">
+            <div class="col-md-6">
+                <div class="col-lg-3">@Html.EditorFor(m => m.Part2)</div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-3">@Html.DisplayFor(m => m.Part2)</div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-lg-3">@Html.EditorFor(m => m.Client2)</div>
+        </div>
+        @*<div class="col-md-6">
+                <div class="col-lg-3">@Html.DisplayFor(m => m.Client2)</div>
+            </div>*@
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.ClientsMultipleSelected)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-lg-3">@Html.EditorFor(m => m.Part3)</div>
+        </div>
+        @*<div class="col-md-6">
+                <div class="col-lg-3">@Html.DisplayFor(m => m.Part3)</div>
+            </div>*@
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-lg-3">@Html.EditorFor(m => m.Part4)</div>
+        </div>
+        @*<div class="col-md-6">
+                <div class="col-lg-3">@Html.DisplayFor(m => m.Part4)</div>
+            </div>*@
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-lg-3">@Html.EditorFor(m => m.Client3)</div>
+        </div>
+    </div>
+    @*<div class="col-md-6">
+            <div class="col-lg-3">@Html.DisplayFor(m => m.Client3)</div>
+        </div>*@
+    @*</div>*@
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-lg-3">@Html.EditorFor(m => m.Part5)</div>
+        </div>
+        @*<div class="col-md-6">
+                <div class="col-lg-3">@Html.DisplayFor(m => m.Part5)</div>
+            </div>*@
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.Part6)</div>
+
+        @*<div class="col-md-6">
+                <div class="col-lg-3">@Html.DisplayFor(m => m.Part6)</div>
+            </div>*@
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.TestExcludeEnumValues)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.TestIncludeEnumValues)</div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.ValueForConditionalValidation)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfEqual_23)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfRegularExpression_abc12)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfStartsWith_Hola)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfEndsWith_Chau)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfContains_Algo)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfRange_3_10)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RequiredIfAny)</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">@Html.EditorFor(m => m.RangedIfEndsWith_Chau)</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@Translations.Create</button>
+
+</form>
+@Html.ActionLink("Enviar email", "Send", new { }, new { @class = "btn btn-primary" })
+
+

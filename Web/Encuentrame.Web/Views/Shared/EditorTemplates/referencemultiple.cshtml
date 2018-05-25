@@ -1,0 +1,68 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model IEnumerable<int>
+@{
+    Type sourceType = null;
+    string sourceName = "";
+    //var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+    
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.SourceType))
+    {
+        sourceType = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceType] as Type;
+        sourceName = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceName].ToString();
+    }
+    
+    ICollection<SelectListItem> selectListItems = null;
+ 
+
+    if (sourceType == null)
+    {
+        selectListItems = new List<SelectListItem>();
+    }
+    else
+    {
+        selectListItems = sourceType.GetStaticMethod(sourceName) as ICollection<SelectListItem>;
+    }
+
+    string dataRelatedTo = "";
+    string dataSourceUrl = "";
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.RelatedTo))
+    {
+        dataRelatedTo = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.RelatedTo].ToString();
+        var controller= ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceController].ToString();
+        var action= ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceAction].ToString();
+        dataSourceUrl = Url.Action(action, controller);
+    }
+
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>(); //validationAttributes;
+
+    if (dataRelatedTo != "")
+    {
+        var ids = string.Empty;
+        if (Model != null)
+        {
+            ids = Model.Join("|");
+        }
+
+        htmlAttributes.Add("data-related-to", dataRelatedTo);
+        htmlAttributes.Add("data-source-url", dataSourceUrl);
+        htmlAttributes.Add("data-selected-id", Model != null && Model.Any() ? ids : "-1");
+        htmlAttributes.Add("class", "form-control reference reference-single reference-related");
+    }
+    else
+    {
+        htmlAttributes.Add("class", "form-control reference reference-single");
+    }
+    
+    htmlAttributes.Add("multiple", "multiple");  
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+
+    @Html.ListBoxFor(m => m, new MultiSelectList(selectListItems, "Value", "Text", Model), htmlAttributes)
+    @Html.ValidationMessageFor(model => model)
+</div>
+
+

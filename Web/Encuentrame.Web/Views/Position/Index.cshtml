@@ -1,0 +1,39 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Web.Helpers.DataTable
+@using Encuentrame.Web.Models.Positions
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManagePositionListTitle;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/form")
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.SuccessSummary()
+
+
+<div class="table-container">
+    @( Html.BuildTable<PositionListModel>(Url.Action("GetItems", "Position"))
+        .InServer()
+           .AddColumn(x => x.Id)
+           .AddColumn(x => x.Creation)
+           .AddColumn(x => x.Latitude)
+           .AddColumn(x => x.Longitude)
+           .AddColumn(x => x.UserId)
+
+           .AddFilter(x => x.Id)
+           .AddFilter(x => x.Creation)
+           .AddFilter(x => x.Latitude)
+           .AddFilter(x => x.Longitude)
+           .AddFilter(x => x.UserId)
+           .Build()
+          )
+</div>
+
+

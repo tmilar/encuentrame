@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3C5289A-6A51-4F3C-8D03-7538A3899CB5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Encuentrame.Model.Mappings</RootNamespace>
+    <AssemblyName>Encuentrame.Model.Mappings</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\TokenApiSessionMap.cs" />
+    <Compile Include="Activities\ActivityMap.cs" />
+    <Compile Include="AreYouOks\AreYouOkMap.cs" />
+    <Compile Include="Businesses\BusinessMap.cs" />
+    <Compile Include="Contacts\ContactMap.cs" />
+    <Compile Include="Devices\DeviceMap.cs" />
+    <Compile Include="Events\EventMap.cs" />
+    <Compile Include="Positions\PositionMap.cs" />
+    <Compile Include="SoughtPersons\SoughtPersonAnswerMap.cs" />
+    <Compile Include="SqlTypeExtensions.cs" />
+    <Compile Include="Accounts\UserMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Supports\EmailConfigurationMap.cs" />
+    <Compile Include="Support\AuditExtraDataMap.cs" />
+    <Compile Include="Support\AuditMap.cs" />
+    <Compile Include="Support\NotificationAccessExceptionMap.cs" />
+    <Compile Include="Support\NotificationAccessMap.cs" />
+    <Compile Include="Support\NotificationMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NailsSupports\Nails.NHibernate\Nails.NHibernate.csproj">
+      <Project>{d2821896-303f-4826-8ebe-013ca5defa9a}</Project>
+      <Name>Nails.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NailsSupports\Nails\Nails.csproj">
+      <Project>{dc6891d7-d143-454d-8cf1-44cd27766afe}</Project>
+      <Name>Nails</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Encuentrame.Model\Encuentrame.Model.csproj">
+      <Project>{49c7f680-c882-4295-8f79-aeac8d267653}</Project>
+      <Name>Encuentrame.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Supports\Encuentrame.Support.Mapping\Encuentrame.Support.Mappings.csproj">
+      <Project>{c9c8434b-256b-4fd3-8bba-06e5f79288bc}</Project>
+      <Name>Encuentrame.Support.Mappings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Supports\Encuentrame.Support\Encuentrame.Support.csproj">
+      <Project>{04d25bee-1935-45ab-bdbe-80a831ccee29}</Project>
+      <Name>Encuentrame.Support</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

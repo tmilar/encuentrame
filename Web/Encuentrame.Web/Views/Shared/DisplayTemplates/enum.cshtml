@@ -1,0 +1,7 @@
+﻿@using Encuentrame.Web.Helpers
+@model Enum
+<div class="form-group">
+    <label class="control-label">@Html.DisplayNameFor(model => model)</label>
+    <p class="form-control-static">@TranslationsHelper.Get(Model)</p>
+</div>
+

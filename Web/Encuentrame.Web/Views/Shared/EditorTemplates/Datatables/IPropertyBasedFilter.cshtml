@@ -1,0 +1,11 @@
+﻿@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Helpers.DataTable.Filters.Interfaces.IPropertyBasedFilter
+
+<div class="col-md-@Model.Width table-filter-container proeprty-filter @Model.CssClass" data-for-child-table="@Model.ForChildTable.ToString().ToLower()">
+    <div class="form-group">
+        <label>@(!string.IsNullOrEmpty(Model.TranslationKey) ? TranslationsHelper.Get(Model.TranslationKey) : TranslationsHelper.Get(Model.Name))</label>
+        @(Model.GetEditor(Html))
+    </div>
+</div>
+
+

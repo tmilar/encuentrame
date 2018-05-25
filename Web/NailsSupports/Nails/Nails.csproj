@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DC6891D7-D143-454D-8CF1-44CD27766AFE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NailsFramework</RootNamespace>
+    <AssemblyName>Nails</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Nails.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;c:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;c:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Nails.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;c:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;c:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MemoDb">
+      <HintPath>..\..\Tools\MemoDb.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Aspects\Aspect.cs" />
+    <Compile Include="Aspects\IVirtualMethodsProxyFactory.cs" />
+    <Compile Include="Aspects\ILemmingBehavior.cs" />
+    <Compile Include="Config\BaseLemmingConfigurator.cs" />
+    <Compile Include="Config\BehaviorConfigurator.cs" />
+    <Compile Include="Config\DefaultRulesConfigurator.cs" />
+    <Compile Include="Config\IAspectsConfigurator.cs" />
+    <Compile Include="Config\IIoCConfigurator.cs" />
+    <Compile Include="Config\ILogConfigurator.cs" />
+    <Compile Include="Config\INailsConfiguration.cs" />
+    <Compile Include="Config\INailsConfigurator.cs" />
+    <Compile Include="Config\IConfigurationStatus.cs" />
+    <Compile Include="Config\IUnitOfWorkConfigurator.cs" />
+    <Compile Include="Config\IPersistenceConfigurator.cs" />
+    <Compile Include="Config\IPluginsConfigurator.cs" />
+    <Compile Include="Config\IUserInterfaceConfigurator.cs" />
+    <Compile Include="Config\LemmingConfigurator.cs" />
+    <Compile Include="Config\NailsConfiguration.cs" />
+    <Compile Include="Config\IMissingConfiguration.cs" />
+    <Compile Include="Config\StartupException.cs" />
+    <Compile Include="IoC\ConfigurationInjection.cs" />
+    <Compile Include="IoC\StaticInjector.cs" />
+    <Compile Include="IoC\IConfigurableObjectFactory.cs" />
+    <Compile Include="IoC\InstanceInjector.cs" />
+    <Compile Include="IoC\IoCContainer.cs" />
+    <Compile Include="IoC\InjectionsExtensions.cs" />
+    <Compile Include="IoC\LemmingsCollection.cs" />
+    <Compile Include="IoC\LemmingUniqueName.cs" />
+    <Compile Include="IoC\NullIoCContainer.cs" />
+    <Compile Include="IoC\NullObjectFactory.cs" />
+    <Compile Include="IoC\ObjectFactoryProxy.cs" />
+    <Compile Include="IoC\PropertySetter.cs" />
+    <Compile Include="IoC\ReferenceResolver.cs" />
+    <Compile Include="IoC\TypeInjector.cs" />
+    <Compile Include="Persistence\Bag.cs" />
+    <Compile Include="Persistence\BagFactory.cs" />
+    <Compile Include="Persistence\ConnectionStringConfigurator.cs" />
+    <Compile Include="Persistence\IConnectionStringProvider.cs" />
+    <Compile Include="Persistence\IdMapper.cs" />
+    <Compile Include="Persistence\IPage.cs" />
+    <Compile Include="Persistence\IPersistenceContext.cs" />
+    <Compile Include="Persistence\Memory.cs" />
+    <Compile Include="Persistence\MemoryTransactionalContext.cs" />
+    <Compile Include="Persistence\MemoryContext.cs" />
+    <Compile Include="Persistence\Model.cs" />
+    <Compile Include="Persistence\ModelQueries.cs" />
+    <Compile Include="Persistence\NullBag.cs" />
+    <Compile Include="Persistence\NullDataMapper.cs" />
+    <Compile Include="Persistence\NullPersistenceContext.cs" />
+    <Compile Include="Persistence\Page.cs" />
+    <Compile Include="Persistence\PageSizeAttribute.cs" />
+    <Compile Include="Persistence\PagingExtensions.cs" />
+    <Compile Include="Plugins\NailsPlugin.cs" />
+    <Compile Include="Support\NailsComponent.cs" />
+    <Compile Include="Support\LocalPath.cs" />
+    <Compile Include="TestSupport\DuplicatedNailsTestsConfigurationException.cs" />
+    <Compile Include="TestSupport\NailsTests.cs" />
+    <Compile Include="TestSupport\NailsTestsConfigurable.cs" />
+    <Compile Include="TestSupport\MissingNailsTestsConfigurationException.cs" />
+    <Compile Include="TestSupport\NailsTestsConfigurationRepository.cs" />
+    <Compile Include="TestSupport\NailsTestsConfigurator.cs" />
+    <Compile Include="UnitOfWork\Async\AllowAsyncAttribute.cs" />
+    <Compile Include="UnitOfWork\Async\AsyncExecutor.cs" />
+    <Compile Include="UnitOfWork\CommandResult.cs" />
+    <Compile Include="UnitOfWork\ContextProviders\DefaultWorkContextProvider.cs" />
+    <Compile Include="UnitOfWork\ContextProviders\IWorkContextProvider.cs" />
+    <Compile Include="UnitOfWork\ContextProviders\ThreadAffinitiveContextContainer.cs" />
+    <Compile Include="UnitOfWork\ContextProviders\ThreadGlobalWorkContextProvider.cs" />
+    <Compile Include="UnitOfWork\CurrentUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\ICurrentUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWorkCommand.cs" />
+    <Compile Include="UnitOfWork\RunningTransactionalContextValidationBehavior.cs" />
+    <Compile Include="UnitOfWork\Session\DisposableContext.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkExecution.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkInfoBuilder.cs" />
+    <Compile Include="UnitOfWork\WorkContext.cs" />
+    <Compile Include="UnitOfWork\LenientException.cs" />
+    <Compile Include="UnitOfWork\Async\NotAsyncAttribute.cs" />
+    <Compile Include="UnitOfWork\Session\CallExecutionContext.cs" />
+    <Compile Include="UnitOfWork\Session\IExecutionContext.cs" />
+    <Compile Include="UnitOfWork\Session\ISessionContext.cs" />
+    <Compile Include="UnitOfWork\Session\SingletonSessionContext.cs" />
+    <Compile Include="UnitOfWork\Session\WebExecutionContext.cs" />
+    <Compile Include="UnitOfWork\Session\WebSessionContext.cs" />
+    <Compile Include="UnitOfWork\TransactionMode.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkActionCommand.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkAttribute.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkCache.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkFunctionCommand.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkEventSubscriptions.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkInfo.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkBehavior.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkInterceptorCommand.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkStatus.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkViolationException.cs" />
+    <Compile Include="Aspects\BaseLemmingBehavior.cs" />
+    <Compile Include="Aspects\MethodInvocationInfo.cs" />
+    <Compile Include="Config\AssembliesToInspect.cs" />
+    <Compile Include="IoC\BaseObjectFactory.cs" />
+    <Compile Include="Support\GenericInheritanceExtensions.cs" />
+    <Compile Include="IoC\IDependencyHandler.cs" />
+    <Compile Include="IoC\IInjector.cs" />
+    <Compile Include="IoC\InjectAttribute.cs" />
+    <Compile Include="IoC\Injection.cs" />
+    <Compile Include="IoC\IObjectFactory.cs" />
+    <Compile Include="IoC\Lemming.cs" />
+    <Compile Include="IoC\LemmingAttribute.cs" />
+    <Compile Include="IoC\NoCachedModule.cs" />
+    <Compile Include="IoC\ReferenceInjection.cs" />
+    <Compile Include="IoC\ValueInjection.cs" />
+    <Compile Include="Logging\ILog.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LogBehavior.cs" />
+    <Compile Include="Logging\NullLog.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="Nails.cs" />
+    <Compile Include="Persistence\IBag.cs" />
+    <Compile Include="Persistence\MemoryBag.cs" />
+    <Compile Include="Persistence\DataMapper.cs" />
+    <Compile Include="Persistence\ITransactionalContext.cs" />
+    <Compile Include="Persistence\NullTransactionalContext.cs" />
+    <Compile Include="UnitOfWork\RunningUnitOfWorkValidationBehavior.cs" />
+    <Compile Include="NailsException.cs" />
+    <Compile Include="Support\ReflectionExtensions.cs" />
+    <Compile Include="UserInterface\UIPlatform.cs" />
+    <Compile Include="UserInterface\NullUIPlatform.cs" />
+    <Compile Include="Web\NailsHttpApplication.cs" />
+    <Compile Include="Web\WebUI.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

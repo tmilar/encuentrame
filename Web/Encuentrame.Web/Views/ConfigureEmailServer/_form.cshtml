@@ -1,0 +1,21 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.ConfigureEmailServer.EmailServerConfigurationModel
+@Html.ErrorSummary()
+@Html.SuccessSummary()
+
+@using (Html.BeginEditSection(Translations.ConfigureEmailServerTitle))
+{
+    <div class="row">
+        <div class="col-md-6">@Html.EditorFor(m => m.From)</div>
+        <div class="col-md-6">@Html.EditorFor(m => m.Host)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">@Html.EditorFor(m => m.Port)</div>
+        <div class="col-md-6">@Html.EditorFor(m => m.EnableSsl)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">@Html.EditorFor(m => m.User)</div>
+        <div class="col-md-6">@Html.EditorFor(m => m.Password)</div>
+    </div>
+}

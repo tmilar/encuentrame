@@ -1,0 +1,88 @@
+﻿@using Encuentrame.Model.Accounts
+@using Encuentrame.Model.Events
+@using Encuentrame.Support
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Web.Helpers.DataTable
+@using Encuentrame.Web.Models.Events
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManageEventListTitle;
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/form")
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.SuccessSummary()
+@Html.ActionLink(Translations.Create, "Create", new { }, new { @class = "btn btn-primary" })
+<div class="table-container">
+    @{
+        var tableBuilder = Html.BuildTable<EventListModel>(Url.Action("GetItems", "ManageEvent"))
+            .InServer()
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Latitude)
+            .AddColumn(x => x.Longitude)
+            .AddColumn(x => x.BeginDateTime)
+            .AddColumn(x => x.EndDateTime)
+            .AddColumn(x => x.Status, dataTemplate: "statusTemplate")
+            .AddColumn(x => x.City);
+        if (AuthorizationHelper.Validate(RoleEnum.Administrator))
+        {
+            tableBuilder.AddColumn(x => x.Organizer, o => o.Name);
+        }
+        tableBuilder.AddColumn("Actions", dataTemplate: "actionsTemplate")
+        .AddFilter(x => x.Name)
+        .AddFilter(x => x.BeginDateTime)
+        .AddFilter(x => x.EndDateTime)
+        .AddFilter(x=>x.Status).AllowMultiple()
+        .AddFilter(x => x.City);
+        if (AuthorizationHelper.Validate(RoleEnum.Administrator))
+        {
+            tableBuilder.AddFilter(x => x.Organizer, x => x.Id, Url.Action("GetEventAdministratorUsers", "ReferenceItems"));
+        }
+
+
+    }
+    @(tableBuilder.Build())
+
+</div>
+
+<script id="actionsTemplate" type="text/template">
+    <a class="btn btn-info btn-xs" href="@Url.Action("Details")/<%=row.Id%>">@Translations.Detail</a>
+    <a class="btn btn-primary btn-xs" href="@Url.Action("Edit")/<%=row.Id%>">@Translations.Edit</a>
+    <a class="btn btn-success btn-xs" href="@Url.Action("Monitor","EventMonitor")/<%=row.Id%>">@Translations.MonitorEvent</a>
+</script>
+<script id="statusTemplate" type="text/template">
+    <%
+    if(row.Status === @(EventStatusEnum.Completed.ToInt())) { %>
+    <span class="label label-success">
+        @TranslationsHelper.Get(EventStatusEnum.Completed)
+    </span>   
+    <% } else if(row.Status === @EventStatusEnum.Pending.ToInt()){ %>
+    <span class="label label-info">
+        @TranslationsHelper.Get(EventStatusEnum.Pending)
+    </span>
+    <% } else if(row.Status === @EventStatusEnum.InProgress.ToInt()){%>
+    <span class="label label-warning">
+        @TranslationsHelper.Get(EventStatusEnum.InProgress)
+    </span>
+    <% } else if(row.Status === @EventStatusEnum.InEmergency.ToInt()){%>
+    <span class="label label-danger  margin-right-xs">
+        @TranslationsHelper.Get(EventStatusEnum.InEmergency)
+    </span>
+        <div class="shake-slow shake-constant shake-opacity">
+            <img src="@Url.Content("~/images/alarm.jpg")" width="21px" height="21px" alt="@TranslationsHelper.Get(EventStatusEnum.InEmergency)" />
+        </div>
+    
+    <% } else if(row.Status === @EventStatusEnum.Canceled.ToInt()) { %>
+    <span class="label label-danger">
+        @TranslationsHelper.Get(EventStatusEnum.Canceled)
+    </span>
+    <% } %>
+</script>

@@ -1,0 +1,49 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Models.References.Commons.ReferenceAny
+@{
+    Type sourceType ;
+    string sourceName;
+    var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.SourceType))
+    {
+        sourceType = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceType] as Type;
+        sourceName = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceName].ToString();
+    }
+    else
+    {
+        sourceType = typeof(ListItemsHelper);
+        sourceName = "";
+    }
+    var selectListItems = sourceType.GetStaticMethod(sourceName, Model == null ? 0 : Model.Id, Model == null ? String.Empty : Model.Type) as ICollection<SelectListItem>;
+    var caption = String.Empty;
+    var dataRequired = Html.GetRequiredMessage(x => x);
+    IDictionary<string, object> htmlAttributes = validationAttributes;
+    htmlAttributes.Add("class", "form-control reference reference-any");
+    var isRequiredConditional = Html.GetIfConditionalRequired(x => x);
+    
+    if (dataRequired != "")
+    {
+        caption = Translations.SelectItemDropDownCaption;
+        //htmlAttributes.Add("data-val", "true");
+        //htmlAttributes.Add("data-val-required", dataRequired);
+    }
+    else if (isRequiredConditional)
+    {
+        caption = Translations.SelectItemDropDownCaption;
+    }
+    else
+    {
+        caption = Translations.NothingDropDownCaption;
+    }
+    
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model, new { @for = Html.NameFor(model => model) + ".referenceAny" })
+    @Html.DropDownList("referenceAny", selectListItems, caption, htmlAttributes)
+    @Html.ValidationMessage("referenceAny")
+</div>
+
+

@@ -1,0 +1,43 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Businesses.BusinessModel
+@Html.ErrorSummary()
+
+
+@using (Html.BeginEditSection(Translations.Data))
+{
+    <div class="row">
+        <div class="col-md-8">@Html.EditorFor(m => m.Name)</div>
+        <div class="col-md-4">@Html.EditorFor(m => m.Cuit)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">@Html.EditorFor(m => m.Street)</div>
+        <div class="col-md-4">@Html.EditorFor(m => m.Number)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">@Html.EditorFor(m => m.City)</div>
+        <div class="col-md-6">@Html.EditorFor(m => m.Province)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">@Html.EditorFor(m => m.FloorAndDepartament)</div>
+        <div class="col-md-3">@Html.EditorFor(m => m.Zip)</div>
+
+    </div>
+}
+
+@if (Model.Id == 0)
+{
+using (Html.BeginEditSection(Translations.SectionUserData))
+ {
+     <div class="row">
+         <div class="col-md-4">@Html.EditorFor(m => m.Username)</div>
+         <div class="col-md-4">@Html.EditorFor(m => m.Password)</div>
+         <div class="col-md-4">@Html.EditorFor(m => m.RePassword)</div>
+     </div>
+     <div class="row">
+         <div class="col-md-4">@Html.EditorFor(m => m.Lastname)</div>
+         <div class="col-md-4">@Html.EditorFor(m => m.Firstname)</div>
+         <div class="col-md-4">@Html.EditorFor(m => m.Email)</div>
+     </div>
+ }
+}

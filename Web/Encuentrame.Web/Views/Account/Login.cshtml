@@ -1,0 +1,41 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Accounts.LoginModel
+@{
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+    ViewBag.Title = Translations.LoginTitle;
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/form")
+}
+@Html.ErrorSummary()
+<form method="POST" action="@Url.Action("Login", new {returnUrl = ViewBag.ReturnUrl})">
+    @Html.AntiForgeryToken() 
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <div class="panel panel-primary margin-top-l">
+                <div class="panel-heading">@Translations.LoginTitle  - TestF1.2</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">@Html.EditorFor(m => m.Username)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">@Html.EditorFor(m => m.Password)</div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-md-offset-1 col-md-4">
+                            @Html.ActionLink(Translations.RegisterNewBusiness, "Login", new { }, new { @class = "btn btn-link", role = "button" })
+                        </div>
+                        <div class=" col-md-offset-2 col-md-4">
+                            <button type="submit" class="btn btn-primary pull-right">@Translations.Login - F2</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>

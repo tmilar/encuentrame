@@ -1,0 +1,20 @@
+﻿@using Encuentrame.Web.Helpers
+@model string
+@{
+    var mask = "";
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.Mask))
+    {
+        mask = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.Mask].ToString();
+    }
+    else
+    {
+        mask = MaskPatterns.Integer;
+    }
+}
+
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    @Html.TextBoxFor(model => model, new {data_mask_pattern = mask, @class = "form-control mask-control"})
+    @Html.ValidationMessageFor(model => model)
+</div>

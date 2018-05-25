@@ -1,0 +1,19 @@
+﻿@using Encuentrame.Web.Helpers
+@model string
+
+@{
+    var maxLength = Html.GetStringLengthValue(model => model);
+    if (maxLength == 0)
+    {
+        maxLength = 500;
+    }
+}
+
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    @Html.TextAreaFor(model => model, new {@maxLength = maxLength, rows = 2, @class = "form-control"})
+    @Html.ValidationMessageFor(model => model)
+</div>
+
+

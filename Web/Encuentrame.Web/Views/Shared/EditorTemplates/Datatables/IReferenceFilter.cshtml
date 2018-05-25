@@ -1,0 +1,38 @@
+﻿@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Helpers.DataTable.Filters.Interfaces.IReferenceFilter
+    
+@{
+    string isMultiple = string.Empty;
+
+    if (Model.IsMultiple)
+    {
+        isMultiple = "multiple='multiple' data-is-multiple ='{0}'".FormatWith(Model.IsMultiple.ToString().ToLower());
+    }
+
+    var showGroups = string.Empty;
+
+    if (Model.ShowGroups)
+    {
+        showGroups = "data-show-groups={0}".FormatWith(Model.ShowGroups.ToString().ToLower());
+    }
+
+    var defaultValue = string.Empty;
+    if (Model.CanAddDefaultValue)
+    {
+        defaultValue = "data-default-value={0}".FormatWith(Model.DefaultValue);
+    }
+}
+<div class="col-md-@Model.Width table-filter-container reference-filter @Model.CssClass" data-for-child-table="@Model.ForChildTable.ToString().ToLower()" @showGroups @defaultValue>
+  <div class="form-group">
+      <label>@(!string.IsNullOrEmpty(Model.TranslationKey) ? TranslationsHelper.Get(Model.TranslationKey) : TranslationsHelper.Get(Model.Name))</label>
+      <select class='select-reference-filter form-control reference reference-single' data-index="@Model.Index" data-name="@Model.ColumnName" data-url="@Model.Url" data-id-path="@Model.IdPath" @isMultiple>
+          @if (!Model.IsMultiple)
+          {
+            <option data-id="-1" value=""></option>
+          }
+      </select>
+  </div>    
+</div>
+
+

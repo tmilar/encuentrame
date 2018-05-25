@@ -1,0 +1,37 @@
+﻿@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Helpers.DataTable.Filters.Interfaces.IDateRangeFilter
+
+@{
+    var defaultMinValue = "";
+    if (string.IsNullOrEmpty(Model.DefaultMinStringValue))
+    {
+        defaultMinValue = "value={0}".FormatWith(Model.DefaultMinStringValue);
+    }
+
+    var defaultMaxValue = "";
+    if (string.IsNullOrEmpty(Model.DefaultMaxStringValue))
+    {
+        defaultMaxValue = "value={0}".FormatWith(Model.DefaultMaxStringValue);
+    }
+}
+<div class="col-md-@Model.Width table-filter-container date-range-filter @Model.CssClass" data-for-child-table="@Model.ForChildTable.ToString().ToLower()" >
+    <div class="form-group">
+        <label>@(!string.IsNullOrEmpty(Model.TranslationKey) ? TranslationsHelper.Get(Model.TranslationKey) : TranslationsHelper.Get(Model.Name))
+        </label>
+        <div class="date-range row" data-index="@Model.Index" data-name="@Model.Name">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input class="range-min datetime-control form-control" data-current-is-max-datetime="false" placeholder="@TranslationsHelper.Get("From")" @defaultMinValue >                    
+                </div>                
+            </div>
+            <div class="col-md-6">
+                <div class="form-group ">
+                    <input class='range-max datetime-control form-control' data-current-is-max-datetime='false' placeholder="@TranslationsHelper.Get("to")" @defaultMaxValue >
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,1659 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Encuentrame</value>
+  </data>
+  <data name="BlankX" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="BlankY" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Marca</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="CodeAlternative" xml:space="preserve">
+    <value>Código alternativo</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detalle</value>
+  </data>
+  <data name="DriverPlcType" xml:space="preserve">
+    <value>Driver PLC</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="GrossWeight" xml:space="preserve">
+    <value>Peso bruto</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Alto</value>
+  </data>
+  <data name="HomeMenu" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Imagen</value>
+  </data>
+  <data name="IP" xml:space="preserve">
+    <value>Dirección IP</value>
+  </data>
+  <data name="LaunchDate" xml:space="preserve">
+    <value>Fecha de marcha</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="ManageMenu" xml:space="preserve">
+    <value>Administrar</value>
+  </data>
+  <data name="MaxLengthError" xml:space="preserve">
+    <value>El campo {0} no puede ser mayor a {1} caracteres</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="NetWeight" xml:space="preserve">
+    <value>Peso neto</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="PowerUnit" xml:space="preserve">
+    <value>Unidad de potencia</value>
+  </data>
+  <data name="PowerUnitEnumTons" xml:space="preserve">
+    <value>Toneladas</value>
+  </data>
+  <data name="PowerUnitEnumWatts" xml:space="preserve">
+    <value>Watts</value>
+  </data>
+  <data name="RegisterIndexBit" xml:space="preserve">
+    <value>Bit indice</value>
+  </data>
+  <data name="RegisterIndexWord" xml:space="preserve">
+    <value>Palabra indice</value>
+  </data>
+  <data name="RequiredError" xml:space="preserve">
+    <value>El campo {0} es requerido</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>Número de serie</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Fecha de ingreso</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>Potencia</value>
+  </data>
+  <data name="NoImage" xml:space="preserve">
+    <value>Sin imagen</value>
+  </data>
+  <data name="Deactivated" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="PowerUnitEnumAmps" xml:space="preserve">
+    <value>Amperes</value>
+  </data>
+  <data name="BaseTime" xml:space="preserve">
+    <value>Base (s)</value>
+  </data>
+  <data name="SetUpTime" xml:space="preserve">
+    <value>Set up (m)</value>
+  </data>
+  <data name="SelectItemDropDownCaption" xml:space="preserve">
+    <value>Seleccione...</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Subir Archivo</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>Cantidad planeada</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="BatchSize" xml:space="preserve">
+    <value>Tamaño del lote</value>
+  </data>
+  <data name="AddToQueue" xml:space="preserve">
+    <value>Agregar en la cola</value>
+  </data>
+  <data name="SettingsWorkingTimesMenu" xml:space="preserve">
+    <value>Horario laboral</value>
+  </data>
+  <data name="SettingsMenu" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="DayOfWeek" xml:space="preserve">
+    <value>Dia de la semana</value>
+  </data>
+  <data name="NoTimeError" xml:space="preserve">
+    <value>El campo {0} no es una hora valida</value>
+  </data>
+  <data name="SettingsWorkingTimesTitle" xml:space="preserve">
+    <value>Horario laboral</value>
+  </data>
+  <data name="BeginDate" xml:space="preserve">
+    <value>Fecha inicio</value>
+  </data>
+  <data name="BeginTime" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Fecha fin</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="DayOfWeekFriday" xml:space="preserve">
+    <value>Viernes</value>
+  </data>
+  <data name="DayOfWeekMonday" xml:space="preserve">
+    <value>Lunes</value>
+  </data>
+  <data name="DayOfWeekSaturday" xml:space="preserve">
+    <value>Sabado</value>
+  </data>
+  <data name="DayOfWeekSunday" xml:space="preserve">
+    <value>Domingo</value>
+  </data>
+  <data name="DayOfWeekThursday" xml:space="preserve">
+    <value>Jueves</value>
+  </data>
+  <data name="DayOfWeekTuesday" xml:space="preserve">
+    <value>Martes</value>
+  </data>
+  <data name="DayOfWeekWednesday" xml:space="preserve">
+    <value>Miercoles</value>
+  </data>
+  <data name="SettingsWorkingTimesNormalWorkingHoursSubtitle" xml:space="preserve">
+    <value>Horario normal</value>
+  </data>
+  <data name="SettingsWorkingTimesSpecialWorkingHoursSubtitle" xml:space="preserve">
+    <value>Horario especial</value>
+  </data>
+  <data name="AddRow" xml:space="preserve">
+    <value>Agregar fila</value>
+  </data>
+  <data name="SettingsWorkingTimesNoWorkingHoursSubtitle" xml:space="preserve">
+    <value>Dias no laborales</value>
+  </data>
+  <data name="NoDateError" xml:space="preserve">
+    <value>El campo {0} no es una fecha valida</value>
+  </data>
+  <data name="OperationUniqueKeyError" xml:space="preserve">
+    <value>El Nombre '{0}' ya existe, debe modificar uno o ambos</value>
+  </data>
+  <data name="CreateSuccess" xml:space="preserve">
+    <value>{0} se creó con éxito</value>
+  </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>{0} se eliminó con éxito</value>
+  </data>
+  <data name="EditSuccess" xml:space="preserve">
+    <value>{0} se modificó con éxito</value>
+  </data>
+  <data name="SectionBasicData" xml:space="preserve">
+    <value>Datos principales</value>
+  </data>
+  <data name="SectionPhysicalAttributesData" xml:space="preserve">
+    <value>Atributos físicos</value>
+  </data>
+  <data name="SectionSecondaryData" xml:space="preserve">
+    <value>Datos secundarios</value>
+  </data>
+  <data name="SectionInterfaceData" xml:space="preserve">
+    <value>Datos de interface de red</value>
+  </data>
+  <data name="SectionModelData" xml:space="preserve">
+    <value>Datos de marca y modelo</value>
+  </data>
+  <data name="WorkingTime" xml:space="preserve">
+    <value>Horario laboral</value>
+  </data>
+  <data name="EstimatedMinutesOfWork" xml:space="preserve">
+    <value>Estimado (min)</value>
+  </data>
+  <data name="BeginDateTime" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="EndDateTime" xml:space="preserve">
+    <value>Finalización</value>
+  </data>
+  <data name="EstimatedDaysOfWork" xml:space="preserve">
+    <value>Estimado (dias)</value>
+  </data>
+  <data name="SelectMachineError" xml:space="preserve">
+    <value>Debe completar los valores necesarios y seleccionar una máquina</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>Referencia</value>
+  </data>
+  <data name="ProgramGridWeeklyTitle" xml:space="preserve">
+    <value>Vista semanal</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea eliminar {0}?</value>
+  </data>
+  <data name="ProgramGridMenu" xml:space="preserve">
+    <value>Grilla</value>
+  </data>
+  <data name="HomeTitle" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="BarPopoverTitle" xml:space="preserve">
+    <value>Seleccione una acción</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Completar</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pausar</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comentarios</value>
+  </data>
+  <data name="CompletedQuantity" xml:space="preserve">
+    <value>Conforme</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Fecha y hora</value>
+  </data>
+  <data name="RejectedQuantity" xml:space="preserve">
+    <value>No conforme</value>
+  </data>
+  <data name="NoActionMessage" xml:space="preserve">
+    <value>No hay acción posible</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Modificar</value>
+  </data>
+  <data name="AcceptableErrorInCompletedQuantity" xml:space="preserve">
+    <value>Completado error (%) </value>
+  </data>
+  <data name="AddPartRow" xml:space="preserve">
+    <value>Agregar parte</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="PushProductionOrderInProgressIsForbiddenException" xml:space="preserve">
+    <value>Esta intentando mover esta Orden de Producción a una posición anterior a una que no esta pendiente.</value>
+  </data>
+  <data name="ErrorSubTitle" xml:space="preserve">
+    <value>Ha ocurrido un error procesando la petición</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorException" xml:space="preserve">
+    <value>Excepción</value>
+  </data>
+  <data name="ErrorRoute" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="ManageUserListTitle" xml:space="preserve">
+    <value>Listado de usuarios</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="ManageUserCreateTitle" xml:space="preserve">
+    <value>Crear Usuario</value>
+  </data>
+  <data name="ManageUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de usuario</value>
+  </data>
+  <data name="ManageUserEditTitle" xml:space="preserve">
+    <value>Editar Usuario</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Ingreso al sistema</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="EmailAlternative" xml:space="preserve">
+    <value>E-Mail alternativo</value>
+  </data>
+  <data name="EmailError" xml:space="preserve">
+    <value>El campo {0} no es una dirección E-Mail válida</value>
+  </data>
+  <data name="InternalNumber" xml:space="preserve">
+    <value>Interno</value>
+  </data>
+  <data name="MobileNumber" xml:space="preserve">
+    <value>Teléfono movil</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="SecurityMenu" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="ContactData" xml:space="preserve">
+    <value>Información de contacto</value>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>Información personal</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Vieja contraseña</value>
+  </data>
+  <data name="RepeatPassword" xml:space="preserve">
+    <value>Repetir contraseña</value>
+  </data>
+  <data name="LoginFailError" xml:space="preserve">
+    <value>El usuario y/o contraseña son incorrectos</value>
+  </data>
+  <data name="ProfileDetailsTitle" xml:space="preserve">
+    <value>Mi perfil</value>
+  </data>
+  <data name="AccountMenu" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
+  <data name="ChangePasswordMenu" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Mi perfil</value>
+  </data>
+  <data name="ChangePasswordTitle" xml:space="preserve">
+    <value>Cambiar password</value>
+  </data>
+  <data name="ChangePasswordFailError" xml:space="preserve">
+    <value>La contraseña no se cambio, verifique que la contraseñas son correctas</value>
+  </data>
+  <data name="ChangePasswordSuccess" xml:space="preserve">
+    <value>La contraseña se cambio con éxito</value>
+  </data>
+  <data name="LogoutMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea salir de la aplicación?</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="ManageRoleCreateTitle" xml:space="preserve">
+    <value>Crear rol</value>
+  </data>
+  <data name="ManageRoleDetailsTitle" xml:space="preserve">
+    <value>Detalle de rol</value>
+  </data>
+  <data name="ManageRoleEditTitle" xml:space="preserve">
+    <value>Editar rol</value>
+  </data>
+  <data name="ManageRoleListTitle" xml:space="preserve">
+    <value>Listado de roles</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="SecurityData" xml:space="preserve">
+    <value>Informacion de permisos</value>
+  </data>
+  <data name="Passes" xml:space="preserve">
+    <value>Permisos</value>
+  </data>
+  <data name="ActionsEnumBegin" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="ActionsEnumCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ActionsEnumComplete" xml:space="preserve">
+    <value>Completar</value>
+  </data>
+  <data name="ActionsEnumCreate" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="ActionsEnumDelete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="ActionsEnumEdit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ActionsEnumList" xml:space="preserve">
+    <value>Listar</value>
+  </data>
+  <data name="ActionsEnumPause" xml:space="preserve">
+    <value>Pausar</value>
+  </data>
+  <data name="ActionsEnumView" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="GroupsOfModulesEnumAccount" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
+  <data name="GroupsOfModulesEnumManage" xml:space="preserve">
+    <value>Administrar</value>
+  </data>
+  <data name="GroupsOfModulesEnumProgramGrid" xml:space="preserve">
+    <value>Grilla</value>
+  </data>
+  <data name="GroupsOfModulesEnumSecurity" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="GroupsOfModulesEnumSettings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="ModulesEnumManageMachine" xml:space="preserve">
+    <value>Máquinas</value>
+  </data>
+  <data name="ModulesEnumManageMachineCategory" xml:space="preserve">
+    <value>Categorias de máquina</value>
+  </data>
+  <data name="ModulesEnumManageOperation" xml:space="preserve">
+    <value>Operaciones</value>
+  </data>
+  <data name="ModulesEnumManagePart" xml:space="preserve">
+    <value>Partes</value>
+  </data>
+  <data name="ModulesEnumManageProductionOrder" xml:space="preserve">
+    <value>Ordenes de producción</value>
+  </data>
+  <data name="ModulesEnumManageRole" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="ModulesEnumManageUser" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="ModulesEnumProfile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="ModulesEnumProgramer" xml:space="preserve">
+    <value>Programador</value>
+  </data>
+  <data name="ModulesEnumWeeklyView" xml:space="preserve">
+    <value>Vista semanal</value>
+  </data>
+  <data name="ModulesEnumWorkingTime" xml:space="preserve">
+    <value>Horario laboral</value>
+  </data>
+  <data name="AddClientRow" xml:space="preserve">
+    <value>Agregar cliente</value>
+  </data>
+  <data name="SectionClientData" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="ModulesEnumManageClient" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="ManageCreateTitle" xml:space="preserve">
+    <value>Crear {0}</value>
+  </data>
+  <data name="ManageDeleteTitle" xml:space="preserve">
+    <value>Borrar {0}</value>
+  </data>
+  <data name="ManageEditTitle" xml:space="preserve">
+    <value>Editar {0}</value>
+  </data>
+  <data name="ManageListTitle" xml:space="preserve">
+    <value>Listado de {0}</value>
+  </data>
+  <data name="ManageMenuOption" xml:space="preserve">
+    <value>Administrar {0}</value>
+  </data>
+  <data name="ManageDetailsTitle" xml:space="preserve">
+    <value>Detalle de {0}</value>
+  </data>
+  <data name="Symbol" xml:space="preserve">
+    <value>Símbolo</value>
+  </data>
+  <data name="MeasurementUnit" xml:space="preserve">
+    <value>Unidad de medida</value>
+  </data>
+  <data name="MeasurementUnits" xml:space="preserve">
+    <value>Unidades de medida</value>
+  </data>
+  <data name="StandardSuperficial" xml:space="preserve">
+    <value>Estándar superficial</value>
+  </data>
+  <data name="StandardSuperficials" xml:space="preserve">
+    <value>Estándares superficiales</value>
+  </data>
+  <data name="ModulesEnumManageMeasurementUnit" xml:space="preserve">
+    <value>Unidades de medida</value>
+  </data>
+  <data name="ModulesEnumManageQuality" xml:space="preserve">
+    <value>Calidades</value>
+  </data>
+  <data name="ModulesEnumManageRawMaterial" xml:space="preserve">
+    <value>Materias primas</value>
+  </data>
+  <data name="ModulesEnumManageStandardSuperficial" xml:space="preserve">
+    <value>Estándares superficiales</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Proveedor</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>Proveedores</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Apellido y nombre </value>
+  </data>
+  <data name="ModulesEnumManageSupplier" xml:space="preserve">
+    <value>Proveedores</value>
+  </data>
+  <data name="DeliveryTime" xml:space="preserve">
+    <value>Tiempo de entrega</value>
+  </data>
+  <data name="SectionSupplierData" xml:space="preserve">
+    <value>Datos de proveedores</value>
+  </data>
+  <data name="ManualId" xml:space="preserve">
+    <value>Id manual</value>
+  </data>
+  <data name="SectionContactsData" xml:space="preserve">
+    <value>Contactos</value>
+  </data>
+  <data name="DepartmentOfOrganization" xml:space="preserve">
+    <value>Sector</value>
+  </data>
+  <data name="ModulesEnumManageRawMaterialType" xml:space="preserve">
+    <value>Tipos de materia prima</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="SectionPartComponentsData" xml:space="preserve">
+    <value>Componentes</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>Componentes</value>
+  </data>
+  <data name="EntryDateTime" xml:space="preserve">
+    <value>Fecha y hora de ingreso</value>
+  </data>
+  <data name="PositionInFactory" xml:space="preserve">
+    <value>Posición en la planta</value>
+  </data>
+  <data name="SuppliersCoilCode" xml:space="preserve">
+    <value>Codigo del proveedor</value>
+  </data>
+  <data name="UseDateTime" xml:space="preserve">
+    <value>Fecha y hora de uso</value>
+  </data>
+  <data name="DeleteRawMaterialInFactoryMessage" xml:space="preserve">
+    <value>¿Está seguro que desea eliminar la materia prima {0} ingresada {1}?</value>
+  </data>
+  <data name="IsFinal" xml:space="preserve">
+    <value>Es final</value>
+  </data>
+  <data name="Origin" xml:space="preserve">
+    <value>Origen</value>
+  </data>
+  <data name="Component" xml:space="preserve">
+    <value>Componente</value>
+  </data>
+  <data name="NothingDropDownCaption" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="IsLast" xml:space="preserve">
+    <value>Es la última</value>
+  </data>
+  <data name="OffLine" xml:space="preserve">
+    <value>Fuera de linea</value>
+  </data>
+  <data name="OnLine" xml:space="preserve">
+    <value>En linea</value>
+  </data>
+  <data name="AddRawMaterialTypeRow" xml:space="preserve">
+    <value>Agregar tipo de materia prima</value>
+  </data>
+  <data name="SectionRawMaterialTypesData" xml:space="preserve">
+    <value>Tipos de material primas seleccionables</value>
+  </data>
+  <data name="SettingsConfigurationTitle" xml:space="preserve">
+    <value>Configuración general</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="SettingsConfigurationMenu" xml:space="preserve">
+    <value>Configuración general</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtrar</value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>Encontrar</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="Clean" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="RefreshQuantity" xml:space="preserve">
+    <value>Actualizar cantidad</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="States" xml:space="preserve">
+    <value>Estados</value>
+  </data>
+  <data name="DailyVolume" xml:space="preserve">
+    <value>Volumen diario</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Uso</value>
+  </data>
+  <data name="SectionPartPerUnitsData" xml:space="preserve">
+    <value>Partes por unidades</value>
+  </data>
+  <data name="Backward" xml:space="preserve">
+    <value>Atras</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Adelante</value>
+  </data>
+  <data name="CheckStock" xml:space="preserve">
+    <value>Revisar Stock</value>
+  </data>
+  <data name="PassNecessary" xml:space="preserve">
+    <value>Pase necesario</value>
+  </data>
+  <data name="UnauthorizedSubTitle" xml:space="preserve">
+    <value>El usuario no posee los permisos necesarios</value>
+  </data>
+  <data name="UnauthorizedTitle" xml:space="preserve">
+    <value>Error de permisos</value>
+  </data>
+  <data name="ActionsEnumMoveWork" xml:space="preserve">
+    <value>Mover ordenes de produccion</value>
+  </data>
+  <data name="ModulesEnumConfiguration" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="ModulesEnumManageClientDailyVolume" xml:space="preserve">
+    <value>Volumen diario por cliente</value>
+  </data>
+  <data name="ModulesEnumManageRawMaterialInFactory" xml:space="preserve">
+    <value>Materia prima en planta</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>hasta</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Fecha de creación</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Limpiar filtros</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Acabado</value>
+  </data>
+  <data name="HasDetained" xml:space="preserve">
+    <value>Tiene retenidos</value>
+  </data>
+  <data name="GroupsOfModulesEnumStocks" xml:space="preserve">
+    <value>Stocks</value>
+  </data>
+  <data name="SectionPartProcessData" xml:space="preserve">
+    <value>Proceso</value>
+  </data>
+  <data name="BeginDatetimeException" xml:space="preserve">
+    <value>La fecha de programacion es muy tarde, ¿desea continuar?</value>
+  </data>
+  <data name="LowerSupplement" xml:space="preserve">
+    <value>Suplemento inferior</value>
+  </data>
+  <data name="UpperSupplement" xml:space="preserve">
+    <value>Suplemento superior</value>
+  </data>
+  <data name="WorkHeight" xml:space="preserve">
+    <value>Altura del trabajo</value>
+  </data>
+  <data name="DetailPartTree" xml:space="preserve">
+    <value>Vista de árbol</value>
+  </data>
+  <data name="TreeAddNewChild" xml:space="preserve">
+    <value>Nuevo hijo</value>
+  </data>
+  <data name="TreeDetails" xml:space="preserve">
+    <value>Detalle</value>
+  </data>
+  <data name="TreeEdit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="TreeRefresh" xml:space="preserve">
+    <value>Recargar</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="UnitsSymbol" xml:space="preserve">
+    <value>Un.</value>
+  </data>
+  <data name="ModulesEnumStock" xml:space="preserve">
+    <value>Stocks</value>
+  </data>
+  <data name="Creation" xml:space="preserve">
+    <value>Creación</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="CuitValidationError" xml:space="preserve">
+    <value>El campo {0} no es un CUIT válido</value>
+  </data>
+  <data name="AddOperation" xml:space="preserve">
+    <value>Agregar operación</value>
+  </data>
+  <data name="AddComponent" xml:space="preserve">
+    <value>Agregar componente</value>
+  </data>
+  <data name="InternalCode" xml:space="preserve">
+    <value>Código interno</value>
+  </data>
+  <data name="Sector" xml:space="preserve">
+    <value>Sector</value>
+  </data>
+  <data name="Sectors" xml:space="preserve">
+    <value>Sectores</value>
+  </data>
+  <data name="Dispatch" xml:space="preserve">
+    <value>Despacho</value>
+  </data>
+  <data name="Dispatches" xml:space="preserve">
+    <value>Despachos</value>
+  </data>
+  <data name="DispatchNumber" xml:space="preserve">
+    <value>Remito</value>
+  </data>
+  <data name="ModulesEnumManageDispatch" xml:space="preserve">
+    <value>Despachos</value>
+  </data>
+  <data name="CreationDateTime" xml:space="preserve">
+    <value>Creación</value>
+  </data>
+  <data name="SectionDispatchItemData" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="ModulesEnumManageSector" xml:space="preserve">
+    <value>Sectores</value>
+  </data>
+  <data name="ModulesEnumManageStorageType" xml:space="preserve">
+    <value>Medios de almacenaje</value>
+  </data>
+  <data name="SectionStorageTypeData" xml:space="preserve">
+    <value>Medios de almacenaje</value>
+  </data>
+  <data name="TaxIdentification" xml:space="preserve">
+    <value>CUIT</value>
+  </data>
+  <data name="SectionWorkDone" xml:space="preserve">
+    <value>Trabajo terminado</value>
+  </data>
+  <data name="CompletedDateTime" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="SectionWorkDoneStock" xml:space="preserve">
+    <value>Stock consumido</value>
+  </data>
+  <data name="MinutesOfWork" xml:space="preserve">
+    <value>Minutos trabajados</value>
+  </data>
+  <data name="HitsBySeconds" xml:space="preserve">
+    <value>Golpe p/segundo</value>
+  </data>
+  <data name="HitsByHour" xml:space="preserve">
+    <value>golpes por hora</value>
+  </data>
+  <data name="ConnectionString" xml:space="preserve">
+    <value>Cadena de conexión</value>
+  </data>
+  <data name="CreatePartAudit" xml:space="preserve">
+    <value>Arqueo de parte</value>
+  </data>
+  <data name="CreatePartPartiallyAudit" xml:space="preserve">
+    <value>Arqueo de parte en fabricación</value>
+  </data>
+  <data name="CreateRawMaterialAudit" xml:space="preserve">
+    <value>Arqueo de materia prima</value>
+  </data>
+  <data name="SecondsByHit" xml:space="preserve">
+    <value>Segundos por golpe</value>
+  </data>
+  <data name="SectionFiles" xml:space="preserve">
+    <value>Archivos adjuntos</value>
+  </data>
+  <data name="Firm" xml:space="preserve">
+    <value>Firme (días)</value>
+  </data>
+  <data name="TooManyFilesErrorMessageResourceName" xml:space="preserve">
+    <value>No puede cargar más de {0} archivos.</value>
+  </data>
+  <data name="Tentative" xml:space="preserve">
+    <value>Tentativo (días)</value>
+  </data>
+  <data name="FileToBigErrorMessageResourceName" xml:space="preserve">
+    <value>El archivo {0} es muy grande. No puede cargar archivos con más de {1} bytes.</value>
+  </data>
+  <data name="ExtensionNotAllowedErrorMessageResourceName" xml:space="preserve">
+    <value>La extension {0} no esta permitida. No puede cargar archivos con una extension que no este en esta lista: {1}.</value>
+  </data>
+  <data name="GreaterThanOtherPropertyValidationError" xml:space="preserve">
+    <value>{0} debe ser mayor que {1}</value>
+  </data>
+  <data name="FileEmptyErrorMessageResourceName" xml:space="preserve">
+    <value>El archivo {0} esta vacio, no puede cargar archivos vacios.</value>
+  </data>
+  <data name="RequiredIfErrorValueForConditionalValidationIs2" xml:space="preserve">
+    <value>El campo {0} es requerido cuando ValueForConditionalValidation tiene un 2.</value>
+  </data>
+  <data name="AccumulatedStockTitle" xml:space="preserve">
+    <value>Acumulado hasta {0}</value>
+  </data>
+  <data name="StepUnit" xml:space="preserve">
+    <value>Unidad de Rango</value>
+  </data>
+  <data name="StepUnitEnumDay" xml:space="preserve">
+    <value>Días</value>
+  </data>
+  <data name="StepUnitEnumMonth" xml:space="preserve">
+    <value>Meses</value>
+  </data>
+  <data name="StepUnitEnumYear" xml:space="preserve">
+    <value>Años</value>
+  </data>
+  <data name="ModulesEnumManageOrder" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="Accumulative" xml:space="preserve">
+    <value>Acumular</value>
+  </data>
+  <data name="StartingFromStockTitle" xml:space="preserve">
+    <value>Desde {0}</value>
+  </data>
+  <data name="ConfigureEmailServerTitle" xml:space="preserve">
+    <value>Configurar Servidor de Email</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Auditoría</value>
+  </data>
+  <data name="ModulesEnumEmailServerConfiguration" xml:space="preserve">
+    <value>Configurar Servidor de Email</value>
+  </data>
+  <data name="ManageAuditTitle" xml:space="preserve">
+    <value>Administrar Auditorías</value>
+  </data>
+  <data name="EntityType" xml:space="preserve">
+    <value>Tipo de Entidad</value>
+  </data>
+  <data name="AuditBehaviorType" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="EntityId" xml:space="preserve">
+    <value>Id Entidad Asociada</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="ModulesEnumManageAudit" xml:space="preserve">
+    <value>Auditorías</value>
+  </data>
+  <data name="EmailFrom" xml:space="preserve">
+    <value>Remitente</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Puerto</value>
+  </data>
+  <data name="Host" xml:space="preserve">
+    <value>Servidor</value>
+  </data>
+  <data name="EnableSsl" xml:space="preserve">
+    <value>Habilitar SSL</value>
+  </data>
+  <data name="EmailFromWrongFormat" xml:space="preserve">
+    <value>Escriba un email valido</value>
+  </data>
+  <data name="NotificationsConfigurationTitle" xml:space="preserve">
+    <value>Configuración de las Notificaciones</value>
+  </data>
+  <data name="SectionNotificationConfigurationList" xml:space="preserve">
+    <value>Notificaciones</value>
+  </data>
+  <data name="AllowEveryone" xml:space="preserve">
+    <value>Enviar a Todos</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="MyNotifications" xml:space="preserve">
+    <value>Mis Notificaciones</value>
+  </data>
+  <data name="ModulesEnumNotificationsConfiguration" xml:space="preserve">
+    <value>Configurar Notificaciones</value>
+  </data>
+  <data name="ModulesEnumMyNotifications" xml:space="preserve">
+    <value>Mis Notificaciones</value>
+  </data>
+  <data name="AllowSending" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="SectionOrderItemData" xml:space="preserve">
+    <value>Detalle del pedido</value>
+  </data>
+  <data name="IsRework" xml:space="preserve">
+    <value>Es re-trabajo</value>
+  </data>
+  <data name="EmailConfiguration" xml:space="preserve">
+    <value>Configuración Servidor de Email</value>
+  </data>
+  <data name="NotificationAccess" xml:space="preserve">
+    <value>Configuración Notificaciones</value>
+  </data>
+  <data name="NotificationAccessException" xml:space="preserve">
+    <value>Configuracion de Mis notificaciones</value>
+  </data>
+  <data name="UserCreatedNotification" xml:space="preserve">
+    <value>Usuario Creado</value>
+  </data>
+  <data name="OperationUpdatedNotification" xml:space="preserve">
+    <value>Operación Actualizada</value>
+  </data>
+  <data name="UserUpdatedNotification" xml:space="preserve">
+    <value>Usuario Actualizado</value>
+  </data>
+  <data name="UserDeletedNotification" xml:space="preserve">
+    <value>Usuario borrado</value>
+  </data>
+  <data name="User_Subject_Create" xml:space="preserve">
+    <value>Usuario fue creado</value>
+  </data>
+  <data name="User_Subject_Update" xml:space="preserve">
+    <value>Usuario fue actualizado</value>
+  </data>
+  <data name="User_Subject_Delete" xml:space="preserve">
+    <value>Usuario fue borrado</value>
+  </data>
+  <data name="Supplier_Subject_Delete" xml:space="preserve">
+    <value>Proveedor fue borrado</value>
+  </data>
+  <data name="Supplier_Subject_Update" xml:space="preserve">
+    <value>Proveedor fue actualizado</value>
+  </data>
+  <data name="Supplier_Subject_Create" xml:space="preserve">
+    <value>Proveedor fue creado</value>
+  </data>
+  <data name="SupplierCreatedNotification" xml:space="preserve">
+    <value>Proveedor Creado</value>
+  </data>
+  <data name="SupplierUpdatedNotification" xml:space="preserve">
+    <value>Proveedor Actualizado</value>
+  </data>
+  <data name="SupplierDeletedNotification" xml:space="preserve">
+    <value>Proveedor borrado</value>
+  </data>
+  <data name="RoleUpdatedNotification" xml:space="preserve">
+    <value>Rol Actualizado</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Ciudad</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Calle</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="Zip" xml:space="preserve">
+    <value>Zip</value>
+  </data>
+  <data name="FloorAndDepartament" xml:space="preserve">
+    <value>Piso y Dto</value>
+  </data>
+  <data name="IsDefault" xml:space="preserve">
+    <value>Principal</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="SectionAddresses" xml:space="preserve">
+    <value>Direcciones</value>
+  </data>
+  <data name="CreateMany" xml:space="preserve">
+    <value>Crear Múltiples</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Clave</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Datos Adicionales</value>
+  </data>
+  <data name="Logistics" xml:space="preserve">
+    <value>Logística</value>
+  </data>
+  <data name="GroupsOfModulesEnumLogistics" xml:space="preserve">
+    <value>Logística</value>
+  </data>
+  <data name="CreateDuplicate" xml:space="preserve">
+    <value>Crear duplicado</value>
+  </data>
+  <data name="CreateOther" xml:space="preserve">
+    <value>Crear otro</value>
+  </data>
+  <data name="Delivered" xml:space="preserve">
+    <value>Entregado</value>
+  </data>
+  <data name="DeliveredText" xml:space="preserve">
+    <value>Entregado</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="PendingToDeliver" xml:space="preserve">
+    <value>Pendiente de Entrega</value>
+  </data>
+  <data name="CanNotDeliverMoreThanOrdered" xml:space="preserve">
+    <value>No se puede despachar mas de lo pedido. Pedido: {0} - Parte: {1}. Intentando entregar: {2} - Cantidad pendiente de Entregar: {3}</value>
+  </data>
+  <data name="Matrices" xml:space="preserve">
+    <value>Matrices</value>
+  </data>
+  <data name="TransportationArrival" xml:space="preserve">
+    <value>Llegada</value>
+  </data>
+  <data name="TransportationDeparture" xml:space="preserve">
+    <value>Partida</value>
+  </data>
+  <data name="Transportation" xml:space="preserve">
+    <value>Transporte</value>
+  </data>
+  <data name="CreateMonthDaily" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="ViewMonthDaily" xml:space="preserve">
+    <value>Visualizar</value>
+  </data>
+  <data name="YearMonth" xml:space="preserve">
+    <value>Mes</value>
+  </data>
+  <data name="MonthlyOrders" xml:space="preserve">
+    <value>Pedidos mensuales</value>
+  </data>
+  <data name="Apportion" xml:space="preserve">
+    <value>Prorratear</value>
+  </data>
+  <data name="ApportionMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea prorratear {0}?</value>
+  </data>
+  <data name="ModulesEnumOrderDispatchSummary" xml:space="preserve">
+    <value>Resumen de Pedidos y Despachos</value>
+  </data>
+  <data name="DateTo" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="DateFrom" xml:space="preserve">
+    <value>Hasta</value>
+  </data>
+  <data name="TotalOrdered" xml:space="preserve">
+    <value>Total pedido</value>
+  </data>
+  <data name="TotalDispatched" xml:space="preserve">
+    <value>Total despachado</value>
+  </data>
+  <data name="Difference" xml:space="preserve">
+    <value>Diferencia</value>
+  </data>
+  <data name="MonthlyOrder" xml:space="preserve">
+    <value>Pedido mensual</value>
+  </data>
+  <data name="TransportationDriverDocumentNumber" xml:space="preserve">
+    <value>Nº de documento</value>
+  </data>
+  <data name="TransportationDriverName" xml:space="preserve">
+    <value>Chofer</value>
+  </data>
+  <data name="TransportationNumberPlate" xml:space="preserve">
+    <value>Chapa patente</value>
+  </data>
+  <data name="DeliveredStatus" xml:space="preserve">
+    <value>Entregado</value>
+  </data>
+  <data name="LessThanOtherPropertyValidationError" xml:space="preserve">
+    <value>{0} debe ser menor que {1}</value>
+  </data>
+  <data name="DispachedAmount" xml:space="preserve">
+    <value>Despachado</value>
+  </data>
+  <data name="PendingOrderedAmount" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="BarCode" xml:space="preserve">
+    <value>Código de barras</value>
+  </data>
+  <data name="Long" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Proveedor</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Peso</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
+  <data name="PendingDispachedOrderDisplay" xml:space="preserve">
+    <value>Pend/Desp/Pedido</value>
+  </data>
+  <data name="TestEnums" xml:space="preserve">
+    <value>TestEnums</value>
+  </data>
+  <data name="RoleEnumAdministrator" xml:space="preserve">
+    <value>Administrador</value>
+  </data>
+  <data name="RoleEnumEventAdministrator" xml:space="preserve">
+    <value>Organizador de eventos</value>
+  </data>
+  <data name="RoleEnumUser" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="ManagePositionListTitle" xml:space="preserve">
+    <value>Posiciones</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Posición</value>
+  </data>
+  <data name="Positions" xml:space="preserve">
+    <value>Posiciones</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitud</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitud</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="UserUsernameUniqueException" xml:space="preserve">
+    <value>El nombre de usuario ya existe.</value>
+  </data>
+  <data name="RangeError" xml:space="preserve">
+    <value>El campo {0} debe estar entre {1} y {2}</value>
+  </data>
+  <data name="ManageAdministratorUserListTitle" xml:space="preserve">
+    <value>Listado de usuarios administradores</value>
+  </data>
+  <data name="ManageEventAdministratorUserListTitle" xml:space="preserve">
+    <value>Listado de usuarios administradores</value>
+  </data>
+  <data name="AdministratorUser" xml:space="preserve">
+    <value>Usuario administrador</value>
+  </data>
+  <data name="EventAdministratorUser" xml:space="preserve">
+    <value>Organizador</value>
+  </data>
+  <data name="ManageAdministratorUserCreateTitle" xml:space="preserve">
+    <value>Crear usuario administrador</value>
+  </data>
+  <data name="ManageAdministratorUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de usuario administrador</value>
+  </data>
+  <data name="ManageAdministratorUserEditTitle" xml:space="preserve">
+    <value>Editar usuario administrador</value>
+  </data>
+  <data name="ManageEventAdministratorUserCreateTitle" xml:space="preserve">
+    <value>Crear usuario administrado de eventor</value>
+  </data>
+  <data name="ManageEventAdministratorUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de usuario administrador de evento</value>
+  </data>
+  <data name="ManageEventAdministratorUserEditTitle" xml:space="preserve">
+    <value>Editar usuario administrador de evento</value>
+  </data>
+  <data name="ManagePersonUserDetailsTitle" xml:space="preserve">
+    <value>Detalle de persona</value>
+  </data>
+  <data name="ManagePersonUserListTitle" xml:space="preserve">
+    <value>Listado de personas</value>
+  </data>
+  <data name="PersonUser" xml:space="preserve">
+    <value>Persona</value>
+  </data>
+  <data name="ManageEventListTitle" xml:space="preserve">
+    <value>Lista de eventos</value>
+  </data>
+  <data name="ManageEventCreateTitle" xml:space="preserve">
+    <value>Crear evento</value>
+  </data>
+  <data name="ManageEventDetailsTitle" xml:space="preserve">
+    <value>Detalle de evento</value>
+  </data>
+  <data name="ManageEventEditTitle" xml:space="preserve">
+    <value>Editar evento</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Evento</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="GeoPosition" xml:space="preserve">
+    <value>Ubicar</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Dueño</value>
+  </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>Organizador</value>
+  </data>
+  <data name="Begin" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="BeginMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea comenzar el evento {0}?</value>
+  </data>
+  <data name="CancelEmergencyMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea cancelar la emergencia declarada para el evento {0}?</value>
+  </data>
+  <data name="Emergency" xml:space="preserve">
+    <value>En emergencia</value>
+  </data>
+  <data name="EmergencyMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea declarar una emergencia en el evento {0}?</value>
+  </data>
+  <data name="Finalize" xml:space="preserve">
+    <value>Finalizar</value>
+  </data>
+  <data name="FinalizeMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea finalizar el evento {0}?</value>
+  </data>
+  <data name="EventStatusEnumCanceled" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="EventStatusEnumCompleted" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="EventStatusEnumInEmergency" xml:space="preserve">
+    <value>En emergencia</value>
+  </data>
+  <data name="EventStatusEnumInProgress" xml:space="preserve">
+    <value>En progreso</value>
+  </data>
+  <data name="EventStatusEnumPending" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="EventMenu" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="MonitorEvent" xml:space="preserve">
+    <value>Monitorear evento</value>
+  </data>
+  <data name="EventMonitorTitle" xml:space="preserve">
+    <value>Monitor de evento</value>
+  </data>
+  <data name="CancelEmergency" xml:space="preserve">
+    <value>Cancelar emergencia</value>
+  </data>
+  <data name="EmergencyDateTime" xml:space="preserve">
+    <value>Fecha y hora de emergencia</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="StartCollaborativeSearch" xml:space="preserve">
+    <value>Búsqueda colaborativa</value>
+  </data>
+  <data name="StartCollaborativeSearchMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea comenzar una búsqueda colaborativa?</value>
+  </data>
+  <data name="IAmOk" xml:space="preserve">
+    <value>Estoy bien</value>
+  </data>
+  <data name="LastPositionUpdate" xml:space="preserve">
+    <value>Ultima act. de posición</value>
+  </data>
+  <data name="NotSeen" xml:space="preserve">
+    <value>No visto</value>
+  </data>
+  <data name="Seen" xml:space="preserve">
+    <value>Visto</value>
+  </data>
+  <data name="WasSeen" xml:space="preserve">
+    <value>Fue visto</value>
+  </data>
+  <data name="IAmOkEnumNotOk" xml:space="preserve">
+    <value>No estoy bien</value>
+  </data>
+  <data name="IAmOkEnumOk" xml:space="preserve">
+    <value>Estoy bien</value>
+  </data>
+  <data name="IAmOkEnumWithoutAnswer" xml:space="preserve">
+    <value>Sin respuesta</value>
+  </data>
+  <data name="IAmNotOk" xml:space="preserve">
+    <value>No estoy bien</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Ultima actualización</value>
+  </data>
+  <data name="WithoutAnswer" xml:space="preserve">
+    <value>Sin respuesta</value>
+  </data>
+  <data name="ManageBusinessListTitle" xml:space="preserve">
+    <value>Listado de empresas</value>
+  </data>
+  <data name="Business" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="Businesses" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="Cuit" xml:space="preserve">
+    <value>Cuit</value>
+  </data>
+  <data name="RePassword" xml:space="preserve">
+    <value>Reescriba contraseña</value>
+  </data>
+  <data name="SectionUserData" xml:space="preserve">
+    <value>Datos de usuario</value>
+  </data>
+  <data name="ManageBusinessDetailsTitle" xml:space="preserve">
+    <value>Detalle de empresa</value>
+  </data>
+  <data name="ManageBusinessCreateTitle" xml:space="preserve">
+    <value>Crear empresa</value>
+  </data>
+  <data name="ManageBusinessEditTitle" xml:space="preserve">
+    <value>Editar empresa</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Creado</value>
+  </data>
+  <data name="RegisterNewBusiness" xml:space="preserve">
+    <value>Registrar nueva empresa</value>
+  </data>
+  <data name="SectionUsers" xml:space="preserve">
+    <value>Usuarios</value>
+  </data>
+  <data name="Clustered" xml:space="preserve">
+    <value>Agrupados</value>
+  </data>
+  <data name="EventName" xml:space="preserve">
+    <value>Nombre del evento</value>
+  </data>
+  <data name="EventPersonMonitorTitle" xml:space="preserve">
+    <value>Monitor de persona en un evento</value>
+  </data>
+  <data name="SeenNotOk" xml:space="preserve">
+    <value>Lo vieron mal</value>
+  </data>
+  <data name="SeenOk" xml:space="preserve">
+    <value>Lo vieron bien</value>
+  </data>
+  <data name="SeenWithoutAnswer" xml:space="preserve">
+    <value>No se</value>
+  </data>
+  <data name="PeopleThatIAmTracking" xml:space="preserve">
+    <value>Gente a la que estoy siguiendo</value>
+  </data>
+  <data name="PeopleInEvents" xml:space="preserve">
+    <value>Personas en eventos</value>
+  </data>
+  <data name="EventsInEmergency" xml:space="preserve">
+    <value>Eventos en emergencia</value>
+  </data>
+  <data name="PeopleWithoutAnswer" xml:space="preserve">
+    <value>Personas que no responden</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Ver detalles</value>
+  </data>
+  <data name="InEmergency" xml:space="preserve">
+    <value>En emergencia</value>
+  </data>
+  <data name="EventsByStatus" xml:space="preserve">
+    <value>Eventos por estado</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>En progreso</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="AllEventsVsInEmergencyEvents" xml:space="preserve">
+    <value>Todos los eventos vs. con emergencia</value>
+  </data>
+  <data name="CreateDataMock" xml:space="preserve">
+    <value>Crear datos de prueba</value>
+  </data>
+  <data name="ControlMonitor" xml:space="preserve">
+    <value>Monitorear</value>
+  </data>
+  <data name="AmountPeople" xml:space="preserve">
+    <value>Cantidad de personas</value>
+  </data>
+  <data name="CollaborativeSearchDateTime" xml:space="preserve">
+    <value>Comienzo búsqueda colaborativa</value>
+  </data>
+  <data name="SectionSummary" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="EventOkNotOkChart" xml:space="preserve">
+    <value>Por vistos bien o mal</value>
+  </data>
+  <data name="EventPersonStatusChart" xml:space="preserve">
+    <value>Por estado</value>
+  </data>
+  <data name="EventSeenNotSeenChart" xml:space="preserve">
+    <value>Por vistos y no vistos</value>
+  </data>
+  <data name="Reopen" xml:space="preserve">
+    <value>Reabrir</value>
+  </data>
+  <data name="ReopenMessage" xml:space="preserve">
+    <value>¿Esta seguro que desea reabrir el evento {0} finalizado?</value>
+  </data>
+</root>

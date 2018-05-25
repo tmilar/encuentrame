@@ -1,0 +1,63 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Models.Accounts.UserModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ProfileDetailsTitle;
+}
+
+@section scripts
+{
+    
+
+}
+@Html.SuccessSummary()
+<h2 class="page-header">@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-9">
+        @using (Html.BeginEditSection(Translations.PersonalData))
+        {
+
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.Username)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.Lastname)</div>
+                <div class="col-md-6">@Html.DisplayFor(m => m.Firstname)</div>
+            </div>
+        }
+        @using (Html.BeginEditSection(Translations.ContactData))
+        {
+            <div class="row">
+                <div class="col-md-5">@Html.DisplayFor(m => m.Email)</div>
+                <div class="col-md-5">@Html.DisplayFor(m => m.EmailAlternative)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">@Html.DisplayFor(m => m.PhoneNumber)</div>
+                <div class="col-md-5">@Html.DisplayFor(m => m.MobileNumber)</div>
+                <div class="col-md-2">@Html.DisplayFor(m => m.InternalNumber)</div>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-3">
+        @using (Html.BeginEditSection())
+        {
+            @Html.DisplayFor(m => m.Image)
+        }
+    </div>
+</div>
+
+
+<form method="POST" action="@Url.Action("Logout", new {})">
+    @Html.ActionLink(Translations.Edit, "ProfileEdit", new {}, new {@class = "btn btn-primary", role = "button"})
+    @Html.ActionLink(Translations.ChangePassword, "ChangePassword", new {}, new {@class = "btn btn-primary", role = "button"})
+    <button type="button" class="btn btn-warning  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+            data-modal-ok="@Translations.Logout" data-modal-title="@Translations.Logout" data-modal-message="@Translations.LogoutMessage.FormatWith(Model.Username)">
+        @Translations.Logout
+    </button>
+
+</form>
+

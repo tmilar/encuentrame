@@ -1,0 +1,18 @@
+﻿@using Encuentrame.Web
+@model Encuentrame.Web.Models.Accounts.UserModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManageUserEditTitle;
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/form")
+}
+<h2 class="page-header">@ViewBag.Title</h2>
+
+<form method="POST" action="@Url.Action("ProfileEdit", new { })">
+    @Html.Partial("_profileForm", Model)
+    <button type="submit" class="btn btn-primary">@Translations.Save</button>
+    @Html.ActionLink(Translations.GoBack, "UserProfile", new { }, new { @class = "btn btn-link" })
+</form>
+

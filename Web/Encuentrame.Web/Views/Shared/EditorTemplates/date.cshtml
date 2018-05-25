@@ -1,0 +1,8 @@
+﻿@using Encuentrame.Web.Helpers
+@model DateTime
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    @Html.TextBoxFor(model => model, new { @Value = Model <= DateTime.MinValue ? "" : Model.ToString("dd/MM/yyyy"), data_date_format = "dd/mm/yyyy", @class = "form-control date-control" })
+    @Html.ValidationMessageFor(model => model)
+</div>

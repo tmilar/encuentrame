@@ -1,0 +1,65 @@
+﻿
+@using Encuentrame.Support
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Accounts.LoggedUserHeaderModel
+
+<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle logged-user-name" data-toggle="dropdown">
+            Hola @Model.FullName.ToUpper()
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+        <ul class="dropdown-menu login-session-container">
+            <li>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-4">
+                        @if (Model.Image.IsNullOrEmpty())
+                        {
+                            <p class="text-center">
+                                <span class="glyphicon glyphicon-user icon-size"></span>
+                            </p>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model=>Model.Image)
+                        }
+                    </div>
+                    <div class="col-md-7">
+                        <p class="text-left">
+                            <strong>@Model.FullName</strong>
+                        </p>
+                        <p class="text-left small">
+                            @Model.Email
+                        </p>
+                        <p class="text-left small">
+                            @Model.Business
+                        </p>
+                        <p class="text-left">
+                            <strong>@TranslationsHelper.Get(Model.Role)</strong>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                        @Html.ActionLink(Translations.ChangePassword, "ChangePassword", "Account", new { Model.Id }, new { @class = "btn btn-primary btn-sm" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.ActionLink(Translations.Profile, "UserProfile", "Account", new { Model.Id }, new { @class = "btn btn-primary btn-sm" })
+                    </div>
+                    <div class="col-md-3">
+                        <form method="POST" action="@Url.Action("Logout", "Account")">
+                            <button type="button" class="btn btn-warning  btn-submit btn-sm" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+                                    data-modal-ok="@Translations.Logout" data-modal-title="@Translations.Logout" data-modal-message="@Translations.LogoutMessage.FormatWith(Model.FullName)">
+                                @Translations.Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

@@ -1,0 +1,56 @@
+﻿@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model System.Collections.IList
+@{
+    var selectListItems = new List<SelectListItem>();
+    var enumType = Model.GetType().GetGenericArguments().First();
+    string typeName = enumType.Name;
+    IList<int> excludedValues = null;
+    IList<int> includedValues = null;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.ExcludedEnumValues))
+    {
+        excludedValues = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.ExcludedEnumValues] as int[];            
+    }
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.IncludedEnumValues))
+    {
+        includedValues = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.IncludedEnumValues] as int[];
+    }
+    
+    foreach (var itemValue in Enum.GetValues(enumType))
+    {
+        var itemName = Enum.GetName(enumType, itemValue);
+        var intValue = (int) itemValue;
+        if ((excludedValues == null && includedValues==null) || (excludedValues != null && !excludedValues.Contains(intValue))
+           || (includedValues != null && includedValues.Contains(intValue)))
+        {
+            selectListItems.Add(new SelectListItem()
+            {
+                Text = TranslationsHelper.Get(typeName, itemName), //all the enum translate with typeName + itemName in translationsResources
+                Value = itemValue.ToString(),
+                Selected = Model.Contains(itemValue),
+            });
+        }        
+    }
+
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>(); //validationAttributes;
+
+    var enumClasses = "form-control reference reference-enum ";
+    
+    var additionalClass = ViewBag.AdditionalClass as string;
+    if (!string.IsNullOrEmpty(additionalClass))
+    {        
+        enumClasses= "{0} {1}".FormatWith(enumClasses, additionalClass);
+    }
+
+    htmlAttributes.Add("class", enumClasses);
+    htmlAttributes.Add("multiple", "multiple");  
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    @Html.DropDownListFor(model => model, selectListItems, htmlAttributes)
+    @Html.ValidationMessageFor(model => model)
+</div>
+
+

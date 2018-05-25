@@ -1,0 +1,43 @@
+﻿@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@model Encuentrame.Web.Models.Tests.TestModel2
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>title</h2>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/form")
+
+}
+<h2 class="page-header">@ViewBag.Title</h2>
+@Html.ErrorSummary()
+<form method="POST" action="@Url.Action("Create2")">
+
+    <label>New Reference</label>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.EditorFor(m => m.Part6)
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.AmountOne)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.AmountTwo)
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">@Translations.Create</button>
+
+</form>
+
+
+

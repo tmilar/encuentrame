@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" appbase=".\bin\debug" />
+  <Config name="Debug" configfile="Nails.Tests.dll.config" binpathtype="Auto">
+    <assembly path="Nails.Tests.dll" />
+  </Config>
+  <Config name="Release" configfile="Nails.Tests.dll.config" binpathtype="Auto">
+    <assembly path="..\Release\Nails.Tests.dll" />
+  </Config>
+</NUnitProject>

@@ -1,0 +1,4 @@
+﻿Generator: Template
+ExcludeForCodeCoverage : true
+GeneratePrettyNames: true
+BaseType: BaseTemplate

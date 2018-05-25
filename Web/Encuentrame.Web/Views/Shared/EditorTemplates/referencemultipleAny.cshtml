@@ -1,0 +1,32 @@
+﻿@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model List<Encuentrame.Web.Models.References.Commons.ReferenceAny>
+@{
+    Type sourceType ;
+    string sourceName;
+    var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.SourceType))
+    {
+        sourceType = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceType] as Type;
+        sourceName = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceName].ToString();
+    }
+    else
+    {
+        sourceType = typeof(ListItemsHelper);
+        sourceName = "";
+    }
+    
+    var selectListItems = sourceType.GetStaticMethod(sourceName, Model) as ICollection<SelectListItem>;
+    IDictionary<string, object> htmlAttributes = validationAttributes;
+    htmlAttributes.Add("class", "form-control reference reference-any");
+    htmlAttributes.Add("name", "referenceAny");
+    
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model, new { @for = Html.NameFor(model => model) + ".referenceAny" })
+    @Html.ListBoxFor(model=>model, selectListItems, htmlAttributes)
+    @Html.ValidationMessageFor(model => model)
+</div>
+
+

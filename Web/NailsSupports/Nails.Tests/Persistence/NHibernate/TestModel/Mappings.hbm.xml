@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<hibernate-mapping xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:nhibernate-mapping-2.2" namespace="NailsFramework.Tests.Persistence.NHibernate.TestModel" assembly="Nails.Tests">
+  <class name="Country" table="Countries">
+    <id name="Id" unsaved-value="0">
+      <column name="Id" />
+      <generator class="native" />
+    </id>
+    <property name="Name" />
+    <bag name="Cities" cascade="all">
+      <key column="CountryId" />
+      <one-to-many class="City" />
+    </bag>
+  </class>
+  <class name="City" table="Cities">
+    <id name="Id" unsaved-value="0">
+      <column name="Id" />
+      <generator class="native" />
+    </id>
+    <property name="Name" />
+  </class>
+</hibernate-mapping>

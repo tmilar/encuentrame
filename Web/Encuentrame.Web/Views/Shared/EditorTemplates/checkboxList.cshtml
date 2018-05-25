@@ -1,0 +1,68 @@
+﻿@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model IEnumerable<int>
+@{
+    Type sourceType = null;
+    string sourceName = "";
+    //var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.SourceType))
+    {
+        sourceType = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceType] as Type;
+        sourceName = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceName].ToString();
+    }
+
+    List<object> parametersList = new List<object>();
+    parametersList.Add(Model);
+  
+    ICollection<SelectListItem> selectListItems = null;
+    if (sourceType == null)
+    {
+        selectListItems = new List<SelectListItem>();
+    }
+    else
+    {
+        selectListItems = sourceType.GetStaticMethod(sourceName, parametersList.ToArray()) as ICollection<SelectListItem>;
+    }
+
+
+    IDictionary<string, object> htmlAttributes = new Dictionary<string, object>(); //validationAttributes;
+
+
+
+    htmlAttributes.Add("class", "checkbox-list");
+    htmlAttributes.Add("style", @" -webkit-columns: {0}; /* Chrome, Safari, Opera */
+                                   -moz-columns: {0}; /* Firefox */
+                                   columns: {0};".FormatWith(3));
+
+
+}
+<div class="form-group">
+    @Html.RequiredMark(model => model)
+    @Html.LabelFor(model => model)
+    
+    @{
+        var ul = new TagBuilder("ul");
+        ul.MergeAttributes(htmlAttributes);
+    }
+
+    @(new HtmlString(ul.ToString(TagRenderMode.StartTag)))
+
+    @foreach (var item in selectListItems)
+        {
+            <li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                               name="@Html.NameFor(x=>Model)"
+                               value="@item.Value"
+                               @(item.Selected?"checked":"")/> @item.Text
+                              
+                    </label>
+                </div>
+            </li>
+        }
+    @(new HtmlString(ul.ToString(TagRenderMode.EndTag)))
+</div>
+
+

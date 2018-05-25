@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Database Name="Nails_LinqToSql" xmlns="http://schemas.microsoft.com/linqtosql/mapping/2007">
+  <Table Name="Cities">
+    <Type Name="NailsFramework.Tests.Persistence.LinqToSql.TestModel.City">
+      <Column Name="Id" Member="Id" IsPrimaryKey="true" IsDbGenerated="true" />
+      <Column Name="Name" Member="Name" />
+      <Column Name="CountryId" Member="CountryId" />
+    </Type>
+  </Table>
+  <Table Name="Countries">
+    <Type Name="NailsFramework.Tests.Persistence.LinqToSql.TestModel.Country">
+      <Column Name="Id" Member="Id" IsPrimaryKey="true" IsDbGenerated="true" />
+      <Column Name="Name" Member="Name" />
+      <Association Member="Cities" IsForeignKey="false" Storage="cities" ThisKey="Id" OtherKey="CountryId" />
+    </Type>
+  </Table>
+</Database>

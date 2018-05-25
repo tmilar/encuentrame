@@ -1,0 +1,27 @@
+﻿@using Newtonsoft.Json
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model string
+@{
+    Type sourceType ;
+    string sourceName;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey(AdditionalMetadataKeys.SourceType))
+    {
+        sourceType = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceType] as Type;
+        sourceName = ViewData.ModelMetadata.AdditionalValues[AdditionalMetadataKeys.SourceName].ToString();
+    }
+    else
+    {
+        sourceType = typeof(ListTreeItemsHelper);
+        sourceName = "";
+    }
+    var treeItems = sourceType.GetStaticMethod(sourceName,Model.Numbers(',')) as IList<ListTreeItemsHelper.Node>;
+    
+}
+<div class="form-group">
+    <label class="control-label">@Html.DisplayNameFor(model => model)</label>
+    <div class="treeview-display" 
+         data-src='@(JsonConvert.SerializeObject(treeItems))'></div>
+</div>
+
+

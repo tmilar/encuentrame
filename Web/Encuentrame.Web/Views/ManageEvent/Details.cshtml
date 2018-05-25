@@ -1,0 +1,84 @@
+﻿
+@using System.Configuration
+@using Encuentrame.Model.Events
+@using Encuentrame.Web
+@using Encuentrame.Web.Helpers
+@using Encuentrame.Support
+@model Encuentrame.Web.Models.Events.EventModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Translations.ManageEventDetailsTitle;
+}
+
+@section scripts
+{
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=@ConfigurationManager.AppSettings["GoogleMapsKey"]&callback=initMap">
+
+    </script>
+    <script src="@Html.ScriptUrl(@"~/scripts/app/controllers/manageEvents/manageEvent.js")" type="text/javascript"></script>
+
+    
+
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+
+@using (Html.BeginDisplaySection(Translations.Data))
+{
+    <div class="row">
+        <div class="col-md-4">@Html.DisplayFor(m => m.Name)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Status)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.OrganizerDisplay)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">@Html.DisplayFor(m => m.BeginDateTime)</div>
+        <div class="col-md-6">@Html.DisplayFor(m => m.EndDateTime)</div>
+    </div>
+}
+
+
+@using (Html.BeginDisplaySection(Translations.SectionBasicData))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">@Html.DisplayFor(m => m.Latitude) @Html.HiddenFor(m => m.Latitude)</div>
+                <div class="col-md-4">@Html.DisplayFor(m => m.Longitude) @Html.HiddenFor(m => m.Longitude)</div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-8">@Html.DisplayFor(m => m.Street)</div>
+                <div class="col-md-4">@Html.DisplayFor(m => m.Number)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">@Html.DisplayFor(m => m.City)</div>
+                <div class="col-md-6">@Html.DisplayFor(m => m.Province)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayFor(m => m.FloorAndDepartament)</div>
+                <div class="col-md-3">@Html.DisplayFor(m => m.Zip)</div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="map-container" id="mapContainer" data-icon-event="@Url.Content("~/images/MapMarker_Flag.png")"  style="position: relative; width: 100%; height: 288px; overflow: hidden"></div>
+        </div>
+    </div>
+}
+
+
+
+
+<form method="POST" action="@Url.Action("Delete", new {id = Model.Id})">
+    <button name="buttonAction" value="delete" type="button" class="btn btn-danger  btn-submit" data-toggle="modal" data-target=".modal-message-before-submit-sm"
+            data-modal-ok="@Translations.Delete" data-modal-title="@Translations.Delete" data-modal-message="@Translations.DeleteMessage.FormatWith(Model.Name)">
+        @Translations.Delete
+    </button>
+   
+    @Html.ActionLink(Translations.Edit, "Edit", new { Id = Model.Id }, new { @class = "btn btn-primary", role = "button" })
+    @Html.ActionLink(Translations.MonitorEvent, "Monitor","EventMonitor", new { Id = Model.Id }, new { @class = "btn btn-success", role = "button" })
+    @Html.ActionLink(Translations.GoBack, "Index", new { }, new { @class = "btn btn-link", role = "button" })
+</form>
+
